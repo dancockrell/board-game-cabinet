@@ -19,9 +19,9 @@ func _setup() -> void:
 	camera = Camera3D.new()
 	add_child(camera)
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 10.1
-	camera.position = Vector3(0.5, 12, 13)
-	camera.rotation = Vector3(-atan2(12.0, 13.05), atan2(0.5, 13.05), 0)
+	camera.size = 8.4
+	camera.position = Vector3(0.5, 10, 13)
+	camera.rotation = Vector3(-atan2(10.0, 13.05), atan2(0.5, 13.05), 0)
 	camera.current = true
 	var world := WorldEnvironment.new()
 	var env := Environment.new()
@@ -36,7 +36,7 @@ func _setup() -> void:
 	var light := DirectionalLight3D.new()
 	light.rotation_degrees = Vector3(-52, -28, 0)
 	light.light_color = Color("fff0d3")
-	light.light_energy = 0.8
+	light.light_energy = 0.72
 	light.shadow_enabled = true
 	light.directional_shadow_max_distance = 35
 	add_child(light)
@@ -254,6 +254,16 @@ func _token(unit: Dictionary) -> Node3D:
 	for i in int(unit.max_hp):
 		var active: bool = i < int(unit.hp)
 		_box(node, Vector3(0.064, 0.028, 0.06), Vector3((i - (unit.max_hp-1)/2.0)*0.075, 0.13, 0.26), trim if active else Color("39423e"))
+	var identity := Label3D.new()
+	identity.text = ("H" if heaven else "D") + str(int(str(unit.id).trim_prefix(str(unit.side))) + 1)
+	identity.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	identity.position = Vector3(0, 0.24, 0.38)
+	identity.font_size = 28
+	identity.pixel_size = 0.0055
+	identity.modulate = Color("fff2cd") if heaven else Color("ffd2c1")
+	identity.outline_modulate = Color("28312f")
+	identity.outline_size = 7
+	node.add_child(identity)
 	return node
 
 func show_orders(orders: Array, selected_id: String, legal_orders: Array, cursor: Vector2i = Vector2i(-1, -1)) -> void:
