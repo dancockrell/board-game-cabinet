@@ -189,18 +189,23 @@ func hydra(p: Node3D, team: Color) -> void:
 	for j in 4:
 		cone(p,Vector3(0,.66,-.30+j*.14),.075,0,.18,gold)
 
-func animate(figure: Node3D, phase: float, moving: bool, flying: bool, hit: float) -> void:
+func animate(figure: Node3D, phase: float, moving: bool, flying: bool, hit: float, attack := 0.0) -> void:
 	var stride := sin(phase*9.0)*(.35 if moving else .035)
 	for pair in [["LegL",1.0],["LegR",-1.0],["ArmL",-0.6],["ArmR",0.6]]:
 		var limb := figure.get_node_or_null(str(pair[0])) as Node3D
-		if limb: limb.rotation.x = stride*float(pair[1]) - hit*.8
+		if limb:
+			limb.rotation.x = stride*float(pair[1]) - hit*.8
+			if str(pair[0]) == "ArmR": limb.rotation.x -= attack * 1.15
 	for s in [-1,1]:
 		var wing := figure.get_node_or_null("WingL" if s < 0 else "WingR") as Node3D
 		if wing: wing.rotation.z = s*sin(phase*8)*.38
 	for i in [-1,0,1]:
 		var neck := figure.get_node_or_null("Neck%d" % i) as Node3D
-		if neck: neck.rotation.z = sin(phase*2+i)*.10
+		if neck:
+			neck.rotation.z = sin(phase*2+i)*.10
+			neck.rotation.x = -attack * (0.35 + abs(i) * 0.08)
 	var cloth := figure.get_node_or_null("Cape") as Node3D
 	if cloth: cloth.rotation.x = sin(phase*5)*.08 + (.15 if moving else 0.0)
 	figure.position.y = (.23 + sin(phase*4)*.07) if flying else abs(stride)*.11
-	figure.rotation.x = -hit*.18
+	figure.rotation.x = -hit*.18 - attack*.10
+	figure.rotation.z = attack * (-.12 if int(figure.get_meta("kind", "").hash()) % 2 else .12)

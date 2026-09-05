@@ -87,12 +87,14 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			node.set_meta("walking_until", _time + .14)
 		_health(node, float(unit["hp"]) / maxf(1.0, float(unit.get("max_hp", unit["hp"]))))
 		_damage_feedback(node, float(unit["hp"]), delta)
-		_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)))
+		var attack_strength := clampf((float(node.get_meta("attack_until", 0.0)) - _time) / 0.24, 0.0, 1.0)
+		_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)
 	for id in _tokens.keys():
 		if not alive.has(id):
 			_departure(_tokens[id])
 			_tokens[id].queue_free()
 			_tokens.erase(id)
+	_mark_attack_events(state.get("events", []))
 	for tower in state.get("towers", []):
 		var id = tower["id"]
 		if not _towers.has(id): _towers[id] = _make_tower(tower)
@@ -130,6 +132,23 @@ func show_deployment(position: Vector2, valid: bool, spell: bool = false, kind: 
 func clear_preview() -> void:
 	if _preview: _preview.visible = false
 	if _ghost: _ghost.visible = false
+
+func _mark_attack_events(events: Array) -> void:
+	for event in events:
+		var event_id := int(event.get("id", -1))
+		if event_id <= _last_event: continue
+		_last_event = event_id
+		if str(event.get("kind", "")) != "hit" or not event.has("source_x"): continue
+		var source := Vector2(float(event.source_x), float(event.source_z))
+		var closest: Node3D
+		var best := 0.8
+		for token in _tokens.values():
+			if int(token.get_meta("side", -1)) != int(event.get("side", -2)): continue
+			var distance := Vector2(token.position.x, token.position.z).distance_to(source)
+			if distance < best:
+				best = distance
+				closest = token
+		if closest: closest.set_meta("attack_until", _time + 0.24)
 
 func _tint_ghost(node: Node) -> void:
 	if node is MeshInstance3D:
@@ -238,6 +257,8 @@ func _make_tower(data: Dictionary) -> Node3D:
 func _make_unit(kind: String, side: int) -> Node3D:
 	var node := Node3D.new()
 	add_child(node)
+	node.set_meta("side", side)
+	node.set_meta("kind", kind)
 	var team: Color = PALETTE.player if side == 0 else PALETTE.enemy
 	_cylinder(node, 0.38, 0.055, Vector3(0, 0.035, 0), Color("263743"))
 	_cylinder(node, 0.36, 0.035, Vector3(0, 0.077, 0), team)
