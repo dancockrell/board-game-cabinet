@@ -107,6 +107,10 @@ func _build_ui() -> void:
 	var edition := _label("CHESS  /  THE WOODEN SET", 14, Color("aeb7a8"))
 	edition.autowrap_mode = TextServer.AUTOWRAP_OFF
 	header.add_child(edition)
+	var war_table := Button.new()
+	war_table.text = "The Ninth Gate"
+	war_table.pressed.connect(func(): get_tree().change_scene_to_file("res://app/ninth_gate.tscn"))
+	header.add_child(war_table)
 	var columns := HBoxContainer.new()
 	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	columns.add_theme_constant_override("separation", 24)
