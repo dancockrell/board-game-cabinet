@@ -86,7 +86,7 @@ func cape(p: Node3D, team: Color, width := .30, length := .54) -> void:
 		var a:=i/8.0
 		var b:=(i+1)/8.0
 		rod(cloth,Vector3((a-.5)*width*1.8,-length,-.165+sin(a*PI*8)*.026),Vector3((b-.5)*width*1.8,-length,-.165+sin(b*PI*8)*.026),.009,ivory.darkened(.18))
-func humanoid(p: Node3D, team: Color, muscular := false, legs := true) -> void:
+func humanoid(p: Node3D, team: Color, muscular := false, legs := true, cloth := Color("d8ceb9")) -> void:
 	if legs:
 		for s in [-1,1]:
 			var leg := joint(p, "LegL" if s < 0 else "LegR", Vector3(s*.12,.49,0))
@@ -95,19 +95,19 @@ func humanoid(p: Node3D, team: Color, muscular := false, legs := true) -> void:
 			ball(leg, Vector3(s*.008,-.15,.005), Vector3(.053,.043,.045), skin)
 			box(leg, Vector3(s*.015,-.33,.065), Vector3(.13,.072,.21), leather)
 			box(leg, Vector3(s*.015,-.23,.064), Vector3(.087,.14,.025), bronze)
-	ball(p, Vector3(0,.72,0), Vector3(.27 if muscular else .205,.27,.14), skin if muscular else ivory)
-	cone(p, Vector3(0,.49,0), .27,.20,.22, leather if muscular else ivory)
+	ball(p, Vector3(0,.72,0), Vector3(.27 if muscular else .205,.27,.14), skin if muscular else cloth)
+	cone(p, Vector3(0,.49,0), .27,.20,.22, leather if muscular else cloth)
 	box(p, Vector3(0,.59,.15), Vector3(.36,.045,.025), leather)
 	box(p, Vector3(0,.59,.17), Vector3(.06,.055,.02), bronze)
 	for i in 12:
 		var a := i*TAU/12
-		var strip := box(p,Vector3(sin(a)*.235,.48,cos(a)*.185),Vector3(.07,.18,.018),leather if muscular else ivory.darkened((i%3)*.025))
+		var strip := box(p,Vector3(sin(a)*.235,.48,cos(a)*.185),Vector3(.07,.18,.018),leather if muscular else cloth.darkened((i%3)*.025))
 		strip.rotation.y = a
 	var sash := box(p, Vector3(.03,.78,.15), Vector3(.058,.27,.02),team.darkened(.18))
 	sash.rotation.z = -.3
 	for s in [-1,1]:
 		var arm := joint(p, "ArmL" if s < 0 else "ArmR", Vector3(s*.24,.85,0))
-		ball(arm, Vector3(0,-.022,0), Vector3(.076,.079,.069) if muscular else Vector3(.053,.069,.049), skin if muscular else ivory)
+		ball(arm, Vector3(0,-.022,0), Vector3(.076,.079,.069) if muscular else Vector3(.053,.069,.049), skin if muscular else cloth)
 		tapered_limb(arm, Vector3.ZERO, Vector3(s*.055,-.14,.025), .075 if muscular else .047, .050 if muscular else .034)
 		tapered_limb(arm, Vector3(s*.055,-.14,.025), Vector3(s*.075,-.28,.11), .061 if muscular else .04, .038 if muscular else .027)
 		ball(arm, Vector3(s*.075,-.28,.11), Vector3(.049,.065,.041), skin)
@@ -115,6 +115,12 @@ func humanoid(p: Node3D, team: Color, muscular := false, legs := true) -> void:
 func build(p: Node3D, kind: String, team: Color) -> void:
 	p.set_meta("kind", kind)
 	team = team.lerp(Color("6e6b60"), .42).darkened(.12)
+	if kind == "hoplites":
+		preload("res://presentation/olympus_sculpt.gd").new(self).hoplite(p,team)
+		return
+	if kind == "minotaur":
+		preload("res://presentation/olympus_sculpt.gd").new(self).minotaur(p,team)
+		return
 	if kind == "hydra":
 		hydra(p, team)
 		_refine(p,kind)
@@ -124,7 +130,7 @@ func build(p: Node3D, kind: String, team: Color) -> void:
 			var a := i*.40
 			var r := .36 * (1.0-i/34.0)
 			ball(p, Vector3(cos(a)*r,.15+i*.016,sin(a)*r), Vector3(.14,.11,.14), Color("68785b").darkened(i*.007))
-		humanoid(p, team, false, false)
+		humanoid(p, team, false, false,Color("66556c"))
 		face(p, Vector3(0,1.10,0), Color("a6c494"))
 		for i in 9:
 			var a := i*TAU/9
@@ -138,7 +144,7 @@ func build(p: Node3D, kind: String, team: Color) -> void:
 		_refine(p,kind)
 		return
 	var giant := kind in ["minotaur","heracles"]
-	humanoid(p, team, giant)
+	humanoid(p, team, giant,true,Color("536951") if kind == "atalanta" else ivory)
 	if kind == "minotaur":
 		ball(p, Vector3(0,.77,-.04), Vector3(.31,.29,.19), Color("6f594b"))
 		face(p, Vector3(0,1.17,0), Color("805147"), true)
@@ -158,6 +164,8 @@ func build(p: Node3D, kind: String, team: Color) -> void:
 		face(p, Vector3(0,1.10,.035))
 		ball(p, Vector3(0,1.14,-.09), Vector3(.28,.27,.21), Color("8b744c"))
 		face(p, Vector3(0,1.10,.095))
+		var sculpt := preload("res://presentation/olympus_sculpt.gd").new(self)
+		sculpt.profile(p,[[.90,0,0,0,.19],[.97,.11,.07,0,.20],[1.045,.16,.08,0,.18],[1.08,.16,.055,0,.17]],Color("614632"),16)
 		for s in [-1,1]:
 			ball(p, Vector3(s*.22,1.30,-.02), Vector3(.085,.09,.06), gold)
 			ball(p, Vector3(s*.22,.88,-.06), Vector3(.14,.13,.19), Color("8b744c"))
