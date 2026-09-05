@@ -2,7 +2,7 @@ config_version=5
 
 [application]
 config/name="Board Game Cabinet"
-run/main_scene="res://app/main.tscn"
+run/main_scene="res://app/olympus_arena.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [display]
