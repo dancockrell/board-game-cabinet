@@ -1,6 +1,16 @@
 # Board Game Cabinet handoff
 
-Updated 2026-09-05. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
+Updated 2026-09-06. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
+
+## Latest integrated sanctuary checkpoint
+
+The user specifically requested much better buildings and parallel model work. The arena now uses complete Doric architecture in `presentation/olympus_architecture.gd`: enclosed cellae, recessed entrances, three-step bases, four/eight fluted columns with entasis and capitals, solid pediments, carved frieze details, overlapping pan tiles, raised cover tiles and ridge caps. Heights remain around 2.3 arena units so the gameplay camera and troop visibility retain their existing contract. `tools/capture_olympus_architecture.gd` renders a close study using the actual runtime buildings.
+
+Five units now use shaped profile/tube mesh builders: Hoplite and Minotaur in `olympus_sculpt.gd`, Atalanta in `olympus_archer.gd`, and Hydra/Harpies in `olympus_creatures.gd`. Atalanta has a green hunting chiton, natural head proportions, bow, quiver and strapped footwear. Hydra has separated sinuous necks and wedge-shaped reptile heads. Harpies have adult anatomy and closed, overlapping feather meshes. The final visual review found and fixed inward-facing feather normals; `test_olympus_creatures.gd` guards this specific defect. Heracles and Medusa remain the oldest and weakest figure constructions and are the next modeling priorities.
+
+Current checks: 773 arena rules; 35 native board; 90 stage geometry/budget; 63 full-roster model; 16 creature; 45 native app (47 with captures); 25 combat effects; 11 HUD effects; 48 audio. The full local cabinet regression passed, followed by the targeted creature regression after the feather winding correction. Existing chess and Ninth Gate tests remain green. Native building and roster studies are staged asset reviews; the six-second legal-play motion fixture is separate gameplay evidence. All assets are original code-built geometry and existing project artwork, with no newly imported third-party models.
+
+The next parallel art wave should give one owner Medusa, one Heracles, and one tower damage/collapse presentation. Preserve `Figure` and all direct animation pivot names, authoritative replica roots, snapshot-driven health, and existing gameplay coordinates. Each owner should produce a native close study, a gameplay-distance review, meaningful model lifecycle checks, and one scoped commit before coordinator integration. The `work/` folder is ignored by Godot and Git; keep experiments there and only ship admitted runtime assets.
 
 ## Start here: current request
 
