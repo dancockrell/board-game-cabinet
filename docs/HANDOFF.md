@@ -37,7 +37,7 @@ Near-term parallel polish slices (roughly 10 minutes each):
 | Component | Status and evidence boundary |
 | --- | --- |
 | Wooden chess | Existing playable game: pure chess rules, wooden 3D board and chips, mouse/keyboard controls, history, undo, save/load, practice opponent, factual tutor context, and PGN export. Preserve its tests. |
-| Olympus Arena | Playable source checkpoint `7bff5ce`: Greek unit deployment, real-time automatic battles, local opponent, two lanes, three structures per side, cycling cards, and elixir. Rules: 740 checks; native renderer: 28; native application: 33 with captures. Packaging and full regression evidence are separate. |
+| Olympus Arena | Playable polished prototype: illustrated roster, coastal arena, animated figures, deployment ghosts and layered audio. Current local evidence: 740 rules checks, 32 native renderer checks, 40 native app checks (42 with captures), 24 audio checks; full chess and parked Ninth Gate regressions passed. Release manifest identifies packaged source. |
 | The Ninth Gate | Parked historical prototype with rules, 3D source work, and an older 2D prerelease. Its setting and play loop are not the current direction. |
 | Go / Xiangqi / checkers | Previously selected future games; not implemented and not active parallel work. |
 
@@ -47,7 +47,7 @@ The [successful chess checkpoint](https://github.com/dancockrell/board-game-cabi
 
 The main project opens Olympus Arena. Press **BATTLE** to begin; the timer waits for this action. Select a card with a click or **1–4**, then click the blue half to deploy troops, or drag the card onto the board. Thunderbolt targets either half. **Escape** clears selection. **Space** or **Pause / Resume** pauses/resumes. **Restart** requests confirmation before replacing the match; **REMATCH** starts again from the result screen. A chess-table button preserves access to chess.
 
-The fixed eight-card deck has no editor. This is local practice against a basic opponent. There are no accounts, network battles, progression, collection upgrades, arena saves/replay, or collision avoidance. Original procedural Greek models now include joint animation and sculpted details; they remain an art prototype rather than a completed authored character set. Native gameplay/result captures and complete-battle checks passed at `7bff5ce`; full cabinet checks and the Windows export need their own publication record.
+The fixed eight-card deck has no editor. This is local practice against a basic opponent. There are no accounts, network battles, progression, collection upgrades, arena saves/replay, or collision avoidance. Original procedural Greek models now include joint animation and sculpted details; they remain an art prototype rather than a completed authored character set. Native gameplay/result captures, complete-battle checks and full cabinet regressions passed during this polish pass. The release manifest records the separately exported Windows build.
 
 ## Actual project boundaries
 

@@ -236,7 +236,7 @@ func _make_tower(data: Dictionary) -> Node3D:
 		for i in 9:
 			var a := i*PI/8
 			_sphere(node,Vector3(.045,.07,.025),Vector3(cos(a)*.22,1.06+sin(a)*.24,.56),PALETTE.gold)
-	_add_health(node, 2.5, 1.4, team)
+	_add_health(node, 3.1, 1.4, team)
 	return node
 
 func _make_unit(kind: String, side: int) -> Node3D:
