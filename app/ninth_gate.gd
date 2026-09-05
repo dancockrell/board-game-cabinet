@@ -1,306 +1,360 @@
 extends Control
-## The map consumes only Heaven's observed view. Draft orders never move counters.
+## Player-facing controller: only observed state enters the 3D scene.
 const Session = preload("res://games/ninth_gate/session.gd")
-const PALETTE = preload("res://themes/ninth_gate.tres")
-const CELL = 73.0
-const ORIGIN = Vector2(48, 186)
+const Board = preload("res://presentation/ninth_gate_board.gd")
+const MoveAudio = preload("res://presentation/move_audio.gd")
+const SAVE_PATH = "user://ninth-gate-v2.json"
 var session = Session.new()
 var observed: Dictionary
 var orders: Array = []
 var selected: String = ""
 var mode: String = "move"
-var notice: String = "Select a gold unit, then a destination. Commit up to three orders together."
+var notice: String = "Pick a gold squad, then a glowing tile. Give up to 3 orders."
+var cursor := Vector2i(2, 1)
+var keyboard_active := false
+var board
+var surface: SubViewportContainer
+var viewport: SubViewport
 var details: RichTextLabel
 var dispatches: RichTextLabel
 var round_label: Label
+var status_label: Label
+var bark_label: Label
+var order_label: Label
+var title_label: Label
+var commit_button: Button
+var heal_button: Button
 var help_dialog: AcceptDialog
-var cursor := Vector2i(1, 3)
-var keyboard_active := false
+var sound
+var reduced_motion := false
+var muted := false
+var _animate := false
+var _busy := false
+var _generation := 0
+var _last_report_round := -1
 
 func _ready() -> void:
 	focus_mode = Control.FOCUS_ALL
-	var skin := Theme.new()
-	skin.default_font_size = 18
-	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("36423c") if state == "hover" else Color("242b29")
-		style.border_color = Color("d5b96f") if state == "focus" else Color("665d47")
-		style.set_border_width_all(2 if state == "focus" else 1)
-		style.set_corner_radius_all(4)
-		style.content_margin_left = 12
-		style.content_margin_right = 12
-		skin.set_stylebox(state, "Button", style)
-	theme = skin
-	_label("THE BOARD GAME CABINET  /  ORIGINAL WAR TABLE", Vector2(48, 30), 16, Color("bbab84"))
-	_label("THE NINTH GATE", Vector2(45, 60), 44, Color("eee2c2"))
-	_label("Heaven and Hell contest the crossing. An original battle prototype.", Vector2(48, 121), 20, Color("c3c6b7"))
-	round_label = _label("", Vector2(990, 65), 26, Color("e0c88f"))
-	_button("Chess table", Vector2(1220, 26), Vector2(170, 40), func(): get_tree().change_scene_to_file("res://app/main.tscn"))
-	_label("ORDERS TO THE HOST", Vector2(990, 163), 18, Color("cfb67a"))
-	details = RichTextLabel.new()
-	details.position = Vector2(990, 200)
-	details.size = Vector2(400, 220)
-	details.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(details)
-	_button("Move", Vector2(990, 432), Vector2(120, 44), func(): mode = "move"; notice = "Move: choose a highlighted adjacent tile."; _refresh())
-	_button("Attack", Vector2(1125, 432), Vector2(120, 44), func(): mode = "attack"; notice = "Attack: choose a highlighted visible enemy."; _refresh())
-	_button("Rally", Vector2(1260, 432), Vector2(130, 44), _rally)
-	_button("COMMIT ORDERS", Vector2(990, 494), Vector2(400, 54), _commit)
-	_button("Clear drafts", Vector2(990, 564), Vector2(190, 42), func(): orders.clear(); _refresh())
-	_button("Undo round", Vector2(1200, 564), Vector2(190, 42), _undo)
-	_button("Save", Vector2(990, 622), Vector2(120, 40), _save)
-	_button("Load", Vector2(1125, 622), Vector2(120, 40), _load_save)
-	_button("New battle", Vector2(1260, 622), Vector2(130, 40), _new_battle)
-	_label("FIELD DISPATCHES", Vector2(990, 695), 18, Color("cfb67a"))
-	dispatches = RichTextLabel.new()
-	dispatches.position = Vector2(990, 731)
-	dispatches.size = Vector2(400, 178)
-	add_child(dispatches)
-	_button("How to play", Vector2(48, 884), Vector2(160, 42), func(): help_dialog.popup_centered(Vector2i(770, 600)))
-	help_dialog = AcceptDialog.new()
-	help_dialog.title = "The Ninth Gate — field manual"
-	var manual := RichTextLabel.new()
-	manual.custom_minimum_size = Vector2(720, 480)
-	manual.text = FileAccess.get_file_as_string("res://games/ninth_gate/RULES.md")
-	help_dialog.add_child(manual)
-	add_child(help_dialog)
+	_build_ui()
+	sound = MoveAudio.new()
+	add_child(sound)
 	_refresh()
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture="):
 			_capture(argument.trim_prefix("--capture="))
 
-func _label(text: String, at: Vector2, font_size: int, color: Color) -> Label:
-	var label := Label.new()
-	label.text = text
-	label.position = at
-	label.add_theme_font_size_override("font_size", font_size)
-	label.add_theme_color_override("font_color", color)
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+func _build_ui() -> void:
+	var skin := Theme.new()
+	skin.default_font_size = 17
+	skin.set_color("font_color", "Label", Color("eee6d3"))
+	skin.set_color("default_color", "RichTextLabel", Color("dddacb"))
+	for state in ["normal","hover","pressed","focus","disabled"]:
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("354844") if state == "hover" else Color("233631")
+		style.border_color = Color("f8d899") if state == "focus" else Color("52665b")
+		style.set_border_width_all(2 if state == "focus" else 1)
+		style.set_corner_radius_all(7)
+		style.content_margin_left = 10
+		style.content_margin_right = 10
+		skin.set_stylebox(state,"Button",style)
+	theme = skin
+	var background := ColorRect.new()
+	background.color = Color("0d191a")
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(background)
+	var art := TextureRect.new()
+	var portrait_strip := AtlasTexture.new()
+	portrait_strip.atlas = preload("res://assets/ninth_gate/commanders.png")
+	portrait_strip.region = Rect2(0,80,2172,350)
+	art.texture = portrait_strip
+	art.position = Vector2(0,0)
+	art.size = Vector2(1440,180)
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	art.size = Vector2(1440,180)
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(art)
+	_label("THE NINTH GATE",Vector2(477,22),37,Color("fff0c8"))
+	_label("AURETH  vs  VEYRA",Vector2(576,70),18,Color("e5c891"))
+	_label("Beautiful rivals. Terrible neighbours.",Vector2(508,103),18,Color("e8dbcb"))
+	_button("Chess cabinet",Vector2(1230,17),Vector2(180,36),func(): get_tree().change_scene_to_file("res://app/main.tscn"))
+	_panel(Rect2(22,192,1000,76),Color("1d302e"))
+	title_label = _label("TAKE THE THREE BRIDGES",Vector2(42,204),20,Color("e9d499"))
+	_label("Hold a bridge to score. First to 12 glory wins, or lead after 8 rounds.",Vector2(42,236),17,Color("d3d9cb"))
+	surface = SubViewportContainer.new()
+	surface.position = Vector2(22,279)
+	surface.size = Vector2(1000,533)
+	surface.stretch = true
+	surface.mouse_filter = Control.MOUSE_FILTER_STOP
+	surface.gui_input.connect(_board_input)
+	add_child(surface)
+	viewport = SubViewport.new()
+	viewport.size = Vector2i(1000,533)
+	viewport.own_world_3d = true
+	viewport.msaa_3d = Viewport.MSAA_4X
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	surface.add_child(viewport)
+	board = Board.new()
+	viewport.add_child(board)
+	_panel(Rect2(22,822,1000,116),Color("192a29"))
+	status_label = _label("",Vector2(42,836),18,Color("f0d49b"))
+	status_label.size = Vector2(958,50)
+	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_label("Click a squad → choose a tile → LET THEM CLASH. Your other squads fight automatically.",Vector2(42,892),16,Color("b9cdc2"))
+	_label("Arrows + Enter to play  ·  M move  ·  A attack  ·  H heal  ·  R recover  ·  Esc deselect",Vector2(42,917),14,Color("99b3aa"))
+	_panel(Rect2(1038,192,380,746),Color("182a29"))
+	round_label = _label("",Vector2(1058,207),23,Color("f0d49b"))
+	bark_label = _label("Veyra: 'Lovely wings. Try to keep them.'",Vector2(1058,271),16,Color("ecb7ac"))
+	bark_label.size = Vector2(340,51)
+	bark_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	details = RichTextLabel.new()
+	details.position = Vector2(1058,330)
+	details.size = Vector2(340,144)
+	details.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(details)
+	_button("Move",Vector2(1058,479),Vector2(102,39),func(): _set_mode("move"))
+	_button("Strike",Vector2(1172,479),Vector2(102,39),func(): _set_mode("attack"))
+	heal_button = _button("Mend",Vector2(1286,479),Vector2(110,39),func(): _set_mode("heal"))
+	_button("Recover",Vector2(1058,528),Vector2(160,37),_rally)
+	_button("Brace",Vector2(1236,528),Vector2(160,37),func(): _stationary("hold"))
+	order_label = _label("",Vector2(1058,578),17,Color("d8d9c7"))
+	order_label.size = Vector2(340,75)
+	commit_button = _button("LET THEM CLASH",Vector2(1058,665),Vector2(338,52),_commit)
+	var gold := StyleBoxFlat.new()
+	gold.bg_color = Color("d4b273")
+	gold.set_corner_radius_all(7)
+	commit_button.add_theme_stylebox_override("normal",gold)
+	commit_button.add_theme_color_override("font_color",Color("182623"))
+	_button("Undo",Vector2(1058,729),Vector2(100,35),_undo)
+	_button("Clear",Vector2(1176,729),Vector2(100,35),func(): orders.clear(); notice="Drafts cleared. Your squads will fight nearby enemies."; _refresh())
+	_button("New",Vector2(1294,729),Vector2(102,35),_confirm_new)
+	_button("Save",Vector2(1058,775),Vector2(100,35),_save)
+	_button("Load",Vector2(1176,775),Vector2(100,35),_load_save)
+	_button("How to play",Vector2(1294,775),Vector2(102,35),func(): help_dialog.popup_centered(Vector2i(790,630)))
+	var mute := CheckButton.new()
+	mute.text = "Sound"
+	mute.button_pressed = true
+	mute.position = Vector2(1054,819)
+	mute.toggled.connect(func(on): muted=not on; sound.set_muted(muted))
+	add_child(mute)
+	var motion := CheckButton.new()
+	motion.text = "Gentle motion"
+	motion.position = Vector2(1180,819)
+	motion.toggled.connect(func(on): reduced_motion=on)
+	add_child(motion)
+	dispatches = RichTextLabel.new()
+	dispatches.position = Vector2(1058,867)
+	dispatches.size = Vector2(338,59)
+	dispatches.add_theme_font_size_override("normal_font_size",14)
+	add_child(dispatches)
+	help_dialog = AcceptDialog.new()
+	help_dialog.title = "Three decisions. One glorious mess."
+	var manual := RichTextLabel.new()
+	manual.custom_minimum_size = Vector2(740,530)
+	manual.text = "QUICK START\n\n1. Click a gold squad. Glowing tiles are places it can move.\n2. Click a destination, or Strike and click an enemy. You can change drafts freely.\n3. Give up to three squads an order, then LET THEM CLASH.\n\nOther squads automatically attack nearby enemies. Move orders trade that attack for a better position. Hold bridges with a squad to score glory. A healer can Mend adjacent injured friends; Recover heals itself. Brace trades an attack for protection.\n\nIvory pieces are yours. Ember pieces are Veyra's. Darkened terrain is outside your sight. A plan can miss if its target moves away.\n\nFULL RULES\n\n" + FileAccess.get_file_as_string("res://games/ninth_gate/RULES.md")
+	help_dialog.add_child(manual)
+	add_child(help_dialog)
+
+func _panel(rect: Rect2,color: Color) -> void:
+	var panel := Panel.new()
+	panel.position=rect.position
+	panel.size=rect.size
+	panel.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	var style:=StyleBoxFlat.new()
+	style.bg_color=color
+	style.set_corner_radius_all(9)
+	panel.add_theme_stylebox_override("panel",style)
+	add_child(panel)
+
+func _label(text:String,at:Vector2,font_size:int,color:Color) -> Label:
+	var label:=Label.new()
+	label.text=text
+	label.position=at
+	label.add_theme_font_size_override("font_size",font_size)
+	label.add_theme_color_override("font_color",color)
+	label.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	add_child(label)
 	return label
 
-func _button(text: String, at: Vector2, dimensions: Vector2, callback: Callable) -> void:
-	var button := Button.new()
-	button.text = text
-	button.position = at
-	button.size = dimensions
+func _button(text:String,at:Vector2,dimensions:Vector2,callback:Callable) -> Button:
+	var button:=Button.new()
+	button.text=text
+	button.position=at
+	button.size=dimensions
 	button.pressed.connect(callback)
 	add_child(button)
+	return button
 
 func _refresh() -> void:
-	observed = session.view_for("heaven")
-	round_label.text = "ROUND %s / 12\nHEAVEN %s   ·   HELL %s" % [observed.round, observed.score.heaven, observed.score.hell]
-	var text := "Your orders: %s / 3  ·  %s\nUnordered units hold their ground.\n\n" % [orders.size(), mode.to_upper()]
+	observed=session.view_for("heaven")
+	round_label.text="ROUND %s / %s\nYOU %s   ·   VEYRA %s  / %s" % [observed.round,observed.get("round_limit",8),observed.score.heaven,observed.score.hell,observed.get("target_score",12)]
+	var text:="SELECT YOUR SQUAD\n\nClick a gold miniature. Move closer, hold a bridge, or set up an attack."
+	heal_button.disabled=true
 	for unit in observed.units:
-		if str(unit.id) == selected:
-			text += "%s · %s\nStrength %s/%s · Morale %s\n\n" % [_unit_name(unit), unit.role, unit.hp, unit.max_hp, unit.morale]
+		if str(unit.id)==selected:
+			text="%s\n%s\n\nHealth %s/%s  ·  Spirit %s\n%s" % [unit.get("display_name",_unit_name(unit)),str(unit.role).capitalize(),unit.hp,unit.max_hp,unit.morale,unit.get("description","")]
+			heal_button.disabled=unit.role!="herald"
+	details.text=text
+	var lines:="%s / 3 ORDERS  ·  %s\n" % [orders.size(),mode.to_upper()]
 	for order in orders:
-		text += "%s: %s %s\n" % [order.unit_id, order.type, _coordinate(order.x, order.y)]
-	if observed.phase == "finished":
-		text = "BATTLE ENDED\n%s\n\nFinal scores above. Undo or begin a new battle." % str(observed.winner).to_upper()
-	details.text = _readable_ids(text)
-	dispatches.text = _readable_ids("\n".join(observed.log.slice(maxi(0, observed.log.size() - 8))))
-	queue_redraw()
+		lines+="%s: %s %s\n" % [_readable_ids(order.unit_id),{"move":"Move","attack":"Strike","heal":"Mend","rally":"Recover","hold":"Brace"}.get(order.type,order.type),_coordinate(order.x,order.y)]
+	order_label.text=lines
+	if observed.phase=="finished":
+		details.text="BATTLE ENDED\n"+str(observed.winner).to_upper()+"\n\n"+("The bridges are yours. Veyra owes you a rematch." if observed.winner=="heaven" else "Veyra takes this round. Try a different opening." if observed.winner=="hell" else "Neither yields. Naturally, both claim victory.")
+		bark_label.text="Veyra: 'Same place tomorrow, darling?'"
+	commit_button.disabled=_busy or observed.phase=="finished"
+	status_label.text=notice
+	dispatches.text=_readable_ids("\n".join(observed.log))
+	board.show_view(observed,_animate and not reduced_motion)
+	board.show_orders(orders,selected,session.legal_orders(selected,"heaven").filter(func(o): return o.type==mode),cursor if keyboard_active else Vector2i(-1,-1))
+	_animate=false
 
-func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, size), Color("111917"))
-	draw_rect(Rect2(970, 148, 440, 790), Color("19211f"))
-	draw_style_box(_frame(), Rect2(28, 165, 916, 628))
-	if not observed:
-		return
-	var visible: Array = observed.visible_cells
-	for y in 8:
-		for x in 12:
-			var at := ORIGIN + Vector2(x, y) * CELL
-			var terrain: String = observed.terrain[y * 12 + x]
-			draw_rect(Rect2(at, Vector2.ONE * CELL), PALETTE.terrain_color(terrain))
-			if terrain == "wood":
-				for index in 3:
-					var p := at + Vector2(19 + index * 17, 30 + (index % 2) * 14)
-					draw_colored_polygon(PackedVector2Array([p + Vector2(0,-15),p + Vector2(-12,12),p + Vector2(12,12)]), Color("2e483b"))
-			elif terrain == "hill":
-				draw_arc(at + Vector2(36,40), 23, PI, TAU, 20, Color("c0b68f"), 2)
-				draw_arc(at + Vector2(36,40), 15, PI, TAU, 20, Color("c0b68f"), 2)
-			elif terrain == "bridge":
-				for plank in 5:
-					draw_line(at + Vector2(10, 12 + plank*12), at + Vector2(63, 12 + plank*12), Color("68583f"), 2)
-			elif terrain == "river":
-				for wave in 3:
-					draw_line(at+Vector2(17,17+wave*18),at+Vector2(55,21+wave*18),Color("65838a"),1)
-			draw_rect(Rect2(at, Vector2.ONE * CELL), Color(0.12,0.17,0.14,0.3), false, 1)
-			if not _is_visible(visible, x, y):
-				draw_rect(Rect2(at, Vector2.ONE * CELL), Color(0.03,0.08,0.09,0.48))
-	for site in observed.sites:
-		var center := ORIGIN + Vector2(site.x + 0.5, site.y + 0.5) * CELL
-		draw_arc(center, 29, 0, TAU, 40, Color("ecd394"), 2)
-		_text(center + Vector2(-6, -18), "+", 22, Color("ffe2a0"))
-	if selected != "" and observed.phase != "finished":
-		for order in session.legal_orders(selected, "heaven"):
-			if order.type == mode:
-				var at := ORIGIN + Vector2(order.x, order.y)*CELL
-				draw_rect(Rect2(at+Vector2(3,3),Vector2.ONE*(CELL-6)), Color("f2d999") if mode=="move" else Color("ffad8b"),false,3)
-	for unit in observed.units:
-		var center := ORIGIN + Vector2(unit.x + 0.5, unit.y + 0.5)*CELL
-		var heaven: bool = unit.side == "heaven"
-		var token := Rect2(center-Vector2(27,22),Vector2(54,44))
-		draw_rect(Rect2(token.position+Vector2(3,5),token.size),Color(0,0,0,0.35))
-		draw_rect(token,PALETTE.heaven if heaven else PALETTE.hell)
-		draw_rect(token,Color("fff0ba") if str(unit.id)==selected else Color("493f32"),false,2)
-		_text(center+Vector2(-22,-2),_unit_name(unit),14,Color("292c25") if heaven else Color("ffe0c1"))
-		_text(center+Vector2(-22,16),"%s  %s" % [str(unit.role).left(3).to_upper(),unit.hp],13,Color("292c25") if heaven else Color("ffe0c1"))
-	for order in orders:
-		for unit in observed.units:
-			if str(unit.id)==str(order.unit_id):
-				var start := ORIGIN+Vector2(unit.x+0.5,unit.y+0.5)*CELL
-				var end := ORIGIN+Vector2(order.x+0.5,order.y+0.5)*CELL
-				draw_line(start,end,Color("ffdf7e"),3,true)
-				draw_circle(end,5,Color("ffdf7e"))
-	for x in 12:
-		_text(ORIGIN+Vector2(x*CELL+30,-8),String.chr(65+x),14,Color("d3c5a0"))
-	for y in 8:
-		_text(ORIGIN+Vector2(-17,y*CELL+42),str(y+1),14,Color("d3c5a0"))
-	if keyboard_active:
-		draw_rect(Rect2(ORIGIN+Vector2(cursor)*CELL+Vector2(6,6),Vector2.ONE*(CELL-12)),Color.WHITE,false,2)
-	_text(Vector2(48,825),"GOLD: HEAVEN    RED: HELL    +: SACRED SITE    DIMMED: OUTSIDE SIGHT",16,Color("c0ba9f"))
-	_text(Vector2(48,857),notice.left(105),16,Color("e8d8ac"))
-	_text(Vector2(229,912),"Arrows + Enter: board   ·   M / A / R: order type   ·   Esc: clear selection",16,Color("aab7ab"))
+func _set_mode(value:String) -> void:
+	mode=value
+	notice={"move":"Green tiles: move up to two spaces. This squad gives up its automatic attack.","attack":"Orange targets: focus a strike. Enemies may move before the blow lands.","heal":"Blue targets: restore an adjacent friend's health. Select your Herald first."}.get(value,"")
+	_refresh()
 
-func _frame() -> StyleBoxFlat:
-	var box := StyleBoxFlat.new()
-	box.bg_color = Color("4b382a")
-	box.border_color = Color("8d7451")
-	box.set_border_width_all(3)
-	box.set_corner_radius_all(10)
-	return box
-
-func _text(at: Vector2, text: String, font_size: int, color: Color) -> void:
-	draw_string(ThemeDB.fallback_font,at,text,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size,color)
-
-func _is_visible(cells: Array, x: int, y: int) -> bool:
-	return (y*12+x) in cells or Vector2i(x,y) in cells or [x,y] in cells or {"x":x,"y":y} in cells
-
-func _coordinate(x: int, y: int) -> String:
-	return "%s%s" % [String.chr(65+x),y+1]
-
-func _unit_name(unit: Dictionary) -> String:
-	return ("H" if unit.side == "heaven" else "D") + str(int(str(unit.id).right(1)) + 1)
-
-func _readable_ids(text: String) -> String:
-	for index in 6:
-		text = text.replace("heaven"+str(index), "H"+str(index+1)).replace("hell"+str(index), "D"+str(index+1))
-	return text
-
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var cell := Vector2i((event.position - ORIGIN)/CELL)
-		if Rect2(ORIGIN,Vector2(12,8)*CELL).has_point(event.position):
-			grab_focus()
+func _board_input(event:InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT:
+		grab_focus()
+		var cell:Vector2i=board.pick_cell(event.position,Vector2(viewport.size))
+		if cell.x>=0 and cell.y>=0 and cell.x<12 and cell.y<8:
 			_select_cell(cell)
+
+func _gui_input(event:InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
-		keyboard_active = true
+		keyboard_active=true
 		match event.keycode:
-			KEY_LEFT: cursor.x = maxi(0,cursor.x-1)
-			KEY_RIGHT: cursor.x = mini(11,cursor.x+1)
-			KEY_UP: cursor.y = maxi(0,cursor.y-1)
-			KEY_DOWN: cursor.y = mini(7,cursor.y+1)
-			KEY_ENTER, KEY_SPACE: _select_cell(cursor)
-			KEY_M: mode = "move"
-			KEY_A: mode = "attack"
+			KEY_LEFT: cursor.x=maxi(0,cursor.x-1)
+			KEY_RIGHT: cursor.x=mini(11,cursor.x+1)
+			KEY_UP: cursor.y=maxi(0,cursor.y-1)
+			KEY_DOWN: cursor.y=mini(7,cursor.y+1)
+			KEY_ENTER,KEY_SPACE: _select_cell(cursor)
+			KEY_M: mode="move"
+			KEY_A: mode="attack"
+			KEY_H: mode="heal"
 			KEY_R: _rally()
-			KEY_ESCAPE: selected = ""
+			KEY_ESCAPE: selected=""
 		_refresh()
 
-func _select_cell(cell: Vector2i) -> void:
-	cursor = cell
-	if observed.phase == "finished":
-		return
+func _select_cell(cell:Vector2i) -> void:
+	cursor=cell
+	if _busy or observed.phase=="finished": return
+	if mode=="heal" and selected!="":
+		for order in session.legal_orders(selected,"heaven"):
+			if order.type=="heal" and order.x==cell.x and order.y==cell.y:
+				_draft(order)
+				return
 	for unit in observed.units:
-		if unit.side == "heaven" and unit.x == cell.x and unit.y == cell.y:
-			selected = str(unit.id)
+		if unit.side=="heaven" and unit.x==cell.x and unit.y==cell.y:
+			selected=str(unit.id)
+			mode="move"
+			notice="Choose a glowing tile, Strike a visible enemy, or let this squad fight on its own."
 			_refresh()
 			return
-	if selected == "":
-		notice = "Select one of your gold units first."
-		queue_redraw()
-		return
 	for order in session.legal_orders(selected,"heaven"):
-		if order.type == mode and order.x == cell.x and order.y == cell.y:
+		if order.x==cell.x and order.y==cell.y and (order.type==mode or order.type=="attack"):
 			_draft(order)
 			return
-	notice = "No legal %s order there. Choose a highlighted tile." % mode
-	queue_redraw()
+	notice="Select a gold squad first, then choose one of its glowing destinations."
+	_refresh()
 
-func _draft(order: Dictionary) -> void:
+func _draft(order:Dictionary) -> void:
+	if _busy: return
 	for index in range(orders.size()-1,-1,-1):
-		if orders[index].unit_id == order.unit_id:
-			orders.remove_at(index)
-	if orders.size() >= 3:
-		notice = "Three orders drafted. Clear drafts or replace an existing unit's order."
+		if orders[index].unit_id==order.unit_id: orders.remove_at(index)
+	if orders.size()>=3:
+		notice="Three orders ready. Commit them, clear them, or change one of those squads' orders."
 	else:
 		orders.append(order.duplicate(true))
-		notice = "Order drafted. Counters move only when both armies' orders resolve."
+		notice="Order ready. Keep planning, or LET THEM CLASH. Unordered squads attack automatically."
+		sound.pitch_scale=1.15
+		sound.play_move_sound()
+	_refresh()
+
+func _stationary(type:String) -> void:
+	for order in session.legal_orders(selected,"heaven"):
+		if order.type==type: _draft(order); return
+	notice="Select a gold squad first."
 	_refresh()
 
 func _rally() -> void:
-	for order in session.legal_orders(selected,"heaven"):
-		if order.type == "rally":
-			_draft(order)
-			return
-	notice = "Select a unit that can rally."
-	queue_redraw()
+	_stationary("rally")
 
 func _commit() -> void:
-	var result: Dictionary = session.resolve_round(orders,observed.revision)
+	if _busy: return
+	var result:Dictionary=session.resolve_round(orders,observed.revision)
 	if result.get("ok",false):
 		orders.clear()
-		selected = ""
-		notice = "Orders resolved. Review the field dispatches, then plan your next round."
+		selected=""
+		notice="The field has changed. Hold the bridges, protect your wounded, and make Veyra work for it."
+		var quips=["Aureth: 'You could always surrender with style.'","Veyra: 'Careful. I bite back.'","Aureth: 'Eyes on the bridge. Yes, the bridge.'","Veyra: 'That almost looked like a plan.'"]
+		bark_label.text=quips[(session.snapshot().round-1)%quips.size()]
+		_animate=true
+		sound.pitch_scale=0.72
+		sound.play_move_sound()
 	else:
-		notice = str(result.get("error","Orders rejected."))
+		notice=str(result.get("error","Those orders could not be accepted."))
 	_refresh()
 
 func _undo() -> void:
 	if session.undo():
 		orders.clear()
-		selected = ""
-		notice = "Previous round restored, including the random sequence."
+		selected=""
+		notice="Last round undone. Try another plan."
 	_refresh()
+
+func _confirm_new() -> void:
+	var dialog:=ConfirmationDialog.new()
+	dialog.title="Start a fresh clash?"
+	dialog.dialog_text="This replaces the current battle. Save first if you want to keep it."
+	dialog.confirmed.connect(func(): _new_battle(); dialog.queue_free())
+	dialog.canceled.connect(dialog.queue_free)
+	add_child(dialog)
+	dialog.popup_centered()
 
 func _new_battle() -> void:
 	session.new_game(1824)
 	orders.clear()
-	selected = ""
-	notice = "A fresh battle. Same starting seed for reproducible practice."
+	selected=""
+	mode="move"
+	notice="A fresh rivalry. Claim the crossings and keep a squad on each to score."
+	bark_label.text="Veyra: 'Lovely wings. Try to keep them.'"
 	_refresh()
 
 func _save() -> void:
-	var file := FileAccess.open("user://ninth-gate-v1.json",FileAccess.WRITE)
+	var file:=FileAccess.open(SAVE_PATH,FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(session.save_data()))
-		notice = "Battle saved. Draft orders are not saved."
-	else:
-		notice = "Could not write the save file."
-	queue_redraw()
-
-func _load_save() -> void:
-	if not FileAccess.file_exists("user://ninth-gate-v1.json"):
-		notice = "No saved battle found."
-		queue_redraw()
-		return
-	var data = JSON.parse_string(FileAccess.get_file_as_string("user://ninth-gate-v1.json"))
-	if data is Dictionary:
-		var result = session.load_data(data)
-		if (result is Dictionary and result.get("ok",false)) or (result is bool and result):
-			orders.clear()
-			selected = ""
-			notice = "Saved battle restored."
-		else:
-			notice = "Save rejected; the active battle is unchanged."
-	else:
-		notice = "No readable save found; the active battle is unchanged."
+		notice="Battle saved. Uncommitted plans are not saved."
+	else: notice="Could not save the battle."
 	_refresh()
 
-func _capture(path: String) -> void:
+func _load_save() -> void:
+	if not FileAccess.file_exists(SAVE_PATH):
+		notice="No saved battle yet."
+		_refresh()
+		return
+	var data=JSON.parse_string(FileAccess.get_file_as_string(SAVE_PATH))
+	if data is Dictionary and session.load_data(data).get("ok",false):
+		orders.clear()
+		selected=""
+		notice="Saved battle restored."
+	else: notice="That save could not be loaded. Your current battle is unchanged."
+	_refresh()
+
+func _unit_name(unit:Dictionary) -> String:
+	return ("H" if unit.side=="heaven" else "D")+str(int(str(unit.id).right(1))+1)
+
+func _readable_ids(text:String) -> String:
+	for index in 6: text=text.replace("heaven"+str(index),"H"+str(index+1)).replace("hell"+str(index),"D"+str(index+1))
+	return text
+
+func _coordinate(x:int,y:int) -> String:
+	return "%s%s" % [String.chr(65+x),y+1]
+
+func _capture(path:String) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
