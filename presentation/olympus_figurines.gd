@@ -122,8 +122,13 @@ func build(p: Node3D, kind: String, team: Color) -> void:
 		preload("res://presentation/olympus_sculpt.gd").new(self).minotaur(p,team)
 		return
 	if kind == "hydra":
-		hydra(p, team)
-		_refine(p,kind)
+		preload("res://presentation/olympus_creatures.gd").new(self).hydra(p,team)
+		return
+	if kind in ["harpies", "harpy"]:
+		preload("res://presentation/olympus_creatures.gd").new(self).harpies(p,team)
+		return
+	if kind == "atalanta":
+		preload("res://presentation/olympus_archer.gd").new(self).build(p,team)
 		return
 	if kind == "medusa":
 		for i in 22:
