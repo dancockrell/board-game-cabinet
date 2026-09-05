@@ -48,6 +48,13 @@ func run() -> void:
 	check(board._preview.scale.x > 2, "Spell preview shows larger area")
 	board.clear_preview()
 	check(not board._preview.visible, "Preview explicitly cleared")
+	board.show_deployment(Vector2(2.7,2),true,false,"minotaur")
+	check(board._ghost != null and board._ghost.visible, "Legal deployment shows selected miniature ghost")
+	check(board._tokens.is_empty(), "Ghost never becomes an authoritative replica")
+	board.show_deployment(Vector2(2.7,-2),false,false,"minotaur")
+	check(not board._ghost.visible, "Rejected placement hides miniature ghost")
+	board.clear_preview()
+	check(not board._ghost.visible and not board._preview.visible, "Clear hides both ghost and placement marker")
 	state.events = [{"id":0,"kind":"lightning","x":0.0,"z":0.0,"side":0}]
 	board.show_state(state)
 	check(board._effects.size() == 1, "Lightning visual created")

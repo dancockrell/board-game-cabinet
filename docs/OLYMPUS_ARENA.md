@@ -90,3 +90,9 @@ At integrated source checkpoint `7bff5ce`, the arena rules suite has **740 passi
 Native gameplay and result captures were produced and visually inspected. Gameplay is readable with original 3D procedural models; the character models are still a foundation for a later art pass. A local practice policy drives the opponent. Collision avoidance, save/replay, network play, progression, deck editing, and finished character art remain absent.
 
 Full cabinet regression validation and Windows packaging are separate integration/publication steps. Verify the release notes and build manifest for the actual packaged source and completed checks; the older Ninth Gate release does not contain Olympus Arena.
+
+## Presentation polish checkpoint
+
+The coastal arena now has sculpted foundations, paved lanes, faction mosaics, fluted columns, planted borders, animated water and detailed shrine roofs. Seven miniature designs animate limbs, capes, wings and Hydra necks. Eight original illustrated portraits appear in the hand, inspection panel and next-card preview. Cards lift when selected; a translucent miniature previews legal deployment. Damage numbers, dust, projectiles, summon particles and thunder effects accompany authoritative events. The audio layer adds original generated percussion, chimes, thunder, collapse and match-result phrases with bounded voice counts.
+
+The current authored-art reference is the portrait atlas. Procedural figures are a better blockout with animation, not the final matching 3D characters. Next priorities are authored character meshes, distinctive attacks, richer tower destruction and collision-aware crowd movement. Multiplayer and progression remain outside this pass.

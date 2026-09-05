@@ -189,6 +189,7 @@ func _sea() -> void:
 	var sea := _box(Vector3(65,0.1,65),Vector3(0,-1.75,0),Color("18566a"))
 	var material := ShaderMaterial.new()
 	material.shader = WATER
+	material.set_shader_parameter("caustic_strength",0.13)
 	material.set_shader_parameter("deep_color",Color("10394d"))
 	material.set_shader_parameter("shallow_color",Color("236879"))
 	sea.material_override = material

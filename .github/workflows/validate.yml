@@ -38,3 +38,4 @@ jobs:
       - name: Olympus arena cards and real-time combat
         run: |
           Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://games/olympus_arena/test_arena.gd
+          Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_olympus_audio.gd

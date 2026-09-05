@@ -10,6 +10,28 @@ The previous Heaven-and-Hell setting, invented commanders, Ninth Gate scenarios,
 
 Use original Greek characters and presentation assets. Preserve the existing wooden chess game. Do not build a broader all-games framework or add commercial progression, accounts, or network services to this first local prototype.
 
+## Current polish pass (2026-09-05)
+
+The user explicitly requested a much more attractive, modern presentation. Implemented: eight illustrated card portraits, a larger coastal 3D arena with carved paving and animated water, layered Greek shrines, seven richer procedural figurines, jointed walking/wing/cape/neck animation, visual movement smoothing, placement ghosts, floating damage and defeat dust, animated card selection, next-card art, and original synthesized combat sounds. Art prompt and provenance are in `assets/olympus_arena/ART-PROVENANCE.md`.
+
+This is a stronger playable art prototype, not finished commercial character production. The next largest visual gain is authored, rigged low-poly characters matching the card portraits, with distinct attack anticipation, contact and recovery. Current meshes are assembled from primitives and unit collision avoidance is still absent. Do not call this equivalent to a shipped Clash Royale presentation.
+
+The visual authority remains the pure session. Replica roots equal authoritative coordinates; smoothing is confined to the child figure. Preview ghosts stay outside the replica map. Audio consumes deduplicated snapshot events and tower health transitions. No presentation feature changes combat results.
+
+New boundaries: `presentation/olympus_stage.gd` and two shaders own scenery; `presentation/olympus_figurines.gd` owns miniature geometry and joint animation; `presentation/olympus_audio.gd` owns synthesized sounds. `tools/capture_olympus_motion.gd` records native frames from legal play at a fixed simulation cadence. Do not use a staged screenshot as evidence of match balance or performance.
+
+Near-term parallel polish slices (roughly 10 minutes each):
+
+| Wave | Owner/files | Output | Dependencies and validation |
+| --- | --- | --- | --- |
+| 1 | Character artist: new `assets/olympus_arena/models/hoplite/` | One authored hoplite with idle/walk/attack clips and material IDs | Match card silhouette; preview at current gameplay camera; no renderer edits |
+| 1 | UI artist: new portrait framing Resource | Consistent cost, rarity-free frame and focus treatment | Existing eight atlas regions; inspect readable names/costs at 1000x700 |
+| 1 | Audio: `olympus_audio.gd` | Refine impact timbre and mixing from captured battles | Preserve dedup/mute and bounded voices; run 24 audio checks and listen |
+| 2 | Renderer: `olympus_arena_board.gd` | Load one authored model with procedural fallback | Depends on approved hoplite; authoritative root and health tests pass |
+| 2 | FX: new effect helper module | Tower destruction debris and shock ring from HP transitions | No overlapping renderer edits; test once-per-destruction and rematch cleanup |
+| 2 | Rules: `games/olympus_arena/` | Design and test simple unit separation before implementation | Separate rules review; no visual-only collision fix; deterministic repeat runs |
+| 3 | Coordinator: app, exports, docs | Integrate, capture motion, package new build | Native UI/board, pure rules, audio and chess regressions; inspect actual exported executable |
+
 ## Repository status
 
 | Component | Status and evidence boundary |
@@ -25,7 +47,7 @@ The [successful chess checkpoint](https://github.com/dancockrell/board-game-cabi
 
 The main project opens Olympus Arena. Press **BATTLE** to begin; the timer waits for this action. Select a card with a click or **1–4**, then click the blue half to deploy troops, or drag the card onto the board. Thunderbolt targets either half. **Escape** clears selection. **Space** or **Pause / Resume** pauses/resumes. **Restart** requests confirmation before replacing the match; **REMATCH** starts again from the result screen. A chess-table button preserves access to chess.
 
-The fixed eight-card deck has no editor. This is local practice against a basic opponent. There are no accounts, network battles, progression, collection upgrades, arena saves/replay, or collision avoidance. Original procedural Greek models are readable placeholders, not a completed character-art set. Native gameplay/result captures and complete-battle checks passed at `7bff5ce`; full cabinet checks and the Windows export need their own publication record.
+The fixed eight-card deck has no editor. This is local practice against a basic opponent. There are no accounts, network battles, progression, collection upgrades, arena saves/replay, or collision avoidance. Original procedural Greek models now include joint animation and sculpted details; they remain an art prototype rather than a completed authored character set. Native gameplay/result captures and complete-battle checks passed at `7bff5ce`; full cabinet checks and the Windows export need their own publication record.
 
 ## Actual project boundaries
 

@@ -285,20 +285,21 @@ func _refresh() -> void:
 		cards[slot].button.disabled=state.phase=="finished"
 	if selected_slot>=0:
 		var kind:String=state.hand[selected_slot]
-		selection_label.text=catalog[kind].name+" Â· "+str(catalog[kind].cost)
+		selection_label.text=catalog[kind].name+" / "+str(catalog[kind].cost)
 		description_label.text=catalog[kind].description
 		card_preview.texture=_texture(kind)
 	else:
 		selection_label.text="Choose your next card" if started else "Pick your opening"
 		description_label.text="Select a card below, then click your half of the arena. Your troops will move and fight automatically."
 		card_preview.texture=_texture(state.hand[0])
+	if selected_slot < 0: board.clear_preview()
 	notice_label.text=notice
 	if state.phase=="finished":
 		paused=false
 		selected_slot=-1
 		_show_overlay(true)
 		overlay_title.text="VICTORY!" if state.winner==0 else "DEFEAT" if state.winner==1 else "DRAW"
-		overlay_text.text="Towers taken: %s â€” %s\n\n" % [crowns[0],crowns[1]]+("Your heroes have conquered the arena." if state.winner==0 else "Try a different push. Save elixir for defense." if state.winner==1 else "The temples stand. Settle it in a rematch.")
+		overlay_text.text="Towers taken: %s - %s\n\n" % [crowns[0],crowns[1]]+("Your heroes have conquered the arena." if state.winner==0 else "Try a different push. Save elixir for defense." if state.winner==1 else "The temples stand. Settle it in a rematch.")
 		start_button.text="REMATCH"
 	board.show_state(state,0.0)
 

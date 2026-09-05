@@ -31,6 +31,10 @@ func _run() -> void:
 	for slot in range(4):
 		expect(app.cards[slot].name.text == app.catalog[initial.hand[slot]].name, "Card label agrees with authoritative hand")
 		expect(app.cards[slot].icon.texture != null, "Card has an original portrait")
+	for kind in app.catalog.keys():
+		var art: AtlasTexture = app._texture(kind)
+		expect(art != null and Rect2(Vector2.ZERO,art.atlas.get_size()).encloses(art.region), "Every card portrait has a valid atlas region")
+	expect(app.get_node("NextArt").texture != null, "Next-card preview contains artwork")
 	app._start_or_restart()
 	expect(app.started and not app.paused and not app.battle_overlay.visible, "Start enters the battle")
 	app._select_card(0)
