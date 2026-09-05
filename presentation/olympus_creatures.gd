@@ -111,7 +111,6 @@ func _feather(p: Node3D, start: Vector3, end: Vector3, width: float, color: Colo
 	var mesh:=SurfaceTool.new()
 	mesh.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for triangle in [[0,1,4],[1,2,4],[2,3,4],[3,0,4],[1,0,5],[2,1,5],[3,2,5],[0,3,5]]:
-		triangle.reverse()
 		for i in triangle: mesh.add_vertex(points[i])
 	mesh.generate_normals()
 	f._finish(f.host._mesh(p,mesh.commit(),Vector3.ZERO,color),color)
