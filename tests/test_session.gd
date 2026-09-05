@@ -27,6 +27,7 @@ func round_trip(session):
 	expect(loaded.load_payload(JSON.parse_string(serialized)).is_empty(), "JSON save loads")
 	expect(loaded.snapshot().to_fen() == session.snapshot().to_fen(), "Save replay recreates complete state")
 	expect(loaded.history() == session.history(), "Save replay retains moves")
+	expect(loaded.history_san() == session.history_san(), "Save replay retains standard notation")
 	expect(loaded.result() == session.result(), "Save replay retains result")
 	return loaded
 
@@ -47,6 +48,10 @@ func _init() -> void:
 	expect(not session.try_move({"from": 12, "to": 36}), "Illegal move rejected")
 	expect(session.revision == 0, "Illegal move leaves revision unchanged")
 	play(session, "e2e4")
+	expect(session.history_san() == ["e4"], "History exposes standard algebraic notation")
+	var notation_copy: Array[String] = session.history_san()
+	notation_copy[0] = "bad"
+	expect(session.history_san() == ["e4"], "Notation history is independent")
 	var first: String = session.snapshot().to_fen()
 	var history: Array = session.history()
 	history[0]["to"] = 63
