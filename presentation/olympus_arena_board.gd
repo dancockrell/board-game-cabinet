@@ -27,7 +27,7 @@ func _setup() -> void:
 	camera = Camera3D.new()
 	add_child(camera)
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 15.65
+	camera.size = 14.85
 	camera.position = Vector3(0, 16.4, 20.6)
 	camera.look_at(Vector3(0, 0.15, 0))
 	camera.current = true
@@ -315,8 +315,9 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	node.set_meta("kind", kind)
 	var team: Color = PALETTE.player if side == 0 else PALETTE.enemy
 	_cylinder(node, 0.38, 0.055, Vector3(0, 0.035, 0), Color("263743"))
-	_cylinder(node, 0.36, 0.035, Vector3(0, 0.077, 0), team)
-	_cylinder(node, 0.29, 0.015, Vector3(0, 0.099, 0), team.lightened(.2))
+	_cylinder(node, 0.36, 0.035, Vector3(0, 0.077, 0), team.darkened(.18))
+	var plinth := _cylinder(node, 0.315, 0.015, Vector3(0, 0.099, 0), Color("766d58"))
+	plinth.material_override = _weathered_material(Color("766d58"))
 	var ability := _cylinder(node, 0.31, 0.012, Vector3(0, 0.116, 0), Color("e6b96580"))
 	ability.name = "Ability"
 	ability.visible = false
