@@ -45,6 +45,7 @@ func _run() -> void:
 	await process_frame
 	app.sound.set_muted(true)
 	app._start_or_restart()
+	app._countdown_remaining = 0.0
 	app.session.new_game(42)
 	app._refresh()
 	# Every simulation step is rendered during warmup so recent effects expire normally.
