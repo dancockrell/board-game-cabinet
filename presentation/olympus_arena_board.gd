@@ -7,6 +7,9 @@ var _towers: Dictionary = {}
 var _materials: Dictionary = {}
 var _preview: MeshInstance3D
 var _time := 0.0
+var _last_event := -1
+var _last_elapsed := 0.0
+var _effects: Array = []
 
 func _ready() -> void:
 	_setup()
@@ -17,7 +20,7 @@ func _setup() -> void:
 	camera = Camera3D.new()
 	add_child(camera)
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 18.8
+	camera.size = 17.5
 	camera.position = Vector3(0, 20, 13.8)
 	camera.look_at(Vector3(0, 0, 0))
 	camera.current = true
@@ -69,6 +72,24 @@ func _setup() -> void:
 func show_state(state: Dictionary, delta: float = 0.0) -> void:
 	_setup()
 	_time += delta
+	if float(state.get("elapsed", 0.0)) < _last_elapsed:
+		_last_event = -1
+		for effect in _effects: effect.node.queue_free()
+		_effects.clear()
+	_last_elapsed = float(state.get("elapsed", 0.0))
+	for effect in _effects.duplicate():
+		effect.age += delta
+		if effect.age >= effect.duration:
+			effect.node.queue_free()
+			_effects.erase(effect)
+		elif effect.has("destination"):
+			effect.node.position = effect.origin.lerp(effect.destination, effect.age / effect.duration)
+		else:
+			effect.node.scale = Vector3.ONE * (1.0 + effect.age * 1.6)
+	for event in state.get("events", []):
+		if int(event.get("id", -1)) <= _last_event: continue
+		_last_event = int(event.id)
+		_show_event(event)
 	var alive := {}
 	for unit in state.get("units", []):
 		var id = unit["id"]
@@ -113,6 +134,34 @@ func show_deployment(position: Vector2, valid: bool, spell: bool = false) -> voi
 
 func clear_preview() -> void:
 	if _preview: _preview.visible = false
+
+func _show_event(event: Dictionary) -> void:
+	var node := Node3D.new()
+	add_child(node)
+	node.position = Vector3(float(event.x), 0.25, float(event.z))
+	var color: Color = PALETTE.player if int(event.side) == 0 else PALETTE.enemy
+	var duration := 0.3
+	match str(event.kind):
+		"lightning":
+			duration = 0.42
+			var points := [Vector3(0, 0, 0), Vector3(-0.32, 1.0, 0), Vector3(0.28, 1.25, 0), Vector3(-0.2, 2.25, 0), Vector3(0.32, 3.5, 0)]
+			for i in range(points.size() - 1): _limb(node, points[i], points[i+1], 0.045, Color("ffe590"))
+			_cylinder(node, 1.05, 0.03, Vector3.ZERO, Color(1, 0.85, 0.35, 0.45))
+		"summon":
+			for i in 8:
+				var angle := i * TAU / 8
+				_sphere(node, Vector3(0.065, 0.14, 0.065), Vector3(cos(angle) * 0.5, 0.2, sin(angle) * 0.5), color)
+		"hit":
+			if event.has("source_x") and event.has("source_z"):
+				var destination := node.position + Vector3(0, 0.5, 0)
+				node.position = Vector3(float(event.source_x), 0.9, float(event.source_z))
+				_sphere(node, Vector3(0.08, 0.08, 0.19), Vector3.ZERO, Color("ffe2a3"))
+				_effects.append({"node":node, "age":0.0, "duration":0.16, "origin":node.position, "destination":destination})
+				return
+			for i in 4:
+				var angle := i * PI / 2
+				_limb(node, Vector3(0, 0.5, 0), Vector3(cos(angle) * 0.35, 0.7, sin(angle) * 0.35), 0.025, Color("ffe2a3"))
+	_effects.append({"node":node, "age":0.0, "duration":duration})
 
 func _make_tower(data: Dictionary) -> Node3D:
 	var node := Node3D.new()
