@@ -278,6 +278,7 @@ func _process(delta:float) -> void:
 			if number != _countdown_number:
 				_countdown_number = number
 				hud_fx.show_countdown("BATTLE!" if number <= 0 else str(number))
+				sound.play_countdown(maxi(0, number))
 		else:
 			_accumulator+=minf(delta,0.25)
 			var changed:=false
@@ -377,6 +378,8 @@ func _start_or_restart() -> void:
 	if hud_fx:
 		hud_fx.reset()
 		hud_fx.show_countdown("3")
+	sound.start_match()
+	sound.play_countdown(3)
 	notice="The gates are opening..."
 	_refresh()
 
@@ -455,6 +458,8 @@ func _toggle_pause() -> void:
 	if not started or state.phase=="finished": return
 	paused=not paused
 	pause_button.text="Resume" if paused else "Pause"
+	if paused: sound.stop_match()
+	else: sound.start_match()
 	notice="Paused. Press Space or Resume to continue." if paused else "Battle resumed."
 	_refresh()
 
@@ -464,8 +469,12 @@ func _restart_confirm() -> void:
 	var dialog:=ConfirmationDialog.new()
 	dialog.title="Start a new match?"
 	dialog.dialog_text="The current match will be replaced."
-	dialog.confirmed.connect(func(): session.new_game(42); started=false; paused=false; selected_slot=-1; _accumulator=0; _show_overlay(true); overlay_title.text="ENTER THE ARENA"; overlay_text.text="New match ready. Choose your opening."; start_button.text="BATTLE"; _refresh(); dialog.queue_free())
-	dialog.canceled.connect(func(): paused=was_paused; dialog.queue_free())
+	dialog.confirmed.connect(func(): session.new_game(42); started=false; paused=false; selected_slot=-1; _accumulator=0; sound.stop_match(); _show_overlay(true); overlay_title.text="ENTER THE ARENA"; overlay_text.text="New match ready. Choose your opening."; start_button.text="BATTLE"; _refresh(); dialog.queue_free())
+	dialog.canceled.connect(func():
+		paused=was_paused
+		if not paused: sound.start_match()
+		dialog.queue_free()
+	)
 	add_child(dialog)
 	dialog.popup_centered()
 

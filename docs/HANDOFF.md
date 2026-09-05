@@ -14,11 +14,11 @@ Use original Greek characters and presentation assets. Preserve the existing woo
 
 The user explicitly requested a much more attractive, modern presentation. Implemented: eight illustrated card portraits, a larger coastal 3D arena with carved paving and animated water, layered Greek shrines, seven richer procedural figurines, jointed walking/wing/cape/neck animation, visual movement smoothing, placement ghosts, floating damage and defeat dust, animated card selection, next-card art, and original synthesized combat sounds. Art prompt and provenance are in `assets/olympus_arena/ART-PROVENANCE.md`.
 
-This is a stronger playable art prototype, not finished commercial character production. The next largest visual gain is authored, rigged low-poly characters matching the card portraits, with distinct attack anticipation, contact and recovery. Current meshes are assembled from primitives and unit collision avoidance is still absent. Do not call this equivalent to a shipped Clash Royale presentation.
+This is a stronger playable art prototype, not finished commercial character production. The next largest visual gain is authored, rigged low-poly characters matching the card portraits, with distinct attack anticipation, contact and recovery. Current meshes are assembled from primitives. Deterministic soft crowd separation respects banks and bridges, but it is not a full physics or steering system. Do not call this equivalent to a shipped Clash Royale presentation.
 
 The visual authority remains the pure session. Replica roots equal authoritative coordinates; smoothing is confined to the child figure. Preview ghosts stay outside the replica map. Audio consumes deduplicated snapshot events and tower health transitions. No presentation feature changes combat results.
 
-New boundaries: `presentation/olympus_stage.gd` and two shaders own scenery; `presentation/olympus_figurines.gd` owns miniature geometry and joint animation; `presentation/olympus_audio.gd` owns synthesized sounds. `tools/capture_olympus_motion.gd` records native frames from legal play at a fixed simulation cadence. Do not use a staged screenshot as evidence of match balance or performance.
+New boundaries: `presentation/olympus_stage.gd` and two shaders own scenery; `presentation/olympus_ambient_life.gd` owns boats, birds, pennants and embers; `presentation/olympus_figurines.gd` owns miniature geometry and joint animation; `presentation/olympus_combat_fx.gd` and `olympus_hud_fx.gd` consume authoritative events; `presentation/olympus_audio.gd` owns synthesized sounds and music. `tools/capture_olympus_motion.gd` records native frames from legal play at a fixed simulation cadence. See [the art production contract](OLYMPUS_ART_PIPELINE.md) before replacing procedural characters. Do not use a staged screenshot as evidence of match balance or performance.
 
 Near-term parallel polish slices (roughly 10 minutes each):
 
@@ -37,7 +37,7 @@ Near-term parallel polish slices (roughly 10 minutes each):
 | Component | Status and evidence boundary |
 | --- | --- |
 | Wooden chess | Existing playable game: pure chess rules, wooden 3D board and chips, mouse/keyboard controls, history, undo, save/load, practice opponent, factual tutor context, and PGN export. Preserve its tests. |
-| Olympus Arena | Playable polished prototype: illustrated roster, coastal arena, animated figures, deployment ghosts and layered audio. Current local evidence: 740 rules checks, 32 native renderer checks, 40 native app checks (42 with captures), 24 audio checks; full chess and parked Ninth Gate regressions passed. Release manifest identifies packaged source. |
+| Olympus Arena | Playable polished prototype: illustrated roster, coastal arena life, animated attacks, deployment ghosts, combat/HUD effects, crowd separation, tactical local opponent and layered audio. Current rules evidence: 760 checks; final native and export counts must be refreshed after integration. Release manifest identifies packaged source. |
 | The Ninth Gate | Parked historical prototype with rules, 3D source work, and an older 2D prerelease. Its setting and play loop are not the current direction. |
 | Go / Xiangqi / checkers | Previously selected future games; not implemented and not active parallel work. |
 
@@ -47,7 +47,7 @@ The [successful chess checkpoint](https://github.com/dancockrell/board-game-cabi
 
 The main project opens Olympus Arena. Press **BATTLE** to begin; the timer waits for this action. Select a card with a click or **1–4**, then click the blue half to deploy troops, or drag the card onto the board. Thunderbolt targets either half. **Escape** clears selection. **Space** or **Pause / Resume** pauses/resumes. **Restart** requests confirmation before replacing the match; **REMATCH** starts again from the result screen. A chess-table button preserves access to chess.
 
-The fixed eight-card deck has no editor. This is local practice against a basic opponent. There are no accounts, network battles, progression, collection upgrades, arena saves/replay, or collision avoidance. Original procedural Greek models now include joint animation and sculpted details; they remain an art prototype rather than a completed authored character set. Native gameplay/result captures, complete-battle checks and full cabinet regressions passed during this polish pass. The release manifest records the separately exported Windows build.
+The fixed eight-card deck has no editor. This is local practice against a tactical deterministic opponent that defends pressure, builds supported pushes and chooses useful spell targets while obeying its own hand and elixir. There are no accounts, network battles, progression, collection upgrades, or arena save/replay. Original procedural Greek models include joint and attack animation and sculpted details; they remain an art prototype rather than a completed authored character set. Soft unit separation is implemented; full local avoidance and formation steering are not. Refresh native gameplay/result captures, complete-battle checks and the Windows manifest after each integrated polish pass.
 
 ## Actual project boundaries
 

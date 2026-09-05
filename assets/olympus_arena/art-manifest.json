@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "assets": [
+    {
+      "id": "olympus-card-atlas-v1",
+      "runtime_path": "res://assets/olympus_arena/card-atlas-v1.png",
+      "source_file": "exec-7606c2f2-490a-4372-88a6-be02ae859ebb.png",
+      "source_tool": "OpenAI built-in image generation",
+      "generation_date": "2026-09-05",
+      "sha256": "5628BC155EB0F5A2DB0AFD184B049ECE38F020C4C4EB65D4B4DE25E122CA1350",
+      "bytes": 3874779,
+      "dimensions": [1536, 1024],
+      "layout": {"columns": 4, "rows": 2, "cell": [384, 512]},
+      "status": "approved-runtime",
+      "runtime_consumers": ["res://app/olympus_arena.gd"],
+      "review": "All eight cells were reviewed at the runtime hand crop and full-size inspection panel. Atlas bounds are covered by native application checks.",
+      "prompt_record": "res://assets/olympus_arena/ART-PROVENANCE.md"
+    }
+  ],
+  "model_contract": "res://docs/OLYMPUS_ART_PIPELINE.md"
+}
