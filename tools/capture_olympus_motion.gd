@@ -99,6 +99,7 @@ func _advance(frame: int) -> void:
 		app.session.tick()
 		app._refresh()
 	app.board.show_state(app.state, 1.0 / FPS)
+	if app.board.ambient_life: app.board.ambient_life.advance(1.0 / FPS, false)
 
 func _deploy_player() -> void:
 	var state: Dictionary = app.session.snapshot()

@@ -13,6 +13,8 @@ var _effects: Array = []
 var _figure_factory: RefCounted
 var _ghost: Node3D
 var _ghost_kind := ""
+var ambient_life
+var combat_fx
 
 func _ready() -> void:
 	_setup()
@@ -45,6 +47,10 @@ func _setup() -> void:
 	add_child(sun)
 	var stage = preload("res://presentation/olympus_stage.gd").new()
 	add_child(stage)
+	ambient_life = preload("res://presentation/olympus_ambient_life.gd").new()
+	add_child(ambient_life)
+	combat_fx = preload("res://presentation/olympus_combat_fx.gd").new()
+	add_child(combat_fx)
 	_preview = _cylinder(self, 0.6, 0.035, Vector3.ZERO, Color(0.3, 0.8, 1, 0.5))
 	_preview.visible = false
 
@@ -56,19 +62,9 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		for effect in _effects: effect.node.queue_free()
 		_effects.clear()
 	_last_elapsed = float(state.get("elapsed", 0.0))
-	for effect in _effects.duplicate():
-		effect.age += delta
-		if effect.age >= effect.duration:
-			effect.node.queue_free()
-			_effects.erase(effect)
-		elif effect.has("destination"):
-			effect.node.position = effect.origin.lerp(effect.destination, effect.age / effect.duration)
-		else:
-			effect.node.scale = Vector3.ONE * (1.0 + effect.age * 1.6)
-	for event in state.get("events", []):
-		if int(event.get("id", -1)) <= _last_event: continue
-		_last_event = int(event.id)
-		_show_event(event)
+	combat_fx.consume_state(state, delta)
+	camera.h_offset = combat_fx.camera_impulse.x
+	camera.v_offset = combat_fx.camera_impulse.y
 	var alive := {}
 	for unit in state.get("units", []):
 		var id = unit["id"]

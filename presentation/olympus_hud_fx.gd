@@ -39,6 +39,7 @@ func deployed(at: Vector2) -> void:
 	for i in 14:
 		var angle := TAU * float(i) / 14.0
 		_sparks.append({"position":at, "velocity":Vector2(cos(angle), sin(angle)) * (75.0 + i * 4.0), "age":0.0, "life":0.48, "color":Color("7bdcff")})
+	while _sparks.size() > 84: _sparks.pop_front()
 	queue_redraw()
 
 func consume_state(state: Dictionary) -> void:

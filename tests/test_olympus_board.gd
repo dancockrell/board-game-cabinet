@@ -57,16 +57,22 @@ func run() -> void:
 	check(not board._ghost.visible and not board._preview.visible, "Clear hides both ghost and placement marker")
 	state.events = [{"id":0,"kind":"lightning","x":0.0,"z":0.0,"side":0}]
 	board.show_state(state)
-	check(board._effects.size() == 1, "Lightning visual created")
+	check(not board.combat_fx.effects.is_empty(), "Lightning visual created")
+	var lightning_count: int = board.combat_fx.effects.size()
 	board.show_state(state)
-	check(board._effects.size() == 1, "Repeated snapshot never duplicates event")
+	check(board.combat_fx.effects.size() == lightning_count, "Repeated snapshot never duplicates event")
 	board.show_state(state, 0.6)
-	check(board._effects.is_empty(), "Event visual expires")
+	board.show_state(state, 0.6)
+	check(board.combat_fx.effects.is_empty(), "Event visual expires")
 	state.events.append({"id":1,"kind":"hit","x":1.0,"z":1.0,"side":0,"source_x":0.0,"source_z":0.0})
 	board.show_state(state)
-	check(board._effects[0].has("destination"), "Source-aware hit creates tracer")
+	var has_tracer := false
+	for effect in board.combat_fx.effects:
+		if str(effect.motion) == "projectile": has_tracer = true
+	check(has_tracer, "Source-aware hit creates tracer")
 	board.show_state(state, 0.2)
-	check(board._effects.is_empty(), "Tracer expires")
+	board.show_state(state, 0.4)
+	check(board.combat_fx.effects.is_empty(), "Tracer and impact expire")
 	await process_frame
 	print("Olympus board: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)

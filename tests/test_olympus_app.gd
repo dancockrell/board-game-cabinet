@@ -70,13 +70,14 @@ func _run() -> void:
 	drag.button_index = MOUSE_BUTTON_LEFT
 	drag.pressed = true
 	app._card_input(drag, 1)
+	expect(app.drag_proxy.visible, "Dragging lifts a translucent card portrait")
 	var before_drag: Dictionary = app.session.snapshot()
 	drag = InputEventMouseButton.new()
 	drag.button_index = MOUSE_BUTTON_LEFT
 	drag.pressed = false
 	drag.position = app.surface.global_position + blue
 	app._input(drag)
-	expect(not app._dragging and app.selected_slot == -1, "Card drag release clears gesture state")
+	expect(not app._dragging and not app.drag_proxy.visible and app.selected_slot == -1, "Card drag release clears gesture state")
 	expect(app.session.snapshot().hand[1] != before_drag.hand[1], "Card drag places the chosen card and rotates its slot")
 	for tick in range(140): app.session.tick()
 	app._refresh()

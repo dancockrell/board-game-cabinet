@@ -22,6 +22,7 @@ var energy_pips: Array[Panel] = []
 var hud_fx
 var _countdown_remaining := 0.0
 var _countdown_number := 0
+var drag_proxy: TextureRect
 var timer_label: Label
 var score_label: Label
 var energy_label: Label
@@ -181,6 +182,14 @@ Or take more towers.",Vector2(1212,304),Vector2(185,66),17)
 		cost_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		button.add_child(cost_label)
 		cards.append({"button":button,"icon":icon,"name":name_label,"cost":cost_label})
+	drag_proxy = TextureRect.new()
+	drag_proxy.size = Vector2(104, 138)
+	drag_proxy.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	drag_proxy.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	drag_proxy.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	drag_proxy.modulate = Color(1, 1, 1, 0.88)
+	drag_proxy.visible = false
+	add_child(drag_proxy)
 	energy_bar = ProgressBar.new()
 	energy_bar.position = Vector2(379,931)
 	energy_bar.size = Vector2(708,12)
@@ -286,6 +295,7 @@ func _process(delta:float) -> void:
 		button.scale = button.scale.lerp(Vector2.ONE * (1.055 if active else 1.025 if hovered else 1.0),1.0-exp(-delta*18.0))
 	if selected_slot >= 0 and _last_pointer.x > -900: _preview(_last_pointer)
 	if board and not state.is_empty(): board.show_state(state,delta)
+	if board and board.ambient_life: board.ambient_life.advance(delta, paused or not started)
 	if hud_fx: hud_fx.advance(delta)
 
 func _refresh() -> void:
@@ -384,9 +394,15 @@ func _select_card(slot:int) -> void:
 func _card_input(event:InputEvent,slot:int) -> void:
 	if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and event.pressed:
 		_select_card(slot)
-		_dragging=true
+		if selected_slot == slot:
+			_dragging=true
+			drag_proxy.texture = cards[slot].icon.texture
+			drag_proxy.position = event.global_position - drag_proxy.size * 0.5
+			drag_proxy.visible = true
 
 func _input(event:InputEvent) -> void:
+	if event is InputEventMouseMotion and _dragging:
+		drag_proxy.position = event.position - drag_proxy.size * 0.5
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode in [KEY_1,KEY_2,KEY_3,KEY_4]: _select_card(event.keycode-KEY_1)
 		elif event.keycode==KEY_ESCAPE:
@@ -396,6 +412,7 @@ func _input(event:InputEvent) -> void:
 		elif event.keycode==KEY_SPACE: _toggle_pause()
 	if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed and _dragging:
 		_dragging=false
+		drag_proxy.visible=false
 		var local:Vector2=event.position-surface.global_position
 		if Rect2(Vector2.ZERO,surface.size).has_point(local): _deploy_at(local)
 
@@ -429,7 +446,9 @@ func _deploy_at(local:Vector2) -> void:
 		sound.pitch_scale=1.2
 		sound.play_move_sound()
 		notice="Deployed! Your hand has cycled. Build your next push."
-	else: notice=str(result.get("error","You cannot deploy there."))
+	else:
+		notice=str(result.get("error","You cannot deploy there."))
+		if hud_fx: hud_fx.show_banner("NOT HERE", 0.65)
 	_refresh()
 
 func _toggle_pause() -> void:
