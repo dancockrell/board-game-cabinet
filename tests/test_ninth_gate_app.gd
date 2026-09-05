@@ -36,18 +36,28 @@ func _run() -> void:
 	await process_frame
 	var initial: Dictionary = app.session.snapshot()
 	expect(app.observed.round == 1 and app.observed.phase == "orders", "Initial planning round")
-	expect(app.round_label.text.contains("ROUND 1 / 12"), "Round label reflects session")
+	expect(app.round_label.text.contains("ROUND 1 / 8"), "Round label reflects session")
 	expect(app.observed == app.session.view_for("heaven"), "Presentation consumes the filtered player view")
 	expect(initial.units.size() == 12 and app.observed.units.size() == 6, "Unseen enemy counters do not reach presentation")
 	for unit in app.observed.units:
 		expect(unit.side == "heaven", "Initial visible counter belongs to Heaven")
 	for private_key in ["rng", "seed", "reports"]:
 		expect(not app.observed.has(private_key), "Referee information stays out of view: " + private_key)
-	app._select_cell(Vector2i(2, 1))
+	expect(app.board is Node3D and app.board.camera is Camera3D, "Battle uses an actual 3D board and camera")
+	expect(app.board._tokens.size() == 6, "Renderer instantiates only the six observed squads")
+	# Pass projected tile centers through the actual viewport input signal.
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = true
+	click.position = app.board.camera.unproject_position(Vector3(2 - 5.5, 0.05, 1 - 3.5))
+	app.surface.gui_input.emit(click)
 	expect(app.selected == "heaven0", "Friendly cell selects its unit")
-	app._select_cell(Vector2i(3, 1))
+	click.position = app.board.camera.unproject_position(Vector3(4 - 5.5, 0.05, 1 - 3.5))
+	app.surface.gui_input.emit(click)
+	expect(app.orders.size() == 1 and app.orders[0].x == 4, "Projected 3D tile click drafts a two-step move")
 	expect(app.orders.size() == 1 and app.orders[0].type == "move", "Destination drafts a legal move")
 	expect(app.session.snapshot() == initial, "Drafting never moves authoritative counters")
+	expect(is_equal_approx(app.board._tokens["heaven0"].position.x, 2 - 5.5), "Draft arrows never relocate the 3D squad")
 	app._commit()
 	expect(app.session.snapshot().round == 2, "Commit advances one simultaneous round")
 	expect(app.orders.is_empty() and app.selected.is_empty(), "Successful commit clears transient planning state")
@@ -79,28 +89,35 @@ func _run() -> void:
 	_key(KEY_RIGHT)
 	_key(KEY_SPACE)
 	expect(app.orders.size() == 1, "Keyboard Space drafts a destination")
+	_key(KEY_A)
+	expect(app.mode == "attack", "Keyboard attack mode works")
+	_key(KEY_M)
+	expect(app.mode == "move", "Keyboard move mode works")
 	_key(KEY_ESCAPE)
 	expect(app.selected.is_empty(), "Escape clears keyboard selection")
 	app._new_battle()
+	app.muted = true
+	app.sound.set_muted(true)
 	# Three rounds of advance provide an optional actual gameplay capture.
 	for round_index in 3:
 		for unit_id in ["heaven0", "heaven2", "heaven5"]:
 			for order in app.session.legal_orders(unit_id, "heaven"):
 				if order.type == "move":
 					var unit: Dictionary = app.session._unit(app.session.snapshot(), unit_id)
-					if order.x == unit.x + 1:
+					if order.x > unit.x:
 						app._draft(order)
 						break
 		app._commit()
 	expect(app.observed.round == 4, "Three playable rounds reach round four")
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--qa-folder="):
+			await create_timer(0.5).timeout
 			await process_frame
 			await RenderingServer.frame_post_draw
 			var path := argument.trim_prefix("--qa-folder=").path_join("ninth-gate-playing.png")
 			expect(root.get_texture().get_image().save_png(path) == OK, "Gameplay screenshot saved")
 	# Complete the battle through the UI with legal orders from player knowledge.
-	for remaining in 12:
+	for remaining in 8:
 		if app.observed.phase == "finished":
 			break
 		var attack_orders: Array = []
@@ -126,7 +143,7 @@ func _run() -> void:
 		app._commit()
 		expect(app.observed.revision > previous_revision, "Full battle commit advances revision")
 	var final_state: Dictionary = app.session.snapshot()
-	expect(final_state.phase == "finished" and final_state.round <= 12, "Battle reaches a bounded terminal result")
+	expect(final_state.phase == "finished" and final_state.round <= 8, "Battle reaches a bounded terminal result")
 	expect(final_state.winner in ["heaven", "hell", "draw"], "Terminal winner is defined")
 	expect(app.details.text.contains("BATTLE ENDED") and app.details.text.contains(str(final_state.winner).to_upper()), "Result panel matches authoritative winner")
 	expect(app.observed == app.session.view_for("heaven"), "Terminal presentation remains a filtered session view")
@@ -137,6 +154,7 @@ func _run() -> void:
 	expect(_without_revision(restored.snapshot()) == _without_revision(final_state), "Reloaded final position, score, reports and random state match")
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--end-capture="):
+			await create_timer(0.5).timeout
 			await process_frame
 			await RenderingServer.frame_post_draw
 			expect(root.get_texture().get_image().save_png(argument.trim_prefix("--end-capture=")) == OK, "Result screenshot saved")
