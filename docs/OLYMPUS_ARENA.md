@@ -33,16 +33,16 @@ The deck is fixed in this prototype; there is no deck editor. Card descriptions 
 
 ## Implemented rules checkpoint
 
-The pure session is implemented. Its standalone suite reports 760 passing checks, including deterministic crowd separation and tactical practice-opponent behavior. The exact formulas live in [the rules contract](../games/olympus_arena/RULES.md), which takes precedence over this summary.
+The pure session is implemented. Its standalone suite reports 773 passing checks, including deterministic crowd separation, tactical practice-opponent behavior, Minotaur charge, and Hydra recovery. The exact formulas live in [the rules contract](../games/olympus_arena/RULES.md), which takes precedence over this summary.
 
 | Card | Elixir | Implemented distinction |
 | --- | --- | --- |
 | Hoplites | 3 | Deploys three ground soldiers |
 | Atalanta | 3 | Fast ranged attacker; can hit flying targets |
-| Minotaur | 5 | High-health attacker that prioritizes buildings |
+| Minotaur | 5 | High-health building attacker; earns a doubled first strike after travelling 2.4 arena units |
 | Medusa | 4 | Ranged attacks slow enemy movement |
 | Heracles | 5 | Club attacks damage nearby ground enemies |
-| Hydra | 6 | Very high health; can reach flying enemies |
+| Hydra | 6 | Very high health; can reach flying enemies and heals after four seconds without damage |
 | Harpies | 3 | Two flying attackers that cross the river directly |
 | Thunderbolt | 2 | Area spell deployable anywhere inside the arena; deals 130 damage to enemy units and 65 to enemy structures |
 
