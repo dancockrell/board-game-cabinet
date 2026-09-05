@@ -1,5 +1,7 @@
 # Board Game Cabinet
 
+**Current source checkpoint:** The Ninth Gate now has a 3D miniature map and rules v2: eight rounds, occupied-bridge scoring, two-step movement, automatic attacks for unordered squads, and Herald healing. Army lore and character style are being reconsidered following user feedback; see [current art direction](docs/ART_DIRECTION_STATUS.md). The published 2026-09-05 prerelease described below remains the earlier 2D/rules-v1 build.
+
 **New playable experiment: [The Ninth Gate](docs/NINTH_GATE_DESIGN.md)** — an original Heaven-versus-Hell command game inspired by structured Prussian Kriegsspiel. Open the chess table and choose **The Ninth Gate**, or launch `godot --path . res://app/ninth_gate.tscn`. It currently uses a readable 2D tactical map, six formations per army, three simultaneous orders each round, filtered enemy visibility, seeded combat, objective scoring, whole-round undo, and replay-based saves. Heaven is player-controlled; Hell has a modest practice opponent. The mythology and battle narrative remain provisional pending the user's setting choice.
 
 The chosen cabinet scope is chess (playable), The Ninth Gate (playable prototype), Go, Xiangqi, and checkers (planned; English draughts provisionally). See the [Claude build / Codex polish handoff](docs/HANDOFF.md), [exact war-game rules](games/ninth_gate/RULES.md), and [Ninth Gate verification](docs/NINTH_GATE_VERIFICATION.md). No claim of balance, finished art, or a strong war-game opponent is made.

@@ -1,5 +1,7 @@
 # Board Game Cabinet: Claude build / Codex polish handoff
 
+**Latest steering:** the first generated commander art was rejected. Establish army lore before further character art; see [art direction checkpoint](ART_DIRECTION_STATUS.md). Rules v2 and the 3D board are a working source checkpoint, not an approved finished visual style. The existing downloadable release is still the older 2D version.
+
 Updated 2026-09-05. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private. Start with this document and [The Ninth Gate design](NINTH_GATE_DESIGN.md). The user's latest selection supersedes the earlier broad game catalogue: **chess, Go, Xiangqi, English checkers, and an original Heaven-versus-Hell Kriegsspiel**. Dice and other components are allowed where a chosen board game needs them. This is not an all-games platform.
 
 ## Intended collaboration
