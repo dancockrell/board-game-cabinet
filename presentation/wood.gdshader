@@ -19,7 +19,9 @@ void fragment() {
     float broad = noise(p * vec2(10.0, 0.7));
     float pores = pow(noise(p * vec2(290.0, 30.0)), 5.0);
     float v = (grain - 0.5) * grain_strength + (broad - 0.5) * 0.11 - pores * 0.1;
-    ALBEDO = wood_color.rgb * (0.9 + v);
+    ALBEDO = wood_color.rgb * (0.63 + v * 0.48);
     ROUGHNESS = 0.45 + grain * 0.21;
     SPECULAR = 0.27;
 }
+
+

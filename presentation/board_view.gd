@@ -74,13 +74,13 @@ func _build_stage() -> void:
     environment.environment.background_color = Color("192421")
     environment.environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
     environment.environment.ambient_light_color = Color("dbe5e0")
-    environment.environment.ambient_light_energy = 0.48
+    environment.environment.ambient_light_energy = 0.32
     environment.environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
     add_child(environment)
     var key := DirectionalLight3D.new()
     key.rotation_degrees = Vector3(-57.0, -28.0, 0.0)
-    key.light_color = Color("ffe6bd")
-    key.light_energy = 1.15
+    key.light_color = Color("fff4e6")
+    key.light_energy = 0.72
     key.shadow_enabled = true
     key.directional_shadow_max_distance = 35.0
     key.shadow_bias = 0.04
@@ -88,7 +88,7 @@ func _build_stage() -> void:
     var fill := OmniLight3D.new()
     fill.position = Vector3(3.5, 5.0, -4.0)
     fill.light_color = Color("cbdce7")
-    fill.light_energy = 1.0
+    fill.light_energy = 0.35
     fill.omni_range = 15.0
     add_child(fill)
     _box(self, Vector3(200.0, 0.2, 200.0), Vector3(0.0, -0.52, 0.0), _plain(Color("20302b")))
@@ -105,6 +105,12 @@ func _build_board() -> void:
     var outer: float = 8.0 * s + 2.0 * board_theme.frame_width
     _box(self, Vector3(outer - 0.10, 0.10, outer - 0.10), Vector3(0.0, -0.30, 0.0), _wood(board_theme.frame_color.darkened(0.3)))
     _box(self, Vector3(outer, 0.26, outer), Vector3(0.0, -0.14, 0.0), _wood(board_theme.frame_color, 1.5))
+    # Four straight-grain rails: full-length side rails and fitted end rails.
+    var rail_width: float = board_theme.frame_width
+    for side in [-1.0, 1.0]:
+        _box(self, Vector3(rail_width, 0.03, outer), Vector3(side * (4.0 * s + rail_width / 2.0), 0.0, 0.0), _wood(board_theme.frame_color, 1.5))
+        var rail := _box(self, Vector3(rail_width, 0.03, 8.0 * s), Vector3(0.0, 0.0, side * (4.0 * s + rail_width / 2.0)), _wood(board_theme.frame_color, 2.1))
+        rail.rotation.y = PI / 2.0
     # Slim maple inlay around the playing field gives a clean crafted edge.
     _box(self, Vector3(8.08 * s, 0.028, 8.08 * s), Vector3(0.0, 0.002, 0.0), _wood(Color("c8a773")))
     for sq in range(64):
@@ -245,3 +251,4 @@ func _unhandled_input(event: InputEvent) -> void:
             zoom_by(-0.35)
         elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
             zoom_by(0.35)
+
