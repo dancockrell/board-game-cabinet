@@ -21,3 +21,5 @@ if ($Graphics) {
         Invoke-GodotCheck @("--rendering-method", "gl_compatibility", "--script", "res://tests/$test.gd")
     }
 }
+Invoke-GodotCheck @("--headless", "--script", "res://games/ninth_gate/test_ninth_gate.gd")
+Invoke-GodotCheck @("--headless", "--script", "res://tests/test_ninth_gate_app.gd")

@@ -42,8 +42,8 @@ func _ready() -> void:
 	details.size = Vector2(400, 220)
 	details.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(details)
-	_button("Move", Vector2(990, 432), Vector2(120, 44), func(): mode = "move"; notice = "Move: choose a highlighted adjacent tile."; queue_redraw())
-	_button("Attack", Vector2(1125, 432), Vector2(120, 44), func(): mode = "attack"; notice = "Attack: choose a highlighted visible enemy."; queue_redraw())
+	_button("Move", Vector2(990, 432), Vector2(120, 44), func(): mode = "move"; notice = "Move: choose a highlighted adjacent tile."; _refresh())
+	_button("Attack", Vector2(1125, 432), Vector2(120, 44), func(): mode = "attack"; notice = "Attack: choose a highlighted visible enemy."; _refresh())
 	_button("Rally", Vector2(1260, 432), Vector2(130, 44), _rally)
 	_button("COMMIT ORDERS", Vector2(990, 494), Vector2(400, 54), _commit)
 	_button("Clear drafts", Vector2(990, 564), Vector2(190, 42), func(): orders.clear(); _refresh())
@@ -98,8 +98,8 @@ func _refresh() -> void:
 		text += "%s: %s %s\n" % [order.unit_id, order.type, _coordinate(order.x, order.y)]
 	if observed.phase == "finished":
 		text = "BATTLE ENDED\n%s\n\nFinal scores above. Undo or begin a new battle." % str(observed.winner).to_upper()
-	details.text = text
-	dispatches.text = "\n".join(observed.log.slice(maxi(0, observed.log.size() - 8)))
+	details.text = _readable_ids(text)
+	dispatches.text = _readable_ids("\n".join(observed.log.slice(maxi(0, observed.log.size() - 8))))
 	queue_redraw()
 
 func _draw() -> void:
@@ -185,6 +185,11 @@ func _coordinate(x: int, y: int) -> String:
 func _unit_name(unit: Dictionary) -> String:
 	return ("H" if unit.side == "heaven" else "D") + str(int(str(unit.id).right(1)) + 1)
 
+func _readable_ids(text: String) -> String:
+	for index in 6:
+		text = text.replace("heaven"+str(index), "H"+str(index+1)).replace("hell"+str(index), "D"+str(index+1))
+	return text
+
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var cell := Vector2i((event.position - ORIGIN)/CELL)
@@ -203,7 +208,7 @@ func _gui_input(event: InputEvent) -> void:
 			KEY_A: mode = "attack"
 			KEY_R: _rally()
 			KEY_ESCAPE: selected = ""
-		queue_redraw()
+		_refresh()
 
 func _select_cell(cell: Vector2i) -> void:
 	cursor = cell
