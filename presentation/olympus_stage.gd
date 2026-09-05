@@ -11,6 +11,7 @@ var _materials: Dictionary = {}
 
 func _ready() -> void:
 	name = "OlympusStage"
+	_sea()
 	_foundation()
 	_field()
 	_river()
@@ -183,3 +184,25 @@ func _mesh(mesh: Mesh, pos: Vector3, color: Color) -> MeshInstance3D:
 	node.position = pos
 	add_child(node)
 	return node
+
+func _sea() -> void:
+	var sea := _box(Vector3(65,0.1,65),Vector3(0,-1.75,0),Color("18566a"))
+	var material := ShaderMaterial.new()
+	material.shader = WATER
+	material.set_shader_parameter("deep_color",Color("10394d"))
+	material.set_shader_parameter("shallow_color",Color("236879"))
+	sea.material_override = material
+	for side in [-1,1]:
+		for i in 7:
+			var rock := MeshInstance3D.new()
+			var shape := SphereMesh.new()
+			shape.radial_segments = 5
+			shape.rings = 3
+			rock.mesh = shape
+			rock.scale = Vector3(1.0+i*.12,.6+(i%3)*.2,1.5)
+			rock.position = Vector3(side*(7.3+sin(i*2.0)), -1.35, -9+i*3.2)
+			var stone := StandardMaterial3D.new()
+			stone.albedo_color = Color("698080")
+			stone.roughness = 1.0
+			rock.material_override = stone
+			add_child(rock)

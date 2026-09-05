@@ -11,6 +11,8 @@ var _last_event := -1
 var _last_elapsed := 0.0
 var _effects: Array = []
 var _figure_factory: RefCounted
+var _ghost: Node3D
+var _ghost_kind := ""
 
 func _ready() -> void:
 	_setup()
@@ -21,14 +23,14 @@ func _setup() -> void:
 	camera = Camera3D.new()
 	add_child(camera)
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 17.5
-	camera.position = Vector3(0, 20, 13.8)
+	camera.size = 15.8
+	camera.position = Vector3(0, 17, 20)
 	camera.look_at(Vector3(0, 0, 0))
 	camera.current = true
 	var world := WorldEnvironment.new()
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color("182937")
+	env.background_color = Color("163c4b")
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color("c5d9e5")
 	env.ambient_light_energy = 0.35
@@ -38,35 +40,11 @@ func _setup() -> void:
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-55, -35, 0)
 	sun.light_color = Color("fff0cf")
-	sun.light_energy = 0.72
+	sun.light_energy = 0.60
 	sun.shadow_enabled = true
 	add_child(sun)
-	_box(self, Vector3(11.5, 0.65, 18.3), Vector3(0, -0.5, 0), Color("34414a"))
-	_box(self, Vector3(11.25, 0.15, 18.05), Vector3(0, -0.18, 0), PALETTE.gold)
-	_box(self, Vector3(11, 0.16, 17.8), Vector3(0, -0.06, 0), PALETTE.marble)
-	for side in [-1, 1]:
-		_box(self, Vector3(10, 0.1, 7.4), Vector3(0, 0.035, side * 4.5), PALETTE.grass)
-		for x in [-2.7, 2.7]:
-			_box(self, Vector3(1.4, 0.025, 6.7), Vector3(x, 0.10, side * 4.0), Color("a6ab8b"))
-		for x in [-4.65, 4.65]:
-			for z in range(2, 8, 2):
-				_cylinder(self, 0.23, 0.3, Vector3(x, 0.22, side * z), PALETTE.stone)
-				_cylinder(self, 0.10, 0.7, Vector3(x, 0.7, side * z), PALETTE.marble)
-				_sphere(self, Vector3(0.16, 0.16, 0.16), Vector3(x, 1.1, side * z), PALETTE.gold)
-	_box(self, Vector3(10.7, 0.12, 1.55), Vector3(0, 0.01, 0), PALETTE.water)
-	for x in range(-5, 6):
-		_box(self, Vector3(0.45, 0.012, 0.025), Vector3(x, 0.085, 0.3 * sin(x)), Color("80d6d9"))
-	for x in [-2.7, 2.7]:
-		_box(self, Vector3(1.8, 0.22, 2.0), Vector3(x, 0.16, 0), PALETTE.marble)
-		for z in [-0.7, -0.35, 0.0, 0.35, 0.7]:
-			_box(self, Vector3(1.64, 0.02, 0.02), Vector3(x, 0.285, z), PALETTE.stone)
-		for edge in [-0.85, 0.85]:
-			_box(self, Vector3(0.12, 0.38, 2), Vector3(x + edge, 0.36, 0), PALETTE.stone)
-	# Repeated meander blocks form an original, physical border rather than a texture.
-	for z in range(-17, 18):
-		for x in [-5.27, 5.27]:
-			_box(self, Vector3(0.22, 0.025, 0.22), Vector3(x, 0.035, z * 0.48), PALETTE.roof)
-			_box(self, Vector3(0.12, 0.03, 0.12), Vector3(x + 0.05, 0.045, z * 0.48 + 0.04), PALETTE.marble)
+	var stage = preload("res://presentation/olympus_stage.gd").new()
+	add_child(stage)
 	_preview = _cylinder(self, 0.6, 0.035, Vector3.ZERO, Color(0.3, 0.8, 1, 0.5))
 	_preview.visible = false
 
@@ -134,16 +112,37 @@ func pick_ground(screen: Vector2, _viewport_size: Vector2 = Vector2.ZERO) -> Vec
 	if hit == null or abs(hit.x) > 5.0 or abs(hit.z) > 8.0: return Vector2.INF
 	return Vector2(hit.x, hit.z)
 
-func show_deployment(position: Vector2, valid: bool, spell: bool = false) -> void:
+func show_deployment(position: Vector2, valid: bool, spell: bool = false, kind: String = "") -> void:
 	_setup()
 	_preview.visible = position.is_finite()
+	if _ghost: _ghost.visible = false
 	if not _preview.visible: return
+	if not spell and not kind.is_empty():
+		if _ghost_kind != kind:
+			if _ghost: _ghost.queue_free()
+			_ghost = _make_unit(kind, 0)
+			_ghost.get_node("Health").hide()
+			_ghost.get_node("Hit").hide()
+			_ghost_kind = kind
+			_tint_ghost(_ghost)
+		_ghost.position = Vector3(position.x, .22, position.y)
+		_ghost.visible = valid
 	_preview.position = Vector3(position.x, 0.32, position.y)
 	_preview.scale = Vector3(2.3 if spell else 1.0, 1, 2.3 if spell else 1.0)
 	_preview.material_override = _material(Color(0.2, 0.8, 1, 0.55) if valid else Color(1, 0.2, 0.15, 0.5))
 
 func clear_preview() -> void:
 	if _preview: _preview.visible = false
+	if _ghost: _ghost.visible = false
+
+func _tint_ghost(node: Node) -> void:
+	if node is MeshInstance3D:
+		var material := StandardMaterial3D.new()
+		material.albedo_color = Color(.35,.8,1,.45)
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		node.material_override = material
+	for child in node.get_children(): _tint_ghost(child)
 
 func _departure(unit: Node3D) -> void:
 	# A short separate cosmetic burst never delays authoritative unit removal.

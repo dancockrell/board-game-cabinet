@@ -2,7 +2,7 @@ extends Control
 ## Real-time controller. Fixed simulation ticks own every placement and hit.
 const Session = preload("res://games/olympus_arena/session.gd")
 const Arena = preload("res://presentation/olympus_arena_board.gd")
-const MoveAudio = preload("res://presentation/move_audio.gd")
+const MoveAudio = preload("res://presentation/olympus_audio.gd")
 var session = Session.new()
 var board
 var state: Dictionary = {}
@@ -48,126 +48,153 @@ func _ready() -> void:
 
 func _build_ui() -> void:
 	var theme_ := Theme.new()
-	theme_.default_font_size=18
-	theme_.set_color("font_color","Label",Color("f5e9cd"))
-	for name_ in ["normal","hover","pressed","focus","disabled"]:
-		var style:=StyleBoxFlat.new()
-		style.bg_color=Color("30475a") if name_=="hover" else Color("1c3042")
-		style.border_color=Color("eed08f") if name_=="focus" else Color("526575")
+	theme_.default_font_size = 18
+	theme_.set_color("font_color", "Label", Color("f8ecd0"))
+	for name_ in ["normal", "hover", "pressed", "focus", "disabled"]:
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("34586a") if name_ == "hover" else Color("172f40")
+		style.border_color = Color("ffe0a0") if name_ in ["focus", "pressed"] else Color("96794c")
 		style.set_border_width_all(2)
-		style.set_corner_radius_all(9)
-		theme_.set_stylebox(name_,"Button",style)
-	theme=theme_
-	var bg:=ColorRect.new()
-	bg.color=Color("0c1927")
+		style.set_corner_radius_all(12)
+		style.shadow_color = Color(0,0,0,0.45)
+		style.shadow_size = 6
+		style.shadow_offset = Vector2(0,4)
+		theme_.set_stylebox(name_, "Button", style)
+	theme = theme_
+	var bg := ColorRect.new()
+	bg.color = Color("091e2a")
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
-	_label("OLYMPUS ARENA",Vector2(30,22),32,Color("f4d999"))
-	_label("GREEK HEROES. MONSTROUS BATTLES.",Vector2(32,62),13,Color("93b3c6"))
-	timer_label=_label("3:00",Vector2(658,20),34,Color("fff4d6"))
-	match_label=_label("PRACTICE MATCH",Vector2(604,63),14,Color("92b4c7"))
-	_button("Chess cabinet",Vector2(1210,24),Vector2(200,42),func(): get_tree().change_scene_to_file("res://app/main.tscn"))
-	_panel(Rect2(22,110,270,656),Color("132a3c"))
-	_label("YOUR CARD",Vector2(42,130),15,Color("94b7d0"))
-	card_preview=TextureRect.new()
-	card_preview.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
-	card_preview.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	card_preview.position=Vector2(69,175)
-	card_preview.size=Vector2(170,145)
-	card_preview.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	add_child(card_preview)
-	selection_label=_label("Pick your opening",Vector2(42,336),23,Color("f3d79b"))
-	selection_label.size=Vector2(230,64)
-	selection_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	description_label=_paragraph("Select one of the four cards below the arena. Deploy troops on your side; they will cross a bridge and fight automatically.",Vector2(42,410),Vector2(226,158),18)
-	_label("HOW TO WIN",Vector2(42,588),15,Color("94b7d0"))
-	_paragraph("Destroy the enemy temple to win immediately. Otherwise, take more towers before time runs out.",Vector2(42,622),Vector2(226,112),17)
-	surface=SubViewportContainer.new()
-	surface.position=Vector2(306,99)
-	surface.size=Vector2(828,675)
-	surface.stretch=true
-	surface.mouse_filter=Control.MOUSE_FILTER_STOP
+	# The arena fills the central stage; information stays outside the deployment surface.
+	_panel(Rect2(264,68,912,710), Color("987f51"))
+	surface = SubViewportContainer.new()
+	surface.position = Vector2(270,74)
+	surface.size = Vector2(900,698)
+	surface.stretch = true
+	surface.mouse_filter = Control.MOUSE_FILTER_STOP
 	surface.gui_input.connect(_arena_input)
+	surface.mouse_exited.connect(func(): _last_pointer=Vector2(-999,-999); board.clear_preview())
 	add_child(surface)
-	viewport=SubViewport.new()
-	viewport.size=Vector2i(828,675)
-	viewport.own_world_3d=true
-	viewport.msaa_3d=Viewport.MSAA_4X
-	viewport.render_target_update_mode=SubViewport.UPDATE_ALWAYS
+	viewport = SubViewport.new()
+	viewport.size = Vector2i(900,698)
+	viewport.own_world_3d = true
+	viewport.msaa_3d = Viewport.MSAA_4X
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	surface.add_child(viewport)
-	board=Arena.new()
+	board = Arena.new()
 	viewport.add_child(board)
-	_panel(Rect2(1148,110,270,656),Color("132a3c"))
-	_label("TOWERS TAKEN",Vector2(1168,133),15,Color("94b7d0"))
-	score_label=_label("YOU 0  :  0 RIVAL",Vector2(1168,174),23,Color("f4d999"))
-	_label("BLUE: YOUR ARMY\nRED: YOUR RIVAL",Vector2(1168,224),17,Color("cddfea"))
-	_label("NEXT IN YOUR HAND",Vector2(1168,304),15,Color("94b7d0"))
-	next_label=_label("",Vector2(1168,345),22,Color("f3d79b"))
-	next_label.size=Vector2(228,64)
-	next_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	_paragraph("Elixir refills over time. Save for a powerful monster, or defend with cheaper troops.\n\nThe final minute gives double elixir.",Vector2(1168,427),Vector2(228,160),17)
-	pause_button=_button("Pause",Vector2(1168,613),Vector2(108,42),_toggle_pause)
-	_button("Restart",Vector2(1290,613),Vector2(108,42),_restart_confirm)
-	var mute:=CheckButton.new()
-	mute.text="Sound"
-	mute.button_pressed=true
-	mute.position=Vector2(1162,685)
-	mute.toggled.connect(func(on): muted=not on; sound.set_muted(muted))
+	_label("OLYMPUS",Vector2(25,16),34,Color("f5d390"))
+	_label("A R E N A",Vector2(29,56),15,Color("a5c5cb"))
+	_panel(Rect2(580,9,280,54),Color("152f3e"))
+	timer_label = _label("3:00",Vector2(616,13),32,Color("fff0cd"))
+	match_label = _label("PRACTICE MATCH",Vector2(719,31),12,Color("a9d7dd"))
+	_button("Chess cabinet",Vector2(1220,22),Vector2(194,42),func(): get_tree().change_scene_to_file("res://app/main.tscn"))
+	_panel(Rect2(20,108,225,612),Color("102936"))
+	_label("YOUR CHAMPIONS",Vector2(36,124),15,Color("b9a272"))
+	card_preview = TextureRect.new()
+	card_preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	card_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	card_preview.position = Vector2(31,158)
+	card_preview.size = Vector2(203,270)
+	card_preview.clip_contents = true
+	card_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(card_preview)
+	selection_label = _paragraph("Pick your opening",Vector2(36,447),Vector2(195,64),25)
+	selection_label.add_theme_color_override("font_color",Color("ffdda0"))
+	description_label = _paragraph("",Vector2(36,519),Vector2(193,123),17)
+	_label("1–4  SELECT    •    DRAG TO PLAY",Vector2(33,679),11,Color("97b6be"))
+	_panel(Rect2(1194,108,225,280),Color("102936"))
+	_label("TEMPLE CLASH",Vector2(1212,129),15,Color("b9a272"))
+	score_label = _label("YOU 0 : 0 RIVAL",Vector2(1212,169),21,Color("ffdda0"))
+	_label("BLUE  /  YOUR ARMY",Vector2(1212,217),15,Color("7bbefd"))
+	_label("RED  /  RIVAL ARMY",Vector2(1212,246),15,Color("ff9180"))
+	_paragraph("Break the enemy temple.
+Or take more towers.",Vector2(1212,304),Vector2(185,66),17)
+	_panel(Rect2(1194,405,225,193),Color("102936"))
+	_label("UP NEXT",Vector2(1212,423),13,Color("b9a272"))
+	var next_art := TextureRect.new()
+	next_art.name = "NextArt"
+	next_art.position = Vector2(1212,456)
+	next_art.size = Vector2(72,96)
+	next_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	next_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	next_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(next_art)
+	next_label = _paragraph("",Vector2(1294,470),Vector2(107,74),19)
+	_label("Cards cycle after every play",Vector2(1212,570),12,Color("97b6be"))
+	pause_button = _button("Pause",Vector2(1194,620),Vector2(105,43),_toggle_pause)
+	_button("Restart",Vector2(1310,620),Vector2(109,43),_restart_confirm)
+	var mute := CheckButton.new()
+	mute.text = "Sound"
+	mute.button_pressed = true
+	mute.position = Vector2(1230,681)
+	mute.toggled.connect(func(on): muted = not on; sound.set_muted(muted))
 	add_child(mute)
+	_panel(Rect2(264,785,912,168),Color("102733"))
 	for slot in 4:
-		var button:=Button.new()
-		button.position=Vector2(356+slot*185,797)
-		button.size=Vector2(176,115)
+		var button := Button.new()
+		button.position = Vector2(473+slot*134,791)
+		button.size = Vector2(124,132)
+		button.pivot_offset = Vector2(62,132)
+		button.clip_contents = true
 		button.gui_input.connect(func(event): _card_input(event,slot))
 		button.pressed.connect(func(): _select_card(slot))
 		add_child(button)
-		var icon:=TextureRect.new()
-		icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
-		icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		icon.position=Vector2(48,7)
-		icon.size=Vector2(81,71)
-		icon.mouse_filter=Control.MOUSE_FILTER_IGNORE
+		var icon := TextureRect.new()
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		icon.position = Vector2(4,4)
+		icon.size = Vector2(116,103)
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		button.add_child(icon)
-		var name_label:=Label.new()
-		name_label.position=Vector2(3,80)
-		name_label.size=Vector2(170,28)
-		name_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-		name_label.add_theme_font_size_override("font_size",17)
-		name_label.mouse_filter=Control.MOUSE_FILTER_IGNORE
+		var name_label := Label.new()
+		name_label.position = Vector2(3,107)
+		name_label.size = Vector2(118,23)
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_label.add_theme_font_size_override("font_size",16)
+		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		button.add_child(name_label)
-		var cost_label:=Label.new()
-		cost_label.position=Vector2(12,9)
-		cost_label.add_theme_font_size_override("font_size",25)
-		cost_label.add_theme_color_override("font_color",Color("dea9ff"))
-		cost_label.mouse_filter=Control.MOUSE_FILTER_IGNORE
+		var cost_bg := Panel.new()
+		cost_bg.position = Vector2(7,6)
+		cost_bg.size = Vector2(32,35)
+		cost_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var gem := StyleBoxFlat.new()
+		gem.bg_color = Color("863bc5")
+		gem.border_color = Color("efbbff")
+		gem.set_border_width_all(2)
+		gem.set_corner_radius_all(12)
+		cost_bg.add_theme_stylebox_override("panel",gem)
+		button.add_child(cost_bg)
+		var cost_label := Label.new()
+		cost_label.position = Vector2(14,7)
+		cost_label.add_theme_font_size_override("font_size",23)
+		cost_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		button.add_child(cost_label)
-		var key_label:=Label.new()
-		key_label.text=str(slot+1)
-		key_label.position=Vector2(152,9)
-		key_label.add_theme_font_size_override("font_size",14)
-		key_label.mouse_filter=Control.MOUSE_FILTER_IGNORE
-		button.add_child(key_label)
 		cards.append({"button":button,"icon":icon,"name":name_label,"cost":cost_label})
-	energy_bar=ProgressBar.new()
-	energy_bar.position=Vector2(356,924)
-	energy_bar.size=Vector2(734,17)
-	energy_bar.max_value=10
-	energy_bar.show_percentage=false
-	var fill:=StyleBoxFlat.new()
-	fill.bg_color=Color("b178ec")
+	energy_bar = ProgressBar.new()
+	energy_bar.position = Vector2(379,931)
+	energy_bar.size = Vector2(708,12)
+	energy_bar.max_value = 10
+	energy_bar.show_percentage = false
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color("c37af1")
 	fill.set_corner_radius_all(6)
 	energy_bar.add_theme_stylebox_override("fill",fill)
 	add_child(energy_bar)
-	energy_label=_label("5 / 10",Vector2(249,913),23,Color("d3a9ff"))
-	_label("ELIXIR",Vector2(173,920),15,Color("b19dc7"))
-	notice_label=_label("",Vector2(30,794),17,Color("f1cc8c"))
-	notice_label.size=Vector2(282,110)
-	notice_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	battle_overlay=_panel(Rect2(460,285,520,286),Color("102236"))
-	overlay_title=_label("ENTER THE ARENA",Vector2(493,310),29,Color("f4d999"))
-	overlay_text=_paragraph("Four cards. Two lanes. One temple to break.\n\nChoose a card and deploy on the blue half.\nYour troops take it from there.",Vector2(493,365),Vector2(450,120),19)
-	start_button=_button("BATTLE",Vector2(590,501),Vector2(260,48),_start_or_restart)
+	energy_label = _label("5 / 10",Vector2(289,843),24,Color("e9b5ff"))
+	_label("ELIXIR",Vector2(291,879),13,Color("b4a0cc"))
+	notice_label = _paragraph("",Vector2(25,747),Vector2(215,176),16)
+	battle_overlay = _panel(Rect2(445,290,550,294),Color("102b3e"))
+	overlay_title = _label("ENTER THE ARENA",Vector2(480,317),30,Color("ffdda0"))
+	overlay_text = _paragraph("Four cards. Two lanes. One temple to break.\n\nChoose a card and deploy on the blue half.\nYour troops take it from there.",Vector2(480,374),Vector2(480,120),19)
+	start_button = _button("BATTLE",Vector2(580,510),Vector2(280,50),_start_or_restart)
+	var battle_style := StyleBoxFlat.new()
+	battle_style.bg_color = Color("b7792d")
+	battle_style.border_color = Color("ffe0a0")
+	battle_style.set_border_width_all(2)
+	battle_style.set_corner_radius_all(12)
+	start_button.add_theme_stylebox_override("normal",battle_style)
 
 func _panel(rect:Rect2,color:Color) -> Panel:
 	var panel:=Panel.new()
@@ -175,7 +202,7 @@ func _panel(rect:Rect2,color:Color) -> Panel:
 	panel.size=rect.size
 	var style:=StyleBoxFlat.new()
 	style.bg_color=color
-	style.border_color=Color("345065")
+	style.border_color=Color("5d665b")
 	style.set_border_width_all(1)
 	style.set_corner_radius_all(12)
 	panel.add_theme_stylebox_override("panel",style)
@@ -223,10 +250,18 @@ func _process(delta:float) -> void:
 			_accumulator-=0.1
 			changed=true
 		if changed: _refresh()
+
+	for slot in cards.size():
+		var button: Button = cards[slot].button
+		var active: bool = slot == selected_slot
+		button.position.y = lerpf(button.position.y, 779.0 if active else 791.0, 1.0-exp(-delta*18.0))
+		button.scale = button.scale.lerp(Vector2.ONE * (1.045 if active else 1.0),1.0-exp(-delta*18.0))
+	if selected_slot >= 0 and _last_pointer.x > -900: _preview(_last_pointer)
 	if board and not state.is_empty(): board.show_state(state,delta)
 
 func _refresh() -> void:
 	state=session.snapshot()
+	if sound: sound.consume_state(state)
 	var seconds:=maxi(0,int(ceil(float(state.time_remaining))))
 	timer_label.text="%d:%02d" % [seconds/60,seconds%60]
 	match_label.text="DOUBLE ELIXIR" if float(state.elapsed)>=120 else "PRACTICE MATCH"
@@ -237,7 +272,8 @@ func _refresh() -> void:
 	score_label.text="YOU %s  :  %s RIVAL" % [crowns[0],crowns[1]]
 	energy_label.text="%s / 10" % int(floor(state.energy[0]))
 	energy_bar.value=state.energy[0]
-	next_label.text=catalog.get(state.get("next_card",""),{}).get("name","—")
+	get_node("NextArt").texture = _texture(state.get("next_card","hoplites"))
+	next_label.text=catalog.get(state.get("next_card",""),{}).get("name","-")
 	for slot in 4:
 		var kind:String=state.hand[slot]
 		var card:Dictionary=catalog[kind]
@@ -249,27 +285,33 @@ func _refresh() -> void:
 		cards[slot].button.disabled=state.phase=="finished"
 	if selected_slot>=0:
 		var kind:String=state.hand[selected_slot]
-		selection_label.text=catalog[kind].name+" · "+str(catalog[kind].cost)
+		selection_label.text=catalog[kind].name+" Â· "+str(catalog[kind].cost)
 		description_label.text=catalog[kind].description
 		card_preview.texture=_texture(kind)
 	else:
 		selection_label.text="Choose your next card" if started else "Pick your opening"
 		description_label.text="Select a card below, then click your half of the arena. Your troops will move and fight automatically."
-		card_preview.texture=null
+		card_preview.texture=_texture(state.hand[0])
 	notice_label.text=notice
 	if state.phase=="finished":
 		paused=false
 		selected_slot=-1
 		_show_overlay(true)
 		overlay_title.text="VICTORY!" if state.winner==0 else "DEFEAT" if state.winner==1 else "DRAW"
-		overlay_text.text="Towers taken: %s — %s\n\n" % [crowns[0],crowns[1]]+("Your heroes have conquered the arena." if state.winner==0 else "Try a different push. Save elixir for defense." if state.winner==1 else "The temples stand. Settle it in a rematch.")
+		overlay_text.text="Towers taken: %s â€” %s\n\n" % [crowns[0],crowns[1]]+("Your heroes have conquered the arena." if state.winner==0 else "Try a different push. Save elixir for defense." if state.winner==1 else "The temples stand. Settle it in a rematch.")
 		start_button.text="REMATCH"
 	board.show_state(state,0.0)
 
 func _texture(kind:String) -> Texture2D:
 	if not _textures.has(kind):
-		var path:="res://assets/olympus_arena/"+kind+".svg"
-		_textures[kind]=load(path) if ResourceLoader.exists(path) else null
+		var order := ["hoplites","atalanta","minotaur","medusa","heracles","hydra","harpies","thunderbolt"]
+		var index := order.find(kind)
+		if index < 0: return null
+		var atlas := AtlasTexture.new()
+		atlas.atlas = preload("res://assets/olympus_arena/card-atlas-v1.png")
+		atlas.region = Rect2((index % 4)*384,(index / 4)*512,384,512)
+		atlas.filter_clip = true
+		_textures[kind] = atlas
 	return _textures[kind]
 
 func _show_overlay(show:bool) -> void:
@@ -324,7 +366,7 @@ func _preview(local:Vector2) -> void:
 		return
 	var point:Vector2=board.pick_ground(local,Vector2(viewport.size))
 	var valid:bool=session.preview_deploy(selected_slot,point).get("ok",false)
-	board.show_deployment(point,valid,state.hand[selected_slot]=="thunderbolt")
+	board.show_deployment(point,valid,state.hand[selected_slot]=="thunderbolt",state.hand[selected_slot])
 
 func _deploy_at(local:Vector2) -> void:
 	if not started:
