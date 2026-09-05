@@ -17,6 +17,7 @@ const SYMBOLS = {
 @export var piece_theme: Resource = preload("res://themes/wooden_pieces.tres")
 var _pieces: Node3D
 var _markers: Node3D
+var _cursor: Node3D
 var _camera: Camera3D
 var _flipped: bool = false
 var _zoom: float = 11.8
@@ -30,6 +31,8 @@ func _ready() -> void:
     add_child(_pieces)
     _markers = Node3D.new()
     add_child(_markers)
+    _cursor = Node3D.new()
+    add_child(_cursor)
     if not _snapshot.is_empty():
         show_position(_snapshot)
 
@@ -268,6 +271,24 @@ func set_flipped(value: bool) -> void:
     _flipped = value
     if is_instance_valid(_camera):
         _update_camera()
+
+func show_keyboard_cursor(square: int) -> void:
+    if not is_instance_valid(_cursor):
+        return
+    for child in _cursor.get_children():
+        _cursor.remove_child(child)
+        child.queue_free()
+    if square < 0 or square > 63:
+        return
+    # Raised corner brackets are distinct from selected-square and legal markers.
+    var center := square_position(square) + Vector3.UP * 0.27
+    var material := _plain(Color("66ccdf"))
+    material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+    var s: float = board_theme.square_size * 0.47
+    for x in [-1.0, 1.0]:
+        for z in [-1.0, 1.0]:
+            _box(_cursor, Vector3(0.19, 0.025, 0.038), center + Vector3(x * (s - 0.075), 0.0, z * s), material)
+            _box(_cursor, Vector3(0.038, 0.025, 0.19), center + Vector3(x * s, 0.0, z * (s - 0.075)), material)
 
 func zoom_by(amount: float) -> void:
     _zoom = clampf(_zoom + amount, 10.0, 15.5)

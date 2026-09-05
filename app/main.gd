@@ -5,7 +5,10 @@ const Board = preload("res://presentation/board_view.gd")
 const Opponent = preload("res://ai/local_opponent.gd")
 const Tutor = preload("res://ai/tutor_context.gd")
 const MoveAudio = preload("res://presentation/move_audio.gd")
+const Preferences = preload("res://core/preferences.gd")
+const PGN = preload("res://games/chess/pgn.gd")
 var save_path: String = "user://cabinet-chess-v1.json"
+var preferences_path: String = "user://cabinet-preferences-v1.json"
 var session = Session.new()
 var board_view
 var board_viewport: SubViewport
@@ -24,6 +27,7 @@ var promotion_dialog: ConfirmationDialog
 var new_dialog: ConfirmationDialog
 var _promotion_moves: Array = []
 var _promotion_revision: int = -1
+var _promotion_buttons: Dictionary = {}
 var _worker: Thread
 var _analysis_busy: bool = false
 var _closing: bool = false
@@ -34,11 +38,28 @@ var _review_ply: int = -1
 var _review_label: Label
 var _review_back: Button
 var _review_next: Button
+var _settings: Dictionary
+var _board_surface: SubViewportContainer
+var _keyboard_square: int = 12
+var _keyboard_active: bool = false
+var _board_caption: Label
+var _reduced_motion: bool = false
+var _draw_dialog: ConfirmationDialog
+var _draw_picker: OptionButton
+var _draw_moves: Array = []
+var _draw_revision: int = -1
+var _export_dialog: FileDialog
+var _export_text: String = ""
 
 func _ready() -> void:
-	_build_ui()
+	_settings = Preferences.read_settings(preferences_path)
+	practice = _settings["practice"]
+	flipped = _settings["flipped"]
+	_reduced_motion = _settings["reduced_motion"]
 	_move_audio = MoveAudio.new()
 	add_child(_move_audio)
+	_move_audio.set_muted(_settings["muted"])
+	_build_ui()
 	session.changed.connect(_on_changed)
 	_refresh()
 	for argument in OS.get_cmdline_user_args():
@@ -93,7 +114,18 @@ func _build_ui() -> void:
 	board_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	columns.add_child(board_column)
 	var container := SubViewportContainer.new()
+	_board_surface = container
 	container.name = "BoardSurface"
+	container.focus_mode = Control.FOCUS_ALL
+	container.gui_input.connect(_board_key_input)
+	container.focus_entered.connect(func():
+		_keyboard_active = true
+		_update_keyboard_cursor()
+	)
+	container.focus_exited.connect(func():
+		_keyboard_active = false
+		_update_keyboard_cursor()
+	)
 	container.stretch = true
 	container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -105,10 +137,14 @@ func _build_ui() -> void:
 	container.add_child(board_viewport)
 	board_view = Board.new()
 	board_viewport.add_child(board_view)
-	board_view.square_clicked.connect(request_square)
-	var instructions := _label("Select a chip, then a marked square.  •  F: turn board  •  Esc: clear selection", 14, Color("aeb7a8"))
+	board_view.square_clicked.connect(_mouse_square)
+	board_view.set_flipped(flipped)
+	var instructions := _label("Click a chip, then a marked square.  •  Tab: focus board  •  Arrows + Enter: play", 14, Color("aeb7a8"))
 	instructions.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	board_column.add_child(instructions)
+	_board_caption = _label("F: turn board  ·  Esc: clear  ·  Mouse wheel: zoom", 14, Color("c8ba96"))
+	_board_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	board_column.add_child(_board_caption)
 	var side := VBoxContainer.new()
 	side.custom_minimum_size.x = 330
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -116,6 +152,7 @@ func _build_ui() -> void:
 	var sidebar_scroll := ScrollContainer.new()
 	sidebar_scroll.custom_minimum_size.x = 345
 	sidebar_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	sidebar_scroll.follow_focus = true
 	columns.add_child(sidebar_scroll)
 	sidebar_scroll.add_child(side)
 	side.add_child(_label("The wooden set", 32))
@@ -128,6 +165,7 @@ func _build_ui() -> void:
 	_mode_picker = OptionButton.new()
 	_mode_picker.add_item("Play the practice opponent")
 	_mode_picker.add_item("Two players at this board")
+	_mode_picker.select(0 if practice else 1)
 	_mode_picker.item_selected.connect(_change_mode)
 	side.add_child(_mode_picker)
 	var controls := HBoxContainer.new()
@@ -140,7 +178,7 @@ func _build_ui() -> void:
 	side.add_child(storage)
 	storage.add_child(_button("Save", _save))
 	storage.add_child(_button("Load", _load_save))
-	draw_button = _button("Claim draw", func(): session.claim_draw())
+	draw_button = _button("Claim draw", _open_draw_claim)
 	storage.add_child(draw_button)
 	var review_controls := HBoxContainer.new()
 	side.add_child(review_controls)
@@ -166,6 +204,13 @@ func _build_ui() -> void:
 	history_label.scroll_following = true
 	history_label.selection_enabled = true
 	side.add_child(history_label)
+	var record_actions := HBoxContainer.new()
+	side.add_child(record_actions)
+	record_actions.add_child(_button("Copy PGN", func():
+		DisplayServer.clipboard_set(PGN.export_game(session))
+		notice_label.text = "Game record copied in PGN format."
+	))
+	record_actions.add_child(_button("Export PGN…", _open_export))
 	side.add_child(HSeparator.new())
 	side.add_child(_label("AT THE BOARD", 13, Color("bfa875")))
 	tutor_label = _label("", 16)
@@ -177,9 +222,23 @@ func _build_ui() -> void:
 	side.add_child(limits)
 	var sound := CheckButton.new()
 	sound.text = "Wooden move sound"
-	sound.button_pressed = true
-	sound.toggled.connect(func(enabled: bool): _move_audio.set_muted(not enabled))
+	sound.button_pressed = not _settings["muted"]
+	sound.toggled.connect(func(enabled: bool):
+		_move_audio.set_muted(not enabled)
+		_settings["muted"] = not enabled
+		_persist_preferences()
+	)
 	side.add_child(sound)
+	var motion := CheckButton.new()
+	motion.text = "Reduced motion"
+	motion.button_pressed = _reduced_motion
+	motion.toggled.connect(func(enabled: bool):
+		_reduced_motion = enabled
+		_settings["reduced_motion"] = enabled
+		board_view.show_position(_display_state().board)
+		_persist_preferences()
+	)
+	side.add_child(motion)
 	notice_label = _label("", 14, Color("e1c48b"))
 	notice_label.custom_minimum_size.y = 32
 	side.add_child(notice_label)
@@ -189,7 +248,9 @@ func _build_ui() -> void:
 	promotion_dialog.get_ok_button().hide()
 	for kind in ["q", "r", "b", "n"]:
 		var titles: Dictionary = {"q": "Queen", "r": "Rook", "b": "Bishop", "n": "Knight"}
-		promotion_dialog.add_button(titles[kind], false, kind)
+		var choice: Button = promotion_dialog.add_button(titles[kind], false, kind)
+		choice.name = "Promote_" + kind
+		_promotion_buttons[kind] = choice
 	promotion_dialog.custom_action.connect(_promote)
 	add_child(promotion_dialog)
 	new_dialog = ConfirmationDialog.new()
@@ -197,6 +258,22 @@ func _build_ui() -> void:
 	new_dialog.dialog_text = "The current board and move record will be replaced.\nSave first if you want to return to this game."
 	new_dialog.confirmed.connect(func(): session.new_game())
 	add_child(new_dialog)
+	_draw_dialog = ConfirmationDialog.new()
+	_draw_dialog.title = "Claim a draw"
+	_draw_dialog.dialog_text = "Declare a qualifying move. The game ends as a draw.\nThe declared move is not played on the board."
+	_draw_dialog.get_ok_button().text = "Declare and claim"
+	_draw_picker = OptionButton.new()
+	_draw_dialog.add_child(_draw_picker)
+	_draw_dialog.confirmed.connect(_confirm_draw_claim)
+	add_child(_draw_dialog)
+	_export_dialog = FileDialog.new()
+	_export_dialog.title = "Export game record"
+	_export_dialog.access = FileDialog.ACCESS_FILESYSTEM
+	_export_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	_export_dialog.add_filter("*.pgn", "Portable Game Notation")
+	_export_dialog.current_file = "cabinet-game.pgn"
+	_export_dialog.file_selected.connect(_write_pgn)
+	add_child(_export_dialog)
 
 func _label(text: String, font_size: int = 17, color: Color = Color("e6dfca")) -> Label:
 	var label := Label.new()
@@ -227,6 +304,7 @@ func request_square(square: int) -> void:
 		_promotion_moves = options
 		_promotion_revision = session.revision
 		promotion_dialog.popup_centered()
+		_promotion_buttons["q"].grab_focus()
 		return
 	if options.size() == 1:
 		_commit_move(options[0])
@@ -248,6 +326,7 @@ func _on_changed(_revision: int) -> void:
 	selected = -1
 	_review_ply = -1
 	promotion_dialog.hide()
+	_draw_dialog.hide()
 	notice_label.text = ""
 	_refresh()
 	_maybe_opponent.call_deferred()
@@ -260,7 +339,7 @@ func _refresh() -> void:
 	if _review_ply >= 0:
 		status_label.text = "Review · ply %d" % _review_ply
 		detail_label.text = "Live game preserved · use Live to return"
-	board_view.show_position(state.board, _animate_next)
+	board_view.show_position(state.board, _animate_next and not _reduced_motion)
 	_animate_next = false
 	_refresh_highlights()
 	var moves: Array = session.history()
@@ -270,7 +349,8 @@ func _refresh() -> void:
 		lines.append("%2d.   %-9s %s" % [index / 2 + 1, notation[index], notation[index + 1] if index + 1 < notation.size() else "…"])
 	history_label.text = "Your move record will appear here.\nStandard chess notation · Nf3" if lines.is_empty() else "\n".join(lines)
 	undo_button.disabled = moves.is_empty() or _review_ply >= 0
-	draw_button.disabled = not session.draw_claim_available() or _review_ply >= 0
+	var claims_available: bool = session.draw_claim_available() or not session.draw_claim_moves().is_empty()
+	draw_button.disabled = not claims_available or _review_ply >= 0 or (practice and state.turn == "b")
 	hint_button.disabled = not terminal.is_empty() or _analysis_busy or _review_ply >= 0
 	_review_label.text = "Live board" if _review_ply < 0 else "%d / %d plies" % [_review_ply, moves.size()]
 	_review_back.disabled = moves.is_empty() or _review_ply == 0
@@ -290,6 +370,7 @@ func _refresh_highlights() -> void:
 	if Rules.in_check(state, state.turn):
 		checked_square = state.board.find("K" if state.turn == "w" else "k")
 	board_view.show_highlights(selected, targets, moves.back()["from"] if not moves.is_empty() else -1, moves.back()["to"] if not moves.is_empty() else -1, checked_square)
+	_update_keyboard_cursor()
 
 func _undo() -> void:
 	var was_white: bool = session.snapshot().turn == "w"
@@ -299,12 +380,17 @@ func _undo() -> void:
 func _flip() -> void:
 	flipped = not flipped
 	board_view.set_flipped(flipped)
+	_settings["flipped"] = flipped
+	_persist_preferences()
+	_update_keyboard_cursor()
 
 func _change_mode(index: int) -> void:
 	practice = index == 0
+	_settings["practice"] = practice
 	_mode_picker.select(index)
 	# Bump the session revision without changing history to invalidate old analysis.
 	session.load_payload(session.save_payload())
+	_persist_preferences()
 
 func _save() -> void:
 	var temporary: String = save_path + ".tmp"
@@ -411,6 +497,106 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_ESCAPE:
 			selected = -1
 			_refresh_highlights()
+
+func _display_state():
+	return session.snapshot_at(_review_ply) if _review_ply >= 0 else session.snapshot()
+
+func _mouse_square(square: int) -> void:
+	_board_surface.grab_focus()
+	_keyboard_active = false
+	_keyboard_square = square
+	request_square(square)
+	_update_keyboard_cursor()
+
+func _board_key_input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.pressed:
+		return
+	var dx: int = 0
+	var dy: int = 0
+	match event.keycode:
+		KEY_LEFT: dx = -1
+		KEY_RIGHT: dx = 1
+		KEY_UP: dy = 1
+		KEY_DOWN: dy = -1
+		KEY_ENTER, KEY_KP_ENTER, KEY_SPACE:
+			if not event.echo:
+				request_square(_keyboard_square)
+		KEY_ESCAPE:
+			selected = -1
+			_refresh_highlights()
+		KEY_F:
+			if not event.echo:
+				_flip()
+		_:
+			return
+	if flipped:
+		dx = -dx
+		dy = -dy
+	_keyboard_square = clampi(_keyboard_square / 8 + dy, 0, 7) * 8 + clampi(_keyboard_square % 8 + dx, 0, 7)
+	_keyboard_active = true
+	_update_keyboard_cursor()
+	_board_surface.accept_event()
+
+func _update_keyboard_cursor() -> void:
+	if not is_instance_valid(board_view) or not is_instance_valid(_board_caption):
+		return
+	var active: bool = _keyboard_active and _board_surface.has_focus()
+	board_view.show_keyboard_cursor(_keyboard_square if active else -1)
+	if not active:
+		_board_caption.text = "F: turn board  ·  Esc: clear  ·  Mouse wheel: zoom"
+		return
+	var state = _display_state()
+	var piece: String = state.board[_keyboard_square]
+	var names: Dictionary = {"p": "pawn", "n": "knight", "b": "bishop", "r": "rook", "q": "queen", "k": "king"}
+	var description: String = "empty" if piece.is_empty() else ("White " if piece == piece.to_upper() else "Black ") + names[piece.to_lower()]
+	var square_name: String = "abcdefgh"[_keyboard_square % 8] + str(_keyboard_square / 8 + 1)
+	var destination: bool = false
+	if selected >= 0 and _review_ply < 0:
+		for move in session.legal_moves():
+			if move["from"] == selected and move["to"] == _keyboard_square:
+				destination = true
+	_board_caption.text = "%s · %s%s" % [square_name, description, " · legal destination" if destination else (" · selected" if selected == _keyboard_square else "")]
+
+func _persist_preferences() -> void:
+	if Preferences.write_settings(preferences_path, _settings) != OK:
+		notice_label.text = "Setting changed for this session; it could not be saved."
+
+func _open_draw_claim() -> void:
+	if _review_ply >= 0 or (practice and session.snapshot().turn == "b"):
+		return
+	if session.draw_claim_available():
+		session.claim_draw()
+		return
+	_draw_moves = session.draw_claim_moves()
+	if _draw_moves.is_empty():
+		return
+	_draw_revision = session.revision
+	_draw_picker.clear()
+	for move in _draw_moves:
+		_draw_picker.add_item(Rules.san(session.snapshot(), move) + "  (" + Rules.uci(move) + ")")
+	_draw_dialog.popup_centered(Vector2i(500, 180))
+	_draw_picker.grab_focus()
+
+func _confirm_draw_claim() -> void:
+	if _draw_picker.selected >= 0 and _draw_picker.selected < _draw_moves.size():
+		if not session.claim_draw_with_move(_draw_moves[_draw_picker.selected], _draw_revision):
+			notice_label.text = "The position changed; the draw declaration was not applied."
+
+func _open_export() -> void:
+	# Capture the visible game's live record now; later moves cannot alter this export.
+	_export_text = PGN.export_game(session)
+	_export_dialog.popup_centered_ratio(0.7)
+
+func _write_pgn(path: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		notice_label.text = "The game record could not be written. Your game is still here."
+		return
+	file.store_string(_export_text)
+	file.flush()
+	var error: Error = file.get_error()
+	file.close()
+	notice_label.text = "Game record exported." if error == OK else "The game record could not be written."
 
 func _exit_tree() -> void:
 	_closing = true

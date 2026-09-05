@@ -33,6 +33,7 @@ func play(uci: String) -> void:
 func _run() -> void:
 	app = Main.instantiate()
 	app.save_path = "user://test-cabinet-%d.json" % OS.get_process_id()
+	app.preferences_path = "user://test-cabinet-prefs-%d.json" % OS.get_process_id()
 	root.add_child(app)
 	await process_frame
 	await process_frame
@@ -134,6 +135,7 @@ func _run() -> void:
 			var result: Error = root.get_texture().get_image().save_png(argument.trim_prefix("--test-capture="))
 			expect(result == OK, "Integration capture saved")
 	DirAccess.remove_absolute(app.save_path)
+	DirAccess.remove_absolute(app.preferences_path)
 	app.queue_free()
 	await process_frame
 	await process_frame
