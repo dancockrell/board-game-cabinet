@@ -80,13 +80,9 @@ func _build_ui() -> void:
 	selection_label=_label("Pick your opening",Vector2(42,336),23,Color("f3d79b"))
 	selection_label.size=Vector2(230,64)
 	selection_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	description_label=_label("Select one of the four cards below the arena. Deploy troops on your side; they will cross a bridge and fight automatically.",Vector2(42,410),18,Color("d0e0e8"))
-	description_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	description_label.size=Vector2(226,158)
+	description_label=_paragraph("Select one of the four cards below the arena. Deploy troops on your side; they will cross a bridge and fight automatically.",Vector2(42,410),Vector2(226,158),18)
 	_label("HOW TO WIN",Vector2(42,588),15,Color("94b7d0"))
-	var win_help:=_label("Destroy the enemy temple to win immediately. Otherwise, take more towers before time runs out.",Vector2(42,622),17,Color("d0e0e8"))
-	win_help.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	win_help.size=Vector2(226,112)
+	_paragraph("Destroy the enemy temple to win immediately. Otherwise, take more towers before time runs out.",Vector2(42,622),Vector2(226,112),17)
 	surface=SubViewportContainer.new()
 	surface.position=Vector2(306,99)
 	surface.size=Vector2(828,675)
@@ -110,9 +106,7 @@ func _build_ui() -> void:
 	next_label=_label("",Vector2(1168,345),22,Color("f3d79b"))
 	next_label.size=Vector2(228,64)
 	next_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	var tip:=_label("Elixir refills over time. Save for a powerful monster, or defend with cheaper troops.\n\nThe final minute gives double elixir.",Vector2(1168,427),17,Color("d0e0e8"))
-	tip.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	tip.size=Vector2(228,160)
+	_paragraph("Elixir refills over time. Save for a powerful monster, or defend with cheaper troops.\n\nThe final minute gives double elixir.",Vector2(1168,427),Vector2(228,160),17)
 	pause_button=_button("Pause",Vector2(1168,613),Vector2(108,42),_toggle_pause)
 	_button("Restart",Vector2(1290,613),Vector2(108,42),_restart_confirm)
 	var mute:=CheckButton.new()
@@ -172,9 +166,7 @@ func _build_ui() -> void:
 	notice_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	battle_overlay=_panel(Rect2(460,285,520,286),Color("102236"))
 	overlay_title=_label("ENTER THE ARENA",Vector2(493,310),29,Color("f4d999"))
-	overlay_text=_label("Four cards. Two lanes. One temple to break.\n\nChoose a card and deploy on the blue half.\nYour troops take it from there.",Vector2(493,365),19,Color("d4e4ee"))
-	overlay_text.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	overlay_text.size=Vector2(450,120)
+	overlay_text=_paragraph("Four cards. Two lanes. One temple to break.\n\nChoose a card and deploy on the blue half.\nYour troops take it from there.",Vector2(493,365),Vector2(450,120),19)
 	start_button=_button("BATTLE",Vector2(590,501),Vector2(260,48),_start_or_restart)
 
 func _panel(rect:Rect2,color:Color) -> Panel:
@@ -197,6 +189,18 @@ func _label(text:String,at:Vector2,font_size:int,color:Color) -> Label:
 	label.position=at
 	label.add_theme_font_size_override("font_size",font_size)
 	label.add_theme_color_override("font_color",color)
+	label.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	add_child(label)
+	return label
+
+func _paragraph(text:String,at:Vector2,dimensions:Vector2,font_size:int) -> Label:
+	var label:=Label.new()
+	label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	label.position=at
+	label.size=dimensions
+	label.add_theme_font_size_override("font_size",font_size)
+	label.add_theme_color_override("font_color",Color("d0e0e8"))
+	label.text=text
 	label.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	add_child(label)
 	return label
@@ -248,6 +252,10 @@ func _refresh() -> void:
 		selection_label.text=catalog[kind].name+" · "+str(catalog[kind].cost)
 		description_label.text=catalog[kind].description
 		card_preview.texture=_texture(kind)
+	else:
+		selection_label.text="Choose your next card" if started else "Pick your opening"
+		description_label.text="Select a card below, then click your half of the arena. Your troops will move and fight automatically."
+		card_preview.texture=null
 	notice_label.text=notice
 	if state.phase=="finished":
 		paused=false
