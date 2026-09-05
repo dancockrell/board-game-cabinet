@@ -23,9 +23,17 @@ A card must show the unit's name and elixir cost before selection. The selected 
 
 Network multiplayer, accounts, matchmaking, collectible upgrades, progression, purchases, a deck-building collection screen, and a full commercial game's balance are outside this first build. Greek heroes and monsters supply the unit identities; no campaign fiction is necessary to explain a match.
 
+## Playing the current build
+
+The main project now opens Olympus Arena. Press **BATTLE** to start; the match clock waits until then. Click a card or press **1–4**, then click the blue half of the arena to deploy. Alternatively, drag a card onto the arena. Thunderbolt can target either half. Troops walk and fight automatically.
+
+Press **Escape** to clear card selection. Press **Space** or click **Pause / Resume** to pause or resume. **Restart** asks before replacing the current match; confirm, then press BATTLE to begin again. The result screen offers **REMATCH**. The chess-table button returns to the existing wooden chess game. The Sound switch controls the synthesized arena audio.
+
+The deck is fixed in this prototype; there is no deck editor. Card descriptions and elixir costs describe the actual implemented units. The models are stylized procedural placeholders with original silhouettes, not finished character art.
+
 ## Implemented rules checkpoint
 
-The pure session has been implemented. Its standalone suite reports 738 passing checks at rules commit `c1026e3`; integrated scene checks and packaging are separate. The exact formulas live in [the rules contract](../games/olympus_arena/RULES.md), which takes precedence over this summary.
+The pure session has been implemented. Its standalone suite reports 740 passing checks through rules/integration commit `641fbc2`; integrated scene checks and packaging are separate. The exact formulas live in [the rules contract](../games/olympus_arena/RULES.md), which takes precedence over this summary.
 
 | Card | Elixir | Implemented distinction |
 | --- | --- | --- |
@@ -75,8 +83,10 @@ Improve the original Greek silhouettes in small groups: shields and spears for i
 
 The next useful tests target reproducible combat interactions, legal placement at boundaries, the final seconds of a match, simultaneous objective destruction, opponent affordability, and restart isolation. Do not spend the first polish pass building accounts, a shop, or a generic framework for unrelated games.
 
-## Verification boundary
+## Verification checkpoint
 
-This document records the intended and emerging implementation. Exact unit rules, controls, test results, source commit, and download evidence must be checked against the integrated source and publication record. The older Ninth Gate Windows release does not contain or validate Olympus Arena.
+At integrated source checkpoint `7bff5ce`, the arena rules suite has **740 passing checks**, the native renderer suite **28 passing checks**, and the native application suite **33 passing checks when captures are enabled** (31 without the two capture checks). The native app suite exercises deployment, illegal-action atomicity, pause/resume, card dragging, restart/rematch, outcomes, and a complete battle. These are automated acceptance checks, not a claim of competitive balance or extensive novice playtesting.
 
+Native gameplay and result captures were produced and visually inspected. Gameplay is readable with original 3D procedural models; the character models are still a foundation for a later art pass. A local practice policy drives the opponent. Collision avoidance, save/replay, network play, progression, deck editing, and finished character art remain absent.
 
+Full cabinet regression validation and Windows packaging are separate integration/publication steps. Verify the release notes and build manifest for the actual packaged source and completed checks; the older Ninth Gate release does not contain Olympus Arena.

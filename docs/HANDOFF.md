@@ -15,11 +15,17 @@ Use original Greek characters and presentation assets. Preserve the existing woo
 | Component | Status and evidence boundary |
 | --- | --- |
 | Wooden chess | Existing playable game: pure chess rules, wooden 3D board and chips, mouse/keyboard controls, history, undo, save/load, practice opponent, factual tutor context, and PGN export. Preserve its tests. |
-| Olympus Arena | Active implementation: Greek unit deployment, real-time automatic battles, local opponent, two lanes, three structures per side, cycling cards, and elixir. Current integration must be tested before claiming a finished build. |
+| Olympus Arena | Playable source checkpoint `7bff5ce`: Greek unit deployment, real-time automatic battles, local opponent, two lanes, three structures per side, cycling cards, and elixir. Rules: 740 checks; native renderer: 28; native application: 33 with captures. Packaging and full regression evidence are separate. |
 | The Ninth Gate | Parked historical prototype with rules, 3D source work, and an older 2D prerelease. Its setting and play loop are not the current direction. |
 | Go / Xiangqi / checkers | Previously selected future games; not implemented and not active parallel work. |
 
 The [successful chess checkpoint](https://github.com/dancockrell/board-game-cabinet/actions/runs/33967027800) and [older Ninth Gate CI](https://github.com/dancockrell/board-game-cabinet/actions/runs/33969164766) are historical evidence only. The [Ninth Gate prerelease](https://github.com/dancockrell/board-game-cabinet/releases/tag/ninth-gate-prototype-2026-09-05) is not an Olympus build. For a new download, inspect its release notes and manifest for the packaged source commit. Never treat earlier CI or an older executable as validation of new arena code.
+
+## Current controls and limitations
+
+The main project opens Olympus Arena. Press **BATTLE** to begin; the timer waits for this action. Select a card with a click or **1–4**, then click the blue half to deploy troops, or drag the card onto the board. Thunderbolt targets either half. **Escape** clears selection. **Space** or **Pause / Resume** pauses/resumes. **Restart** requests confirmation before replacing the match; **REMATCH** starts again from the result screen. A chess-table button preserves access to chess.
+
+The fixed eight-card deck has no editor. This is local practice against a basic opponent. There are no accounts, network battles, progression, collection upgrades, arena saves/replay, or collision avoidance. Original procedural Greek models are readable placeholders, not a completed character-art set. Native gameplay/result captures and complete-battle checks passed at `7bff5ce`; full cabinet checks and the Windows export need their own publication record.
 
 ## Actual project boundaries
 
