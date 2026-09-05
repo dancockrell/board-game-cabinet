@@ -375,6 +375,9 @@ func _analysis_finished(response: Dictionary, purpose: String) -> void:
 		_refresh()
 		_maybe_opponent.call_deferred()
 		return
+	if purpose == "hint" and _review_ply >= 0:
+		notice_label.text = "Return to Live to explore a candidate for the current game."
+		return
 	if purpose == "opponent":
 		if practice and session.snapshot().turn == "b":
 			_commit_move(response["move"], response["revision"])

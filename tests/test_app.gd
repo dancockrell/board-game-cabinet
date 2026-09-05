@@ -55,7 +55,11 @@ func _run() -> void:
 	expect(app.board_view._snapshot == app.session.snapshot().board, "View equals authoritative board after move")
 	expect(app.history_label.text.contains("e4"), "SAN record shows e4")
 	var live_revision: int = app.session.revision
+	app._start_analysis("hint")
 	app._review(-1)
+	while app._analysis_busy:
+		await process_frame
+	expect(app.selected == -1, "Pending live hint cannot mark a historical board")
 	expect(app.board_view._snapshot == app.session.snapshot_at(0).board, "Review renders earlier snapshot")
 	expect(app.session.revision == live_revision and app.session.history().size() == 1, "Review leaves live state unchanged")
 	app.request_square(52)

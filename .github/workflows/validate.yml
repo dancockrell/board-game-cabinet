@@ -20,7 +20,9 @@ jobs:
           chmod +x Godot_v4.3-stable_linux.x86_64
           echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
       - name: Import and parse
-        run: Godot_v4.3-stable_linux.x86_64 --headless --path . --editor --import --quit
+        run: |
+          Godot_v4.3-stable_linux.x86_64 --headless --path . --editor --import --quit 2>&1 | tee "$RUNNER_TEMP/godot-import.log"
+          ! grep -E 'SCRIPT ERROR|Parse Error|^ERROR:' "$RUNNER_TEMP/godot-import.log"
       - name: Chess rules and independent oracle
         run: |
           Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_chess.gd
