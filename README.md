@@ -2,7 +2,7 @@
 
 A playable Godot desktop chess table with a wooden board, round wooden chips, and burned-symbol shading. The app separates authoritative chess state from 3D presentation and uses reusable theme Resources so the simple static set can become a foundation for more sets and, later, other games.
 
-The current build includes legal chess moves and special moves, turn handling, legal/capture/check/last-move indicators, four-choice promotion, SAN move history, undo, immutable position review, transactional save/load, a two-ply local practice opponent, and factual tutor context with candidate moves. Chips lift, slide, and settle; wooden taps can be muted. The board can be turned without changing logical positions or picking correctness.
+The current build includes legal chess moves and special moves, turn handling, legal/capture/check/last-move indicators, four-choice promotion, SAN move history, undo, immutable position review, transactional save/load, a two-ply local practice opponent, and factual tutor context with candidate moves. Chips lift, slide, and settle; wooden taps can be muted. The board supports mouse and keyboard play, screen-relative navigation in either orientation, and persisted table preferences. Full games can be copied or exported as PGN, and draw claims can declare an intended move without playing it.
 
 The [production plan](docs/PLAN.md) contains the architecture, full acceptance gates, 35 original parallel slices, their delivery status, and practical next slices. [Verification notes](docs/VERIFICATION.md) separate automated coverage, inspected graphics, exported-app checks, and remaining product limitations.
 
@@ -15,13 +15,16 @@ godot --path .
 ```
 
 - Click a piece, then one of its legal destinations. Promotion opens a queen/rook/bishop/knight choice.
+- Press **Tab** until the board has focus, use **arrow keys** to move the square cursor, and **Enter** or **Space** to select a piece and play a legal destination. Arrows follow the visible board in either orientation. **Escape** clears selection. Promotion choices also support keyboard focus and activation.
 - Use the opponent selector for local play or the practice computer.
-- **Undo**, **New**, **Save**, **Load**, and **Claim draw** operate on the authoritative session. The draw button is enabled when a supported current-position claim is available.
+- **Undo**, **New**, **Save**, **Load**, and **Claim draw** operate on the authoritative session. The draw dialog offers supported current-position claims and qualifying intended moves. Declaring a move claims the draw without adding that move to the played history.
 - **Turn board**, or **F**, changes viewing orientation. **Escape** clears selection.
 - **‹** and **›** inspect recorded positions; **Live** returns to the current game. Review does not mutate the active position.
-- **Explore a candidate move** requests a practice-level suggestion. **Wooden move sound** toggles move audio.
+- **Explore a candidate move** requests a practice-level suggestion.
+- **Copy PGN** copies the full live game record; **Export PGN…** opens a file chooser. A historical review position does not truncate the record.
+- **Table settings…** contains **Wooden move sound** and **Reduced motion** controls.
 
-Save/Load uses one local save slot at `user://cabinet-chess-v1.json`. An invalid save leaves the active game intact. Presentation preferences are not persisted yet.
+Save/Load uses one local save slot at `user://cabinet-chess-v1.json`. An invalid save leaves the active game intact. Sound, board orientation, reduced motion and opponent mode are remembered separately in a versioned local preference file. Zoom is not persisted. Invalid preferences fall back to usable defaults.
 
 ## Verify
 
@@ -32,9 +35,9 @@ From the repository root in PowerShell:
 ./tools/verify.ps1 -Godot "C:/path/to/Godot_v4.3-stable_win64_console.exe" -Graphics
 ```
 
-The first command imports the project and runs `test_chess`, `test_chess_oracle`, and `test_session` headlessly. `-Graphics` also runs `test_board` and `test_app` in the Compatibility renderer and needs a usable graphics session. The complete command passed on the tested Windows system.
+The first command imports the project and runs five headless suites: `test_chess`, `test_chess_oracle`, `test_session`, `test_draw_claims` and `test_pgn`. `-Graphics` also runs `test_board`, `test_app` and `test_controls` in the Compatibility renderer and needs a usable graphics session. The complete command passed on the tested Windows system.
 
-The oracle fixture was generated with python-chess 1.11.2 and compares **960 positions and 23,179 legal moves**. The board suite passed **136 checks**. Application integration coverage includes mouse moves, the computer response, save and corrupt-load recovery, undo, castling, en passant, underpromotion, and position review. These checks establish specific behavior; they do not prove every chess position, universal dead-position adjudication, or complete product accessibility.
+The oracle fixture was generated with python-chess 1.11.2 and compares **960 positions and 23,179 legal moves**. The board suite passed **136 checks**. Application integration coverage includes mouse moves, the computer response, save and corrupt-load recovery, undo, castling, en passant, underpromotion, and position review. PGN export has 176 default-run checks plus 14 independently parsed replay fixtures. Controls coverage adds keyboard navigation, promotion, preferences, reduced motion, PGN export and draw dialogs. These checks establish specific behavior; they do not prove every chess position, universal dead-position adjudication, or complete product accessibility.
 
 GitHub CI passed for the implemented checkpoint `35220cb`: [verification run](https://github.com/dancockrell/board-game-cabinet/actions/runs/33965654203). Check the latest repository run before assuming that result applies to later changes.
 
@@ -52,9 +55,9 @@ Replace `godot` with your quoted executable path and PowerShell's `&` invocation
 
 ## Current boundaries
 
-The computer is a local two-ply practice opponent, not Stockfish or a UCI engine connection. Tutor output provides position facts and heuristic candidates; expert tactical explanations and conversational coaching are pending. SAN is implemented, while PGN import/export is not.
+The computer is a local two-ply practice opponent, not Stockfish or a UCI engine connection. Tutor output provides position facts and heuristic candidates; expert tactical explanations and conversational coaching are pending. SAN and standard-start PGN export are implemented; PGN import remains pending. See [PGN scope](docs/PGN.md).
 
-Draw claims currently inspect the existing position. Claims based on announcing an intended next move are pending, as is generic dead-position detection beyond the supported material cases. Xiangqi remains an architectural target. Full keyboard board operation, persistent preferences, multiple save slots, and a complete accessibility review remain open. The branded effect is shader shading on the chip top, not physically recessed silhouette geometry.
+Draw claims support the current position and a declared legal next move, with the declaration retained in saves. Generic dead-position detection beyond the supported material cases remains pending. Xiangqi remains an architectural target. Multiple save slots and a complete accessibility review remain open; screen-reader behavior has not been validated. The branded effect includes restrained height-normal shading on the chip top; physically recessed silhouette geometry remains future work.
 
 ## Design boundaries
 

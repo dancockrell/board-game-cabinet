@@ -7,11 +7,11 @@ This is a working foundation build, with substantial parts of the wooden vertica
 - Godot 4.3 stable, official `77dcf97d8`, GDScript and Compatibility renderer.
 - Windows desktop with NVIDIA GeForce RTX 4070, OpenGL 3.3, driver 591.86.
 - Native captures inspected at the default 1200 × 800 window and the minimum 1000 × 700 window. Board, 32 starting chips, coordinate order, light h1, silhouettes, sidebar and controls fit.
-- `tools/verify.ps1 -Godot <Godot executable> -Graphics` imports the project, runs three headless suites and two native graphical suites. The wrapper checks exit codes and script/error output.
+- `tools/verify.ps1 -Godot <Godot executable> -Graphics` imports the project, runs five headless suites and three native graphical suites. The wrapper checks exit codes and script/error output.
 - GitHub Actions runs fresh Linux import and headless suites using Godot 4.3 downloaded from its official release and checked against upstream SHA-512 sums. Native graphical evidence is local Windows evidence.
 - The Windows export preset embeds the project into one executable. The exported executable launched, rendered a fresh starting-board capture and exited with code 0. Godot licence and third-party copyright notices accompany it.
 
-Godot's dummy headless renderer cannot validate these procedural meshes: launching the 3D scene with `--headless` produced dummy mesh-storage errors. Rules tests remain headless; `test_board.gd` and `test_app.gd` intentionally run native OpenGL. See the official [command-line documentation](https://docs.godotengine.org/en/4.3/tutorials/editor/command_line_tutorial.html) for the import, script and export flags.
+Godot's dummy headless renderer cannot validate these procedural meshes: launching the 3D scene with `--headless` produced dummy mesh-storage errors. Rules tests remain headless; `test_board.gd`, `test_app.gd` and `test_controls.gd` intentionally run native OpenGL. See the official [command-line documentation](https://docs.godotengine.org/en/4.3/tutorials/editor/command_line_tutorial.html) for the import, script and export flags.
 
 ## Tests and evidence
 
@@ -22,7 +22,10 @@ Godot's dummy headless renderer cannot validate these procedural meshes: launchi
 | `tests/test_session.gd` | Illegal/malformed/stale requests are atomic; snapshots/history independent; exact undo; replay and malformed saves; SAN preservation; current-position threefold claims; fivefold auto draws; tutor facts, source revisions, legal/terminal opponent and mate-in-one | Passed |
 | `tests/test_board.gd` | 136 checks: all 64 square centers from both camera orientations; motion endpoints and interruption; castling/promotion mapping; generated PCM and mute | Passed |
 | `tests/test_app.gd` | Mouse events through the board viewport; legal markers and e2e4; SAN/history; actual save overwrite/load/corrupt recovery; stale analysis after undo and during review; live/history isolation; en passant; castling; promotion chooser and knight underpromotion; game result and reopening through undo; actual practice reply and paired undo | Passed |
-| Desktop export | Embedded Windows release build, native launch, starting position screenshot and exit code 0 | Passed |
+| `tests/test_draw_claims.gd` | Intended repetition and fifty-move claims; declaration does not play a move; validation is atomic; saved declarations replay and invalid declarations fail safely | Passed locally |
+| `tests/test_pgn.gd` | 176 checks on a default run; deterministic/escaped headers, SAN, both mate results, castling, all promotions, repetition and undo; 14 emitted fixtures independently parsed and replayed with python-chess to exact FEN, ply count and result | Passed locally |
+| `tests/test_controls.gd` | Keyboard cursor in both orientations, select/move/cancel, modal promotion, preferences round trip and corrupt-file recovery, reduced motion, PGN export and intended-draw dialog integration | Passed locally |
+| Initial desktop export | Embedded Windows release build, native launch, starting position screenshot and exit code 0 | Passed |
 
 The small local opponent takes approximately 18–19 ms from the initial position and 27 ms after e4 on this machine in isolated adapter tests. This is a local timing observation, not a cross-device latency guarantee or strength rating. It searches two plies and is explicitly labelled practice strength.
 
@@ -31,13 +34,23 @@ Runtime images in `images/` are actual Godot captures, not design mockups. `wood
 ## Product status and remaining work
 
 - **Playable foundation:** ordinary/special chess moves, turn/check/result display, local or practice play, selection/legal moves, undo, SAN record, transactional single-slot save, immutable review, camera flip/zoom, motion and optional sound are implemented.
-- **Rules scope:** supported material draws, fivefold repetition and seventy-five-move automatic draws are implemented. The UI claims draws from the current position. Claims based on a declared next move and exhaustive dead-position recognition remain pending. FEN validation is structural; the app currently loads only validated legal replays from the standard start.
-- **Tutor/engine scope:** source-bound position facts and shallow candidates work. There is no Stockfish/UCI process connection, expert tactical explanation, conversational tutor, PGN import/export or Xiangqi game yet.
-- **Visual scope:** physical board/chip geometry and inset chip faces are present. The burned silhouette itself is a rough dark surface shader, not recessed silhouette geometry. This is the initial visual baseline for user review, not a claim of final premium-art approval.
-- **Accessibility and preferences:** mouse board interaction and keyboard shortcuts for flip/clear work. Full keyboard board navigation, reduced-motion preference, persistent sound/camera/mode preferences and accessibility review remain pending. Sidebar scroll protects short windows.
+- **Rules scope:** supported material draws, fivefold repetition and seventy-five-move automatic draws are implemented. The UI claims draws from the current position or by declaring a qualifying legal next move without playing it; saves retain that declaration. Exhaustive dead-position recognition remains pending. FEN validation is structural; the app currently loads only validated legal replays from the standard start.
+- **Tutor/engine scope:** source-bound position facts and shallow candidates work. There is no Stockfish/UCI process connection, expert tactical explanation, conversational tutor, PGN import or Xiangqi game yet. Standard-start full-game PGN copy/export is implemented.
+- **Visual scope:** physical board/chip geometry and inset chip faces are present. The burned silhouette uses rough dark surface shading and subtle height-normal detail. It is not recessed silhouette geometry. This is the initial visual baseline for user review, not a claim of final premium-art approval.
+- **Accessibility and preferences:** mouse and keyboard board interaction, modal keyboard promotion, reduced motion and persisted mute/orientation/practice preferences work. Arrow directions follow the visible board in both orientations. Zoom is not persisted. Full accessibility review, including screen-reader behavior, remains unvalidated. Sidebar scroll protects short windows.
 - **Review and sound evidence:** automated game completion/result and history tests passed. A sustained manual full-game playtest and human listening review of the generated sound remain pending.
 - **Distribution:** Windows release smoke-tested locally; other platforms and code signing are not tested/configured. The repository is private. No release publication or store upload was performed.
 
 ## Corrections made during verification
 
 The first full-screen render revealed header wrapping that expanded the layout and pushed the board off-screen. Header sizing and sidebar layout were corrected and both window sizes inspected. Live hint responses were prevented from marking a historical review board. External square requests now reject fractional and malformed values. The graphical test capture flag was separated from the application's capture flag so a second screenshot timer cannot survive test shutdown. The final native integration run completed without script errors or leaked-object warnings.
+
+## Continuation validation — 5 September 2026
+
+The continuation implementation passed `tools/verify.ps1 -Godot <exe> -Graphics`: five headless suites and three native suites. The unchanged oracle still covers 960 positions and 23,179 legal moves, and the board suite still reports 136 checks. PGN reports 176 checks on its default run; its fixture-producing run adds one file-open assertion. Fourteen PGN fixtures were independently replayed with python-chess.
+
+New coverage exercises keyboard square navigation under both camera orientations, Enter/Space move submission, Escape cancellation, promotion focus, settings persistence and recovery, reduced motion, full-game PGN export while reviewing history, and intended-move draw declarations. These supplement the existing state-authority, special-move, save/load and practice-opponent checks. The latest UI hint/opponent timing regression test awaits the coordinator's final rerun; final continuation graphics/export inspection is ongoing. No final CI or new exported-build success is claimed by this continuation record.
+
+Delivered controls are Tab to focus the board, arrows to navigate visually, Enter/Space to select and move, and Escape to clear selection. Table settings expose sound and reduced motion. Orientation and opponent mode persist alongside those settings; camera zoom remains temporary. Copy PGN and Export PGN operate on the complete authoritative live game. The draw chooser can declare a qualifying next move, retaining the unchanged board and played history while recording the claim metadata.
+
+The next acceptance work is a sustained manual full game, human listening review, focus/contrast and screen-reader testing, and user visual approval of the brand/wood finish. The next substantial implementation is a real UCI engine connection with measured cancellation/failure recovery. Expert tutoring, PGN import, generic dead-position detection, Xiangqi and other themes remain future work. Automated checks and a shader refinement do not alone establish final premium polish.

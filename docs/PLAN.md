@@ -46,16 +46,32 @@ The application source checkpoint `35220cb` was pushed to GitHub, and its [CI ve
 
 | Area | Delivered and checked | Remaining acceptance work |
 | --- | --- | --- |
-| Chess foundation | Plain state/rules; ordinary and special moves; check, mate, stalemate; perft/regressions; python-chess 1.11.2 oracle covering 960 positions and 23,179 legal moves | Claims based on intended next moves; generic dead-position adjudication beyond supported material cases; broader long-game coverage |
-| Session | Validated requests, revisions, snapshots, SAN history, undo, transactional replay save/load, current-position draw claims and implemented automatic draw policy | Multiple save slots and persistent preferences; expanded save migration policy |
-| Board | Wooden 3D board/chips, branded shader appearance, Resource themes, logical picking, flip and move/check markers; 136 board checks passed | Recessed brand geometry is not implemented; further premium material and accessibility review |
-| Input and review | Mouse play, four-choice promotion, immutable `snapshot_at()` review and Live return | Full keyboard board operation and complete accessibility acceptance |
+| Chess foundation | Plain state/rules; ordinary and special moves; check, mate, stalemate; perft/regressions; python-chess 1.11.2 oracle covering 960 positions and 23,179 legal moves | Generic dead-position adjudication beyond supported material cases; broader long-game coverage |
+| Session | Validated requests, revisions, snapshots, SAN history, undo, transactional replay save/load, current-position and intended-move draw claims, persisted declaration metadata and automatic draw policy | Multiple save slots; expanded save migration policy |
+| Board | Wooden 3D board/chips, branded shader appearance with restrained height-normal detail, Resource themes, logical picking, flip and move/check markers; 136 board checks passed | Recessed brand geometry is not implemented; further premium material and accessibility review |
+| Input and review | Mouse and keyboard play in either orientation, modal keyboard promotion, immutable `snapshot_at()` review and Live return | Complete accessibility acceptance, including screen-reader review |
 | Practice and help | Local two-ply computer, revision-bound results, factual position context, candidate suggestions | Stockfish/UCI integration, expert explanations, conversational tutoring |
-| Feedback | Lift/slide/settle movement and muteable wooden taps | Complete listening/accessibility review and persistent user preferences |
-| Test and release | `test_chess`, `test_chess_oracle`, `test_session`, `test_board`, `test_app`; application checks include mouse/computer/save/corrupt-load/undo/castling/en-passant/underpromotion/review; successful CI and Windows export smoke | Exhaustive chess proof is not claimed; full manual acceptance ledger and broader device/platform coverage |
-| Cabinet roadmap | Game definition/topology seam and reusable static-piece theme system | PGN import/export, Xiangqi, additional admitted themes, animated character sets |
+| Feedback | Lift/slide/settle movement, muteable wooden taps, reduced motion and persisted sound/orientation/mode preferences | Complete listening/accessibility review; zoom remains transient |
+| Test and release | Five headless and three native suites; rules, session, draw claims, PGN, board, app and controls; earlier checkpoint CI and Windows export smoke | Exhaustive chess proof is not claimed; full manual acceptance ledger and broader device/platform coverage |
+| Cabinet roadmap | Game definition/topology seam and reusable static-piece theme system | PGN import, Xiangqi, additional admitted themes, animated character sets |
 
-The implemented breadth exceeds a bare board prototype. It still does not close every acceptance gate above: teacher-quality explanations, full keyboard play, comprehensive draw/dead-position policy, and the complete polish review remain explicit work.
+The implemented breadth exceeds a bare board prototype. It still does not close every acceptance gate above: teacher-quality explanations, generic dead-position policy, full accessibility acceptance, and the complete polish review remain explicit work.
+
+## Continuation checkpoint — 2026-09-05
+
+The continuation adds keyboard board play, modal promotion, persisted table preferences, PGN copy/export and intended-next-move draw declarations. The declarations are validated without playing the move and are retained in save metadata. The brand shader adds subtle height-normal detail; carved symbol geometry and final visual approval remain open.
+
+The complete local eight-suite command passed for the continuation implementation. The latest UI hint/opponent timing regression test is awaiting the coordinator's final rerun, and updated export/capture review is ongoing. No final continuation CI or exported-build success is asserted here; the CI link above describes the earlier checkpoint only.
+
+| Completed handoff | Actual files and check |
+| --- | --- |
+| N1-01, N2-01 | `core/session.gd`, `tests/test_draw_claims.gd`, `app/main.gd`: current/intended claims, no played declaration move, save/load replay and invalid-claim atomicity |
+| N1-03 | `presentation/brand.gdshader`: restrained height-normal shading; initial native inspection completed, final user visual admission remains |
+| N2-02 | `app/main.gd`, `presentation/board_view.gd`, `tests/test_controls.gd`: arrows follow visible orientation; Enter/Space move; Escape clears; modal promotion supports keyboard |
+| N2-04 | `games/chess/pgn.gd`, `tests/test_pgn.gd`, `app/main.gd`: copy/full-game file export; 176 default-run checks and 14 independently replayed fixtures |
+| N3-01 | `core/preferences.gd`, `app/main.gd`, `tests/test_controls.gd`: persisted mute/orientation/reduced-motion/practice settings, corrupt-file fallback and runtime controls; zoom not persisted |
+
+The next useful implementation lane is a real UCI adapter with timeout/cancellation recovery and verified engine identity. In parallel, finish a sustained manual game, human audio listening, focus/contrast/screen-reader review and user approval of the wood/brand appearance. Keep those acceptance checks distinct from the passing automated suites.
 
 ## Architecture and authority
 
@@ -82,10 +98,12 @@ Paths below distinguish current contracts from planned modules. Empty abstractio
 | --- | --- |
 | `project.godot`, `app/main.tscn` | Project boot, window, renderer, root scene; integration owner |
 | `app/main.gd` | Initial screen, input flow, status/history controls, scheduling; integration owner |
+| `core/preferences.gd` | Versioned local mute, orientation, reduced-motion and opponent preferences; separate from game state |
 | `core/session.gd` | Single authority for position, legal requests, snapshots, revisions, undo, saves |
 | `games/chess/chess_state.gd` | Plain position value and FEN parsing/serialization |
 | `games/chess/chess_rules.gd` | Move generation, attack detection, immutable application, results, UCI |
-| `games/chess/chess_rules.gd` notation helpers | Implemented SAN formatter and UCI codec; PGN remains future work |
+| `games/chess/chess_rules.gd` notation helpers | Implemented SAN formatter and UCI codec |
+| `games/chess/pgn.gd` | Pure standard-start PGN export; full accepted history and authoritative result |
 | `ai/` | Computer and tutor services; process/protocol work stays outside rules |
 | `presentation/board_view.gd` | Procedural board/chips, logical picking, position rendering, markers, flip |
 | `presentation/board_view.gd`, `presentation/move_audio.gd` | Implemented lift/slide/settle transitions and muteable wooden sound response |
@@ -158,7 +176,7 @@ The session records accepted moves alongside position snapshots for immediate un
 
 Load into temporary state. Validate schema/version/game, parse the starting position, replay every move legally, and compare any final-position assertion. Only after every check succeeds replace the session, rebuild snapshots/repetition accounting, advance revision, and emit one change. A failed load preserves the previous session. Write through a temporary file and replace the destination only after successful serialization where the platform permits. Handle unreadable files and future versions with plain recovery messages.
 
-UCI strings such as `e2e4` and `e7e8q` provide the unambiguous replay format. The implemented `ChessRules.san()` formats the displayed move history with legal context for disambiguation, captures, castling, promotion, check, and mate; `GameSession.history_san()` returns the accepted notation. Review uses copied `snapshot_at()` positions and cannot mutate the active game. PGN import/export remains future work: SAN text alone is not a complete PGN codec.
+UCI strings such as `e2e4` and `e7e8q` provide the unambiguous replay format. The implemented `ChessRules.san()` formats the displayed move history with legal context for disambiguation, captures, castling, promotion, check, and mate; `GameSession.history_san()` returns the accepted notation. Review uses copied `snapshot_at()` positions and cannot mutate the active game. The pure `games/chess/pgn.gd` helper now exports standard-start games with seven roster tags, escaped metadata, wrapped SAN and an authoritative result. Copy/export always uses the full live game even while reviewing an earlier position. PGN import and arbitrary starting-position export remain future work; see [PGN.md](PGN.md). Intended-move draw declarations are save metadata, not an extra played move.
 
 ## Testing and release evidence
 
@@ -186,14 +204,14 @@ The original slice IDs below remain useful ownership contracts. Several implemen
 | W4-02 | Implemented shader/material pass; ongoing visual admission | `presentation/wood.gdshader`, `presentation/brand.gdshader`, themes and captured runtime board; no recessed brand mesh |
 | W4-03, W4-04 | Covered through consolidated suites | Session/application opponent guards plus rule/perft/oracle suites; check dedicated future UCI timeout/cancellation fixtures when that adapter exists |
 | W5-01, W5-03 | Implemented | Promotion UI and `board_view.gd` lift/slide/settle; underpromotion and state synchronization application coverage |
-| W5-02, W5-05 | Partially closed by design | Repetition identity in `ChessRules.position_key()` and session policy; current-position claims implemented, intended-next-move claims pending |
-| W5-04, W6-03 | Remaining | Full accessibility review and keyboard board navigation; F/Escape shortcuts alone do not satisfy them |
+| W5-02, W5-05 | Implemented supported policy | Repetition identity, current-position and intended-next-move claims, automatic draws, declaration save validation; generic dead-position work remains |
+| W5-04, W6-03 | Keyboard/reduced-motion implementation delivered; accessibility admission open | Native keyboard navigation and promotion in both orientations; preferences and focus fixtures; full accessibility and screen-reader review remain |
 | W6-01 | Implemented in existing rule/session modules | `ChessRules.san()`, `GameSession.history_san()` and immutable review; no separate `san.gd` required |
 | W6-02 | Implemented feedback; review remains | Procedural wooden sound in `presentation/move_audio.gd`, mute toggle; dedicated listening acceptance still needs a record |
 | W6-04 | Evidence recorded; full acceptance still open | Coordinator-owned `docs/VERIFICATION.md`; actual graphics/application captures and automated checks, without assuming every manual gate is closed |
 | W6-05 | Delivered tested Windows checkpoint | `tools/verify.ps1`, GitHub CI, `export_presets.cfg`, built/launched/captured Windows executable |
 
-The following are the most practical next ten-minute handoffs. Assign N1-01 and N1-02 to different workers, then schedule N2 only after its stated dependency. Keep all edits to session or application integration serialized under the coordinator.
+The following handoffs record the next-wave contracts after the initial build. The continuation delivered N1-01, N1-03, N2-01, N2-02, N2-04 and N3-01 within the scope recorded below; the table preserves their original ownership and checks. N1-02, N1-04, N2-03 and N3-02 remain open. Keyboard implementation has practical native-test evidence but does not close the broader accessibility review. Keep all edits to session or application integration serialized under the coordinator.
 
 | ID / wave | Owner and likely files | Dependencies | Expected output | Explicit validation |
 | --- | --- | --- | --- | --- |
@@ -290,7 +308,7 @@ These waves deliberately contain serial rows within the integration lane. With f
 
 **M3 — cabinet and Xiangqi.** Add a restrained game chooser and persist each game's resume slot. Implement Xiangqi's actual topology and rules, then extract the minimum shared game interface supported by both games. Keep per-game notation, positions, adjudication, tutorial facts, and opponent adapters honest.
 
-**M4 — stronger coaching and review.** Extend the existing SAN history and immutable review with a real engine, process cancellation, bounded analysis, evaluations with provenance, PGN import/export, and specific tactical explanations. Measure responsiveness and failure recovery. Do not gate ordinary local play on a network tutor.
+**M4 — stronger coaching and review.** Extend the existing SAN history and immutable review with a real engine, process cancellation, bounded analysis, evaluations with provenance, PGN import and richer export, and specific tactical explanations. Measure responsiveness and failure recovery. Do not gate ordinary local play on a network tutor.
 
 **M5 — animated character sets.** Character models occupy the same logical piece roles and positions. A presentation event stream drives idle, selected, move, capture, defeat, and promotion sequences while the session remains authoritative. Each asset declares scale, footprint, attachment points, role/team identity, animation map, fallback static pose, and provenance. Long capture choreography must be skippable; interruption reconstructs the latest state. Establish framing, silhouettes, readability, and performance with one character pair before commissioning a full Battle-Chess-style set.
 
