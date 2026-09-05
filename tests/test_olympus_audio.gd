@@ -62,6 +62,3 @@ func _run() -> void:
 	await create_timer(0.3).timeout
 	print("Olympus audio: %s checks, failed=%s" % [checks, failed])
 	quit(1 if failed else 0)
-
-
-

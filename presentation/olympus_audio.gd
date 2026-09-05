@@ -146,4 +146,3 @@ func _synthesize(kind: String) -> AudioStreamWAV:
 
 func _bell(age: float, frequency: float) -> float:
 	return (sin(TAU * frequency * age) + sin(TAU * frequency * 2.01 * age) * 0.2 + sin(TAU * frequency * 3.98 * age) * 0.07) * exp(-age * 5.5)
-
