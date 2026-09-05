@@ -21,6 +21,7 @@ var _camera: Camera3D
 var _flipped: bool = false
 var _zoom: float = 11.8
 var _snapshot: Array = []
+var _movement_tweens: Array[Tween] = []
 
 func _ready() -> void:
     _build_stage()
@@ -143,7 +144,12 @@ func _coordinate(text_: String, at: Vector3, reverse: bool = false) -> void:
 func square_position(square: int) -> Vector3:
     return Vector3(float(square % 8) - 3.5, 0.05, 3.5 - float(square / 8)) * board_theme.square_size
 
-func show_position(board: Array) -> void:
+func show_position(board: Array, animate: bool = false) -> void:
+    var origins: Dictionary = _movement_origins(_snapshot, board) if animate else {}
+    for tween in _movement_tweens:
+        if tween.is_valid():
+            tween.kill()
+    _movement_tweens.clear()
     _snapshot = board.duplicate()
     if not is_instance_valid(_pieces):
         return
@@ -154,11 +160,55 @@ func show_position(board: Array) -> void:
         var piece: String = str(board[square])
         if piece.is_empty() or not SYMBOLS.has(piece.to_lower()):
             continue
-        _make_piece(square, piece)
+        var node := _make_piece(square, piece)
+        if origins.has(square):
+            _animate_piece(node, int(origins[square]), square)
 
-func _make_piece(square: int, piece: String) -> void:
+func _movement_origins(before: Array, after: Array) -> Dictionary:
+    # This maps visual identity only; the session has already accepted the move.
+    # Both final castling pieces animate; captured pieces never survive the rebuild.
+    var origins: Dictionary = {}
+    if before.size() != 64 or after.size() != 64:
+        return origins
+    var sources: Array[int] = []
+    for square in range(64):
+        if not str(before[square]).is_empty() and str(after[square]).is_empty():
+            sources.append(square)
+    for target in range(64):
+        var piece: String = str(after[target])
+        if piece.is_empty() or piece == str(before[target]):
+            continue
+        var match_: int = -1
+        for source in sources:
+            if str(before[source]) == piece:
+                match_ = source
+                break
+        if match_ < 0 and piece.to_lower() in ["q", "r", "b", "n"]:
+            var pawn: String = "P" if piece == piece.to_upper() else "p"
+            for source in sources:
+                if str(before[source]) == pawn:
+                    match_ = source
+                    break
+        if match_ >= 0:
+            origins[target] = match_
+            sources.erase(match_)
+    return origins
+
+func _animate_piece(node: Node3D, source: int, target: int) -> void:
+    var start := square_position(source)
+    var end := square_position(target)
+    var lift: Vector3 = Vector3.UP * 0.14 * board_theme.square_size
+    node.position = start
+    var tween := create_tween().bind_node(node)
+    _movement_tweens.append(tween)
+    tween.tween_property(node, "position", start + lift, 0.045).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+    tween.tween_property(node, "position", end + lift, 0.125).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(node, "position", end, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+func _make_piece(square: int, piece: String) -> Node3D:
     var white: bool = piece == piece.to_upper()
     var node := Node3D.new()
+    node.name = "Square%d" % square
     node.position = square_position(square)
     _pieces.add_child(node)
     var color: Color = piece_theme.white_color if white else piece_theme.black_color
@@ -181,6 +231,7 @@ func _make_piece(square: int, piece: String) -> void:
     # Brands face the player on either side of the table.
     if not white:
         icon.rotation.y = PI
+    return node
 
 func show_highlights(selected: int, legal_targets: Array, last_from: int = -1, last_to: int = -1, checked_square: int = -1) -> void:
     if not is_instance_valid(_markers):
