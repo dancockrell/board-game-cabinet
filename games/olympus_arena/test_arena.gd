@@ -71,6 +71,7 @@ func _init() -> void:
 	_check(a.snapshot() == b.snapshot(), "seeded bot deterministic")
 	_combat_checks()
 	_crowd_checks()
+	_bot_checks()
 	print("Olympus arena: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
 
@@ -206,3 +207,51 @@ func _crowd_checks() -> void:
 				all_safe = false
 	_check(all_safe, "Live crowded routes never cut water away from bridges")
 	_check(a.snapshot() == b.snapshot(), "Repeated player deployments and crowd simulation remain exactly deterministic")
+
+func _bot_checks() -> void:
+	var game = Arena.new()
+	game.bot_enabled = false
+	game._hands[0][0] = "harpies"
+	game.deploy(0, Vector2(-2.7, 2.0))
+	for unit in game._state.units: unit.z = -4.0
+	game._state.energy[1] = 4.0
+	game._bot_turn()
+	var defender: Dictionary = game.snapshot().units.back()
+	_check(defender.side == 1 and defender.x < 0 and defender.kind == "medusa", "Bot counters an approaching flying push in its threatened lane")
+	_check(is_equal_approx(game.snapshot().energy[1], 0.0), "Defensive counter pays normal card cost")
+	game.new_game()
+	game._state.energy[1] = 0.0
+	var before: Dictionary = game.snapshot()
+	game._bot_turn()
+	_check(game.snapshot() == before, "Unaffordable bot hand cannot deploy or mutate visible state")
+	game._state.energy[1] = 3.0
+	before = game.snapshot()
+	game._bot_turn()
+	_check(game.snapshot() == before, "Quiet bot reserves elixir for an affordable-soon front line")
+	game.new_game()
+	game._hands[1] = ["thunderbolt", "hydra", "heracles", "minotaur"]
+	game._state.energy[1] = 2.0
+	game.deploy(0, Vector2(-2.7, 2.0))
+	var target: Dictionary = game._bot_spell_target()
+	_check(target.position.x < 0 and target.score >= 390.0, "Bot values a clustered troop spell over healthy towers")
+	game._bot_turn()
+	var hurt := true
+	for unit in game.snapshot().units:
+		if unit.side == 0 and not is_equal_approx(unit.hp, 15.0): hurt = false
+	_check(hurt and game.snapshot().hand.size() == 4, "Bot spell damages the selected cluster using ordinary deployment")
+	_check(is_equal_approx(game.snapshot().energy[1], 0.0), "Tactical spell respects elixir affordability")
+	game.new_game()
+	game._state.towers[1].hp = 60.0
+	game._hands[1] = ["thunderbolt", "hydra", "heracles", "minotaur"]
+	game._state.energy[1] = 2.0
+	game._bot_turn()
+	_check(game.snapshot().crowns[1] == 1, "Bot recognizes a spell-finishable opposing tower")
+	game.new_game()
+	game._state.towers[0].hp = 400.0
+	game._bot_turn()
+	var attacker: Dictionary = game.snapshot().units.back()
+	_check(attacker.kind == "minotaur" and attacker.x < 0, "Bot opens a coherent building push against weaker enemy lane")
+	game._state.energy[1] = 4.0
+	game._bot_turn()
+	var support: Dictionary = game.snapshot().units.back()
+	_check(support.kind == "atalanta" and support.x < 0 and support.z < attacker.z, "Bot supports an existing front line with an archer behind it")

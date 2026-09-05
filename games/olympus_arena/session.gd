@@ -136,19 +136,81 @@ func tick() -> void:
 	_state.revision += 1
 
 func _bot_turn() -> void:
-	var start := _rng.randi_range(0, 3)
-	for offset in range(4):
-		var slot := (start + offset) % 4
+	# React only to current visible pieces: no future RNG or player-hand inspection.
+	var threats := [0.0, 0.0]
+	var air_threat := [false, false]
+	var nearest_z := [-1.0, -1.0]
+	for unit in _state.units:
+		if unit.side != 0 or unit.hp <= 0 or unit.z > -0.4: continue
+		var lane := 0 if unit.x < 0 else 1
+		threats[lane] += float(unit.hp) * (1.0 + maxf(0.0, -float(unit.z) - 1.0) * 0.3)
+		air_threat[lane] = air_threat[lane] or unit.flying
+		nearest_z[lane] = minf(nearest_z[lane], unit.z)
+	var defending: bool = maxf(threats[0], threats[1]) > 0
+	var lane: int = (0 if threats[0] >= threats[1] else 1) if defending else _bot_push_lane()
+	var lane_x := -2.7 if lane == 0 else 2.7
+	var frontline := false
+	for unit in _state.units:
+		if unit.side == 1 and (unit.x < 0) == (lane == 0) and unit.kind in ["minotaur", "hydra", "heracles"]:
+			frontline = true
+	var cards := catalog()
+	var chosen := -1
+	var best_score := -INF
+	var best_unaffordable := -INF
+	var point := Vector2(lane_x, clampf(nearest_z[lane] - 1.1, -6.5, -1.2) if defending else -4.1 if frontline else -2.7)
+	var spell := _bot_spell_target()
+	for slot in range(4):
 		var kind: String = _hands[1][slot]
-		var point := Vector2(-2.7 if _rng.randf() < 0.5 else 2.7, -2.2 - _rng.randf() * 2.0)
+		var score := 0.0
 		if kind == "thunderbolt":
-			point = Vector2(2.7, 5.0)
-			for unit in _state.units:
-				if unit.side == 0:
-					point = _position(unit)
-					break
-		if _deploy(1, slot, point).ok:
-			return
+			score = float(spell.score) / 35.0 if spell.score >= 180.0 else -100.0
+		elif defending:
+			score = {"hoplites":6.0, "atalanta":7.0, "minotaur":-10.0, "medusa":9.0, "heracles":8.0, "hydra":7.0, "harpies":6.0}[kind]
+			if air_threat[lane]: score += 6.0 if kind in ["atalanta", "medusa", "hydra", "harpies"] else -20.0
+		else:
+			score = ({"hoplites":7.0, "atalanta":10.0, "minotaur":4.0, "medusa":9.0, "heracles":5.0, "hydra":4.0, "harpies":8.0} if frontline else {"hoplites":4.0, "atalanta":3.0, "minotaur":10.0, "medusa":4.0, "heracles":9.0, "hydra":11.0, "harpies":3.0})[kind]
+		if float(_state.energy[1]) + 0.000001 < float(cards[kind].cost):
+			if float(cards[kind].cost) - float(_state.energy[1]) <= 2.0:
+				best_unaffordable = maxf(best_unaffordable, score)
+			continue
+		if score > best_score and score > 0:
+			best_score = score
+			chosen = slot
+	# In quiet moments, save briefly for a coherent front line instead of leaking troops.
+	if not defending and best_unaffordable > best_score: return
+	if chosen < 0: return
+	if _hands[1][chosen] == "thunderbolt": point = spell.position
+	_deploy(1, chosen, point)
+
+func _bot_push_lane() -> int:
+	var health := [INF, INF]
+	for tower in _state.towers:
+		if tower.side == 0 and tower.kind == "tower" and tower.hp > 0:
+			health[0 if tower.x < 0 else 1] = tower.hp
+	# Follow an existing push when either lane is otherwise equally attractive.
+	if health[0] == health[1]:
+		for unit in _state.units:
+			if unit.side == 1 and unit.hp > 0: return 0 if unit.x < 0 else 1
+		return _rng.randi_range(0, 1)
+	return 0 if health[0] < health[1] else 1
+
+func _bot_spell_target() -> Dictionary:
+	var candidates: Array[Vector2] = []
+	for unit in _state.units:
+		if unit.side == 0 and unit.hp > 0: candidates.append(_position(unit))
+	for tower in _state.towers:
+		if tower.side == 0 and tower.hp > 0: candidates.append(_position(tower))
+	var best := {"score":0.0, "position":Vector2.ZERO}
+	for point in candidates:
+		var score := 0.0
+		for unit in _state.units:
+			if unit.side == 0 and unit.hp > 0 and _position(unit).distance_to(point) <= 1.55:
+				score += minf(unit.hp, 130.0) + (25.0 if unit.hp <= 130.0 else 0.0)
+		for tower in _state.towers:
+			if tower.side == 0 and tower.hp > 0 and _position(tower).distance_to(point) <= 1.55:
+				score += 1000.0 if tower.hp <= 65.0 else 20.0
+		if score > best.score: best = {"score":score, "position":point}
+	return best
 
 func _step_unit(unit: Dictionary) -> void:
 	unit.cooldown = maxf(0.0, float(unit.cooldown) - STEP)
