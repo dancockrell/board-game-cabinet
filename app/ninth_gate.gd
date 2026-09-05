@@ -63,18 +63,8 @@ func _build_ui() -> void:
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(background)
-	var art := TextureRect.new()
-	var portrait_strip := AtlasTexture.new()
-	portrait_strip.atlas = preload("res://assets/ninth_gate/commanders.png")
-	portrait_strip.region = Rect2(0,80,2172,350)
-	art.texture = portrait_strip
-	art.position = Vector2(0,0)
-	art.size = Vector2(1440,180)
-	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	art.size = Vector2(1440,180)
-	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(art)
+	# Character visuals are held pending army lore and a new style direction.
+	_panel(Rect2(22,16,1396,150),Color("152a2b"))
 	_label("THE NINTH GATE",Vector2(477,22),37,Color("fff0c8"))
 	_label("AURETH  vs  VEYRA",Vector2(576,70),18,Color("e5c891"))
 	_label("Beautiful rivals. Terrible neighbours.",Vector2(508,103),18,Color("e8dbcb"))
