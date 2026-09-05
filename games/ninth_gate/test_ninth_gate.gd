@@ -1,13 +1,13 @@
 extends SceneTree
 const Session = preload("res://games/ninth_gate/session.gd")
 var checks: int = 0
+var failures: int = 0
 
 func check(condition: bool, message: String) -> void:
 	checks += 1
 	if not condition:
 		push_error(message)
-		quit(1)
-		assert(condition, message)
+		failures += 1
 
 func piece(id: String, side: String, x: int, y: int, role: String = "spear") -> Dictionary:
 	return {"id":id,"side":side,"x":x,"y":y,"role":role,"hp":5,"max_hp":5,"morale":3}
@@ -60,17 +60,18 @@ func _init() -> void:
 	s.new_game(42)
 	var other = Session.new()
 	other.new_game(42)
-	for round_index in 12:
+	for round_index in Session.LIMIT:
+		if s.snapshot().phase == "finished": break
 		check(s.resolve_round([]).ok and other.resolve_round([]).ok, "Round resolves")
 		check(canonical(s.snapshot()) == canonical(other.snapshot()), "Seeded bot and combat deterministic")
-	check(s.snapshot().phase == "finished" and s.snapshot().round == 12,"Twelve rounds ends match")
+	check(s.snapshot().phase == "finished" and s.snapshot().round <= 8,"Match ends by eight rounds")
 	check(not s.resolve_round([]).ok, "Finished match rejects commands")
 	var saved: Dictionary = s.save_data()
 	var loaded = Session.new()
 	check(loaded.load_data(JSON.parse_string(JSON.stringify(saved))).ok,"Save round-trips through JSON")
 	check(canonical(loaded.snapshot()) == canonical(s.snapshot()),"Replay restore identical")
 	var loaded_before: Dictionary = loaded.snapshot()
-	saved.orders.append([])
+	while saved.orders.size() <= Session.LIMIT: saved.orders.append([])
 	check(not loaded.load_data(saved).ok,"Overlength save rejected")
 	check(loaded.snapshot() == loaded_before,"Failed load atomic")
 	# Hidden enemy relocation cannot affect bot decisions from identical observations.
@@ -87,7 +88,7 @@ func _init() -> void:
 	s._apply([order("a","move",5,1)])
 	check(s._state.sites[0].owner == "heaven" and s._state.score.heaven == 1,"Crossing captured and scores")
 	s._apply([order("a","move",6,1)])
-	check(s._state.score.heaven == 2,"Empty owned crossing continues scoring")
+	check(s._state.score.heaven == 1 and s._state.sites[0].owner == "","Empty crossing stops scoring and clears ownership")
 	s._state.units = [piece("a","heaven",3,2),piece("b","hell",4,2)]
 	s._apply([order("a","attack",4,2),order("b","move",4,3)])
 	check(s._unit(s._state,"b").hp == 5,"Attack misses enemy that moved away")
@@ -96,8 +97,12 @@ func _init() -> void:
 	s.new_game(91)
 	other.new_game(91)
 	var combat_units: Array = [piece("a","heaven",3,2),piece("b","heaven",3,3),piece("x","hell",4,2),piece("y","hell",4,3)]
+	combat_units[2].hp = 2
+	combat_units[3].hp = 2
 	s._state.units = combat_units.duplicate(true)
 	other._state.units = combat_units.duplicate(true)
+	s._state.sites = [{"x":4,"y":2,"owner":"hell"},{"x":4,"y":3,"owner":"hell"}]
+	other._state.sites = s._state.sites.duplicate(true)
 	check(s.resolve_round([order("a","attack",4,2),order("b","attack",4,3)]).ok,"Combat orders valid")
 	check(other.resolve_round([order("b","attack",4,3),order("a","attack",4,2)]).ok,"Reversed combat orders valid")
 	check(canonical(s.snapshot()) == canonical(other.snapshot()),"Combat deterministic independent of selection order")
@@ -125,5 +130,46 @@ func _init() -> void:
 	json_save.orders[0][0].x = 3.5
 	check(not loaded.load_data(json_save).ok,"Fractional JSON coordinate rejected")
 	check(loaded.snapshot() == loaded_before,"Fractional save load atomic")
+	# Rules-v2 movement, support, automatic combat, and scoring contracts.
+	s.new_game()
+	check(s.snapshot().round_limit == 8 and s.snapshot().target_score == 12,"Victory targets exposed to presentation")
+	check(s.snapshot().units[0].display_name == "Dawn Wardens","Named formations available to UI")
+	check(s.legal_orders("heaven0").has(order("heaven0","move",4,1)),"Two-step advance is legal")
+	s._state.units = [piece("a","heaven",4,2),piece("b","hell",9,7)]
+	check(not s.legal_orders("a").has(order("a","move",6,2)),"Cannot jump river in two steps")
+	s._state.units = [piece("a","heaven",2,2),piece("block","heaven",3,2),piece("b","hell",9,7)]
+	check(not s.legal_orders("a").has(order("a","move",4,2)),"Cannot jump occupied intermediate square")
+	s._state.units = [piece("a","heaven",2,2,"archer"),piece("b","hell",4,3)]
+	check(s.legal_orders("a").has(order("a","attack",4,3)),"Archer attacks at range three")
+	s._apply([])
+	check(s._unit(s._state,"b").hp < 5,"Uncommanded archer automatically attacks")
+	s.new_game()
+	s._state.units = [piece("a","heaven",2,2,"herald"),piece("ally","heaven",3,2),piece("b","hell",9,7)]
+	s._state.units[1].hp = 1
+	check(s.legal_orders("a").has(order("a","heal",3,2)),"Herald can mend injured adjacent ally")
+	s._apply([order("a","heal",3,2)])
+	check(s._unit(s._state,"ally").hp == 3,"Mend restores two health")
+	s._state.units[0].hp = 2
+	check(s.legal_orders("a").has(order("a","heal",2,2)),"Herald can mend itself")
+	s.new_game()
+	s._state.units = [piece("a","heaven",3,2),piece("b","hell",4,2)]
+	s._apply([order("a","hold",3,2),order("b","hold",4,2)])
+	check(s._unit(s._state,"a").hp == 5 and s._unit(s._state,"b").hp == 5,"Explicit brace suppresses automatic attack")
+	s.new_game()
+	s._state.units = [piece("a","heaven",5,1),piece("b","hell",9,7)]
+	s._state.score.heaven = 11
+	s._apply([])
+	check(s._state.phase == "finished" and s._state.winner == "heaven","Twelve bridge points wins before round limit")
+	s.new_game()
+	var obsolete: Dictionary = s.save_data()
+	obsolete.rules = 1
+	before = s.snapshot()
+	check(not s.load_data(obsolete).ok and s.snapshot() == before,"Old rules saves explicitly rejected atomically")
+	var reserved: Array = []
+	for bot_order in s._bot(s.view_for("hell")):
+		if bot_order.type != "move": continue
+		var cell: Vector2i = Vector2i(bot_order.x,bot_order.y)
+		check(not reserved.has(cell),"Bot avoids duplicate move destinations")
+		reserved.append(cell)
 	print("Ninth Gate: %d checks passed" % checks)
-	quit(0)
+	quit(1 if failures > 0 else 0)
