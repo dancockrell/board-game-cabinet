@@ -198,5 +198,12 @@ func _init() -> void:
 	s._state.units = [piece("a","heaven",0,0),piece("b","hell",11,7)]
 	for round_index in Session.LIMIT: s._apply([])
 	check(s._state.round == 8 and s._state.phase == "finished","Eight rounds ends even an uneventful battle")
+	s.new_game()
+	s._state.units = [piece("a","heaven",3,2),piece("b","hell",4,2)]
+	before = s.snapshot()
+	var forecast: String = s.preview_order(order("a","attack",4,2))
+	check(forecast.contains("1-3 damage"),"Strike preview uses actual die bounds and possible Brace cover")
+	check(s.snapshot() == before,"Preview consumes no random state and changes no authority")
+	check(s.preview_order(order("a","attack",9,7)).contains("legal target"),"Preview rejects unobserved or illegal targets")
 	print("Ninth Gate: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures > 0 else 0)

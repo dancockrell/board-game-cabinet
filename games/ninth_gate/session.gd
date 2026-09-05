@@ -79,6 +79,27 @@ func _legal(view: Dictionary, unit_id: String, side: String) -> Array:
 		if distance <= (3 if unit.role == "archer" else 1): orders.append({"unit_id":unit_id,"type":"attack","x":target.x,"y":target.y})
 	return orders
 
+func preview_order(order: Dictionary, side: String = "heaven") -> String:
+	if not legal_orders(str(order.get("unit_id", "")), side).has(order): return "Choose a highlighted legal target."
+	var view: Dictionary = view_for(side)
+	var unit: Dictionary = _unit(view, order.unit_id)
+	match order.type:
+		"move": return "Move up to 2 spaces. This squad gives up its automatic attack; blocked paths stop it."
+		"hold": return "Brace: gain 1 cover this round instead of attacking."
+		"rally": return "Recover: restore 1 health and %d spirit instead of attacking." % (2 if side == "heaven" else 1)
+		"heal": return "Mend: restore up to 2 health. The ally must still be on this tile after movement."
+		"attack":
+			var target: Dictionary = _occupant(view, order.x, order.y)
+			var cover: int = 1 if view.terrain[target.y * WIDTH + target.x] in ["wood", "hill"] else 0
+			if target.role == "guard": cover += 1
+			# Opposing Brace orders are unknown, so include their possible cover.
+			return "Strike: %d-%d damage if the target stays. Enemy movement can make it miss; Brace may reduce damage." % [_attack_damage(unit, 1, cover + 1), _attack_damage(unit, 6, cover)]
+	return ""
+
+func _attack_damage(attacker: Dictionary, die: int, cover: int) -> int:
+	var attack: int = (2 if attacker.role == "spear" else 1) + (1 if attacker.side == "hell" else 0)
+	return maxi(0, (die + attack + (1 if attacker.morale >= 2 else 0) - cover) / 3)
+
 func _reachable(state: Dictionary, unit: Dictionary) -> Array:
 	# Breadth-first reachability allows corners, never jumps a river or blocker.
 	var found: Array = []
@@ -232,8 +253,7 @@ func _apply(orders: Array) -> void:
 		var cover: int = 1 if _state.terrain[target.y * WIDTH + target.x] in ["wood","hill"] else 0
 		if target.role == "guard": cover += 1
 		if braced.has(target.id): cover += 1
-		var attack: int = (2 if attacker.role == "spear" else 1) + (1 if attacker.side == "hell" else 0)
-		var loss: int = maxi(0, ( _roll() + attack + (1 if attacker.morale >= 2 else 0) - cover) / 3)
+		var loss: int = _attack_damage(attacker, _roll(), cover)
 		damage[target.id] = int(damage.get(target.id, 0)) + loss
 		log_lines.append("%s attacked %s for %d." % [attacker.id,target.id,loss])
 		var report: String = "%s attacked %s for %d." % [attacker.id,target.id,loss]
