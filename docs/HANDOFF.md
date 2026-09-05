@@ -12,6 +12,14 @@ Use original Greek characters and presentation assets. Preserve the existing woo
 
 ## Current polish pass (2026-09-05)
 
+The latest request is finer, more realistic art on the board and a better match. The diorama pass is implemented: chamfered masonry, weathered limestone and aged-bronze shaders, worn paving, nonperiodic dark coastal water, irregular plants and rocks, restrained temple colors, filmic lighting, and refined miniature proportions with tapered limbs and folded cloth capes. The [board-art contract](OLYMPUS_BOARD_ART.md) defines the current environment and gameplay-distance review target.
+
+Minotaur now earns a doubled building strike after 2.4 units of its own travel. Its amber base cue persists while charged, and a HUD announcement explains the state. Hydra recovers 20 health after four seconds without damage, then 20 each subsequent second; all incoming damage interrupts recovery. These mechanics, events, and visual cues are driven by authoritative state. See the exact rules for details.
+
+This checkpoint passed the complete `tools/verify.ps1 -Graphics` run: 773 arena rules, 35 arena renderer, 90 stage geometry/budget, 45 native app (47 with captures), 25 combat effects, 11 HUD effects, and 48 audio/music checks, plus the existing chess and Ninth Gate regressions. Native opening, staged miniature review, and sequential gameplay images were inspected. The motion fixture contains 180 native frames at 30 fps, covering match time 38-44 seconds without retiming. The figures remain procedural; the realism target is not complete until authored models pass the same camera review.
+
+`tools/capture_olympus_roster.gd` produces an explicitly staged art lineup. `tools/capture_olympus_motion.gd` produces actual legal-play evidence. Do not substitute the lineup for gameplay evidence.
+
 The user explicitly requested a much more attractive, modern presentation. Implemented: eight illustrated card portraits, a larger coastal 3D arena with carved paving and animated water, boats, gulls, pennants and embers, layered Greek shrines, seven richer procedural figurines, jointed walking/attack/wing/cape/neck animation, visual movement smoothing, placement ghosts, tactile card dragging, unit-specific attack effects, tower debris and smoke, reactive HUD alerts, a cinematic countdown, tactical practice opponent, deterministic crowd separation, and original synthesized combat sounds plus a quiet lyre-and-frame-drum score. Art prompt and provenance are in `assets/olympus_arena/ART-PROVENANCE.md` and `art-manifest.json`.
 
 This is a stronger playable art prototype, not finished commercial character production. The next largest visual gain is authored, rigged low-poly characters matching the card portraits, with distinct attack anticipation, contact and recovery. Current meshes are assembled from primitives. Deterministic soft crowd separation respects banks and bridges, but it is not a full physics or steering system. Do not call this equivalent to a shipped Clash Royale presentation.
@@ -31,14 +39,14 @@ The previous short slices for crowd separation, combat effects, ambient arena li
 | 2 | Character artists: separate folders for Atalanta, Minotaur and Medusa | Three approved models, one owner per folder | Starts only after hoplite pipeline admission; shared skeleton changes have one owner |
 | 2 | Creature artists: separate folders for Heracles, Hydra and Harpies | Three approved models with creature-specific clips | Hydra must preserve three-head separation; Harpies must remain distinct as a pair |
 | 2 | Renderer owner: `olympus_arena_board.gd` | Admit approved models one at a time with procedural fallback | No batch integration; run authoritative-root, event, cleanup and crowd captures after each |
-| 3 | Coordinator: app, exports, docs | Mix review, complete-match capture, regression, Windows build and release | Requires 760 rules checks plus all native presentation suites and exported executable smoke test |
+| 3 | Coordinator: app, exports, docs | Mix review, complete-match capture, regression, Windows build and release | Requires 773 rules checks plus all native presentation suites and exported executable smoke test |
 
 ## Repository status
 
 | Component | Status and evidence boundary |
 | --- | --- |
 | Wooden chess | Existing playable game: pure chess rules, wooden 3D board and chips, mouse/keyboard controls, history, undo, save/load, practice opponent, factual tutor context, and PGN export. Preserve its tests. |
-| Olympus Arena | Playable polished prototype: illustrated roster, coastal arena life, animated attacks, deployment ghosts, combat/HUD effects, crowd separation, tactical local opponent and layered audio. Current evidence: 760 rules, 33 native renderer, 45 native app (47 with captures), 21 combat-FX, 9 HUD-FX and 48 audio checks. Full chess and parked Ninth Gate regressions pass. Refresh the export manifest for every new package. |
+| Olympus Arena | Playable prototype with a weathered diorama, refined procedural miniatures, charge/recovery abilities, illustrated roster, coastal life, combat feedback, tactical local opponent and layered audio. Current evidence: 773 rules, 35 native renderer, 90 stage geometry/budget, 45 native app (47 with captures), 25 combat-FX, 11 HUD-FX and 48 audio checks. Full chess and parked Ninth Gate regressions pass. Refresh the export manifest for every new package. |
 | The Ninth Gate | Parked historical prototype with rules, 3D source work, and an older 2D prerelease. Its setting and play loop are not the current direction. |
 | Go / Xiangqi / checkers | Previously selected future games; not implemented and not active parallel work. |
 

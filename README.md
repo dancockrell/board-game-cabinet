@@ -4,6 +4,8 @@
 
 Press **BATTLE**, select a card with a click or keys **1–4**, then click your half of the arena. Cards can also be dragged onto the arena. **Thunderbolt** targets either side. **Space** pauses/resumes the local match; **Escape** deselects a card. Destroy the rival temple to win immediately, or win on towers at the clock. The final minute doubles elixir regeneration. A tied three-minute match enters up to one minute of sudden-death overtime.
 
+The latest board pass adds weathered limestone, chamfered masonry, worn paving, deep coastal water, aged bronze, muted terracotta and refined procedural miniatures. Minotaur earns a doubled building strike by travelling; Hydra recovers after avoiding damage. The [board-art contract](docs/OLYMPUS_BOARD_ART.md) sets the target for further realism and authored characters. The complete local graphical regression passes, including 773 arena rules checks.
+
 The first roster is **Hoplites, Atalanta, Minotaur, Medusa, Heracles, Hydra, Harpies, and Thunderbolt**. This is a local playable prototype with a fixed deck and basic bot, not online multiplayer or a progression system. See the [arena guide](docs/OLYMPUS_ARENA.md), [exact rules](games/olympus_arena/RULES.md), and [current handoff](docs/HANDOFF.md). The Ninth Gate remains a parked historical experiment; Go, Xiangqi, and checkers have not been implemented.
 
 ![Actual native arena gameplay](docs/images/olympus-arena.png)
