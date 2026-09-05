@@ -6,48 +6,49 @@ Updated 2026-09-05. Repository: [dancockrell/board-game-cabinet](https://github.
 
 Claude builds a complete, testable game foundation and hands over clean source, readable placeholder presentation, exact rules, run instructions, and evidence. Codex then improves materials, visual clarity, input, feedback, sound, and presentation consistency. Both stages own correctness. Neither stage can postpone defects by calling them polish.
 
-For the new war game, use the structured Reisswitz 1824 tradition as historical inspiration and implement original rules with a reproducible digital adjudicator. Do not attempt to reproduce a subjective human umpire through unsupported AI promises. The working title is **The Ninth Gate**; its goal is an excellent modern Kriegsspiel, with quality established by playtesting rather than by the title or this brief. Original mythology and the provisional siege/crossing scenario await the user's setting choice; do not cement Milton, Revelation, or another canon without that decision.
+For the new war game, use the structured Reisswitz 1824 tradition as historical inspiration and implement original rules with a reproducible digital adjudicator. The user has now selected **our original canon** and authorized changing the rules and presentation to make a fun modern 3D game for novices. The tone is adventurous and playful, with glamorous adult commanders and a PG-13 flirtatious rivalry. Aureth, Keeper of the Dawn, faces Veyra, the Cinder Regent, at the Three Bridges of the Ninth Gate. See the [setting and comparison with Milton/Revelation](NINTH_GATE_DESIGN.md#why-original-canon-is-the-best-fit-for-this-game). The working title and quality ambitions do not establish brand clearance or playtested excellence.
 
 ## Status and evidence boundary
 
 | Game | Current status | Next useful boundary |
 | --- | --- | --- |
 | Chess | Existing playable wooden table; validated source checkpoint `6f5ff9273c07da13331d2c647468d2ba33604bd2` | Preserve it; complete manual acceptance and further polish |
-| The Ninth Gate | Rules through `d6d2dd2`: 78 headless checks; UI: 46 checks including complete battle and JSON replay; native planning/contact/result captures | Human playtesting, balance, and visual polish; see [current verification](NINTH_GATE_VERIFICATION.md) |
+| The Ninth Gate | Version 2 rules and a new 3D presentation are the current iteration; the former 2D release is a historical checkpoint | Verify current integration/export, then novice playtesting and balance; see [current verification](NINTH_GATE_VERIFICATION.md) |
 | Xiangqi | Selected, not implemented | 9×10 intersection board, river/palaces, complete rules and repetition policy |
 | Go | Selected, not implemented | Choose a named rules/scoring/ko policy before coding; 9×9 is a practical first teaching board, not a confirmed product decision |
 | English checkers | Selected, not implemented; variant is provisional | 8×8 dark-square play, compulsory capture chains, English promotion and king rules |
 
-The [successful chess CI run](https://github.com/dancockrell/board-game-cabinet/actions/runs/33967027800) covers the older chess checkpoint, not subsequent Ninth Gate changes. Existing Windows exports likewise predate the new game unless their manifest explicitly identifies a newer source revision. Use the repository's current [verification record](VERIFICATION.md) for later evidence. A new file or a green import alone does not prove a playable, polished battle.
+The [successful chess CI run](https://github.com/dancockrell/board-game-cabinet/actions/runs/33967027800) covers the older chess checkpoint. The [earlier Ninth Gate CI](https://github.com/dancockrell/board-game-cabinet/actions/runs/33969164766) and [2D prerelease](https://github.com/dancockrell/board-game-cabinet/releases/tag/ninth-gate-prototype-2026-09-05) establish the previous prototype. Neither validates the current rules or 3D changes. Use the current [verification record](NINTH_GATE_VERIFICATION.md) and release manifest for the exact tested and packaged source. A green import alone does not establish playability or visual quality.
 
 The chess foundation includes ordinary and special legal moves, promotions, turn ownership, SAN history, undo, immutable review, transactional single-slot save/load, supported draw claims, PGN export, mouse/keyboard play, Resource-driven wooden presentation, reduced motion, and a local two-ply practice opponent. Tutor support is factual context and modest candidates. It is not a strong chess engine or a conversational tutor. Generic dead positions, PGN import, multiple slots, complete accessibility acceptance, and full manual acceptance remain open.
 
 ## Exact next-build brief
 
-Polish and playtest **one Ninth Gate scenario first**, retaining playable chess. The new source already makes Heaven the player's army and Hell the practice opponent, with order planning, commitment, resolution, undo, save/load, and restart. Its first scene is a simple 2D map with a Resource palette, not a polished 3D wooden war table. Automated native interaction and a complete twelve-round battle are checked; human playtesting and balance remain open. Do not build Go, Xiangqi, or checkers simultaneously with this integration.
+Polish and playtest **one Ninth Gate scenario first**, retaining playable chess. Heaven is the player's army; Hell is a practice opponent. The current iteration adds a 3D table, clearer novice-facing orders, faster movement, useful default attacks, a support action, shorter matches, and original commander presentation. Do not build Go, Xiangqi, or checkers simultaneously. Do not claim commander powers, dialogue systems, civilian evacuation, or a fortress siege: those are future mechanics, even when the fiction mentions them.
 
 Keep state and rules independent of Godot Nodes. The scene presents a side-filtered observation and requests actions. It cannot correct the rules by moving a counter locally. The opponent cannot read the full referee state or the player's pending orders. Report current limitations directly. Finish with a clean commit, reproducible commands, a native screenshot, and test output tied to the commit.
 
-## Prototype contract under implementation
+## Current rules contract: version 2
 
-This is the initial rules agent's concrete contract, not a declaration that every item has passed native interaction acceptance. `games/ninth_gate/session.gd` is the pure `RefCounted` authority; consult the [exact prototype rules](../games/ninth_gate/RULES.md) and its adjacent test script for precise formulas. The [design document](NINTH_GATE_DESIGN.md) distinguishes later command and reconnaissance ambitions.
+`games/ninth_gate/session.gd` is the pure `RefCounted` authority. Consult [exact rules](../games/ninth_gate/RULES.md) and its adjacent tests for formulas and edge cases. Rules commit `886f9ba` and regression commit `550717e` passed 80 headless checks. This is rules evidence; the coordinator must separately verify the integrated UI and export. The [design document](NINTH_GATE_DESIGN.md) distinguishes setting, current mechanics, and future ambitions.
 
-| Area | Initial contract |
+| Area | Version 2 contract |
 | --- | --- |
 | Map | 12×8 cells; river at zero-based column 5; crossings at rows 1, 3, and 6; woods and hills |
 | Armies | Six formations each: two guards, two spears, one archer, one herald; Heaven and Hell use original presentation |
-| Planning | Up to three distinct formation orders each round: move, attack, rally, or hold; omissions hold |
-| Movement | One cardinal cell; river impassable except crossings; cells occupied at the start block moves; competing destinations stop all contenders |
-| Resolution | Both plans commit before movement, then rally, then attacks; attack damage applied simultaneously |
-| Combat | Archers reach Manhattan distance 2, others 1; terrain, morale, faction modifiers, and seeded chance contribute; exact formula remains in executable rules |
-| Faction experiment | Heaven favours guard protection and rallying; Hell has increased attack. This is an unbalanced hypothesis awaiting tests and human games |
-| Objectives | Three crossing sites retain ownership when vacated and award one point per owned site each round |
-| End | Army annihilation or twelve rounds; simultaneous annihilation and round-limit results use objective scores, equal scores draw |
+| Planning | Up to three distinct formation orders: move, attack, rally, hold, or a Herald's support action. Unordered units automatically attack the nearest enemy in range after movement, with stable-ID tie breaking |
+| Movement | Up to two cardinal steps through free passable cells; river impassable except crossings; start-of-round occupation blocks paths; competing destinations stop contenders |
+| Resolution | Both plans commit before movement, recovery/support, and simultaneous damage. Any explicit order suppresses that unit's default attack; moving does not also attack |
+| Combat | Archers reach Manhattan distance 3, others 1. Hold braces for extra cover; Wardens on both sides receive armour. Terrain, morale, and seeded dice contribute |
+| Recovery | Rally restores one health and morale; Heaven rallies morale faster. Heralds can restore two health to self or an adjacent injured ally; square targeting may miss a moving ally |
+| Faction experiment | Heaven recovers morale faster; Hell adds attack power. Balance remains a playtest hypothesis |
+| Objectives | Each occupied bridge awards one point per round. Vacated bridges clear ownership and stop scoring |
+| End | Army annihilation, first to at least 12 points, or eight resolved rounds. Simultaneous thresholds and ties follow the exact rules; equal deciding scores draw |
 | Knowledge | Friendly sight reaches Manhattan distance 3, or 4 from hills; public scores/site ownership; hidden enemies/orders withheld; own dispatches and public captures only |
 | API | `snapshot()` for referee/debug use; `view_for(side)` for presentation; `legal_orders(unit_id, side)` for planning; `resolve_round(orders, expected_revision)` for commitments |
-| Persistence | `undo()` restores a whole round including random state; `save_data()` / `load_data(data)` replay seed and accepted human plans transactionally, including undo after load |
+| Persistence | `undo()` restores a whole round including random state; `save_data()` / `load_data(data)` replay seed and accepted human plans transactionally. Version 1 saves are rejected explicitly; there is no silent migration |
 
-There is no claim yet of line-of-sight occlusion, contact memory, order transmission delay, supply, retreat behaviour, distinct abilities for every role, strong AI, two-human secret planning, or a finished balance model. Fog radius is a deliberately small first rule, not a complete battlefield intelligence simulation. Consult the final integration notes before presenting any prototype feature as shipped.
+There is no line-of-sight occlusion, contact memory, order transmission delay, supply, routing, strong AI, two-human secret planning, or finished balance model. Fog radius is a deliberately small rule, not a complete battlefield intelligence simulation. Portraits establish characters; they do not establish playable commander abilities. Consult current verification before presenting integration work as shipped.
 
 ## Work in the existing project
 
@@ -86,7 +87,7 @@ Supply the source commit and branch, exact game variant and rules version, launc
 
 The polish pass needs stable formation IDs, copied observations, documented orders and events, revision handling, explicit outcome data, reusable theme Resources, original asset sources, and room for keyboard navigation. Those are useful interfaces. A universal hierarchy for every imaginable game is not required. Add Go's placements and passing, Xiangqi's intersection moves, and checkers' multi-capture actions only when implementing their own tested sessions.
 
-Use the [parallel ten-minute waves](NINTH_GATE_DESIGN.md#parallel-follow-up-slices) for bounded follow-up tasks with distinct file ownership, explicit dependencies, and checks. The earlier [chess plan](PLAN.md) remains the record of chess architecture and its acceptance gates; the selected scope here takes precedence over older roadmap ordering.
+Use the [parallel ten-minute waves](NINTH_GATE_DESIGN.md#parallel-follow-up-slices) for bounded follow-up tasks with distinct file ownership, dependencies, and checks. Preserve current rules tests while checking novice clarity: can a new player identify the objective, explain the three-order budget and default attacks, distinguish roles, undo a mistake, and understand the result? Record confusion and match duration instead of assuming shorter rules are fun. The earlier [chess plan](PLAN.md) remains the architecture record; this selected scope supersedes older roadmap ordering.
 
 ## Rights and publication
 
