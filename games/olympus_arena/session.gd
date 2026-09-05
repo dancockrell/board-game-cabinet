@@ -194,9 +194,9 @@ func _attack(unit: Dictionary, target: Dictionary) -> void:
 		target.slow = 1.6
 	if unit.kind == "heracles":
 		for enemy in _state.units:
-			if enemy.id != target.get("id") and enemy.side != unit.side and not enemy.flying and _position(enemy).distance_to(_position(target)) < 1.0:
+			if str(enemy.id) != str(target.get("id")) and enemy.side != unit.side and not enemy.flying and _position(enemy).distance_to(_position(target)) < 1.0:
 				enemy.hp -= float(unit.damage) * 0.65
-	_event("hit", _position(target), unit.side)
+	_event("hit", _position(target), unit.side, _position(unit))
 
 func _step_tower(tower: Dictionary) -> void:
 	tower.cooldown = maxf(0.0, float(tower.cooldown) - STEP)
@@ -213,7 +213,7 @@ func _step_tower(tower: Dictionary) -> void:
 	if not closest.is_empty():
 		closest.hp -= 32.0 if tower.kind == "tower" else 42.0
 		tower.cooldown = 0.9
-		_event("hit", _position(closest), tower.side)
+		_event("hit", _position(closest), tower.side, _position(tower))
 
 func _cleanup() -> void:
 	_state.units = _state.units.filter(func(unit: Dictionary) -> bool: return unit.hp > 0)
@@ -253,8 +253,12 @@ func _finish_on_score() -> void:
 func _position(thing: Dictionary) -> Vector2:
 	return Vector2(thing.x, thing.z)
 
-func _event(kind: String, point: Vector2, side: int) -> void:
-	_state.events.append({"kind":kind, "x":point.x, "z":point.y, "side":side, "time":_state.elapsed, "id":_event_id})
+func _event(kind: String, point: Vector2, side: int, source: Vector2 = Vector2.INF) -> void:
+	var event := {"kind":kind, "x":point.x, "z":point.y, "side":side, "time":_state.elapsed, "id":_event_id}
+	if source.is_finite():
+		event["source_x"] = source.x
+		event["source_z"] = source.y
+	_state.events.append(event)
 	_event_id += 1
 	while _state.events.size() > 32:
 		_state.events.pop_front()

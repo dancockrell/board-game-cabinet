@@ -130,6 +130,21 @@ func _combat_checks() -> void:
 	for frame in range(14):
 		game.tick()
 	_check(is_equal_approx(game.snapshot().energy[0], 1.0), "final minute doubles regeneration")
+	game.new_game()
+	game._state.energy = [10.0, 10.0]
+	game._hands[0][0] = "heracles"
+	game.deploy(0, Vector2(2.7, 2))
+	game._deploy(1, 0, Vector2(2.7, -5))
+	var hero: Dictionary = game._state.units[0]
+	var tower: Dictionary = game._state.towers[4]
+	hero.x = tower.x
+	hero.z = tower.z + 0.5
+	var enemy: Dictionary = game._state.units[1]
+	var enemy_before: float = enemy.hp
+	game._attack(hero, tower)
+	_check(enemy.hp < enemy_before, "Heracles hitting a string-ID tower also splashes nearby integer-ID units")
+	var hit: Dictionary = game.snapshot().events.back()
+	_check(hit.has("source_x") and hit.has("source_z") and is_equal_approx(hit.source_x, hero.x) and is_equal_approx(hit.source_z, hero.z), "Hit event records authoritative projectile origin")
 
 func _check(condition: bool, label: String) -> void:
 	checks += 1
