@@ -11,6 +11,8 @@ var _last_towers: Dictionary = {}
 var _last_phase := ""
 var _last_overtime := false
 var _double_announced := false
+var _last_event_id := -1
+var _last_elapsed := -1.0
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -25,6 +27,8 @@ func reset() -> void:
 	_last_phase = ""
 	_last_overtime = false
 	_double_announced = false
+	_last_event_id = -1
+	_last_elapsed = -1.0
 	queue_redraw()
 
 func show_countdown(text: String) -> void:
@@ -43,8 +47,16 @@ func deployed(at: Vector2) -> void:
 	queue_redraw()
 
 func consume_state(state: Dictionary) -> void:
-	if float(state.get("elapsed", 0.0)) <= 0.001 and not _last_towers.is_empty():
+	var elapsed := float(state.get("elapsed", 0.0))
+	if elapsed < _last_elapsed or (elapsed <= 0.001 and not _last_towers.is_empty()):
 		reset()
+	_last_elapsed = elapsed
+	for event in state.get("events", []):
+		var event_id := int(event.get("id", -1))
+		if event_id <= _last_event_id: continue
+		_last_event_id = event_id
+		if str(event.get("kind", "")) == "charge_ready":
+			show_banner("YOUR MINOTAUR IS CHARGED" if int(event.get("side", 1)) == 0 else "RIVAL MINOTAUR CHARGED", 1.05)
 	for tower in state.get("towers", []):
 		var id := str(tower.id)
 		var hp := float(tower.hp)

@@ -36,10 +36,15 @@ func _run() -> void:
 	state.overtime = true
 	fx.consume_state(state)
 	expect(fx._banner == "SUDDEN DEATH", "Overtime announces once")
+	state.events = [{"id":17,"kind":"charge_ready","side":0,"x":2.7,"z":1.0}]
+	fx.consume_state(state)
+	expect(fx._banner == "YOUR MINOTAUR IS CHARGED", "Player charge state receives novice-readable HUD feedback")
+	fx.consume_state(state)
+	expect(fx._last_event_id == 17, "Repeated snapshots do not replay the charge announcement")
 	fx.show_countdown("3")
 	expect(fx._banner == "3" and is_equal_approx(fx._banner_duration, 0.92), "Countdown uses short cinematic banner")
 	fx.reset()
-	expect(fx._sparks.is_empty() and fx._last_towers.is_empty() and not fx._double_announced, "Rematch clears transient HUD state")
+	expect(fx._sparks.is_empty() and fx._last_towers.is_empty() and not fx._double_announced and fx._last_event_id == -1, "Rematch clears transient HUD state")
 	fx.queue_free()
 	await process_frame
 	print("Olympus HUD FX: %d checks, %d failures" % [checks, failures])
