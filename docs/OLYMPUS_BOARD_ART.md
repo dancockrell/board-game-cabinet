@@ -48,3 +48,9 @@ Every board-art change must pass all of these checks before it becomes release e
 6. Any new bitmap or authored model is recorded in the art manifest with its source, hash, tool/version, review status, transforms, and runtime consumers. Procedural code assets are recorded through source control and the release source commit.
 
 The next authored-model gate remains one complete Hoplite. It should replace the fallback only after the isolated model viewer and the real match view both outperform the current miniature without losing the shield, spear, formation, or team read.
+
+## Sanctuary iteration
+
+`presentation/olympus_sculpt.gd` builds explicitly shaped Hoplite and Minotaur geometry using ring profiles and tapered curved tubes. This is an intermediate asset technique with editable source: no external model or texture dependencies. The Hoplite shield and spear, and Minotaur axe, belong to animated arm children. Preserve this attachment in any replacement. The old sphere assembly is no longer the visual standard for those two units.
+
+The stage uses mixed rectangular courses and subtle joints so the paving supports the figures without competing with them. Team color belongs on a thin plinth rim; its top is neutral weathered stone. Health bars are unlit and cast no shadows. The next art priority is to bring the Hydra, Harpies, Atalanta and Medusa to the same degree of shape control, then review attack poses and crowd silhouettes in both teams.
