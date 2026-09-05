@@ -171,5 +171,32 @@ func _init() -> void:
 		var cell: Vector2i = Vector2i(bot_order.x,bot_order.y)
 		check(not reserved.has(cell),"Bot avoids duplicate move destinations")
 		reserved.append(cell)
-	print("Ninth Gate: %d checks passed" % checks)
+	# Exact damage modifiers are measured from matching dice, not lucky outcomes.
+	var ordinary_damage: int = 0
+	var protected_damage: int = 0
+	for seed_value in 20:
+		s.new_game(seed_value)
+		other.new_game(seed_value)
+		s._state.units = [piece("a","heaven",2,2),piece("b","hell",3,2)]
+		other._state.units = [piece("a","heaven",2,2),piece("b","hell",3,2,"guard")]
+		s._apply([order("a","attack",3,2),order("b","rally",3,2)])
+		other._apply([order("a","attack",3,2),order("b","hold",3,2)])
+		ordinary_damage += 5 - s._unit(s._state,"b").hp
+		protected_damage += 5 - other._unit(other._state,"b").hp
+	check(protected_damage < ordinary_damage,"Guard armor plus brace reduces damage over identical dice")
+	s.new_game()
+	s._state.units = [piece("a","heaven",4,1),piece("b","hell",5,1)]
+	# Legal resolver cannot see hidden blockers in general; referee still rechecks paths.
+	s._apply([order("a","move",6,1),order("b","hold",5,1)])
+	check(s._unit(s._state,"a").x == 4,"Authoritative movement cannot jump a blocker at the intermediate bridge")
+	s.new_game()
+	s._state.units = [piece("a","heaven",5,1),piece("b","hell",5,6)]
+	s._state.score = {"heaven":11,"hell":11}
+	s._apply([])
+	check(s._state.phase == "finished" and s._state.winner == "draw","Simultaneous target-score tie is a draw")
+	s.new_game()
+	s._state.units = [piece("a","heaven",0,0),piece("b","hell",11,7)]
+	for round_index in Session.LIMIT: s._apply([])
+	check(s._state.round == 8 and s._state.phase == "finished","Eight rounds ends even an uneventful battle")
+	print("Ninth Gate: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures > 0 else 0)

@@ -23,7 +23,7 @@ The bot receives the same filtered view for its side. It spends commands on reco
 * **Hold / Brace:** stay in place, gain one cover this round, and do not attack.
 * **Move:** move up to two steps north, south, east, or west, with a turn permitted between steps. Every step must be passable and unoccupied in the observed planning position. River squares are illegal. Hidden occupants can cause a legal attempted move to fail during resolution; there must still be a clear path in the authoritative pre-round position.
 * **Attack:** target the planning position of a visible enemy within Manhattan range one, or range three for archers. There is no intervening-square line-of-fire rule. The attack targets the square, not a tracking unit identifier.
-* **Rally:** recover one health up to five. Recover one morale, or two for Heaven, up to three. 
+* **Rally:** recover one health up to five. Recover one morale, or two for Heaven, up to three.
 
 * **Mend:** heralds can restore two health to an injured friendly unit within one step, including themselves. The order targets a square; if that ally moves away it may miss. Healing cannot exceed maximum health.
 
