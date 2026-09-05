@@ -229,7 +229,21 @@ func load_data(data: Dictionary) -> Dictionary:
 	candidate.new_game(int(data.seed))
 	for round_orders in data.orders:
 		if not round_orders is Array: return {"ok":false,"error":"Malformed saved orders."}
-		var result: Dictionary = candidate.resolve_round(round_orders)
+		# Godot JSON decodes every number as float, but dictionary equality is
+		# type-sensitive. Normalize only validated integral board coordinates.
+		var normalized: Array = []
+		for order in round_orders:
+			if not order is Dictionary: return {"ok":false,"error":"Malformed saved order."}
+			var copy: Dictionary = order.duplicate(true)
+			for axis in ["x","y"]:
+				var value = copy.get(axis)
+				if not (value is int or value is float): return {"ok":false,"error":"Invalid saved coordinate."}
+				if not is_finite(float(value)) or float(value) < 0 or float(value) >= (WIDTH if axis == "x" else HEIGHT):
+					return {"ok":false,"error":"Invalid saved coordinate."}
+				if float(value) != float(int(value)): return {"ok":false,"error":"Fractional saved coordinate."}
+				copy[axis] = int(value)
+			normalized.append(copy)
+		var result: Dictionary = candidate.resolve_round(normalized)
 		if not result.ok: return {"ok":false,"error":"Invalid saved order sequence."}
 	_state = candidate.snapshot()
 	_undo = candidate._undo.duplicate(true)

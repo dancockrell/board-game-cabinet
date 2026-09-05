@@ -102,5 +102,28 @@ func _init() -> void:
 	check(other.resolve_round([order("b","attack",4,3),order("a","attack",4,2)]).ok,"Reversed combat orders valid")
 	check(canonical(s.snapshot()) == canonical(other.snapshot()),"Combat deterministic independent of selection order")
 	check(s.snapshot().rng != 91,"Combat consumed random state")
+	# Play real nonempty orders from the initial position, then persist as JSON.
+	s.new_game()
+	for index in 12:
+		if s.snapshot().phase == "finished": break
+		var planned: Array = []
+		for unit in s.view_for("heaven").units:
+			if unit.side != "heaven" or planned.size() >= 3: continue
+			var chosen: Dictionary = {}
+			for legal in s.legal_orders(unit.id):
+				if legal.type == "rally": chosen = legal
+				if legal.type == "move" and legal.x > unit.x: chosen = legal
+				if legal.type == "attack":
+					chosen = legal
+					break
+			if not chosen.is_empty(): planned.append(chosen)
+		check(s.resolve_round(planned).ok,"Nonempty battle orders resolve")
+	var json_save: Dictionary = JSON.parse_string(JSON.stringify(s.save_data()))
+	check(loaded.load_data(json_save).ok,"Nonempty full battle JSON replay loads")
+	check(canonical(loaded.snapshot()) == canonical(s.snapshot()),"Full battle JSON replay identical")
+	loaded_before = loaded.snapshot()
+	json_save.orders[0][0].x = 3.5
+	check(not loaded.load_data(json_save).ok,"Fractional JSON coordinate rejected")
+	check(loaded.snapshot() == loaded_before,"Fractional save load atomic")
 	print("Ninth Gate: %d checks passed" % checks)
 	quit(0)
