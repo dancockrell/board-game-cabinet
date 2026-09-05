@@ -4,7 +4,7 @@ extends SceneTree
 ## Encode without retiming: ffmpeg -framerate 30 -i frame-%04d.png -c:v libx264 -pix_fmt yuv420p gameplay.mp4
 const Battle = preload("res://app/olympus_arena.tscn")
 const FPS := 30
-const WARMUP_FRAMES := 35 * FPS
+const WARMUP_FRAMES := 38 * FPS
 const CAPTURE_FRAMES := 6 * FPS
 var app
 var directory := ""
@@ -33,9 +33,14 @@ func _run() -> void:
 		quit(2)
 		return
 	root.size = Vector2i(1440, 960)
+	root.content_scale_size = Vector2i(1440, 960)
+	root.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
+	root.gui_disable_input = true
 	app = Battle.instantiate()
 	root.add_child(app)
 	app.set_process(false)
+	app.set_process_input(false)
+	app.set_process_unhandled_input(false)
 	await process_frame
 	await process_frame
 	app.sound.set_muted(true)
@@ -60,10 +65,15 @@ func _run() -> void:
 			push_error("Capture failed: %s" % filename)
 			quit(1)
 			return
+	var expected_elapsed := float(WARMUP_FRAMES + CAPTURE_FRAMES) / FPS
+	if not is_equal_approx(float(app.state.elapsed), expected_elapsed):
+		push_error("Capture timeline changed unexpectedly; expected %.1f seconds, got %s" % [expected_elapsed, app.state.elapsed])
+		quit(1)
+		return
 	var metadata := {
 		"scene": "res://app/olympus_arena.tscn", "seed": 42,
 		"fps": FPS, "frames": CAPTURE_FRAMES, "duration_seconds": 6,
-		"warmup_seconds": 35, "simulation_tick_seconds": 0.1,
+		"warmup_seconds": WARMUP_FRAMES / FPS, "simulation_tick_seconds": 0.1,
 		"player_legal_placements": placements,
 		"final_elapsed": app.state.elapsed,
 		"final_unit_count": app.state.units.size(),
@@ -95,7 +105,7 @@ func _deploy_player() -> void:
 	for offset in 4:
 		var slot := (last_slot + 1 + offset) % 4
 		var kind: String = state.hand[slot]
-		var position := Vector2(-2.7 if lane % 2 == 0 else 2.7, 3.8)
+		var position := Vector2(-2.7 if lane % 2 == 0 else 2.7, 1.3)
 		if kind == "thunderbolt":
 			position = Vector2(position.x, -3.0)
 			for unit in state.units:
