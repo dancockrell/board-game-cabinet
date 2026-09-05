@@ -104,6 +104,14 @@ func _run() -> void:
 	expect(app.session.snapshot().board[49] == "P", "Pawn remains authoritative until choice")
 	app._promote("n")
 	expect(app.session.snapshot().board[56] == "N" and app.board_view._snapshot[56] == "N", "Underpromotion reaches state and view")
+	app.session.new_game()
+	for uci in ["f2f3", "e7e5", "g2g4", "d8h4"]:
+		play(uci)
+	expect(app.session.result().contains("Checkmate") and app.status_label.text.contains("Black wins"), "Completed game announces checkmate winner")
+	app.request_square(12)
+	expect(app.selected == -1, "Completed game rejects board input")
+	app._undo()
+	expect(app.session.result().is_empty() and app.board_view._snapshot == app.session.snapshot().board, "Undo reopens completed game coherently")
 	# A real practice response completes and is undoable as a player turn.
 	app.session.new_game()
 	app._change_mode(0)
@@ -122,8 +130,8 @@ func _run() -> void:
 	await process_frame
 	await RenderingServer.frame_post_draw
 	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--capture="):
-			var result: Error = root.get_texture().get_image().save_png(argument.trim_prefix("--capture="))
+		if argument.begins_with("--test-capture="):
+			var result: Error = root.get_texture().get_image().save_png(argument.trim_prefix("--test-capture="))
 			expect(result == OK, "Integration capture saved")
 	DirAccess.remove_absolute(app.save_path)
 	app.queue_free()
