@@ -92,5 +92,15 @@ func _init() -> void:
 	s._apply([order("a","attack",4,2),order("b","move",4,3)])
 	check(s._unit(s._state,"b").hp == 5,"Attack misses enemy that moved away")
 	check(str(s.view_for("heaven").log).contains("no enemy"),"Miss explained to attacker")
+	# Real combat consumes identical dice even if the UI submits its orders reversed.
+	s.new_game(91)
+	other.new_game(91)
+	var combat_units: Array = [piece("a","heaven",3,2),piece("b","heaven",3,3),piece("x","hell",4,2),piece("y","hell",4,3)]
+	s._state.units = combat_units.duplicate(true)
+	other._state.units = combat_units.duplicate(true)
+	check(s.resolve_round([order("a","attack",4,2),order("b","attack",4,3)]).ok,"Combat orders valid")
+	check(other.resolve_round([order("b","attack",4,3),order("a","attack",4,2)]).ok,"Reversed combat orders valid")
+	check(canonical(s.snapshot()) == canonical(other.snapshot()),"Combat deterministic independent of selection order")
+	check(s.snapshot().rng != 91,"Combat consumed random state")
 	print("Ninth Gate: %d checks passed" % checks)
 	quit(0)
