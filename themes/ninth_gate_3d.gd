@@ -1,0 +1,15 @@
+extends Resource
+## Presentation-only palette for the original fantasy war table.
+@export var grass: Color = Color("728b64")
+@export var grass_alternate: Color = Color("7e956a")
+@export var unseen: Color = Color("465853")
+@export var river: Color = Color("3f969c")
+@export var stone: Color = Color("b1b39b")
+@export var wood: Color = Color("302c2a")
+@export var heaven: Color = Color("eee4c9")
+@export var heaven_trim: Color = Color("e9ba63")
+@export var hell: Color = Color("453d4c")
+@export var hell_trim: Color = Color("ec7661")
+@export var move: Color = Color("b3ed9c")
+@export var attack: Color = Color("ff9c66")
+@export var heal: Color = Color("9bdce9")
