@@ -355,6 +355,14 @@ func _add_health(node: Node3D, height: float, width: float, color: Color) -> voi
 	var fill := _box(holder, Vector3(width, 0.075, 0.04), Vector3(0, 0, 0.025), color)
 	fill.name = "Fill"
 	fill.set_meta("width", width)
+	# Health indicators are interface overlays in world space. They must not
+	# cast floating rectangular shadows onto the stone or change with sunlight.
+	for indicator in holder.get_children():
+		if indicator is MeshInstance3D:
+			indicator.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			var material := indicator.material_override.duplicate() as StandardMaterial3D
+			material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			indicator.material_override = material
 
 func _health(node: Node3D, fraction: float) -> void:
 	var fill: MeshInstance3D = node.get_node("Health/Fill")
