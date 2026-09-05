@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CabinetGameDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/game_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+game_id = "chess"
+display_name = "Chess"
+files = 8
+ranks = 8
+placement = "cells"
+rules_version = 1
