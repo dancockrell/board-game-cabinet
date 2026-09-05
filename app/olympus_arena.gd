@@ -3,6 +3,7 @@ extends Control
 const Session = preload("res://games/olympus_arena/session.gd")
 const Arena = preload("res://presentation/olympus_arena_board.gd")
 const MoveAudio = preload("res://presentation/olympus_audio.gd")
+const HudFx = preload("res://presentation/olympus_hud_fx.gd")
 var session = Session.new()
 var board
 var state: Dictionary = {}
@@ -17,6 +18,10 @@ var _dragging := false
 var _last_pointer := Vector2(-999,-999)
 var _textures: Dictionary = {}
 var cards: Array = []
+var energy_pips: Array[Panel] = []
+var hud_fx
+var _countdown_remaining := 0.0
+var _countdown_number := 0
 var timer_label: Label
 var score_label: Label
 var energy_label: Label
@@ -84,6 +89,10 @@ func _build_ui() -> void:
 	surface.add_child(viewport)
 	board = Arena.new()
 	viewport.add_child(board)
+	hud_fx = HudFx.new()
+	hud_fx.position = surface.position
+	hud_fx.size = surface.size
+	add_child(hud_fx)
 	_label("OLYMPUS",Vector2(25,16),34,Color("f5d390"))
 	_label("A R E N A",Vector2(29,56),15,Color("a5c5cb"))
 	_panel(Rect2(580,9,280,54),Color("152f3e"))
@@ -182,6 +191,17 @@ Or take more towers.",Vector2(1212,304),Vector2(185,66),17)
 	fill.set_corner_radius_all(6)
 	energy_bar.add_theme_stylebox_override("fill",fill)
 	add_child(energy_bar)
+	for pip_index in 10:
+		var pip := Panel.new()
+		pip.position = Vector2(383 + pip_index * 70.3, 933)
+		pip.size = Vector2(62, 8)
+		pip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var pip_style := StyleBoxFlat.new()
+		pip_style.bg_color = Color("e394ff")
+		pip_style.set_corner_radius_all(4)
+		pip.add_theme_stylebox_override("panel", pip_style)
+		add_child(pip)
+		energy_pips.append(pip)
 	energy_label = _label("5 / 10",Vector2(289,843),24,Color("e9b5ff"))
 	_label("ELIXIR",Vector2(291,879),13,Color("b4a0cc"))
 	notice_label = _paragraph("",Vector2(25,747),Vector2(215,176),16)
@@ -243,21 +263,30 @@ func _button(text:String,at:Vector2,dimensions:Vector2,callback:Callable) -> But
 
 func _process(delta:float) -> void:
 	if started and not paused and state.get("phase","")=="playing":
-		_accumulator+=minf(delta,0.25)
-		var changed:=false
-		while _accumulator>=0.1:
-			session.tick()
-			_accumulator-=0.1
-			changed=true
-		if changed: _refresh()
+		if _countdown_remaining > 0.0:
+			_countdown_remaining = maxf(0.0, _countdown_remaining - delta)
+			var number := ceili(_countdown_remaining)
+			if number != _countdown_number:
+				_countdown_number = number
+				hud_fx.show_countdown("BATTLE!" if number <= 0 else str(number))
+		else:
+			_accumulator+=minf(delta,0.25)
+			var changed:=false
+			while _accumulator>=0.1:
+				session.tick()
+				_accumulator-=0.1
+				changed=true
+			if changed: _refresh()
 
 	for slot in cards.size():
 		var button: Button = cards[slot].button
 		var active: bool = slot == selected_slot
+		var hovered: bool = button.is_hovered()
 		button.position.y = lerpf(button.position.y, 779.0 if active else 791.0, 1.0-exp(-delta*18.0))
-		button.scale = button.scale.lerp(Vector2.ONE * (1.045 if active else 1.0),1.0-exp(-delta*18.0))
+		button.scale = button.scale.lerp(Vector2.ONE * (1.055 if active else 1.025 if hovered else 1.0),1.0-exp(-delta*18.0))
 	if selected_slot >= 0 and _last_pointer.x > -900: _preview(_last_pointer)
 	if board and not state.is_empty(): board.show_state(state,delta)
+	if hud_fx: hud_fx.advance(delta)
 
 func _refresh() -> void:
 	state=session.snapshot()
@@ -272,6 +301,11 @@ func _refresh() -> void:
 	score_label.text="YOU %s  :  %s RIVAL" % [crowns[0],crowns[1]]
 	energy_label.text="%s / 10" % int(floor(state.energy[0]))
 	energy_bar.value=state.energy[0]
+	for pip_index in energy_pips.size():
+		var charge := clampf(float(state.energy[0]) - pip_index, 0.0, 1.0)
+		energy_pips[pip_index].modulate = Color(1.0, 1.0, 1.0, 0.18 + charge * 0.82)
+		energy_pips[pip_index].scale.y = 0.65 + charge * 0.35
+	timer_label.modulate = Color("ff8a72") if seconds <= 10 and state.phase == "playing" else Color.WHITE
 	get_node("NextArt").texture = _texture(state.get("next_card","hoplites"))
 	next_label.text=catalog.get(state.get("next_card",""),{}).get("name","-")
 	for slot in 4:
@@ -283,6 +317,7 @@ func _refresh() -> void:
 		cards[slot].button.tooltip_text=card.description
 		cards[slot].button.modulate=Color("ffe9b2") if slot==selected_slot else Color.WHITE if state.energy[0]>=card.cost else Color("8496a7")
 		cards[slot].button.disabled=state.phase=="finished"
+		cards[slot].button.add_theme_color_override("font_color", Color("fff0c6") if slot == selected_slot else Color("e7e1d2"))
 	if selected_slot>=0:
 		var kind:String=state.hand[selected_slot]
 		selection_label.text=catalog[kind].name+" / "+str(catalog[kind].cost)
@@ -294,6 +329,7 @@ func _refresh() -> void:
 		card_preview.texture=_texture(state.hand[0])
 	if selected_slot < 0: board.clear_preview()
 	notice_label.text=notice
+	if hud_fx: hud_fx.consume_state(state)
 	if state.phase=="finished":
 		paused=false
 		selected_slot=-1
@@ -323,14 +359,23 @@ func _start_or_restart() -> void:
 	started=true
 	paused=false
 	_accumulator=0
+	_countdown_remaining=3.05
+	_countdown_number=3
 	selected_slot=-1
 	pause_button.text="Pause"
 	_show_overlay(false)
-	notice="Pick a card, then deploy on your blue half."
+	if hud_fx:
+		hud_fx.reset()
+		hud_fx.show_countdown("3")
+	notice="The gates are opening..."
 	_refresh()
 
 func _select_card(slot:int) -> void:
 	if state.phase=="finished": return
+	if _countdown_remaining > 0.0:
+		notice="The battle begins after the count."
+		_refresh()
+		return
 	selected_slot=slot
 	notice="Deploy %s on your half." % catalog[state.hand[slot]].name
 	if state.hand[slot]=="thunderbolt": notice="Aim Thunderbolt anywhere in the arena."
@@ -378,6 +423,7 @@ func _deploy_at(local:Vector2) -> void:
 	var point:Vector2=board.pick_ground(local,Vector2(viewport.size))
 	var result:Dictionary=session.deploy(selected_slot,point)
 	if result.get("ok",false):
+		if hud_fx: hud_fx.deployed(local)
 		selected_slot=-1
 		board.show_deployment(Vector2.INF,false)
 		sound.pitch_scale=1.2
