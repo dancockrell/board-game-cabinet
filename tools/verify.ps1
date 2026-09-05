@@ -17,7 +17,7 @@ foreach ($test in @("test_chess", "test_chess_oracle", "test_session", "test_dra
     Invoke-GodotCheck @("--headless", "--script", "res://tests/$test.gd")
 }
 if ($Graphics) {
-    foreach ($test in @("test_board", "test_app", "test_controls", "test_ninth_gate_board", "test_ninth_gate_app", "test_olympus_combat_fx", "test_olympus_board", "test_olympus_stage", "test_olympus_app")) {
+    foreach ($test in @("test_board", "test_app", "test_controls", "test_ninth_gate_board", "test_ninth_gate_app", "test_olympus_combat_fx", "test_olympus_board", "test_olympus_stage", "test_olympus_models", "test_olympus_creatures", "test_olympus_app")) {
         Invoke-GodotCheck @("--rendering-method", "gl_compatibility", "--script", "res://tests/$test.gd")
     }
 }
