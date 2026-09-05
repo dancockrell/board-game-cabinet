@@ -43,6 +43,10 @@ func run() -> void:
 		state.events[0].id+=1
 		fx.consume_state(state,0.0)
 		check(not fx.effects.is_empty(),"Unit effect renders: "+kind)
+	state.events[0].id += 1
+	state.events[0].source_kind = "temple"
+	fx.consume_state(state, 0.0)
+	check(fx.effects.any(func(effect): return str(effect.get("impact", "")) == "giant"), "Temple launches a distinct heavy projectile")
 	fx.animate(2.0)
 	fx.animate(2.0)
 	check(fx.effects.is_empty(),"Projectile completion impacts also expire")

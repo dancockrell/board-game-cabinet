@@ -175,14 +175,19 @@ func show_event(event: Dictionary) -> void:
 		"hit":
 			var kind := _attacker(event)
 			var source := Vector3(float(event.get("source_x",at.x)),.95,float(event.get("source_z",at.z)))
-			if kind in ["atalanta","tower"]:
+			if kind in ["atalanta","tower","temple"]:
 				var e := _effect(source,.15,"projectile")
 				e.destination=at+Vector3(0,.35,0)
 				e.impact="arrow"
 				e.color=team
 				var direction := (e.destination-source).normalized() as Vector3
-				_line(e.node,-direction*.50,Vector3.ZERO,.017,Color("fff0bd"))
-				_ball(e.node,Vector3.ZERO,Vector3(.055,.055,.055),Color("fff5da"),true)
+				if kind == "temple":
+					_line(e.node,-direction*.34,Vector3.ZERO,.04,team.lightened(.42))
+					_ball(e.node,Vector3.ZERO,Vector3(.12,.12,.12),Color("fff1a8"),true)
+					e.impact="giant"
+				else:
+					_line(e.node,-direction*.50,Vector3.ZERO,.017,Color("fff0bd"))
+					_ball(e.node,Vector3.ZERO,Vector3(.055,.055,.055),Color("fff5da"),true)
 			elif kind == "medusa":
 				var e := _effect(source,.16,"flash")
 				_line(e.node,Vector3.ZERO,at-source+Vector3(0,.45,0),.034,Color("88efb2"))

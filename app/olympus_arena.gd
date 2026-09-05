@@ -279,6 +279,9 @@ func _process(delta:float) -> void:
 				_countdown_number = number
 				hud_fx.show_countdown("BATTLE!" if number <= 0 else str(number))
 				sound.play_countdown(maxi(0, number))
+				if number <= 0:
+					notice = "Pick a card, then deploy on your blue half."
+					notice_label.text = notice
 		else:
 			_accumulator+=minf(delta,0.25)
 			var changed:=false

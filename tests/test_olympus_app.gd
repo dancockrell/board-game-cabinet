@@ -43,6 +43,7 @@ func _run() -> void:
 	expect(app.session.snapshot() == countdown_state, "Countdown keeps the authoritative clock frozen")
 	app._process(2.1)
 	expect(app._countdown_remaining == 0.0, "Countdown completes before deployment")
+	expect(app.notice.contains("Pick a card"), "Countdown hands control back with a useful instruction")
 	app._select_card(0)
 	expect(app.selected_slot == 0 and app.card_preview.texture != null, "Selecting card populates portrait preview")
 	var blue: Vector2 = app.board.camera.unproject_position(Vector3(-2.7, 0, 4))
