@@ -24,10 +24,10 @@ func catalog() -> Dictionary:
 	return {
 		"hoplites": {"name":"Hoplites", "cost":3, "description":"Three shield soldiers. Strong together.", "hp":145.0, "damage":24.0, "speed":0.8, "range":0.65, "count":3},
 		"atalanta": {"name":"Atalanta", "cost":3, "description":"Quick archer. Hits ground and air.", "hp":175.0, "damage":37.0, "speed":1.05, "range":2.65, "count":1},
-		"minotaur": {"name":"Minotaur", "cost":5, "description":"Heavy charger. Heads straight for towers.", "hp":720.0, "damage":86.0, "speed":0.78, "range":0.8, "count":1},
+		"minotaur": {"name":"Minotaur", "cost":5, "description":"Targets towers. Build a charge by moving; next hit deals double damage.", "hp":720.0, "damage":86.0, "speed":0.78, "range":0.8, "count":1},
 		"medusa": {"name":"Medusa", "cost":4, "description":"Ranged gaze slows enemy movement.", "hp":260.0, "damage":29.0, "speed":0.72, "range":2.35, "count":1},
 		"heracles": {"name":"Heracles", "cost":5, "description":"His club hits nearby ground enemies.", "hp":640.0, "damage":64.0, "speed":0.75, "range":0.8, "count":1},
-		"hydra": {"name":"Hydra", "cost":6, "description":"An enduring beast that can bite flying foes.", "hp":1080.0, "damage":58.0, "speed":0.52, "range":1.15, "count":1},
+		"hydra": {"name":"Hydra", "cost":6, "description":"Bites ground and air. Heals after 4 seconds without taking damage.", "hp":1080.0, "damage":58.0, "speed":0.52, "range":1.15, "count":1},
 		"harpies": {"name":"Harpies", "cost":3, "description":"Two flying attackers. Evade ground fighters.", "hp":120.0, "damage":27.0, "speed":1.35, "range":0.8, "count":2},
 		"thunderbolt": {"name":"Thunderbolt", "cost":2, "description":"Strike anywhere: 130 unit damage, 65 tower damage.", "count":0}
 	}
@@ -89,7 +89,7 @@ func _deploy(side: int, slot: int, position: Vector2) -> Dictionary:
 	if kind == "thunderbolt":
 		for unit in _state.units:
 			if unit.side != side and _position(unit).distance_to(position) <= 1.55:
-				unit.hp -= 130.0
+				_hurt(unit, 130.0)
 		for tower in _state.towers:
 			if tower.side != side and _position(tower).distance_to(position) <= 1.55:
 				tower.hp -= 65.0
@@ -98,7 +98,7 @@ func _deploy(side: int, slot: int, position: Vector2) -> Dictionary:
 		for index in range(int(card.count)):
 			var spread := (index - (int(card.count) - 1) * 0.5) * 0.42
 			var point := Vector2(clampf(position.x + spread, -4.6, 4.6), position.y)
-			_state.units.append({"id":_next_id, "side":side, "kind":kind, "x":point.x, "z":point.y, "hp":card.hp, "max_hp":card.hp, "range":card.range, "damage":card.damage, "speed":card.speed, "cooldown":0.2, "slow":0.0, "flying":kind == "harpies", "lane":-2.7 if position.x < 0 else 2.7, "crossed":false})
+			_state.units.append({"id":_next_id, "side":side, "kind":kind, "x":point.x, "z":point.y, "hp":card.hp, "max_hp":card.hp, "range":card.range, "damage":card.damage, "speed":card.speed, "cooldown":0.2, "slow":0.0, "flying":kind == "harpies", "lane":-2.7 if position.x < 0 else 2.7, "crossed":false, "charge_distance":0.0, "charge_ready":false, "recovery_time":0.0, "heal_clock":0.0})
 			_next_id += 1
 		_event("summon", position, side)
 	_cleanup()
@@ -215,6 +215,15 @@ func _bot_spell_target() -> Dictionary:
 func _step_unit(unit: Dictionary) -> void:
 	unit.cooldown = maxf(0.0, float(unit.cooldown) - STEP)
 	unit.slow = maxf(0.0, float(unit.slow) - STEP)
+	if unit.kind == "hydra":
+		unit.recovery_time = float(unit.recovery_time) + STEP
+		unit.heal_clock = float(unit.heal_clock) + STEP
+		if unit.recovery_time >= 4.0 - 0.000001 and unit.hp < unit.max_hp:
+			if unit.heal_clock >= 1.0 - 0.000001:
+				var healing := minf(20.0, float(unit.max_hp) - float(unit.hp))
+				unit.hp += healing
+				unit.heal_clock = 0.0
+				_event("heal", _position(unit), unit.side, Vector2.INF, {"unit_id":unit.id, "amount":healing, "source_kind":"hydra"})
 	var target: Dictionary = {}
 	var best := 3.1
 	if unit.kind != "minotaur":
@@ -252,6 +261,11 @@ func _step_unit(unit: Dictionary) -> void:
 			destination = Vector2(unit.lane, -sign_z * (RIVER_BANK + 0.05))
 	var next := current.move_toward(destination, float(unit.speed) * STEP * (0.45 if unit.slow > 0 else 1.0))
 	next = _constrain_position(unit, current, next)
+	if unit.kind == "minotaur" and not unit.charge_ready:
+		unit.charge_distance = float(unit.charge_distance) + current.distance_to(next)
+		if unit.charge_distance >= 2.4:
+			unit.charge_ready = true
+			_event("charge_ready", next, unit.side, Vector2.INF, {"unit_id":unit.id, "source_kind":"minotaur"})
 	unit.x = next.x
 	unit.z = next.y
 
@@ -302,14 +316,26 @@ func _constrain_position(unit: Dictionary, current: Vector2, desired: Vector2) -
 	return point
 
 func _attack(unit: Dictionary, target: Dictionary) -> void:
-	target.hp -= float(unit.damage)
+	var charged: bool = unit.kind == "minotaur" and unit.get("charge_ready", false)
+	var damage := float(unit.damage) * (2.0 if charged else 1.0)
+	_hurt(target, damage)
+	if charged:
+		unit.charge_ready = false
+		unit.charge_distance = 0.0
+		_event("charge_hit", _position(target), unit.side, _position(unit), {"unit_id":unit.id, "source_kind":unit.kind, "target_kind":target.kind, "damage":damage})
 	if unit.kind == "medusa" and target.has("slow"):
 		target.slow = 1.6
 	if unit.kind == "heracles":
 		for enemy in _state.units:
 			if str(enemy.id) != str(target.get("id")) and enemy.side != unit.side and not enemy.flying and _position(enemy).distance_to(_position(target)) < 1.0:
-				enemy.hp -= float(unit.damage) * 0.65
-	_event("hit", _position(target), unit.side, _position(unit), {"source_kind":unit.kind, "target_kind":target.kind, "damage":float(unit.damage)})
+				_hurt(enemy, float(unit.damage) * 0.65)
+	_event("hit", _position(target), unit.side, _position(unit), {"source_kind":unit.kind, "target_kind":target.kind, "damage":damage, "charged":charged})
+
+func _hurt(target: Dictionary, damage: float) -> void:
+	target.hp -= damage
+	if target.kind == "hydra":
+		target.recovery_time = 0.0
+		target.heal_clock = 0.0
 
 func _step_tower(tower: Dictionary) -> void:
 	tower.cooldown = maxf(0.0, float(tower.cooldown) - STEP)
@@ -325,7 +351,7 @@ func _step_tower(tower: Dictionary) -> void:
 				closest = unit
 	if not closest.is_empty():
 		var damage := 32.0 if tower.kind == "tower" else 42.0
-		closest.hp -= damage
+		_hurt(closest, damage)
 		tower.cooldown = 0.9
 		_event("hit", _position(closest), tower.side, _position(tower), {"source_kind":tower.kind, "target_kind":closest.kind, "damage":damage})
 

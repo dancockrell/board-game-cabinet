@@ -72,6 +72,7 @@ func _init() -> void:
 	_combat_checks()
 	_crowd_checks()
 	_bot_checks()
+	_ability_checks()
 	print("Olympus arena: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
 
@@ -255,3 +256,49 @@ func _bot_checks() -> void:
 	game._bot_turn()
 	var support: Dictionary = game.snapshot().units.back()
 	_check(support.kind == "atalanta" and support.x < 0 and support.z < attacker.z, "Bot supports an existing front line with an archer behind it")
+
+func _ability_checks() -> void:
+	var game = Arena.new()
+	game.bot_enabled = false
+	game.deploy(2, Vector2(-2.7, 4.0))
+	var bull: Dictionary = game._state.units[0]
+	for frame in range(32): game.tick()
+	_check(bull.charge_ready, "Minotaur builds charge from actual travel")
+	var ready_event := false
+	for event in game.snapshot().events:
+		if event.kind == "charge_ready" and event.unit_id == bull.id: ready_event = true
+	_check(ready_event, "Charge readiness has an explicit presentation event")
+	var tower: Dictionary = game._state.towers[3]
+	var hp_before: float = tower.hp
+	game._attack(bull, tower)
+	_check(is_equal_approx(hp_before - tower.hp, 172.0), "Charged Minotaur strike deals exactly double base damage")
+	_check(not bull.charge_ready and bull.charge_distance == 0.0, "Charged strike consumes movement charge")
+	var event: Dictionary = game.snapshot().events.back()
+	_check(event.kind == "hit" and event.charged and event.damage == 172.0, "Standard hit event reports charged damage truthfully")
+	hp_before = tower.hp
+	game._attack(bull, tower)
+	_check(is_equal_approx(hp_before - tower.hp, 86.0), "Standing Minotaur follow-up uses ordinary damage")
+	game.new_game()
+	game._state.energy[0] = 10.0
+	game._hands[0][0] = "hydra"
+	game.deploy(0, Vector2(0, 7.0))
+	var hydra: Dictionary = game._state.units[0]
+	game._hurt(hydra, 100.0)
+	for frame in range(39): game.tick()
+	_check(hydra.hp == 980.0, "Hydra cannot recover before four seconds unharmed")
+	game.tick()
+	_check(hydra.hp == 1000.0, "Hydra restores twenty health at four seconds")
+	var heal_event: Dictionary = game.snapshot().events.back()
+	_check(heal_event.kind == "heal" and heal_event.unit_id == hydra.id and heal_event.amount == 20.0, "Recovery emits exact unit and healing amount")
+	for frame in range(10): game.tick()
+	_check(hydra.hp == 1020.0, "Unharmed Hydra continues recovery once per second")
+	game._hands[1][0] = "thunderbolt"
+	game._state.energy[1] = 10.0
+	game._deploy(1, 0, Vector2(hydra.x, hydra.z))
+	_check(hydra.recovery_time == 0.0 and hydra.heal_clock == 0.0, "Thunderbolt interrupts Hydra recovery")
+	hp_before = hydra.hp
+	for frame in range(39): game.tick()
+	_check(hydra.hp == hp_before, "Damaged Hydra waits a full new recovery interval")
+	hydra.hp = hydra.max_hp - 3.0
+	game.tick()
+	_check(hydra.hp == hydra.max_hp, "Recovery cannot exceed maximum health")
