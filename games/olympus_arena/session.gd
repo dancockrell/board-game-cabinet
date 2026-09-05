@@ -68,7 +68,7 @@ func _validate_deploy(side: int, slot: int, position: Vector2) -> Dictionary:
 		return {"ok":false, "error":"Choose a position inside the arena."}
 	if kind != "thunderbolt" and ((side == 0 and position.y < 0.8) or (side == 1 and position.y > -0.8)):
 		return {"ok":false, "error":"Deploy troops on your side of the river."}
-	if float(_state.energy[side]) < int(card.cost):
+	if float(_state.energy[side]) + 0.000001 < int(card.cost):
 		return {"ok":false, "error":"Not enough elixir yet."}
 	if _state.units.size() + int(card.count) > MAX_UNITS:
 		return {"ok":false, "error":"The arena is full. Wait for space."}
@@ -80,7 +80,7 @@ func _deploy(side: int, slot: int, position: Vector2) -> Dictionary:
 		return validity
 	var kind: String = _hands[side][slot]
 	var card: Dictionary = catalog()[kind]
-	_state.energy[side] -= int(card.cost)
+	_state.energy[side] = maxf(0.0, float(_state.energy[side]) - int(card.cost))
 	_hands[side][slot] = _queues[side].pop_front()
 	_queues[side].append(kind)
 	if kind == "thunderbolt":
@@ -114,6 +114,8 @@ func tick() -> void:
 		if _bot_wait <= 0:
 			_bot_turn()
 			_bot_wait = 1.5 + _rng.randf() * 1.3
+			if _state.phase != "playing":
+				return
 	for unit in _state.units:
 		if unit.hp > 0:
 			_step_unit(unit)
