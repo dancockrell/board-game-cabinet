@@ -19,6 +19,11 @@ func _init() -> void:
 func snapshot():
 	return _state.copy()
 
+func snapshot_at(ply: int):
+	if ply < 0 or ply > _moves.size():
+		return null
+	return _state.copy() if ply == _moves.size() else _states[ply].copy()
+
 func history() -> Array:
 	return _moves.duplicate(true)
 

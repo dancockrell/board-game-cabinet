@@ -1,0 +1,29 @@
+name: Validate cabinet
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  rules:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install pinned Godot 4.3
+        run: |
+          mkdir -p "$RUNNER_TEMP/godot"
+          cd "$RUNNER_TEMP/godot"
+          release=https://github.com/godotengine/godot-builds/releases/download/4.3-stable
+          curl -fsSLO "$release/Godot_v4.3-stable_linux.x86_64.zip"
+          curl -fsSLO "$release/SHA512-SUMS.txt"
+          sha512sum --check --ignore-missing SHA512-SUMS.txt
+          unzip -q Godot_v4.3-stable_linux.x86_64.zip
+          chmod +x Godot_v4.3-stable_linux.x86_64
+          echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+      - name: Import and parse
+        run: Godot_v4.3-stable_linux.x86_64 --headless --path . --editor --import --quit
+      - name: Chess rules and independent oracle
+        run: |
+          Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_chess.gd
+          Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_chess_oracle.gd
+      - name: Sessions and adapters
+        run: Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_session.gd
