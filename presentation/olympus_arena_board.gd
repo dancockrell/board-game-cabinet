@@ -1,10 +1,12 @@
 extends Node3D
 ## Persistent visual replicas of authoritative arena snapshots.
 const PALETTE = preload("res://themes/olympus_arena_theme.tres")
+const LIMESTONE = preload("res://presentation/olympus_limestone.gdshader")
 var camera: Camera3D
 var _tokens: Dictionary = {}
 var _towers: Dictionary = {}
 var _materials: Dictionary = {}
+var _weathered_materials: Dictionary = {}
 var _preview: MeshInstance3D
 var _time := 0.0
 var _last_event := -1
@@ -280,8 +282,31 @@ func _make_tower(data: Dictionary) -> Node3D:
 		for i in 9:
 			var a := i*PI/8
 			_sphere(node,Vector3(.045,.07,.025),Vector3(cos(a)*.22,1.06+sin(a)*.24,.56),PALETTE.gold)
+	_weather_architecture(node)
 	_add_health(node, 3.1, 1.4, team)
 	return node
+
+func _weather_architecture(node: Node3D) -> void:
+	for child in node.get_children():
+		if not child is MeshInstance3D: continue
+		var source := (child as MeshInstance3D).material_override
+		if not source is StandardMaterial3D: continue
+		var color: Color = (source as StandardMaterial3D).albedo_color
+		if color.a < .99: continue
+		(child as MeshInstance3D).material_override = _weathered_material(color)
+
+func _weathered_material(color: Color) -> ShaderMaterial:
+	var key := color.to_html()
+	if _weathered_materials.has(key): return _weathered_materials[key]
+	var material := ShaderMaterial.new()
+	material.shader = LIMESTONE
+	material.set_shader_parameter("base_color", color.darkened(.08))
+	var aged_metal := color.r > .45 and color.g / maxf(color.r, .001) > .68 and color.b / maxf(color.g, .001) < .62
+	material.set_shader_parameter("metalness", .58 if aged_metal else 0.0)
+	material.set_shader_parameter("surface_roughness", .48 if aged_metal else .88)
+	material.set_shader_parameter("wear_strength", .26 if aged_metal else .17)
+	_weathered_materials[key] = material
+	return material
 
 func _make_unit(kind: String, side: int) -> Node3D:
 	var node := Node3D.new()
@@ -369,7 +394,7 @@ func _material(color: Color) -> StandardMaterial3D:
 	mat.roughness = 0.84
 	# Bronze and gilded details should catch a thin highlight. Limestone, linen,
 	# paint and skin remain matte so the diorama reads as crafted material.
-	if color.r > .52 and color.g > .36 and color.b < .28:
+	if color.r > .45 and color.g / maxf(color.r, .001) > .68 and color.b / maxf(color.g, .001) < .62:
 		mat.metallic = 0.46
 		mat.roughness = 0.42
 	elif color.get_luminance() < .24:
