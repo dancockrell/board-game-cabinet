@@ -146,10 +146,16 @@ func _column(pos: Vector3) -> void:
 func _medallion(pos: Vector3, radius: float, color: Color) -> void:
 	_cylinder(radius, 0.018, pos, SAND)
 	_cylinder(radius * 0.92, 0.025, pos + Vector3.UP * 0.004, IVORY)
-	for i in 12:
-		var angle := TAU * i / 12.0
-		var chip := _box(Vector3(0.11, 0.016, 0.25), pos + Vector3(cos(angle)*radius*0.73, 0.025, sin(angle)*radius*0.73), color)
+	for i in 16:
+		var angle := TAU * i / 16.0
+		var chip := _box(Vector3(0.065, 0.016, 0.21), pos + Vector3(cos(angle)*radius*0.73, 0.025, sin(angle)*radius*0.73), color)
 		chip.rotation.y = -angle + PI / 2.0
+	# Small tesserae border in limestone, faded pigment and warm stone.
+	for i in 48:
+		var angle := TAU * i / 48.0
+		var tile_color: Color = color.lerp(SAND,0.5) if i % 4 == 0 else IVORY.darkened(0.09 if i % 2 else 0.03)
+		var tile := _box(Vector3(0.052,0.012,0.067),pos+Vector3(cos(angle)*radius*.87,.022,sin(angle)*radius*.87),tile_color)
+		tile.rotation.y = -angle
 	_cylinder(radius * 0.40, 0.027, pos + Vector3.UP * 0.012, color)
 	_cylinder(radius * 0.29, 0.03, pos + Vector3.UP * 0.017, IVORY)
 
@@ -260,16 +266,21 @@ func _sea() -> void:
 	material.set_shader_parameter("deep_color",Color("071a24"))
 	material.set_shader_parameter("shallow_color",Color("14363b"))
 	sea.material_override = material
-	for side in [-1,1]:
-		for i in 7:
+	# Uneven outcrops, not a necklace of identically spaced stones.
+	var clusters := [Vector3(-7.15,-1.45,-6.4),Vector3(-7.35,-1.48,5.8),Vector3(7.35,-1.46,-2.6),Vector3(7.0,-1.46,8.4)]
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 84027
+	for group in clusters.size():
+		for i in (5 if group % 2 == 0 else 4):
 			var rock := MeshInstance3D.new()
 			var shape := SphereMesh.new()
 			shape.radial_segments = 7
 			shape.rings = 4
 			rock.mesh = shape
-			rock.scale = Vector3(1.0+i*.12,.6+(i%3)*.2,1.15+(i%2)*.45)
-			rock.rotation = Vector3(sin(i*2.1)*.22, i*1.71, cos(i*1.8)*.19)
-			rock.position = Vector3(side*(7.3+sin(i*2.0+side*.7)), -1.38+sin(i*3.1)*.15, -9+i*3.2+sin(i*1.7+side)*.52)
-			var stone := _material(Color("555b50").darkened(float(i % 3) * 0.065))
-			rock.material_override = stone
+			var size_ := 1.0 if i == 0 else rng.randf_range(0.28,0.69)
+			rock.scale = Vector3(1.75,0.93,2.1) * size_
+			rock.rotation = Vector3(rng.randf_range(-.3,.3),rng.randf_range(0,TAU),rng.randf_range(-.2,.2))
+			var offset := Vector3.ZERO if i == 0 else Vector3(rng.randf_range(-.45,.65),rng.randf_range(-.08,.02),rng.randf_range(-1.2,1.25))
+			rock.position = clusters[group] + offset
+			rock.material_override = _material(Color("555b50").darkened(rng.randf_range(0.0,0.12)))
 			add_child(rock)
