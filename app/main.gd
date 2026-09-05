@@ -50,6 +50,7 @@ var _draw_moves: Array = []
 var _draw_revision: int = -1
 var _export_dialog: FileDialog
 var _export_text: String = ""
+var _settings_dialog: AcceptDialog
 
 func _ready() -> void:
 	_settings = Preferences.read_settings(preferences_path)
@@ -198,7 +199,7 @@ func _build_ui() -> void:
 	))
 	side.add_child(_label("MOVE RECORD", 13, Color("bfa875")))
 	history_label = RichTextLabel.new()
-	history_label.custom_minimum_size.y = 88
+	history_label.custom_minimum_size.y = 72
 	history_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	history_label.bbcode_enabled = false
 	history_label.scroll_following = true
@@ -208,18 +209,26 @@ func _build_ui() -> void:
 	side.add_child(record_actions)
 	record_actions.add_child(_button("Copy PGN", func():
 		DisplayServer.clipboard_set(PGN.export_game(session))
-		notice_label.text = "Game record copied in PGN format."
+		notice_label.text = "Full game record copied in PGN format."
 	))
 	record_actions.add_child(_button("Export PGN…", _open_export))
 	side.add_child(HSeparator.new())
 	side.add_child(_label("AT THE BOARD", 13, Color("bfa875")))
 	tutor_label = _label("", 16)
-	tutor_label.custom_minimum_size.y = 72
+	tutor_label.custom_minimum_size.y = 60
 	side.add_child(tutor_label)
 	hint_button = _button("Explore a candidate move", _hint)
 	side.add_child(hint_button)
 	var limits := _label("Practice strength · two-ply search\nPosition facts, not expert coaching.", 13, Color("aeb7a8"))
 	side.add_child(limits)
+	_settings_dialog = AcceptDialog.new()
+	_settings_dialog.title = "Table settings"
+	_settings_dialog.dialog_text = "Changes are remembered on this device."
+	_settings_dialog.get_ok_button().text = "Done"
+	add_child(_settings_dialog)
+	var settings_content := VBoxContainer.new()
+	_settings_dialog.add_child(settings_content)
+	side.add_child(_button("Table settings…", func(): _settings_dialog.popup_centered(Vector2i(400, 200))))
 	var sound := CheckButton.new()
 	sound.text = "Wooden move sound"
 	sound.button_pressed = not _settings["muted"]
@@ -228,7 +237,7 @@ func _build_ui() -> void:
 		_settings["muted"] = not enabled
 		_persist_preferences()
 	)
-	side.add_child(sound)
+	settings_content.add_child(sound)
 	var motion := CheckButton.new()
 	motion.text = "Reduced motion"
 	motion.button_pressed = _reduced_motion
@@ -238,7 +247,7 @@ func _build_ui() -> void:
 		board_view.show_position(_display_state().board)
 		_persist_preferences()
 	)
-	side.add_child(motion)
+	settings_content.add_child(motion)
 	notice_label = _label("", 14, Color("e1c48b"))
 	notice_label.custom_minimum_size.y = 32
 	side.add_child(notice_label)
@@ -267,7 +276,7 @@ func _build_ui() -> void:
 	_draw_dialog.confirmed.connect(_confirm_draw_claim)
 	add_child(_draw_dialog)
 	_export_dialog = FileDialog.new()
-	_export_dialog.title = "Export game record"
+	_export_dialog.title = "Export full game record"
 	_export_dialog.access = FileDialog.ACCESS_FILESYSTEM
 	_export_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	_export_dialog.add_filter("*.pgn", "Portable Game Notation")
@@ -351,7 +360,7 @@ func _refresh() -> void:
 	undo_button.disabled = moves.is_empty() or _review_ply >= 0
 	var claims_available: bool = session.draw_claim_available() or not session.draw_claim_moves().is_empty()
 	draw_button.disabled = not claims_available or _review_ply >= 0 or (practice and state.turn == "b")
-	hint_button.disabled = not terminal.is_empty() or _analysis_busy or _review_ply >= 0
+	hint_button.disabled = not terminal.is_empty() or _analysis_busy or _review_ply >= 0 or (practice and state.turn == "b")
 	_review_label.text = "Live board" if _review_ply < 0 else "%d / %d plies" % [_review_ply, moves.size()]
 	_review_back.disabled = moves.is_empty() or _review_ply == 0
 	_review_next.disabled = _review_ply < 0
@@ -429,6 +438,9 @@ func _maybe_opponent() -> void:
 		_start_analysis("opponent")
 
 func _hint() -> void:
+	if practice and session.snapshot().turn == "b":
+		_maybe_opponent()
+		return
 	_start_analysis("hint")
 
 func _start_analysis(purpose: String) -> void:
@@ -473,7 +485,8 @@ func _analysis_finished(response: Dictionary, purpose: String) -> void:
 			selected = candidate["from"]
 			_refresh_highlights()
 			notice_label.text = "Try exploring %s. This shallow suggestion can miss tactics." % Rules.uci(candidate)
-	hint_button.disabled = not session.result().is_empty() or _review_ply >= 0
+	hint_button.disabled = not session.result().is_empty() or _review_ply >= 0 or (practice and session.snapshot().turn == "b")
+	_maybe_opponent.call_deferred()
 
 func _commit_move(move: Dictionary, revision: int = -1) -> bool:
 	_animate_next = true

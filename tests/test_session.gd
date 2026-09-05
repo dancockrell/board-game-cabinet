@@ -140,6 +140,5 @@ func _init() -> void:
 	expect("e5d6" not in context.legal_captures_uci, "Tutor excludes king-exposing captures")
 	context = Tutor.build(checkmated, 93, [])
 	expect(context.in_check and context.legal_move_count == 0, "Tutor checkmate facts")
-	print("PENDING: draw claims based on an intended next move; API supports current position claims only.")
 	print("Session checks complete; failures: ", failures)
 	quit(1 if failures else 0)

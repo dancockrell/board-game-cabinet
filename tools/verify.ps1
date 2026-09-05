@@ -13,11 +13,11 @@ function Invoke-GodotCheck([string[]]$CheckArgs) {
     }
 }
 Invoke-GodotCheck @("--headless", "--editor", "--import", "--quit")
-foreach ($test in @("test_chess", "test_chess_oracle", "test_session")) {
+foreach ($test in @("test_chess", "test_chess_oracle", "test_session", "test_draw_claims", "test_pgn")) {
     Invoke-GodotCheck @("--headless", "--script", "res://tests/$test.gd")
 }
 if ($Graphics) {
-    foreach ($test in @("test_board", "test_app")) {
+    foreach ($test in @("test_board", "test_app", "test_controls")) {
         Invoke-GodotCheck @("--rendering-method", "gl_compatibility", "--script", "res://tests/$test.gd")
     }
 }

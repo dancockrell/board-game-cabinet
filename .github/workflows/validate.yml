@@ -28,4 +28,7 @@ jobs:
           Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_chess.gd
           Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_chess_oracle.gd
       - name: Sessions and adapters
-        run: Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_session.gd
+        run: |
+          Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_session.gd
+          Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_draw_claims.gd
+          Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_pgn.gd

@@ -118,6 +118,7 @@ func _run() -> void:
 	app._change_mode(0)
 	click(12)
 	click(28)
+	app._hint()
 	await process_frame
 	while app._analysis_busy:
 		await process_frame
