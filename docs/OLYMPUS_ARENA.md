@@ -25,7 +25,7 @@ Network multiplayer, accounts, matchmaking, collectible upgrades, progression, p
 
 ## Implemented rules checkpoint
 
-The pure session has been implemented. Its standalone suite reports 726 passing checks at this checkpoint; integrated scene checks and packaging are separate. The exact formulas live in [the rules contract](../games/olympus_arena/RULES.md), which takes precedence over this summary.
+The pure session has been implemented. Its standalone suite reports 738 passing checks at rules commit `c1026e3`; integrated scene checks and packaging are separate. The exact formulas live in [the rules contract](../games/olympus_arena/RULES.md), which takes precedence over this summary.
 
 | Card | Elixir | Implemented distinction |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ The pure session has been implemented. Its standalone suite reports 726 passing 
 
 Both sides start with five elixir and regenerate one every 2.8 seconds, capped at ten. Regeneration doubles after two minutes. The main match lasts three minutes. Equal crowns at that point trigger up to one minute of sudden-death overtime. At the final limit, surviving structures and then remaining total tower health break the tie; a remaining tie draws. Destroying a side tower earns one crown. Destroying the main temple wins immediately with three crowns.
 
-Troops deploy on their owner's half of the board; destroying an enemy side tower does not currently extend deployment territory. Ground units cross at bridges. Flying units cross directly. Ordinary melee fighters cannot hit air units; the Hydra is an explicit exception. Buildings attack automatically. There is no unit upgrade or collection level.
+Troops deploy on their owner's half of the board; destroying an enemy side tower does not currently extend deployment territory. Ground units cross at bridges. Flying units cross directly. Ordinary melee fighters cannot hit air units; the Hydra is an explicit exception. Buildings attack automatically. There is no unit upgrade or collection level. Arena save/replay and collision avoidance are not implemented. Damage within a fixed step follows deterministic unit order rather than simultaneous resolution.
 
 The simulation advances in fixed 0.1-second steps. `snapshot()` returns a deep copy, including the player hand and next card. `catalog()` exposes costs and descriptions. `preview_deploy(slot, position)` validates without mutation; `deploy(slot, position, expected_revision)` submits a deployment; `new_game(seed)` resets the match. The practice opponent is enabled by `bot_enabled` and obeys the same hand, cost, and placement validation. It is a local policy, not a remote player.
 
@@ -78,4 +78,5 @@ The next useful tests target reproducible combat interactions, legal placement a
 ## Verification boundary
 
 This document records the intended and emerging implementation. Exact unit rules, controls, test results, source commit, and download evidence must be checked against the integrated source and publication record. The older Ninth Gate Windows release does not contain or validate Olympus Arena.
+
 
