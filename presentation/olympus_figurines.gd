@@ -1,23 +1,46 @@
 extends RefCounted
-## Original sculpted toy figures. Only presentation; no combat decisions live here.
+## Original painted tabletop miniatures. Only presentation; no combat decisions live here.
 var host: Node3D
-var gold := Color("d6a34e")
-var bronze := Color("996237")
-var ivory := Color("fff0cf")
-var leather := Color("513b31")
-var skin := Color("dbae87")
+var gold := Color("ad8950")
+var bronze := Color("806747")
+var ivory := Color("d8ceb9")
+var leather := Color("4e4438")
+var skin := Color("bb9679")
+var _paint: Dictionary = {}
 
 func _init(renderer: Node3D) -> void:
 	host = renderer
 
 func ball(p: Node3D, at: Vector3, size: Vector3, color: Color) -> MeshInstance3D:
-	return host._sphere(p, size, at, color)
+	return _finish(host._sphere(p, size, at, color), color)
 
 func box(p: Node3D, at: Vector3, size: Vector3, color: Color) -> MeshInstance3D:
-	return host._box(p, size, at, color)
+	return _finish(host._box(p, size, at, color), color)
 
 func rod(p: Node3D, a: Vector3, b: Vector3, radius: float, color: Color) -> MeshInstance3D:
-	return host._limb(p, a, b, radius, color)
+	return _finish(host._limb(p, a, b, radius, color), color)
+
+func tapered_limb(p: Node3D, a: Vector3, b: Vector3, upper: float, lower: float) -> MeshInstance3D:
+	var mesh := CylinderMesh.new()
+	mesh.top_radius = lower
+	mesh.bottom_radius = upper
+	mesh.height = a.distance_to(b)
+	mesh.radial_segments = 12
+	var limb := _finish(host._mesh(p, mesh, (a+b)*.5, skin), skin)
+	limb.quaternion = Quaternion(Vector3.UP, (b-a).normalized())
+	return limb
+
+func _finish(mesh: MeshInstance3D, color: Color) -> MeshInstance3D:
+	if not _paint.has(color):
+		var material := StandardMaterial3D.new()
+		material.albedo_color = color
+		material.roughness = .84
+		if color == gold or color == bronze:
+			material.metallic = .54
+			material.roughness = .47
+		_paint[color] = material
+	mesh.material_override = _paint[color]
+	return mesh
 
 func joint(p: Node3D, label: String, at: Vector3) -> Node3D:
 	var node := Node3D.new()
@@ -32,67 +55,92 @@ func cone(p: Node3D, at: Vector3, bottom: float, top: float, height: float, colo
 	mesh.top_radius = top
 	mesh.height = height
 	mesh.radial_segments = 10
-	return host._mesh(p, mesh, at, color)
+	return _finish(host._mesh(p, mesh, at, color), color)
 
-func face(p: Node3D, at: Vector3, color: Color = Color("dbae87"), bull := false) -> void:
+func face(p: Node3D, at: Vector3, color: Color = Color("bb9679"), bull := false) -> void:
 	ball(p, at, Vector3(.20,.22,.18) if not bull else Vector3(.27,.26,.21), color)
 	for s in [-1,1]:
-		ball(p, at + Vector3(s * .075,.03,.165), Vector3(.038,.04,.024), ivory)
-		ball(p, at + Vector3(s * .075,.025,.188), Vector3(.019,.027,.014), Color("182833"))
-		box(p, at + Vector3(s * .078,.083,.177), Vector3(.095,.028,.028), leather).rotation.z = s * -.16
-	ball(p, at + Vector3(0,-.032,.19), Vector3(.045,.048,.04), color.darkened(.09))
-	box(p, at + Vector3(0,-.11,.157), Vector3(.07,.018,.026), leather)
+		box(p, at + Vector3(s * .075,.025,.168), Vector3(.05,.014,.018), leather)
+		box(p, at + Vector3(s * .078,.055,.173), Vector3(.075,.018,.022), color.darkened(.30)).rotation.z = s * -.10
+	rod(p, at + Vector3(0,.035,.16), at + Vector3(0,-.04,.19), .022, color)
+	box(p, at + Vector3(0,-.105,.157), Vector3(.065,.009,.018), color.darkened(.32))
 
 func cape(p: Node3D, team: Color, width := .30, length := .54) -> void:
 	var cloth := joint(p, "Cape", Vector3(0,.92,-.10))
-	for i in 5:
-		var strip := box(cloth, Vector3((i-2)*width*.34,-length*.50,-.10-abs(i-2)*.01), Vector3(width*.35,length,.055), team.darkened(abs(i-2)*.035))
-		strip.rotation.x = -.23
-		ball(cloth, Vector3((i-2)*width*.34,-length,-.17), Vector3(width*.19,.045,.045), gold)
-
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for row in 7:
+		for column in 8:
+			var corners: Array[Vector3] = []
+			for offset in [Vector2(0,0),Vector2(1,0),Vector2(0,1),Vector2(1,1)]:
+				var u: float = (column+offset.x)/8.0
+				var v: float = (row+offset.y)/7.0
+				corners.append(Vector3((u-.5)*width*1.8*(.70+v*.30),-v*length,-.035-v*.13+sin(u*PI*8)*.020*(.3+v)))
+			for i in [0,2,1,1,2,3]: surface.add_vertex(corners[i])
+	surface.generate_normals()
+	var mesh := _finish(host._mesh(cloth,surface.commit(),Vector3.ZERO,team),team)
+	var material := mesh.material_override.duplicate() as StandardMaterial3D
+	material.cull_mode=BaseMaterial3D.CULL_DISABLED
+	mesh.material_override=material
+	for i in 8:
+		var a:=i/8.0
+		var b:=(i+1)/8.0
+		rod(cloth,Vector3((a-.5)*width*1.8,-length,-.165+sin(a*PI*8)*.026),Vector3((b-.5)*width*1.8,-length,-.165+sin(b*PI*8)*.026),.009,ivory.darkened(.18))
 func humanoid(p: Node3D, team: Color, muscular := false, legs := true) -> void:
 	if legs:
 		for s in [-1,1]:
 			var leg := joint(p, "LegL" if s < 0 else "LegR", Vector3(s*.12,.49,0))
-			rod(leg, Vector3.ZERO, Vector3(s*.015,-.30,.015), .088 if muscular else .07, skin)
-			box(leg, Vector3(s*.015,-.33,.07), Vector3(.17,.13,.26), leather)
-			box(leg, Vector3(s*.015,-.19,.074), Vector3(.12,.15,.03), gold)
-	ball(p, Vector3(0,.72,0), Vector3(.30 if muscular else .235,.30,.17), skin if muscular else team)
+			tapered_limb(leg, Vector3.ZERO, Vector3(s*.008,-.15,.005), .072 if muscular else .053, .051 if muscular else .039)
+			tapered_limb(leg, Vector3(s*.008,-.15,.005), Vector3(s*.015,-.30,.015), .054 if muscular else .042, .037 if muscular else .029)
+			ball(leg, Vector3(s*.008,-.15,.005), Vector3(.053,.043,.045), skin)
+			box(leg, Vector3(s*.015,-.33,.065), Vector3(.13,.072,.21), leather)
+			box(leg, Vector3(s*.015,-.23,.064), Vector3(.087,.14,.025), bronze)
+	ball(p, Vector3(0,.72,0), Vector3(.27 if muscular else .205,.27,.14), skin if muscular else ivory)
 	cone(p, Vector3(0,.49,0), .27,.20,.22, leather if muscular else ivory)
-	box(p, Vector3(0,.59,.17), Vector3(.42,.07,.045), gold)
-	ball(p, Vector3(0,.59,.2), Vector3(.075,.063,.02), gold.lightened(.2))
+	box(p, Vector3(0,.59,.15), Vector3(.36,.045,.025), leather)
+	box(p, Vector3(0,.59,.17), Vector3(.06,.055,.02), bronze)
+	for i in 12:
+		var a := i*TAU/12
+		var strip := box(p,Vector3(sin(a)*.235,.48,cos(a)*.185),Vector3(.07,.18,.018),leather if muscular else ivory.darkened((i%3)*.025))
+		strip.rotation.y = a
+	var sash := box(p, Vector3(.03,.78,.15), Vector3(.058,.27,.02),team.darkened(.18))
+	sash.rotation.z = -.3
 	for s in [-1,1]:
 		var arm := joint(p, "ArmL" if s < 0 else "ArmR", Vector3(s*.24,.85,0))
-		ball(arm, Vector3.ZERO, Vector3(.13,.13,.13), skin if muscular else gold)
-		rod(arm, Vector3.ZERO, Vector3(s*.075,-.28,.11), .095 if muscular else .065, skin)
-		ball(arm, Vector3(s*.075,-.28,.11), Vector3(.08,.085,.08), skin)
+		ball(arm, Vector3(0,-.022,0), Vector3(.076,.079,.069) if muscular else Vector3(.053,.069,.049), skin if muscular else ivory)
+		tapered_limb(arm, Vector3.ZERO, Vector3(s*.055,-.14,.025), .075 if muscular else .047, .050 if muscular else .034)
+		tapered_limb(arm, Vector3(s*.055,-.14,.025), Vector3(s*.075,-.28,.11), .061 if muscular else .04, .038 if muscular else .027)
+		ball(arm, Vector3(s*.075,-.28,.11), Vector3(.049,.065,.041), skin)
 
 func build(p: Node3D, kind: String, team: Color) -> void:
 	p.set_meta("kind", kind)
+	team = team.lerp(Color("6e6b60"), .42).darkened(.12)
 	if kind == "hydra":
 		hydra(p, team)
+		_refine(p,kind)
 		return
 	if kind == "medusa":
 		for i in 22:
 			var a := i*.40
 			var r := .36 * (1.0-i/34.0)
-			ball(p, Vector3(cos(a)*r,.15+i*.016,sin(a)*r), Vector3(.14,.11,.14), Color("429985").darkened(i*.007))
+			ball(p, Vector3(cos(a)*r,.15+i*.016,sin(a)*r), Vector3(.14,.11,.14), Color("68785b").darkened(i*.007))
 		humanoid(p, team, false, false)
 		face(p, Vector3(0,1.10,0), Color("a6c494"))
 		for i in 9:
 			var a := i*TAU/9
 			var tip := Vector3(cos(a)*.30,1.34+sin(i*1.7)*.09,sin(a)*.22)
-			rod(p, Vector3(0,1.18,0), tip, .06, Color("286e55"))
-			ball(p, tip+Vector3(0,.02,.035), Vector3(.07,.065,.10), Color("5ca773"))
+			rod(p, Vector3(0,1.18,0), tip, .06, Color("475b44"))
+			ball(p, tip+Vector3(0,.02,.035), Vector3(.07,.065,.10), Color("74815c"))
 			ball(p, tip+Vector3(.032,.035,.12), Vector3(.018,.02,.018), Color("ffde73"))
 		cone(p, Vector3(0,1.38,0), .075,0,.24,gold)
 		rod(p, Vector3(.34,.35,.15), Vector3(.40,1.28,.15), .03, gold)
-		ball(p, Vector3(.40,1.31,.15), Vector3(.09,.11,.08), Color("90f1c5"))
+		ball(p, Vector3(.40,1.31,.15), Vector3(.09,.11,.08), Color("a9b18b"))
+		_refine(p,kind)
 		return
 	var giant := kind in ["minotaur","heracles"]
 	humanoid(p, team, giant)
 	if kind == "minotaur":
-		ball(p, Vector3(0,.77,-.04), Vector3(.39,.34,.24), Color("815346"))
+		ball(p, Vector3(0,.77,-.04), Vector3(.31,.29,.19), Color("6f594b"))
 		face(p, Vector3(0,1.17,0), Color("805147"), true)
 		ball(p, Vector3(0,1.06,.23), Vector3(.21,.13,.14), Color("b9896c"))
 		for s in [-1,1]:
@@ -103,16 +151,16 @@ func build(p: Node3D, kind: String, team: Color) -> void:
 			cone(p, Vector3(s*.33,1.09,0), .07,0,.19,gold)
 		rod(p, Vector3(.36,.23,.16), Vector3(.48,1.37,.16), .048, leather)
 		for s in [-1,1]:
-			var blade := ball(p, Vector3(.48+s*.18,1.23,.16), Vector3(.19,.24,.05), Color("bbd6d3"))
+			var blade := ball(p, Vector3(.48+s*.18,1.23,.16), Vector3(.19,.24,.05), Color("9a9b87"))
 			blade.rotation.z = s*.35
 		box(p, Vector3(0,.50,.19), Vector3(.35,.13,.05), team)
 	elif kind == "heracles":
 		face(p, Vector3(0,1.10,.035))
-		ball(p, Vector3(0,1.14,-.09), Vector3(.28,.27,.21), Color("b58238"))
+		ball(p, Vector3(0,1.14,-.09), Vector3(.28,.27,.21), Color("8b744c"))
 		face(p, Vector3(0,1.10,.095))
 		for s in [-1,1]:
 			ball(p, Vector3(s*.22,1.30,-.02), Vector3(.085,.09,.06), gold)
-			ball(p, Vector3(s*.22,.88,-.06), Vector3(.14,.13,.19), Color("b58238"))
+			ball(p, Vector3(s*.22,.88,-.06), Vector3(.14,.13,.19), Color("8b744c"))
 		ball(p, Vector3(0,1.37,.10), Vector3(.18,.09,.17), gold)
 		box(p, Vector3(0,1.37,.25), Vector3(.06,.04,.04), leather)
 		cape(p, Color("bc8d45"), .39,.65)
@@ -122,9 +170,9 @@ func build(p: Node3D, kind: String, team: Color) -> void:
 			box(p, Vector3(.48,1.03+i*.14,.12), Vector3(.31,.06,.29), bronze)
 	elif kind == "atalanta":
 		face(p, Vector3(0,1.10,0))
-		ball(p, Vector3(0,1.23,-.03), Vector3(.21,.13,.2), Color("934929"))
+		ball(p, Vector3(0,1.23,-.03), Vector3(.21,.13,.2), Color("72513b"))
 		var pony := joint(p,"Ponytail",Vector3(0,1.20,-.18))
-		ball(pony,Vector3(0,-.16,-.06),Vector3(.11,.25,.10),Color("934929"))
+		ball(pony,Vector3(0,-.16,-.06),Vector3(.11,.25,.10),Color("72513b"))
 		box(p,Vector3(0,1.21,.174),Vector3(.32,.04,.04),gold)
 		cape(p,team.darkened(.2),.22,.4)
 		rod(p,Vector3(-.18,.54,-.17),Vector3(-.18,1.04,-.20),.085,leather)
@@ -164,9 +212,10 @@ func build(p: Node3D, kind: String, team: Color) -> void:
 			ball(p,Vector3(-.30+cos(a)*.27,.64+sin(a)*.27,.27),Vector3(.022,.022,.02),ivory)
 		rod(p,Vector3(.34,.12,.12),Vector3(.34,1.60,.12),.025,leather)
 		cone(p,Vector3(.34,1.69,.12),.065,0,.26,Color("d4e4df"))
+	_refine(p,kind)
 
 func hydra(p: Node3D, team: Color) -> void:
-	var green := Color("347565")
+	var green := Color("52644e")
 	ball(p,Vector3(0,.35,0),Vector3(.43,.30,.51),green)
 	for s in [-1,1]:
 		for z in [-.23,.23]:
@@ -178,8 +227,8 @@ func hydra(p: Node3D, team: Color) -> void:
 	for i in [-1,0,1]:
 		var head := joint(p,"Neck%d" % i,Vector3(i*.19,.46,.14))
 		rod(head,Vector3.ZERO,Vector3(i*.11,.39,.04),.10,green)
-		rod(head,Vector3(i*.11,.39,.04),Vector3(i*.12,.64,.22),.085,Color("438976"))
-		ball(head,Vector3(i*.12,.69,.31),Vector3(.15,.14,.24),Color("62a486"))
+		rod(head,Vector3(i*.11,.39,.04),Vector3(i*.12,.64,.22),.085,Color("657456"))
+		ball(head,Vector3(i*.12,.69,.31),Vector3(.15,.14,.24),Color("798566"))
 		box(head,Vector3(i*.12,.64,.51),Vector3(.19,.025,.08),leather)
 		for s in [-1,1]:
 			ball(head,Vector3(i*.12+s*.10,.75,.42),Vector3(.034,.036,.025),Color("ffe084"))
@@ -188,6 +237,44 @@ func hydra(p: Node3D, team: Color) -> void:
 	box(p,Vector3(0,.61,-.10),Vector3(.40,.07,.30),team)
 	for j in 4:
 		cone(p,Vector3(0,.66,-.30+j*.14),.075,0,.18,gold)
+
+func _height(y: float) -> float:
+	if y < .10: return y
+	if y < .55: return .10 + (y-.10)*1.48
+	if y < .90: return .766 + (y-.55)
+	return 1.116 + (y-.90)*.70
+
+func _refine(figure: Node3D, kind: String) -> void:
+	# Reproportion the assembled sculpt and its pivots together. Joint names remain
+	# direct children, so the independent walking/attack animator retains its API.
+	# Preserve each world transform before changing parents to avoid compounded scale.
+	var root_transform := figure.global_transform
+	var inverse := root_transform.affine_inverse()
+	var records: Array = []
+	var pending: Array[Node] = [figure]
+	while not pending.is_empty():
+		var parent: Node = pending.pop_front()
+		for child in parent.get_children():
+			if child is Node3D:
+				records.append({"node":child,"transform":inverse*child.global_transform})
+				pending.append(child)
+	for record in records:
+		var node: Node3D = record.node
+		var original: Transform3D = record.transform
+		var height := original.origin.y
+		var shaped := original
+		if kind == "hydra":
+			# Longer necks and narrower heads read as a reptile instead of a plush toy.
+			shaped.origin = Vector3(original.origin.x*.90,original.origin.y*1.08,original.origin.z)
+			if node is MeshInstance3D:
+				shaped.basis = original.basis.scaled(Vector3(.78,.88,.86) if height > 1.0 else Vector3(.9,1.08,1.0))
+		else:
+			var lateral := .72 if height >= .94 else .86
+			shaped.origin = Vector3(original.origin.x*lateral,_height(height),original.origin.z*lateral)
+			if node is MeshInstance3D:
+				var vertical := .70 if height >= .9 else (1.48 if height > .10 and height < .55 else 1.0)
+				shaped.basis = original.basis.scaled(Vector3(lateral,vertical,lateral))
+		node.global_transform = root_transform*shaped
 
 func animate(figure: Node3D, phase: float, moving: bool, flying: bool, hit: float, attack := 0.0) -> void:
 	var stride := sin(phase*9.0)*(.35 if moving else .035)
