@@ -4,6 +4,9 @@ extends RefCounted
 const STEP := 0.1
 const MATCH_SECONDS := 180.0
 const MAX_UNITS := 64
+const RIVER_BANK := 0.8
+const BRIDGE_HALF_WIDTH := 0.50
+const GROUND_SPACING := 0.58
 const DECK := ["hoplites", "atalanta", "minotaur", "medusa", "heracles", "hydra", "harpies", "thunderbolt"]
 var bot_enabled := true
 var _rng := RandomNumberGenerator.new()
@@ -119,6 +122,7 @@ func tick() -> void:
 	for unit in _state.units:
 		if unit.hp > 0:
 			_step_unit(unit)
+	_separate_units()
 	for tower in _state.towers:
 		if tower.hp > 0:
 			_step_tower(tower)
@@ -181,12 +185,59 @@ func _step_unit(unit: Dictionary) -> void:
 	if not unit.flying and current.y * destination.y < 0:
 		var sign_z := 1.0 if current.y > 0 else -1.0
 		if absf(current.x - float(unit.lane)) > 0.12 and absf(current.y) > 0.22:
-			destination = Vector2(unit.lane, sign_z * 0.35)
+			destination = Vector2(unit.lane, sign_z * (RIVER_BANK + 0.05))
 		else:
-			destination = Vector2(unit.lane, -sign_z * 0.35)
+			destination = Vector2(unit.lane, -sign_z * (RIVER_BANK + 0.05))
 	var next := current.move_toward(destination, float(unit.speed) * STEP * (0.45 if unit.slow > 0 else 1.0))
+	next = _constrain_position(unit, current, next)
 	unit.x = next.x
 	unit.z = next.y
+
+func _separate_units() -> void:
+	# Two deterministic soft passes preserve crowd flow without teleporting fighters.
+	# Distances stay below melee range so adjacent opposing units can still fight.
+	for iteration in range(2):
+		var pushes: Array[Vector2] = []
+		pushes.resize(_state.units.size())
+		pushes.fill(Vector2.ZERO)
+		for first in range(_state.units.size()):
+			var a: Dictionary = _state.units[first]
+			if a.hp <= 0: continue
+			for second in range(first + 1, _state.units.size()):
+				var b: Dictionary = _state.units[second]
+				if b.hp <= 0 or a.flying != b.flying: continue
+				var gap := 0.32 if a.flying else GROUND_SPACING
+				var difference := _position(a) - _position(b)
+				var distance := difference.length()
+				if distance >= gap: continue
+				var direction: Vector2
+				if distance > 0.00001:
+					direction = difference / distance
+				else:
+					# Identity-derived tie breaking never consumes the opponent RNG.
+					var angle := float((int(a.id) * 13 + int(b.id) * 7) % 16) * TAU / 16.0
+					direction = Vector2(cos(angle), sin(angle))
+				var push := direction * (gap - distance) * 0.5
+				pushes[first] += push
+				pushes[second] -= push
+		for index in range(_state.units.size()):
+			var unit: Dictionary = _state.units[index]
+			if unit.hp <= 0: continue
+			var current := _position(unit)
+			var next := _constrain_position(unit, current, current + pushes[index].limit_length(0.04))
+			unit.x = next.x
+			unit.z = next.y
+
+func _constrain_position(unit: Dictionary, current: Vector2, desired: Vector2) -> Vector2:
+	var point := Vector2(clampf(desired.x, -4.6, 4.6), clampf(desired.y, -7.8, 7.8))
+	if unit.flying: return point
+	var bridge_x := -2.7 if current.x < 0 else 2.7
+	if absf(current.y) < RIVER_BANK:
+		# A unit already on a bridge cannot be pushed sideways into the river.
+		point.x = clampf(point.x, bridge_x - BRIDGE_HALF_WIDTH, bridge_x + BRIDGE_HALF_WIDTH)
+	elif absf(point.y) < RIVER_BANK and absf(absf(point.x) - 2.7) > BRIDGE_HALF_WIDTH:
+		point.y = RIVER_BANK if current.y >= 0 else -RIVER_BANK
+	return point
 
 func _attack(unit: Dictionary, target: Dictionary) -> void:
 	target.hp -= float(unit.damage)
@@ -196,7 +247,7 @@ func _attack(unit: Dictionary, target: Dictionary) -> void:
 		for enemy in _state.units:
 			if str(enemy.id) != str(target.get("id")) and enemy.side != unit.side and not enemy.flying and _position(enemy).distance_to(_position(target)) < 1.0:
 				enemy.hp -= float(unit.damage) * 0.65
-	_event("hit", _position(target), unit.side, _position(unit))
+	_event("hit", _position(target), unit.side, _position(unit), {"source_kind":unit.kind, "target_kind":target.kind, "damage":float(unit.damage)})
 
 func _step_tower(tower: Dictionary) -> void:
 	tower.cooldown = maxf(0.0, float(tower.cooldown) - STEP)
@@ -211,9 +262,10 @@ func _step_tower(tower: Dictionary) -> void:
 				best = distance
 				closest = unit
 	if not closest.is_empty():
-		closest.hp -= 32.0 if tower.kind == "tower" else 42.0
+		var damage := 32.0 if tower.kind == "tower" else 42.0
+		closest.hp -= damage
 		tower.cooldown = 0.9
-		_event("hit", _position(closest), tower.side, _position(tower))
+		_event("hit", _position(closest), tower.side, _position(tower), {"source_kind":tower.kind, "target_kind":closest.kind, "damage":damage})
 
 func _cleanup() -> void:
 	_state.units = _state.units.filter(func(unit: Dictionary) -> bool: return unit.hp > 0)
@@ -253,8 +305,9 @@ func _finish_on_score() -> void:
 func _position(thing: Dictionary) -> Vector2:
 	return Vector2(thing.x, thing.z)
 
-func _event(kind: String, point: Vector2, side: int, source: Vector2 = Vector2.INF) -> void:
+func _event(kind: String, point: Vector2, side: int, source: Vector2 = Vector2.INF, details: Dictionary = {}) -> void:
 	var event := {"kind":kind, "x":point.x, "z":point.y, "side":side, "time":_state.elapsed, "id":_event_id}
+	event.merge(details)
 	if source.is_finite():
 		event["source_x"] = source.x
 		event["source_z"] = source.y

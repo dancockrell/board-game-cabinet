@@ -70,6 +70,7 @@ func _init() -> void:
 		_check(a.snapshot().energy[1] >= 0 and a.snapshot().energy[1] <= 10, "bot obeys energy budget")
 	_check(a.snapshot() == b.snapshot(), "seeded bot deterministic")
 	_combat_checks()
+	_crowd_checks()
 	print("Olympus arena: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
 
@@ -145,9 +146,63 @@ func _combat_checks() -> void:
 	_check(enemy.hp < enemy_before, "Heracles hitting a string-ID tower also splashes nearby integer-ID units")
 	var hit: Dictionary = game.snapshot().events.back()
 	_check(hit.has("source_x") and hit.has("source_z") and is_equal_approx(hit.source_x, hero.x) and is_equal_approx(hit.source_z, hero.z), "Hit event records authoritative projectile origin")
+	_check(hit.source_kind == "heracles" and hit.target_kind == "tower" and is_equal_approx(hit.damage, hero.damage), "Unit hit identifies attacker, target type, and applied damage")
+	tower.cooldown = 0.0
+	game._step_tower(tower)
+	var tower_hit: Dictionary = game.snapshot().events.back()
+	_check(tower_hit.source_kind == "tower" and tower_hit.target_kind == "heracles" and tower_hit.damage == 32.0, "Tower hit identifies source and target types with actual damage")
 
 func _check(condition: bool, label: String) -> void:
 	checks += 1
 	if not condition:
 		failures += 1
 		push_error(label)
+
+func _crowd_checks() -> void:
+	var game = Arena.new()
+	game.bot_enabled = false
+	game.deploy(0, Vector2(4.6, 4.0))
+	for iteration in range(20): game._separate_units()
+	var group: Array = game.snapshot().units
+	var spaced := true
+	for first in range(group.size()):
+		for second in range(first + 1, group.size()):
+			if Vector2(group[first].x, group[first].z).distance_to(Vector2(group[second].x, group[second].z)) < 0.5:
+				spaced = false
+	_check(spaced, "Boundary-clamped deployment separates into individual authoritative troops")
+	for unit in group:
+		_check(absf(unit.x) <= 4.6 and absf(unit.z) <= 7.8, "Crowd separation stays within arena")
+	# A crowd pressed toward the bank cannot enter water away from a bridge.
+	for index in range(game._state.units.size()):
+		game._state.units[index].x = 0.0
+		game._state.units[index].z = 0.8 + index * 0.05
+	for iteration in range(20): game._separate_units()
+	var bank_safe := true
+	for unit in game.snapshot().units:
+		if unit.z < 0.8: bank_safe = false
+	_check(bank_safe, "Crowd pressure cannot push ground troops through the river bank")
+	# Bridge traffic may spread across its deck but never off its side.
+	for index in range(game._state.units.size()):
+		game._state.units[index].x = 3.19
+		game._state.units[index].z = 0.0
+		game._state.units[index].side = index % 2
+	for iteration in range(20): game._separate_units()
+	var bridge_safe := true
+	for unit in game.snapshot().units:
+		if absf(unit.z) < 0.8 and absf(unit.x - 2.7) > 0.50001: bridge_safe = false
+	_check(bridge_safe, "Opposing bridge crowds remain on bridge deck")
+	_check(Vector2(game._state.units[0].x, game._state.units[0].z).distance_to(Vector2(game._state.units[1].x, game._state.units[1].z)) > 0.3, "Opposing coincident units acquire deterministic separation")
+	var a = Arena.new()
+	var b = Arena.new()
+	var all_safe := true
+	for frame in range(500):
+		if frame % 90 == 0:
+			for arena in [a, b]:
+				arena.deploy(0, Vector2(0.0, 0.8))
+		a.tick()
+		b.tick()
+		for unit in a.snapshot().units:
+			if not unit.flying and absf(unit.z) < 0.79999 and absf(absf(unit.x) - 2.7) > 0.50001:
+				all_safe = false
+	_check(all_safe, "Live crowded routes never cut water away from bridges")
+	_check(a.snapshot() == b.snapshot(), "Repeated player deployments and crowd simulation remain exactly deterministic")
