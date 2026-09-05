@@ -55,10 +55,10 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	app._change_mode(1)
-	app._board_surface.grab_focus()
-	expect(app._board_surface.has_focus(), "Board is keyboard focusable")
-	key(KEY_ENTER)
-	expect(app.selected == 12, "Keyboard Enter selects e2")
+	key(KEY_TAB)
+	expect(app._board_surface.has_focus(), "Tab focuses board from initial screen")
+	key(KEY_SPACE)
+	expect(app.selected == 12, "Keyboard Space selects e2")
 	key(KEY_UP)
 	key(KEY_UP)
 	expect(app._keyboard_square == 28, "Arrow keys reach e4")

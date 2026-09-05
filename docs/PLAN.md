@@ -61,7 +61,7 @@ The implemented breadth exceeds a bare board prototype. It still does not close 
 
 The continuation adds keyboard board play, modal promotion, persisted table preferences, PGN copy/export and intended-next-move draw declarations. The declarations are validated without playing the move and are retained in save metadata. The brand shader adds subtle height-normal detail; carved symbol geometry and final visual approval remain open.
 
-The complete local eight-suite command passed for the continuation implementation. The latest UI hint/opponent timing regression test is awaiting the coordinator's final rerun, and updated export/capture review is ongoing. No final continuation CI or exported-build success is asserted here; the CI link above describes the earlier checkpoint only.
+The complete local eight-suite command passed for the continuation implementation, followed by native reruns of the keyboard/dialog and hint/opponent timing regressions. Normal/minimum window captures and the custom dialogs were inspected. The Windows build was rebuilt, launched, captured and exited successfully. Expanded headless CI passed at `0ef94e0`; exact evidence and remaining acceptance limits are recorded in `docs/VERIFICATION.md`.
 
 | Completed handoff | Actual files and check |
 | --- | --- |
