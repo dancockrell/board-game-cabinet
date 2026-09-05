@@ -2,6 +2,8 @@
 
 This contract turns the current illustrated and procedural presentation into a repeatable character pipeline. It is the handoff authority for authored models. It does not change combat rules or authorize copying art, animation, audio, interface layouts, or branding from another game.
 
+The playable environment, lighting, procedural fallback figures, and gameplay-distance review criteria are specified in the [board-art contract](OLYMPUS_BOARD_ART.md).
+
 ## Visual target
 
 The game should read as a premium animated tabletop spectacle: warm Mediterranean light, painted limestone, deep turquoise water, bronze, dyed linen, and characters with the appeal of hand-sculpted display miniatures. Shapes should be broad, asymmetrical, and legible from the normal 900 x 698 arena viewport. Avoid glossy Korean-MMO armor, tiny realistic anatomy, crowded filigree, photoreal skin, sexualized combat costumes, and interchangeable fantasy silhouettes.
