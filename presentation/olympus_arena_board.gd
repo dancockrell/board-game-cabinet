@@ -25,26 +25,50 @@ func _setup() -> void:
 	camera = Camera3D.new()
 	add_child(camera)
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 15.8
-	camera.position = Vector3(0, 17, 20)
-	camera.look_at(Vector3(0, 0, 0))
+	camera.size = 15.65
+	camera.position = Vector3(0, 16.4, 20.6)
+	camera.look_at(Vector3(0, 0.15, 0))
 	camera.current = true
 	var world := WorldEnvironment.new()
 	var env := Environment.new()
-	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color("163c4b")
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("c5d9e5")
-	env.ambient_light_energy = 0.35
-	env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+	var sky_material := ProceduralSkyMaterial.new()
+	sky_material.sky_top_color = Color("315b6a")
+	sky_material.sky_horizon_color = Color("a8c2bc")
+	sky_material.ground_horizon_color = Color("55756f")
+	sky_material.ground_bottom_color = Color("142d36")
+	sky_material.sun_angle_max = 8.0
+	var sky := Sky.new()
+	sky.sky_material = sky_material
+	env.background_mode = Environment.BG_SKY
+	env.sky = sky
+	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
+	env.ambient_light_color = Color("b9c8c6")
+	env.ambient_light_energy = 0.43
+	env.ambient_light_sky_contribution = 0.72
+	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	env.tonemap_exposure = 1.08
+	env.adjustment_enabled = true
+	env.adjustment_contrast = 1.06
+	env.adjustment_saturation = 0.92
 	world.environment = env
 	add_child(world)
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-55, -35, 0)
-	sun.light_color = Color("fff0cf")
-	sun.light_energy = 0.60
+	sun.rotation_degrees = Vector3(-53, -38, -7)
+	sun.light_color = Color("ffe6bd")
+	sun.light_energy = 1.08
 	sun.shadow_enabled = true
+	sun.directional_shadow_max_distance = 32.0
+	sun.shadow_bias = 0.035
+	sun.directional_shadow_blend_splits = true
 	add_child(sun)
+	# A broad cool fill keeps painted faces and shield emblems readable without
+	# flattening the warm, directional afternoon light.
+	var fill := DirectionalLight3D.new()
+	fill.rotation_degrees = Vector3(-42, 142, 0)
+	fill.light_color = Color("93b9c1")
+	fill.light_energy = 0.16
+	fill.shadow_enabled = false
+	add_child(fill)
 	var stage = preload("res://presentation/olympus_stage.gd").new()
 	add_child(stage)
 	ambient_life = preload("res://presentation/olympus_ambient_life.gd").new()
@@ -209,15 +233,18 @@ func _make_tower(data: Dictionary) -> Node3D:
 	var team: Color = PALETTE.player if int(data["side"]) == 0 else PALETTE.enemy
 	var temple: bool = str(data.get("kind", "tower")) == "temple"
 	var width := 2.2 if temple else 1.35
-	_box(node, Vector3(width + .52,.08,2.02),Vector3(0,.035,0),Color("ad9270"))
+	_box(node, Vector3(width + .52,.08,2.02),Vector3(0,.035,0),Color("88745d"))
 	_box(node, Vector3(width + 0.3, 0.18, 1.8), Vector3(0, 0.1, 0), PALETTE.stone)
 	_box(node, Vector3(width, 0.15, 1.55), Vector3(0, 0.27, 0), PALETTE.marble)
 	for side in [-1,1]:
 		for stair in 3:
 			_box(node,Vector3(width*.58,.07,.19),Vector3(0,.05+stair*.07,side*(1.12-stair*.15)),PALETTE.marble)
 	if temple:
-		_box(node, Vector3(1.35, 1.1, 0.85), Vector3(0, 0.9, 0.1), PALETTE.marble)
-		_box(node, Vector3(0.55, 0.8, 0.04), Vector3(0, 0.75, 0.55), team)
+		_box(node, Vector3(1.35, 1.1, 0.85), Vector3(0, 0.9, 0.1), PALETTE.marble.darkened(.035))
+		# Deep entry recess with a narrow dyed-linen standard. The team color is
+		# an accent on the architecture, never the architecture itself.
+		_box(node, Vector3(0.58, 0.73, 0.045), Vector3(0, 0.77, 0.548), Color("3a332d"))
+		_box(node, Vector3(0.28, 0.66, 0.052), Vector3(0, 0.79, 0.575), team.darkened(.12))
 	for x in [-width * 0.38, width * 0.38]:
 		for z in [-0.53, 0.53]:
 			_cylinder(node, 0.19, 0.14, Vector3(x, 0.4, z), PALETTE.stone)
@@ -225,21 +252,22 @@ func _make_tower(data: Dictionary) -> Node3D:
 			for flute in 8:
 				var angle := flute*TAU/8.0
 				_cylinder(node,.019,.81,Vector3(x+cos(angle)*.128,.94,z+sin(angle)*.128),Color("d6caa8"))
-			_cylinder(node,.16,.075,Vector3(x,1.38,z),PALETTE.gold)
+			_cylinder(node,.17,.075,Vector3(x,1.38,z),PALETTE.stone.lightened(.05))
 			_box(node, Vector3(0.35, 0.14, 0.35), Vector3(x, 1.46, z), PALETTE.stone)
-	_box(node, Vector3(width + 0.15, 0.22, 1.55), Vector3(0, 1.66, 0), team)
+	_box(node, Vector3(width + 0.15, 0.22, 1.55), Vector3(0, 1.66, 0), PALETTE.stone.darkened(.04))
 	_box(node,Vector3(width+.24,.07,1.65),Vector3(0,1.52,0),PALETTE.gold)
 	_box(node,Vector3(width+.24,.07,1.65),Vector3(0,1.80,0),PALETTE.marble)
 	for side in [-1,1]:
 		for i in 7:
-			_box(node,Vector3(.08,.10,.035),Vector3((i-3)*width/7.0,1.66,side*.79),PALETTE.gold)
+			_box(node,Vector3(.065,.085,.035),Vector3((i-3)*width/7.0,1.66,side*.79),team.darkened(.08))
 	for sign_x in [-1, 1]:
-		var roof := _box(node, Vector3(width * 0.59, 0.12, 1.68), Vector3(sign_x * width * 0.24, 1.92, 0), PALETTE.roof)
+		var roof := _box(node, Vector3(width * 0.59, 0.095, 1.68), Vector3(sign_x * width * 0.24, 1.92, 0), PALETTE.roof)
 		roof.rotation.z = sign_x * -0.35
 		for row in 8:
-			var tile := _box(node, Vector3(width * .59,.026,.025),Vector3(sign_x*width*.24,1.987,-.74+row*.21),Color("d18b60"))
+			var tile := _box(node, Vector3(width * .59,.021,.018),Vector3(sign_x*width*.24,1.973,-.74+row*.21),PALETTE.roof.lightened(.065))
 			tile.rotation.z = sign_x * -.35
-	_sphere(node, Vector3(0.15, 0.15, 0.15), Vector3(0, 2.18, 0), PALETTE.gold)
+	_cylinder(node, .055, 1.64, Vector3(0, 2.08, 0), PALETTE.roof.darkened(.12)).rotation.z = PI / 2.0
+	_sphere(node, Vector3(0.12, 0.12, 0.12), Vector3(0, 2.18, 0), PALETTE.gold)
 	for s in [-1,1]:
 		_cylinder(node,.065,.55,Vector3(s*width*.43,2.03,-.25),PALETTE.gold)
 		var flag := _box(node,Vector3(.25,.33,.035),Vector3(s*width*.43,2.09,-.25),team)
@@ -323,7 +351,14 @@ func _material(color: Color) -> StandardMaterial3D:
 	if _materials.has(color): return _materials[color]
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = color
-	mat.roughness = 0.78
+	mat.roughness = 0.84
+	# Bronze and gilded details should catch a thin highlight. Limestone, linen,
+	# paint and skin remain matte so the diorama reads as crafted material.
+	if color.r > .52 and color.g > .36 and color.b < .28:
+		mat.metallic = 0.46
+		mat.roughness = 0.42
+	elif color.get_luminance() < .24:
+		mat.roughness = 0.68
 	if color.a < 1:
 		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	_materials[color] = mat

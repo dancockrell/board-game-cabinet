@@ -70,6 +70,10 @@ func animate(delta: float) -> void:
 			"smoke":
 				node.position = effect.origin + effect.velocity*effect.age
 				node.scale = Vector3.ONE*(.5+sin(t*PI)*.7)*maxf(.001,1.0-t*t)
+			"rise":
+				node.position = effect.origin + effect.velocity*effect.age
+				node.rotation.y += delta*float(effect.get("turn",2.0))
+				node.scale = Vector3.ONE*maxf(.001,sin(t*PI))
 			"ring":
 				node.scale = Vector3(1.0+t*float(effect.get("expansion",2.5)),1.0,1.0+t*float(effect.get("expansion",2.5)))
 				node.position.y = effect.origin.y + t*.05
@@ -165,6 +169,27 @@ func show_event(event: Dictionary) -> void:
 	var team := Color("72d4ff") if int(event.get("side",0)) == 0 else Color("ff9576")
 	match str(event.get("kind","")):
 		"lightning": _thunder(at)
+		"charge_ready":
+			# The halo makes the Minotaur's stored first strike legible before it
+			# reaches a building; rules still own the charge state and damage.
+			_ring(at-Vector3(0,.16,0),.36,Color("e8b65f"),.65,20)
+			for i in 5:
+				var a := i*TAU/5.0
+				var e := _effect(at+Vector3(cos(a)*.28,.08,sin(a)*.28),.55,"rise")
+				e.velocity=Vector3(cos(a)*.08,.65,sin(a)*.08)
+				e.turn=2.5+i*.25
+				_ball(e.node,Vector3.ZERO,Vector3(.045,.09,.045),Color("f3c878"),true)
+		"charge_hit":
+			_shake_strength = maxf(_shake_strength,.055)
+			_ring(at-Vector3(0,.13,0),.44,Color("f0c66f"),.42,20)
+			for i in 7: _debris(at,i,Color("b49568"),.075+(i%2)*.025,.52)
+		"heal":
+			for i in 7:
+				var a := i*2.399
+				var e := _effect(at+Vector3(cos(a)*(.12+i*.025),.05,sin(a)*(.12+i*.025)),.72,"rise")
+				e.velocity=Vector3(cos(a)*.08,.72+i*.025,sin(a)*.08)
+				e.turn=2.0+i*.18
+				_ball(e.node,Vector3.ZERO,Vector3(.035,.10,.035),Color("89d596"),true)
 		"summon":
 			_ring(at-Vector3(0,.12,0),.32,team,.42)
 			for i in 6:

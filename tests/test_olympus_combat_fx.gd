@@ -50,6 +50,12 @@ func run() -> void:
 	fx.animate(2.0)
 	fx.animate(2.0)
 	check(fx.effects.is_empty(),"Projectile completion impacts also expire")
+	for ability in ["charge_ready", "charge_hit", "heal"]:
+		state.events[0] = {"id":int(state.events[0].id)+1,"kind":ability,"x":1.0,"z":.5,"side":0,"source_kind":"minotaur" if ability.begins_with("charge") else "hydra"}
+		fx.consume_state(state,0.0)
+		check(not fx.effects.is_empty(),"Ability feedback renders: "+ability)
+		fx.animate(2.0)
+	check(fx.effects.is_empty(),"Ability feedback expires cleanly")
 	for i in 100:
 		fx.show_event({"kind":"lightning","x":0,"z":0,"side":0})
 	check(fx.effects.size() <= fx.MAX_EFFECTS,"Heavy bursts respect hard effect cap")
