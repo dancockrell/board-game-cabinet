@@ -29,6 +29,14 @@ func play(uci: String) -> void:
 			return
 	expect(false, "Missing fixture move " + uci)
 
+func capture(label: String) -> void:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--qa-folder="):
+			await process_frame
+			await RenderingServer.frame_post_draw
+			var path: String = argument.trim_prefix("--qa-folder=").path_join(label + ".png")
+			expect(root.get_texture().get_image().save_png(path) == OK, "Save QA capture " + label)
+
 func _run() -> void:
 	prefs_path = "user://test-controls-%d.json" % OS.get_process_id()
 	expect(Prefs.read_settings(prefs_path) == Prefs.DEFAULTS, "Missing preference file uses defaults")
@@ -58,6 +66,8 @@ func _run() -> void:
 	key(KEY_ENTER)
 	expect(app.session.snapshot().board[28] == "P" and app.session.snapshot().board[12] == "", "Keyboard plays complete e2e4 move")
 	expect(app.board_view._cursor.get_child_count() == 8, "Keyboard cursor has visible corner brackets")
+	await create_timer(0.3).timeout
+	await capture("keyboard-play")
 	key(KEY_F)
 	key(KEY_UP)
 	expect(app.flipped and app._keyboard_square == 20, "Arrow navigation follows flipped screen orientation")
@@ -89,6 +99,7 @@ func _run() -> void:
 	var before: String = app.session.snapshot().to_fen()
 	app._open_draw_claim()
 	expect(app._draw_dialog.visible and not app.draw_button.disabled, "Prospective claim is available through deliberate dialog")
+	await capture("draw-declaration")
 	app._draw_dialog.hide()
 	expect(app.session.result().is_empty(), "Closing declaration does not claim")
 	app._open_draw_claim()
@@ -112,6 +123,9 @@ func _run() -> void:
 	root.add_child(app)
 	await process_frame
 	expect(app._move_audio.muted and app.flipped and app._reduced_motion and not app.practice, "Restart applies all persisted preferences")
+	app._settings_dialog.popup_centered(Vector2i(400, 230))
+	await capture("table-settings")
+	app._settings_dialog.hide()
 	app._commit_move({"from": 12, "to": 28, "promotion": ""})
 	expect(app.board_view._movement_tweens.is_empty(), "Reduced motion snaps to authoritative destination")
 	expect(app.board_view._snapshot == app.session.snapshot().board, "Reduced motion preserves authority")

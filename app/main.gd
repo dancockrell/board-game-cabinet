@@ -223,12 +223,15 @@ func _build_ui() -> void:
 	side.add_child(limits)
 	_settings_dialog = AcceptDialog.new()
 	_settings_dialog.title = "Table settings"
-	_settings_dialog.dialog_text = "Changes are remembered on this device."
 	_settings_dialog.get_ok_button().text = "Done"
 	add_child(_settings_dialog)
 	var settings_content := VBoxContainer.new()
+	settings_content.add_theme_constant_override("separation", 8)
 	_settings_dialog.add_child(settings_content)
-	side.add_child(_button("Table settings…", func(): _settings_dialog.popup_centered(Vector2i(400, 200))))
+	var settings_note := _label("Changes are remembered on this device.", 15)
+	settings_note.custom_minimum_size = Vector2(350, 36)
+	settings_content.add_child(settings_note)
+	side.add_child(_button("Table settings…", func(): _settings_dialog.popup_centered(Vector2i(400, 230))))
 	var sound := CheckButton.new()
 	sound.text = "Wooden move sound"
 	sound.button_pressed = not _settings["muted"]
@@ -269,10 +272,15 @@ func _build_ui() -> void:
 	add_child(new_dialog)
 	_draw_dialog = ConfirmationDialog.new()
 	_draw_dialog.title = "Claim a draw"
-	_draw_dialog.dialog_text = "Declare a qualifying move. The game ends as a draw.\nThe declared move is not played on the board."
 	_draw_dialog.get_ok_button().text = "Declare and claim"
+	var declaration_content := VBoxContainer.new()
+	declaration_content.add_theme_constant_override("separation", 12)
+	_draw_dialog.add_child(declaration_content)
+	var declaration_note := _label("Declare a qualifying move to end the game as a draw. The declared move is not played on the board.", 17)
+	declaration_note.custom_minimum_size = Vector2(440, 70)
+	declaration_content.add_child(declaration_note)
 	_draw_picker = OptionButton.new()
-	_draw_dialog.add_child(_draw_picker)
+	declaration_content.add_child(_draw_picker)
 	_draw_dialog.confirmed.connect(_confirm_draw_claim)
 	add_child(_draw_dialog)
 	_export_dialog = FileDialog.new()
@@ -587,7 +595,7 @@ func _open_draw_claim() -> void:
 	_draw_picker.clear()
 	for move in _draw_moves:
 		_draw_picker.add_item(Rules.san(session.snapshot(), move) + "  (" + Rules.uci(move) + ")")
-	_draw_dialog.popup_centered(Vector2i(500, 180))
+	_draw_dialog.popup_centered(Vector2i(500, 240))
 	_draw_picker.grab_focus()
 
 func _confirm_draw_claim() -> void:
