@@ -33,6 +33,14 @@ func legal_moves() -> Array:
 func try_move(request: Dictionary, expected_revision: int = -1) -> bool:
 	if expected_revision >= 0 and expected_revision != revision:
 		return false
+	for key in ["from", "to"]:
+		var value: Variant = request.get(key)
+		if not (value is int or value is float):
+			return false
+		if not is_finite(float(value)) or float(value) != floor(float(value)) or float(value) < 0 or float(value) > 63:
+			return false
+	if not request.get("promotion", "") is String:
+		return false
 	for move in legal_moves():
 		if int(request.get("from", -1)) == move["from"] and int(request.get("to", -1)) == move["to"] and str(request.get("promotion", "")) == str(move.get("promotion", "")):
 			_states.append(_state.copy())
