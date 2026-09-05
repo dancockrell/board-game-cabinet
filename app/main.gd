@@ -513,7 +513,10 @@ func _review(direction: int) -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_F:
+		if event.keycode == KEY_TAB and get_viewport().gui_get_focus_owner() == null:
+			_board_surface.grab_focus()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_F:
 			_flip()
 		elif event.keycode == KEY_ESCAPE:
 			selected = -1
