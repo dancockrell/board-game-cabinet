@@ -32,6 +32,12 @@ func run() -> void:
 	check(is_equal_approx(unit.position.z, 2.0), "Authoritative position rendered")
 	check(is_equal_approx(unit.get_node("Health/Fill").scale.x, 0.5), "Health ratio rendered")
 	check(unit.get_node("Hit").visible, "Damage impact visible")
+	state.units[0].charge_ready = true
+	board.show_state(state, 0.05)
+	check(unit.get_node("Ability").visible, "Authoritative Minotaur charge remains visible until consumed")
+	state.units[0].charge_ready = false
+	board.show_state(state, 0.05)
+	check(not unit.get_node("Ability").visible, "Consumed charge clears persistent board marker")
 	state.towers[0].hp = 0.0
 	board.show_state(state, 0.3)
 	check(not unit.get_node("Hit").visible, "Damage impact expires")

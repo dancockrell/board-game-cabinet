@@ -110,6 +110,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			node.get_node("Figure").rotation.y = atan2(target.x - previous.x, target.z - previous.z)
 			node.set_meta("walking_until", _time + .14)
 		_health(node, float(unit["hp"]) / maxf(1.0, float(unit.get("max_hp", unit["hp"]))))
+		_ability_status(node, unit)
 		_damage_feedback(node, float(unit["hp"]), delta)
 		var attack_strength := clampf((float(node.get_meta("attack_until", 0.0)) - _time) / 0.24, 0.0, 1.0)
 		_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)
@@ -291,6 +292,9 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	_cylinder(node, 0.38, 0.055, Vector3(0, 0.035, 0), Color("263743"))
 	_cylinder(node, 0.36, 0.035, Vector3(0, 0.077, 0), team)
 	_cylinder(node, 0.29, 0.015, Vector3(0, 0.099, 0), team.lightened(.2))
+	var ability := _cylinder(node, 0.31, 0.012, Vector3(0, 0.116, 0), Color("e6b96580"))
+	ability.name = "Ability"
+	ability.visible = false
 	var figure := Node3D.new()
 	figure.name = "Figure"
 	node.add_child(figure)
@@ -301,6 +305,17 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	_figure_factory.build(figure, kind, team)
 	_add_health(node, 2.10 if size > 1 else 1.75, .78, team)
 	return node
+
+func _ability_status(node: Node3D, unit: Dictionary) -> void:
+	var marker: MeshInstance3D = node.get_node("Ability")
+	var charged := bool(unit.get("charge_ready", false))
+	var recovering := str(unit.get("kind", "")) == "hydra" and float(unit.get("recovery_time", 0.0)) >= 4.0 and float(unit.get("hp", 0.0)) < float(unit.get("max_hp", 0.0))
+	marker.visible = charged or recovering
+	if not marker.visible: return
+	marker.material_override = _material(Color("e6b9659c") if charged else Color("72b98583"))
+	var pulse := .94 + sin(_time * (6.5 if charged else 3.5)) * .06
+	marker.scale = Vector3(pulse, 1.0, pulse)
+
 func _add_health(node: Node3D, height: float, width: float, color: Color) -> void:
 	var hit := _cylinder(node, width * 0.57, 0.035, Vector3(0, 0.18, 0), Color(1, 0.8, 0.25, 0.7))
 	hit.name = "Hit"
