@@ -99,6 +99,47 @@ func _run() -> void:
 			await RenderingServer.frame_post_draw
 			var path := argument.trim_prefix("--qa-folder=").path_join("ninth-gate-playing.png")
 			expect(root.get_texture().get_image().save_png(path) == OK, "Gameplay screenshot saved")
+	# Complete the battle through the UI with legal orders from player knowledge.
+	for remaining in 12:
+		if app.observed.phase == "finished":
+			break
+		var attack_orders: Array = []
+		var rally_orders: Array = []
+		for unit in app.observed.units:
+			if unit.side != "heaven":
+				continue
+			var chosen: Dictionary = {}
+			for order in app.session.legal_orders(unit.id, "heaven"):
+				if order.type == "rally":
+					chosen = order
+				if order.type == "attack":
+					chosen = order
+					break
+			if chosen.get("type") == "attack":
+				attack_orders.append(chosen)
+			elif not chosen.is_empty():
+				rally_orders.append(chosen)
+		attack_orders.append_array(rally_orders)
+		for order in attack_orders.slice(0, 3):
+			app._draft(order)
+		var previous_revision: int = app.observed.revision
+		app._commit()
+		expect(app.observed.revision > previous_revision, "Full battle commit advances revision")
+	var final_state: Dictionary = app.session.snapshot()
+	expect(final_state.phase == "finished" and final_state.round <= 12, "Battle reaches a bounded terminal result")
+	expect(final_state.winner in ["heaven", "hell", "draw"], "Terminal winner is defined")
+	expect(app.details.text.contains("BATTLE ENDED") and app.details.text.contains(str(final_state.winner).to_upper()), "Result panel matches authoritative winner")
+	expect(app.observed == app.session.view_for("heaven"), "Terminal presentation remains a filtered session view")
+	var restored = app.Session.new()
+	var serialized = JSON.parse_string(JSON.stringify(app.session.save_data()))
+	var load_result: Dictionary = restored.load_data(serialized)
+	expect(load_result.ok, "Completed battle loads after an actual JSON round trip: " + str(load_result))
+	expect(_without_revision(restored.snapshot()) == _without_revision(final_state), "Reloaded final position, score, reports and random state match")
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--end-capture="):
+			await process_frame
+			await RenderingServer.frame_post_draw
+			expect(root.get_texture().get_image().save_png(argument.trim_prefix("--end-capture=")) == OK, "Result screenshot saved")
 	app.queue_free()
 	await process_frame
 	print("Ninth Gate app: %d checks, %d failures" % [checks, failures])
