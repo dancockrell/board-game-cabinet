@@ -49,7 +49,7 @@ app/main.gd (input, UI, controller, opponent scheduling)
     -> core/session.gd (accepted state, revision, history, undo)
         -> games/chess/chess_state.gd
         -> games/chess/chess_rules.gd
-    -> adapters/ (computer and tutor boundaries)
+    -> ai/ (computer and tutor boundaries)
     -> presentation/board_view.gd -> themes/ (Resource assets)
 ```
 
@@ -69,7 +69,7 @@ Paths below distinguish current contracts from planned modules. Empty abstractio
 | `games/chess/chess_state.gd` | Plain position value and FEN parsing/serialization |
 | `games/chess/chess_rules.gd` | Move generation, attack detection, immutable application, results, UCI |
 | `games/chess/` future notation files | SAN and PGN when accepted move history is stable |
-| `adapters/` | Computer and tutor services; process/protocol work stays outside rules |
+| `ai/` | Computer and tutor services; process/protocol work stays outside rules |
 | `presentation/board_view.gd` | Procedural board/chips, logical picking, position rendering, markers, flip |
 | `presentation/` future animation/audio files | Presentation-only transitions and sound response |
 | `themes/` | BoardTheme/PieceTheme Resource definitions and authored set assets |
@@ -92,7 +92,7 @@ The initial chess implementation intentionally has a concrete, small API:
 
 Generated moves are candidates until legality filtering proves the mover's king remains safe. Attack detection is distinct from legal-move generation: pawns attack empty diagonals, kings attack adjacent squares, and castling must test attacked transit squares. Low-level move application may assume a generated move; every external request must go through the validating session boundary.
 
-An eventual `GameDefinition` identifies a game, constructs its starting state, names its rules service, describes board topology and piece roles, and declares notation/save formats. An eventual game-neutral controller needs only legal actions, action submission, side-to-act, outcome, and presentation descriptors. Introduce that interface when a second game's actual needs can challenge it. Do not make chess's 64-square array, kings, castling, promotions, FEN, or alternating two-side assumptions universal base-class requirements.
+The initial `core/game_definition.gd` Resource identifies a game and describes its board dimensions and cell/intersection placement. Its eventual definition can also select starting-state construction and rules, describe piece roles, and declare notation/save formats. An eventual game-neutral controller needs only legal actions, action submission, side-to-act, outcome, and presentation descriptors. Introduce that interface when a second game's actual needs can challenge it. Do not make chess's 64-square array, kings, castling, promotions, FEN, or alternating two-side assumptions universal base-class requirements.
 
 ## Chess implementation plan
 
@@ -174,7 +174,7 @@ One integration owner controls `project.godot`, `app/main.gd`, `app/main.tscn`, 
 | W1-01 | Rules lane: `games/chess/chess_rules.gd` | W0-03 | Ordinary move generation and attack maps | Per-piece fixtures and initial legal count 20 |
 | W1-02 | Presentation lane: `presentation/board_view.gd` | W0-04 | Board geometry, layout transform, camera-compatible bounds | Runtime capture shows 64 tiles and light h1 |
 | W1-03 | Test lane: `tests/test_chess_rules.gd` | W0-03 and rules contract | Perft runner and check/pin fixtures | Reports explicit expected/actual counts; no scene dependency |
-| W1-04 | Adapter lane: `adapters/local_opponent.gd` | Frozen rules contract | Deterministic practice candidate from legal moves | Fixture move is in legal set; no-move returns empty |
+| W1-04 | Adapter lane: `ai/local_opponent.gd` | Frozen rules contract | Deterministic practice candidate from legal moves | Fixture move is in legal set; no-move returns empty |
 | W1-05 | Integration lane: `core/session.gd` | W0-03 and rules contract | Session boundary, copied snapshots, revision/change signal | Illegal request preserves revision/state; legal request increments once |
 
 ### Wave 2: special rules, chips, and factual help
@@ -183,7 +183,7 @@ One integration owner controls `project.godot`, `app/main.gd`, `app/main.tscn`, 
 | --- | --- | --- | --- | --- |
 | W2-01 | Rules lane: `games/chess/chess_rules.gd` | W1-01 | Castling, en passant, promotions, check filtering | Special-move fixtures and initial perft depths 1–3 pass |
 | W2-02 | Presentation lane: `presentation/board_view.gd` | W1-02 | Chips, six top brands, side treatment, `show_position` | Start capture has 32 readable, correctly placed chips |
-| W2-03 | Tutor lane: `adapters/tutor_analysis.gd` | W1-01 | Position facts and identified heuristic candidate | Check/turn/material fixtures match displayed data |
+| W2-03 | Tutor lane: `ai/tutor_context.gd` | W1-01 | Position facts and identified heuristic candidate | Check/turn/material fixtures match displayed data |
 | W2-04 | Test lane: `tests/test_session.gd` | W1-05 | Session legality/history/revision assertions | Tests exercise success and rejected no-mutation paths |
 | W2-05 | Integration lane: `core/session.gd` | W1-05 | Undo through snapshots and move log | Play/undo restores exact original FEN and empty log |
 
