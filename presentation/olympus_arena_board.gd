@@ -10,6 +10,7 @@ var _time := 0.0
 var _last_event := -1
 var _last_elapsed := 0.0
 var _effects: Array = []
+var _figure_factory: RefCounted
 
 func _ready() -> void:
 	_setup()
@@ -96,17 +97,26 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		alive[id] = true
 		if not _tokens.has(id):
 			_tokens[id] = _make_unit(str(unit.get("kind", "hoplites")), int(unit["side"]))
+			_tokens[id].position = Vector3(float(unit["x"]), 0.12, float(unit["z"]))
 		var node: Node3D = _tokens[id]
 		var target := Vector3(float(unit["x"]), 0.12, float(unit["z"]))
 		var previous: Vector3 = node.position
 		node.position = target
+		var visual_offset: Vector3 = node.get_meta("visual_offset", Vector3.ZERO)
+		visual_offset += previous - target
+		visual_offset = visual_offset.lerp(Vector3.ZERO, 1.0 - exp(-delta * 28.0))
+		node.set_meta("visual_offset", visual_offset)
+		node.get_node("Figure").position.x = visual_offset.x
+		node.get_node("Figure").position.z = visual_offset.z
 		if previous.distance_to(target) > 0.004:
 			node.get_node("Figure").rotation.y = atan2(target.x - previous.x, target.z - previous.z)
-			node.get_node("Figure").position.y = abs(sin(_time * 9 + int(id))) * 0.045
+			node.set_meta("walking_until", _time + .14)
 		_health(node, float(unit["hp"]) / maxf(1.0, float(unit.get("max_hp", unit["hp"]))))
 		_damage_feedback(node, float(unit["hp"]), delta)
+		_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)))
 	for id in _tokens.keys():
 		if not alive.has(id):
+			_departure(_tokens[id])
 			_tokens[id].queue_free()
 			_tokens.erase(id)
 	for tower in state.get("towers", []):
@@ -134,6 +144,21 @@ func show_deployment(position: Vector2, valid: bool, spell: bool = false) -> voi
 
 func clear_preview() -> void:
 	if _preview: _preview.visible = false
+
+func _departure(unit: Node3D) -> void:
+	# A short separate cosmetic burst never delays authoritative unit removal.
+	var cloud := Node3D.new()
+	add_child(cloud)
+	cloud.position = unit.position
+	for i in 6:
+		var a := i * TAU / 6.0
+		var puff := _sphere(cloud, Vector3.ONE * .10, Vector3(cos(a)*.12,.32,sin(a)*.12), Color("ead4a2"))
+		var motion := create_tween().set_parallel(true)
+		motion.tween_property(puff,"position",Vector3(cos(a)*.55,.12,sin(a)*.55),.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		motion.tween_property(puff,"scale",Vector3.ONE*.005,.35)
+	var cleanup := create_tween()
+	cleanup.tween_interval(.38)
+	cleanup.tween_callback(cloud.queue_free)
 
 func _show_event(event: Dictionary) -> void:
 	var node := Node3D.new()
@@ -170,8 +195,12 @@ func _make_tower(data: Dictionary) -> Node3D:
 	var team: Color = PALETTE.player if int(data["side"]) == 0 else PALETTE.enemy
 	var temple: bool = str(data.get("kind", "tower")) == "temple"
 	var width := 2.2 if temple else 1.35
+	_box(node, Vector3(width + .52,.08,2.02),Vector3(0,.035,0),Color("ad9270"))
 	_box(node, Vector3(width + 0.3, 0.18, 1.8), Vector3(0, 0.1, 0), PALETTE.stone)
 	_box(node, Vector3(width, 0.15, 1.55), Vector3(0, 0.27, 0), PALETTE.marble)
+	for side in [-1,1]:
+		for stair in 3:
+			_box(node,Vector3(width*.58,.07,.19),Vector3(0,.05+stair*.07,side*(1.12-stair*.15)),PALETTE.marble)
 	if temple:
 		_box(node, Vector3(1.35, 1.1, 0.85), Vector3(0, 0.9, 0.1), PALETTE.marble)
 		_box(node, Vector3(0.55, 0.8, 0.04), Vector3(0, 0.75, 0.55), team)
@@ -179,12 +208,35 @@ func _make_tower(data: Dictionary) -> Node3D:
 		for z in [-0.53, 0.53]:
 			_cylinder(node, 0.19, 0.14, Vector3(x, 0.4, z), PALETTE.stone)
 			_cylinder(node, 0.13, 0.94, Vector3(x, 0.93, z), PALETTE.marble)
+			for flute in 8:
+				var angle := flute*TAU/8.0
+				_cylinder(node,.019,.81,Vector3(x+cos(angle)*.128,.94,z+sin(angle)*.128),Color("d6caa8"))
+			_cylinder(node,.16,.075,Vector3(x,1.38,z),PALETTE.gold)
 			_box(node, Vector3(0.35, 0.14, 0.35), Vector3(x, 1.46, z), PALETTE.stone)
 	_box(node, Vector3(width + 0.15, 0.22, 1.55), Vector3(0, 1.66, 0), team)
+	_box(node,Vector3(width+.24,.07,1.65),Vector3(0,1.52,0),PALETTE.gold)
+	_box(node,Vector3(width+.24,.07,1.65),Vector3(0,1.80,0),PALETTE.marble)
+	for side in [-1,1]:
+		for i in 7:
+			_box(node,Vector3(.08,.10,.035),Vector3((i-3)*width/7.0,1.66,side*.79),PALETTE.gold)
 	for sign_x in [-1, 1]:
 		var roof := _box(node, Vector3(width * 0.59, 0.12, 1.68), Vector3(sign_x * width * 0.24, 1.92, 0), PALETTE.roof)
 		roof.rotation.z = sign_x * -0.35
+		for row in 8:
+			var tile := _box(node, Vector3(width * .59,.026,.025),Vector3(sign_x*width*.24,1.987,-.74+row*.21),Color("d18b60"))
+			tile.rotation.z = sign_x * -.35
 	_sphere(node, Vector3(0.15, 0.15, 0.15), Vector3(0, 2.18, 0), PALETTE.gold)
+	for s in [-1,1]:
+		_cylinder(node,.065,.55,Vector3(s*width*.43,2.03,-.25),PALETTE.gold)
+		var flag := _box(node,Vector3(.25,.33,.035),Vector3(s*width*.43,2.09,-.25),team)
+		flag.rotation.z=s*.09
+	if temple:
+		# Central ceremonial brazier and laurel crest distinguish the crown objective.
+		_cylinder(node,.25,.17,Vector3(0,.49,.58),PALETTE.gold)
+		_sphere(node,Vector3(.13,.22,.13),Vector3(0,.70,.58),Color("ffbe67"))
+		for i in 9:
+			var a := i*PI/8
+			_sphere(node,Vector3(.045,.07,.025),Vector3(cos(a)*.22,1.06+sin(a)*.24,.56),PALETTE.gold)
 	_add_health(node, 2.5, 1.4, team)
 	return node
 
@@ -192,65 +244,19 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	var node := Node3D.new()
 	add_child(node)
 	var team: Color = PALETTE.player if side == 0 else PALETTE.enemy
-	_cylinder(node, 0.37, 0.1, Vector3(0, 0.035, 0), team)
+	_cylinder(node, 0.38, 0.055, Vector3(0, 0.035, 0), Color("263743"))
+	_cylinder(node, 0.36, 0.035, Vector3(0, 0.077, 0), team)
+	_cylinder(node, 0.29, 0.015, Vector3(0, 0.099, 0), team.lightened(.2))
 	var figure := Node3D.new()
 	figure.name = "Figure"
 	node.add_child(figure)
-	figure.rotation.y = PI if side == 0 else 0
-	var skin := Color("cf9f75")
-	var bronze := Color("b68b43")
-	var size := 1.2 if kind in ["heracles", "minotaur", "hydra"] else 0.9
+	figure.rotation.y = PI if side == 0 else 0.0
+	var size := 1.10 if kind in ["heracles", "minotaur", "hydra"] else .86
 	figure.scale = Vector3.ONE * size
-	if kind == "hydra":
-		_sphere(figure, Vector3(0.38, 0.3, 0.48), Vector3(0, 0.37, 0), Color("497c63"))
-		for i in [-1, 0, 1]:
-			_limb(figure, Vector3(i * 0.14, 0.4, 0), Vector3(i * 0.25, 0.9, 0.25), 0.09, Color("497c63"))
-			_sphere(figure, Vector3(0.13, 0.12, 0.22), Vector3(i * 0.25, 0.98, 0.32), Color("6eaa73"))
-			_sphere(figure, Vector3(0.025, 0.03, 0.025), Vector3(i * 0.25 - 0.08, 1.03, 0.46), Color("ffd769"))
-	else:
-		var body_color: Color = Color("71604c") if kind == "minotaur" else team
-		_sphere(figure, Vector3(0.22, 0.3, 0.15), Vector3(0, 0.55, 0), body_color)
-		for x in [-0.11, 0.11]:
-			_limb(figure, Vector3(x, 0.4, 0), Vector3(x, 0.1, 0.04), 0.07, skin)
-			_box(figure, Vector3(0.12, 0.1, 0.21), Vector3(x, 0.1, 0.08), Color("594c42"))
-		_sphere(figure, Vector3(0.16, 0.18, 0.15), Vector3(0, 0.97, 0), skin)
-		_limb(figure, Vector3(-0.18, 0.72, 0), Vector3(-0.3, 0.5, 0.12), 0.065, skin)
-		_limb(figure, Vector3(0.18, 0.72, 0), Vector3(0.3, 0.55, 0.18), 0.065, skin)
-		match kind:
-			"hoplites", "hoplite":
-				_sphere(figure, Vector3(0.18, 0.13, 0.16), Vector3(0, 1.06, 0), bronze)
-				_box(figure, Vector3(0.045, 0.14, 0.22), Vector3(0, 1.19, 0), team)
-				var shield := _cylinder(figure, 0.25, 0.055, Vector3(-0.25, 0.56, 0.16), bronze)
-				shield.rotation.x = PI / 2
-				_sphere(figure, Vector3(0.08, 0.08, 0.035), Vector3(-0.25, 0.56, 0.21), team)
-				_limb(figure, Vector3(0.28, 0.13, 0.12), Vector3(0.28, 1.48, 0.12), 0.025, Color("6d503b"))
-				_sphere(figure, Vector3(0.05, 0.13, 0.035), Vector3(0.28, 1.5, 0.12), PALETTE.marble)
-			"atalanta":
-				_sphere(figure, Vector3(0.17, 0.11, 0.18), Vector3(0, 1.08, -0.03), Color("763f2c"))
-				for j in 5:
-					_limb(figure, Vector3(0.3 + sin(j * PI / 5) * 0.15, 0.3 + j * 0.14, 0.17), Vector3(0.3 + sin((j + 1) * PI / 5) * 0.15, 0.3 + (j + 1) * 0.14, 0.17), 0.025, bronze)
-				_limb(figure, Vector3(0.3, 0.3, 0.17), Vector3(0.3, 1, 0.17), 0.01, PALETTE.marble)
-			"heracles":
-				_sphere(figure, Vector3(0.25, 0.22, 0.21), Vector3(0, 1.0, -0.07), Color("aa7732"))
-				_sphere(figure, Vector3(0.13, 0.14, 0.08), Vector3(0, 0.96, 0.13), skin)
-				_limb(figure, Vector3(0.28, 0.5, 0.1), Vector3(0.4, 1.3, 0.1), 0.11, Color("755135"))
-			"minotaur":
-				_sphere(figure, Vector3(0.23, 0.21, 0.2), Vector3(0, 1, 0), Color("775341"))
-				_sphere(figure, Vector3(0.16, 0.11, 0.15), Vector3(0, 0.92, 0.18), Color("ab8262"))
-				for x in [-1, 1]:
-					_limb(figure, Vector3(x * 0.17, 1.09, 0), Vector3(x * 0.34, 1.23, 0), 0.045, PALETTE.marble)
-					_limb(figure, Vector3(x * 0.34, 1.23, 0), Vector3(x * 0.32, 1.38, 0), 0.024, PALETTE.marble)
-			"medusa":
-				for j in 7:
-					var angle := j * TAU / 7
-					_limb(figure, Vector3(0, 1.0, 0), Vector3(cos(angle) * 0.26, 1.17 + sin(angle) * 0.12, sin(angle) * 0.15), 0.045, Color("49835c"))
-			"harpies", "harpy":
-				for x in [-1, 1]:
-					for j in 4:
-						_limb(figure, Vector3(x * 0.18, 0.72, 0), Vector3(x * (0.48 + j * 0.055), 1.1 - j * 0.15, -0.12), 0.045, Color("ded2b3"))
-	_add_health(node, 1.95 if size > 1 else 1.65, 0.78, team)
+	if _figure_factory == null: _figure_factory = preload("res://presentation/olympus_figurines.gd").new(self)
+	_figure_factory.build(figure, kind, team)
+	_add_health(node, 2.10 if size > 1 else 1.75, .78, team)
 	return node
-
 func _add_health(node: Node3D, height: float, width: float, color: Color) -> void:
 	var hit := _cylinder(node, width * 0.57, 0.035, Vector3(0, 0.18, 0), Color(1, 0.8, 0.25, 0.7))
 	hit.name = "Hit"
@@ -273,7 +279,24 @@ func _health(node: Node3D, fraction: float) -> void:
 
 func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
 	var timer := maxf(0.0, float(node.get_meta("hit_time", 0.0)) - delta)
-	if hp < float(node.get_meta("previous_hp", hp)): timer = 0.22
+	var previous_hp := float(node.get_meta("previous_hp", hp))
+	if hp < previous_hp:
+		timer = 0.22
+		var number := Label3D.new()
+		number.text = "−%d" % roundi(previous_hp-hp)
+		number.font_size = 42
+		number.pixel_size = .009
+		number.outline_size = 8
+		number.modulate = Color("fff2bc")
+		number.outline_modulate = Color("583328")
+		number.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		number.no_depth_test = true
+		add_child(number)
+		number.position = node.position + Vector3(.12,1.62,0)
+		var rise := create_tween().set_parallel(true)
+		rise.tween_property(number,"position:y",number.position.y+.65,.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		rise.tween_property(number,"modulate:a",0.0,.25).set_delay(.30)
+		rise.chain().tween_callback(number.queue_free)
 	node.set_meta("previous_hp", hp)
 	node.set_meta("hit_time", timer)
 	var hit: MeshInstance3D = node.get_node("Hit")
@@ -327,4 +350,3 @@ func _limb(parent: Node3D, from: Vector3, to: Vector3, radius: float, color: Col
 	if abs(direction.dot(Vector3.UP)) < 0.999:
 		mesh.quaternion = Quaternion(Vector3.UP, direction)
 	return mesh
-
