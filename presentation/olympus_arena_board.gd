@@ -17,7 +17,7 @@ func _setup() -> void:
 	camera = Camera3D.new()
 	add_child(camera)
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 20.3
+	camera.size = 18.8
 	camera.position = Vector3(0, 20, 13.8)
 	camera.look_at(Vector3(0, 0, 0))
 	camera.current = true
@@ -27,14 +27,14 @@ func _setup() -> void:
 	env.background_color = Color("182937")
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color("c5d9e5")
-	env.ambient_light_energy = 0.62
-	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	env.ambient_light_energy = 0.35
+	env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	world.environment = env
 	add_child(world)
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-55, -35, 0)
 	sun.light_color = Color("fff0cf")
-	sun.light_energy = 1.6
+	sun.light_energy = 0.72
 	sun.shadow_enabled = true
 	add_child(sun)
 	_box(self, Vector3(11.5, 0.65, 18.3), Vector3(0, -0.5, 0), Color("34414a"))
@@ -83,6 +83,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			node.get_node("Figure").rotation.y = atan2(target.x - previous.x, target.z - previous.z)
 			node.get_node("Figure").position.y = abs(sin(_time * 9 + int(id))) * 0.045
 		_health(node, float(unit["hp"]) / maxf(1.0, float(unit.get("max_hp", unit["hp"]))))
+		_damage_feedback(node, float(unit["hp"]), delta)
 	for id in _tokens.keys():
 		if not alive.has(id):
 			_tokens[id].queue_free()
@@ -91,8 +92,10 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		var id = tower["id"]
 		if not _towers.has(id): _towers[id] = _make_tower(tower)
 		var node: Node3D = _towers[id]
-		node.visible = float(tower["hp"]) > 0
+		node.scale.y = 1.0 if float(tower["hp"]) > 0 else 0.14
+		node.get_node("Health").visible = float(tower["hp"]) > 0
 		_health(node, float(tower["hp"]) / maxf(1.0, float(tower.get("max_hp", tower["hp"]))))
+		_damage_feedback(node, float(tower["hp"]), delta)
 
 func pick_ground(screen: Vector2, _viewport_size: Vector2 = Vector2.ZERO) -> Vector2:
 	_setup()
@@ -200,6 +203,9 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	return node
 
 func _add_health(node: Node3D, height: float, width: float, color: Color) -> void:
+	var hit := _cylinder(node, width * 0.57, 0.035, Vector3(0, 0.18, 0), Color(1, 0.8, 0.25, 0.7))
+	hit.name = "Hit"
+	hit.visible = false
 	var holder := Node3D.new()
 	holder.name = "Health"
 	node.add_child(holder)
@@ -215,6 +221,15 @@ func _health(node: Node3D, fraction: float) -> void:
 	fraction = clampf(fraction, 0.0, 1.0)
 	fill.scale.x = maxf(0.001, fraction)
 	fill.position.x = (fraction - 1.0) * float(fill.get_meta("width")) / 2
+
+func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
+	var timer := maxf(0.0, float(node.get_meta("hit_time", 0.0)) - delta)
+	if hp < float(node.get_meta("previous_hp", hp)): timer = 0.22
+	node.set_meta("previous_hp", hp)
+	node.set_meta("hit_time", timer)
+	var hit: MeshInstance3D = node.get_node("Hit")
+	hit.visible = timer > 0.0
+	hit.scale = Vector3.ONE * (1.0 + (0.22 - timer) * 2.0)
 
 func _material(color: Color) -> StandardMaterial3D:
 	if _materials.has(color): return _materials[color]
@@ -263,3 +278,4 @@ func _limb(parent: Node3D, from: Vector3, to: Vector3, radius: float, color: Col
 	if abs(direction.dot(Vector3.UP)) < 0.999:
 		mesh.quaternion = Quaternion(Vector3.UP, direction)
 	return mesh
+
