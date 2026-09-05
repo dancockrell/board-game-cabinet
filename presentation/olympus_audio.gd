@@ -25,6 +25,14 @@ func _ready() -> void:
 		add_child(voice)
 		_voices.append(voice)
 
+func _exit_tree() -> void:
+	# Detach playback resources before child destruction. Godot's audio server
+	# may retain stopped streams until its next mix/update cycle.
+	for voice in _voices:
+		voice.stop()
+		voice.stream = null
+	_clips.clear()
+
 func set_muted(value: bool) -> void:
 	muted = value
 	if muted:
@@ -138,3 +146,4 @@ func _synthesize(kind: String) -> AudioStreamWAV:
 
 func _bell(age: float, frequency: float) -> float:
 	return (sin(TAU * frequency * age) + sin(TAU * frequency * 2.01 * age) * 0.2 + sin(TAU * frequency * 3.98 * age) * 0.07) * exp(-age * 5.5)
+

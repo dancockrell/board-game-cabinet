@@ -57,11 +57,11 @@ func _run() -> void:
 	state.events = [{"id":0, "kind":"summon", "time":0.1}]
 	audio.consume_state(state)
 	_check(audio.played_counts.get("summon", 0) == 2, "new match resets event cursor")
-	audio.set_muted(true)
-	await create_timer(0.15).timeout
 	audio.free()
-	await process_frame
+	# Let the audio server retire playback objects after node destruction.
+	await create_timer(0.3).timeout
 	print("Olympus audio: %s checks, failed=%s" % [checks, failed])
 	quit(1 if failed else 0)
+
 
 
