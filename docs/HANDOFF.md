@@ -13,7 +13,7 @@ For the new war game, use the structured Reisswitz 1824 tradition as historical 
 | Game | Current status | Next useful boundary |
 | --- | --- | --- |
 | Chess | Existing playable wooden table; validated source checkpoint `6f5ff9273c07da13331d2c647468d2ba33604bd2` | Preserve it; complete manual acceptance and further polish |
-| The Ninth Gate | Rules `4573a54`: 58 headless checks passed; scene `3fa37eb`: compiled, launched, and captured by the coordinator | Native full-battle acceptance, deeper interaction checks, then balance and polish |
+| The Ninth Gate | Rules through `d6d2dd2`: 78 headless checks; UI: 46 checks including complete battle and JSON replay; native planning/contact/result captures | Human playtesting, balance, and visual polish; see [current verification](NINTH_GATE_VERIFICATION.md) |
 | Xiangqi | Selected, not implemented | 9×10 intersection board, river/palaces, complete rules and repetition policy |
 | Go | Selected, not implemented | Choose a named rules/scoring/ko policy before coding; 9×9 is a practical first teaching board, not a confirmed product decision |
 | English checkers | Selected, not implemented; variant is provisional | 8×8 dark-square play, compulsory capture chains, English promotion and king rules |
@@ -24,7 +24,7 @@ The chess foundation includes ordinary and special legal moves, promotions, turn
 
 ## Exact next-build brief
 
-Finish **one Ninth Gate scenario first**, retaining playable chess. The new source already makes Heaven the player's army and Hell the practice opponent, with order planning, commitment, resolution, undo, save/load, and restart. Its first scene is a simple 2D map with a Resource palette, not a polished 3D wooden war table. Finish native interaction and full-battle acceptance before expanding it. Do not build Go, Xiangqi, or checkers simultaneously with this integration.
+Polish and playtest **one Ninth Gate scenario first**, retaining playable chess. The new source already makes Heaven the player's army and Hell the practice opponent, with order planning, commitment, resolution, undo, save/load, and restart. Its first scene is a simple 2D map with a Resource palette, not a polished 3D wooden war table. Automated native interaction and a complete twelve-round battle are checked; human playtesting and balance remain open. Do not build Go, Xiangqi, or checkers simultaneously with this integration.
 
 Keep state and rules independent of Godot Nodes. The scene presents a side-filtered observation and requests actions. It cannot correct the rules by moving a counter locally. The opponent cannot read the full referee state or the player's pending orders. Report current limitations directly. Finish with a clean commit, reproducible commands, a native screenshot, and test output tied to the commit.
 

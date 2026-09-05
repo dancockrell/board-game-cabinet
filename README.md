@@ -1,5 +1,9 @@
 # Board Game Cabinet
 
+**New playable experiment: [The Ninth Gate](docs/NINTH_GATE_DESIGN.md)** — an original Heaven-versus-Hell command game inspired by structured Prussian Kriegsspiel. Open the chess table and choose **The Ninth Gate**, or launch `godot --path . res://app/ninth_gate.tscn`. It currently uses a readable 2D tactical map, six formations per army, three simultaneous orders each round, filtered enemy visibility, seeded combat, objective scoring, whole-round undo, and replay-based saves. Heaven is player-controlled; Hell has a modest practice opponent. The mythology and battle narrative remain provisional pending the user's setting choice.
+
+The chosen cabinet scope is chess (playable), The Ninth Gate (playable prototype), Go, Xiangqi, and checkers (planned; English draughts provisionally). See the [Claude build / Codex polish handoff](docs/HANDOFF.md), [exact war-game rules](games/ninth_gate/RULES.md), and [Ninth Gate verification](docs/NINTH_GATE_VERIFICATION.md). No claim of balance, finished art, or a strong war-game opponent is made.
+
 A playable Godot desktop chess table with a wooden board, round wooden chips, and burned-symbol shading. The app separates authoritative chess state from 3D presentation and uses reusable theme Resources so the simple static set can become a foundation for more sets and, later, other games.
 
 The current build includes legal chess moves and special moves, turn handling, legal/capture/check/last-move indicators, four-choice promotion, SAN move history, undo, immutable position review, transactional save/load, a two-ply local practice opponent, and factual tutor context with candidate moves. Chips lift, slide, and settle; wooden taps can be muted. The board supports mouse and keyboard play, screen-relative navigation in either orientation, and persisted table preferences. Full games can be copied or exported as PGN, and draw claims can declare an intended move without playing it.
