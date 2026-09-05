@@ -171,3 +171,56 @@ static func uci(move: Dictionary) -> String:
 	var start: int = move["from"]
 	var target: int = move["to"]
 	return "abcdefgh"[start % 8] + str(start / 8 + 1) + "abcdefgh"[target % 8] + str(target / 8 + 1) + move.get("promotion", "")
+
+static func position_key(state) -> String:
+	## FIDE repetition identity: an unusable en-passant target changes no legal moves.
+	var fields: PackedStringArray = state.to_fen().split(" ")
+	if state.en_passant >= 0:
+		var usable := false
+		for move in legal_moves(state):
+			if move["to"] == state.en_passant and state.board[move["from"]].to_lower() == "p" and move["from"] % 8 != move["to"] % 8 and state.board[move["to"]] == "":
+				usable = true
+		if not usable:
+			fields[3] = "-"
+	return " ".join(fields.slice(0, 4))
+
+static func san(state, move: Dictionary) -> String:
+	## Standard algebraic notation for a previously validated legal move.
+	var start: int = move["from"]
+	var target: int = move["to"]
+	var piece: String = state.board[start]
+	var kind := piece.to_upper()
+	var notation := ""
+	if kind == "K" and absi(start - target) == 2:
+		notation = "O-O" if target > start else "O-O-O"
+	else:
+		var capture: bool = state.board[target] != "" or (kind == "P" and start % 8 != target % 8)
+		if kind != "P":
+			notation = kind
+			var competitors: Array[int] = []
+			for candidate in legal_moves(state):
+				if candidate["to"] == target and candidate["from"] != start and state.board[candidate["from"]] == piece:
+					competitors.append(candidate["from"])
+			if not competitors.is_empty():
+				var same_file := false
+				var same_rank := false
+				for square in competitors:
+					same_file = same_file or square % 8 == start % 8
+					same_rank = same_rank or square / 8 == start / 8
+				if not same_file:
+					notation += "abcdefgh"[start % 8]
+				elif not same_rank:
+					notation += str(start / 8 + 1)
+				else:
+					notation += "abcdefgh"[start % 8] + str(start / 8 + 1)
+		elif capture:
+			notation = "abcdefgh"[start % 8]
+		if capture:
+			notation += "x"
+		notation += "abcdefgh"[target % 8] + str(target / 8 + 1)
+		if move.get("promotion", "") != "":
+			notation += "=" + move.promotion.to_upper()
+	var after = apply_move(state, move)
+	if in_check(after, after.turn):
+		notation += "#" if legal_moves(after).is_empty() else "+"
+	return notation
