@@ -1,6 +1,6 @@
 # Board Game Cabinet
 
-**The app now opens Olympus Arena:** a playable real-time Greek arena battler with an eight-card deck, four-card hand, regenerating elixir, two bridges, two defensive towers and a central temple per side, automatic troop combat, and a local computer opponent. Troops, spells, card icons, and the 3D arena are original project assets. The core match structure follows the user's requested Clash Royale reference.
+**The app now opens Olympus Arena:** a playable real-time Greek arena battler with an eight-card deck, four-card hand, regenerating elixir, two bridges, two defensive towers and a central temple per side, automatic troop combat, and a tactical local computer opponent. The current polish pass adds an illustrated roster, animated coastal arena, soft crowd separation, character-specific combat effects, tower destruction, tactile card dragging, reactive match HUD, countdown, and an original synthesized lyre-and-frame-drum score. Troops, spells, cards, audio, effects, and the 3D arena are original project assets. The core match structure follows the user's requested Clash Royale reference.
 
 Press **BATTLE**, select a card with a click or keys **1–4**, then click your half of the arena. Cards can also be dragged onto the arena. **Thunderbolt** targets either side. **Space** pauses/resumes the local match; **Escape** deselects a card. Destroy the rival temple to win immediately, or win on towers at the clock. The final minute doubles elixir regeneration. A tied three-minute match enters up to one minute of sudden-death overtime.
 

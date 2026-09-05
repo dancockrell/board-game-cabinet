@@ -12,7 +12,7 @@ Use original Greek characters and presentation assets. Preserve the existing woo
 
 ## Current polish pass (2026-09-05)
 
-The user explicitly requested a much more attractive, modern presentation. Implemented: eight illustrated card portraits, a larger coastal 3D arena with carved paving and animated water, layered Greek shrines, seven richer procedural figurines, jointed walking/wing/cape/neck animation, visual movement smoothing, placement ghosts, floating damage and defeat dust, animated card selection, next-card art, and original synthesized combat sounds. Art prompt and provenance are in `assets/olympus_arena/ART-PROVENANCE.md`.
+The user explicitly requested a much more attractive, modern presentation. Implemented: eight illustrated card portraits, a larger coastal 3D arena with carved paving and animated water, boats, gulls, pennants and embers, layered Greek shrines, seven richer procedural figurines, jointed walking/attack/wing/cape/neck animation, visual movement smoothing, placement ghosts, tactile card dragging, unit-specific attack effects, tower debris and smoke, reactive HUD alerts, a cinematic countdown, tactical practice opponent, deterministic crowd separation, and original synthesized combat sounds plus a quiet lyre-and-frame-drum score. Art prompt and provenance are in `assets/olympus_arena/ART-PROVENANCE.md` and `art-manifest.json`.
 
 This is a stronger playable art prototype, not finished commercial character production. The next largest visual gain is authored, rigged low-poly characters matching the card portraits, with distinct attack anticipation, contact and recovery. Current meshes are assembled from primitives. Deterministic soft crowd separation respects banks and bridges, but it is not a full physics or steering system. Do not call this equivalent to a shipped Clash Royale presentation.
 
@@ -20,24 +20,25 @@ The visual authority remains the pure session. Replica roots equal authoritative
 
 New boundaries: `presentation/olympus_stage.gd` and two shaders own scenery; `presentation/olympus_ambient_life.gd` owns boats, birds, pennants and embers; `presentation/olympus_figurines.gd` owns miniature geometry and joint animation; `presentation/olympus_combat_fx.gd` and `olympus_hud_fx.gd` consume authoritative events; `presentation/olympus_audio.gd` owns synthesized sounds and music. `tools/capture_olympus_motion.gd` records native frames from legal play at a fixed simulation cadence. See [the art production contract](OLYMPUS_ART_PIPELINE.md) before replacing procedural characters. Do not use a staged screenshot as evidence of match balance or performance.
 
-Near-term parallel polish slices (roughly 10 minutes each):
+The previous short slices for crowd separation, combat effects, ambient arena life, tactical bot behavior, countdown, music and HUD reactions are complete. The next parallel polish slices are:
 
 | Wave | Owner/files | Output | Dependencies and validation |
 | --- | --- | --- | --- |
-| 1 | Character artist: new `assets/olympus_arena/models/hoplite/` | One authored hoplite with idle/walk/attack clips and material IDs | Match card silhouette; preview at current gameplay camera; no renderer edits |
-| 1 | UI artist: new portrait framing Resource | Consistent cost, rarity-free frame and focus treatment | Existing eight atlas regions; inspect readable names/costs at 1000x700 |
-| 1 | Audio: `olympus_audio.gd` | Refine impact timbre and mixing from captured battles | Preserve dedup/mute and bounded voices; run 24 audio checks and listen |
-| 2 | Renderer: `olympus_arena_board.gd` | Load one authored model with procedural fallback | Depends on approved hoplite; authoritative root and health tests pass |
-| 2 | FX: new effect helper module | Tower destruction debris and shock ring from HP transitions | No overlapping renderer edits; test once-per-destruction and rematch cleanup |
-| 2 | Rules: `games/olympus_arena/` | Design and test simple unit separation before implementation | Separate rules review; no visual-only collision fix; deterministic repeat runs |
-| 3 | Coordinator: app, exports, docs | Integrate, capture motion, package new build | Native UI/board, pure rules, audio and chess regressions; inspect actual exported executable |
+| 1 | Character artist: `work/art-source/olympus/hoplite/`, then `assets/olympus_arena/models/hoplite/` | Authored hoplite with all required clips and material IDs | Follow `OLYMPUS_ART_PIPELINE.md`; review alone, in a trio, and against both team accents |
+| 1 | Technical artist: new `presentation/olympus_model_loader.gd` | GLB loader with clip validation and procedural fallback | Use a deliberately missing fixture first; no renderer edit until fallback tests pass |
+| 1 | Performance owner: new profiling scene/report | 8-, 16- and 32-unit native GPU/CPU measurements with effects | Use current game camera and active water/ambient life; record hardware and frame percentiles |
+| 1 | UX owner: app tests and a review note | Keyboard, mouse, drag and 1000 x 700 readability audit | Substantiate issues before app edits; verify countdown and invalid-placement recovery |
+| 2 | Character artists: separate folders for Atalanta, Minotaur and Medusa | Three approved models, one owner per folder | Starts only after hoplite pipeline admission; shared skeleton changes have one owner |
+| 2 | Creature artists: separate folders for Heracles, Hydra and Harpies | Three approved models with creature-specific clips | Hydra must preserve three-head separation; Harpies must remain distinct as a pair |
+| 2 | Renderer owner: `olympus_arena_board.gd` | Admit approved models one at a time with procedural fallback | No batch integration; run authoritative-root, event, cleanup and crowd captures after each |
+| 3 | Coordinator: app, exports, docs | Mix review, complete-match capture, regression, Windows build and release | Requires 760 rules checks plus all native presentation suites and exported executable smoke test |
 
 ## Repository status
 
 | Component | Status and evidence boundary |
 | --- | --- |
 | Wooden chess | Existing playable game: pure chess rules, wooden 3D board and chips, mouse/keyboard controls, history, undo, save/load, practice opponent, factual tutor context, and PGN export. Preserve its tests. |
-| Olympus Arena | Playable polished prototype: illustrated roster, coastal arena life, animated attacks, deployment ghosts, combat/HUD effects, crowd separation, tactical local opponent and layered audio. Current rules evidence: 760 checks; final native and export counts must be refreshed after integration. Release manifest identifies packaged source. |
+| Olympus Arena | Playable polished prototype: illustrated roster, coastal arena life, animated attacks, deployment ghosts, combat/HUD effects, crowd separation, tactical local opponent and layered audio. Current evidence: 760 rules, 33 native renderer, 45 native app (47 with captures), 21 combat-FX, 9 HUD-FX and 48 audio checks. Full chess and parked Ninth Gate regressions pass. Refresh the export manifest for every new package. |
 | The Ninth Gate | Parked historical prototype with rules, 3D source work, and an older 2D prerelease. Its setting and play loop are not the current direction. |
 | Go / Xiangqi / checkers | Previously selected future games; not implemented and not active parallel work. |
 

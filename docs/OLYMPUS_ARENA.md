@@ -85,7 +85,7 @@ The next useful tests target reproducible combat interactions, legal placement a
 
 ## Verification checkpoint
 
-The current arena rules suite has **760 passing checks**. Native coverage includes the renderer, full application, combat-effects director, HUD-effects director, audio lifecycle, card dragging, countdown, legal deployment, invalid-action atomicity, pause/resume, restart/rematch, outcomes, deterministic crowd spacing, tactical bot fixtures, and a complete battle. These are automated acceptance checks, not a claim of competitive balance or extensive novice playtesting.
+The current arena rules suite has **760 passing checks**. The renderer has 33 native checks; the full application has 45, or 47 when it writes both captures; the combat-effects director has 21; the HUD-effects director has 9; and synthesized audio/music has 48. Coverage includes card dragging, countdown, legal deployment, invalid-action atomicity, pause/resume, restart/rematch, outcomes, deterministic crowd spacing, tactical bot fixtures, event deduplication, effect caps, audio cleanup, and a complete battle. The full chess and parked Ninth Gate regressions also pass. These are automated acceptance checks, not a claim of competitive balance or extensive novice playtesting.
 
 Native gameplay and result captures are produced and visually inspected. Gameplay is readable with original 3D procedural models; the character models are still a foundation for an authored art pass. Save/replay, network play, progression, deck editing, and finished character meshes remain absent.
 
