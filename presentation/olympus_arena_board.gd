@@ -43,10 +43,10 @@ func _setup() -> void:
 	env.sky = sky
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
 	env.ambient_light_color = Color("b9c8c6")
-	env.ambient_light_energy = 0.43
+	env.ambient_light_energy = 0.34
 	env.ambient_light_sky_contribution = 0.72
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	env.tonemap_exposure = 1.08
+	env.tonemap_exposure = 0.92
 	env.adjustment_enabled = true
 	env.adjustment_contrast = 1.06
 	env.adjustment_saturation = 0.92
@@ -55,7 +55,7 @@ func _setup() -> void:
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-53, -38, -7)
 	sun.light_color = Color("ffe6bd")
-	sun.light_energy = 1.08
+	sun.light_energy = 0.86
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 32.0
 	sun.shadow_bias = 0.035
