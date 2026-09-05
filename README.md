@@ -1,10 +1,14 @@
 # Board Game Cabinet
 
-**Current source checkpoint:** The Ninth Gate now has a 3D miniature map and rules v2: eight rounds, occupied-bridge scoring, two-step movement, automatic attacks for unordered squads, and Herald healing. Army lore and character style are being reconsidered following user feedback; see [current art direction](docs/ART_DIRECTION_STATUS.md). The published 2026-09-05 prerelease described below remains the earlier 2D/rules-v1 build.
+**The app now opens Olympus Arena:** a playable real-time Greek arena battler with an eight-card deck, four-card hand, regenerating elixir, two bridges, two defensive towers and a central temple per side, automatic troop combat, and a local computer opponent. Troops, spells, card icons, and the 3D arena are original project assets. The core match structure follows the user's requested Clash Royale reference.
 
-**New playable experiment: [The Ninth Gate](docs/NINTH_GATE_DESIGN.md)** — an original Heaven-versus-Hell command game inspired by structured Prussian Kriegsspiel. Open the chess table and choose **The Ninth Gate**, or launch `godot --path . res://app/ninth_gate.tscn`. It currently uses a readable 2D tactical map, six formations per army, three simultaneous orders each round, filtered enemy visibility, seeded combat, objective scoring, whole-round undo, and replay-based saves. Heaven is player-controlled; Hell has a modest practice opponent. The mythology and battle narrative remain provisional pending the user's setting choice.
+Press **BATTLE**, select a card with a click or keys **1–4**, then click your half of the arena. Cards can also be dragged onto the arena. **Thunderbolt** targets either side. **Space** pauses/resumes the local match; **Escape** deselects a card. Destroy the rival temple to win immediately, or win on towers at the clock. The final minute doubles elixir regeneration. A tied three-minute match enters up to one minute of sudden-death overtime.
 
-The chosen cabinet scope is chess (playable), The Ninth Gate (playable prototype), Go, Xiangqi, and checkers (planned; English draughts provisionally). See the [Claude build / Codex polish handoff](docs/HANDOFF.md), [exact war-game rules](games/ninth_gate/RULES.md), and [Ninth Gate verification](docs/NINTH_GATE_VERIFICATION.md). No claim of balance, finished art, or a strong war-game opponent is made.
+The first roster is **Hoplites, Atalanta, Minotaur, Medusa, Heracles, Hydra, Harpies, and Thunderbolt**. This is a local playable prototype with a fixed deck and basic bot, not online multiplayer or a progression system. See the [arena guide](docs/OLYMPUS_ARENA.md), [exact rules](games/olympus_arena/RULES.md), and [current handoff](docs/HANDOFF.md). The Ninth Gate remains a parked historical experiment; Go, Xiangqi, and checkers have not been implemented.
+
+![Actual native arena gameplay](docs/images/olympus-arena.png)
+
+## Wooden chess table
 
 A playable Godot desktop chess table with a wooden board, round wooden chips, and burned-symbol shading. The app separates authoritative chess state from 3D presentation and uses reusable theme Resources so the simple static set can become a foundation for more sets and, later, other games.
 
@@ -19,6 +23,8 @@ Tested on **Godot 4.3**, Windows, using the Compatibility/OpenGL renderer with a
 ```powershell
 godot --path .
 ```
+
+The default scene is Olympus Arena. Choose **Chess cabinet** to reach the wooden table; the controls below apply to that chess scene.
 
 - Click a piece, then one of its legal destinations. Promotion opens a queen/rook/bishop/knight choice.
 - Press **Tab** until the board has focus, use **arrow keys** to move the square cursor, and **Enter** or **Space** to select a piece and play a legal destination. Arrows follow the visible board in either orientation. **Escape** clears selection. Promotion choices also support keyboard focus and activation.
