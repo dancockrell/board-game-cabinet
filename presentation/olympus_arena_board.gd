@@ -235,54 +235,7 @@ func _make_tower(data: Dictionary) -> Node3D:
 	node.position = Vector3(float(data["x"]), 0.1, float(data["z"]))
 	var team: Color = PALETTE.player if int(data["side"]) == 0 else PALETTE.enemy
 	var temple: bool = str(data.get("kind", "tower")) == "temple"
-	var width := 2.2 if temple else 1.35
-	_box(node, Vector3(width + .52,.08,2.02),Vector3(0,.035,0),Color("88745d"))
-	_box(node, Vector3(width + 0.3, 0.18, 1.8), Vector3(0, 0.1, 0), PALETTE.stone)
-	_box(node, Vector3(width, 0.15, 1.55), Vector3(0, 0.27, 0), PALETTE.marble)
-	for side in [-1,1]:
-		for stair in 3:
-			_box(node,Vector3(width*.58,.07,.19),Vector3(0,.05+stair*.07,side*(1.12-stair*.15)),PALETTE.marble)
-	if temple:
-		_box(node, Vector3(1.35, 1.1, 0.85), Vector3(0, 0.9, 0.1), PALETTE.marble.darkened(.035))
-		# Deep entry recess with a narrow dyed-linen standard. The team color is
-		# an accent on the architecture, never the architecture itself.
-		_box(node, Vector3(0.58, 0.73, 0.045), Vector3(0, 0.77, 0.548), Color("3a332d"))
-		_box(node, Vector3(0.28, 0.66, 0.052), Vector3(0, 0.79, 0.575), team.darkened(.12))
-	for x in [-width * 0.38, width * 0.38]:
-		for z in [-0.53, 0.53]:
-			_cylinder(node, 0.19, 0.14, Vector3(x, 0.4, z), PALETTE.stone)
-			_cylinder(node, 0.13, 0.94, Vector3(x, 0.93, z), PALETTE.marble)
-			for flute in 8:
-				var angle := flute*TAU/8.0
-				_cylinder(node,.019,.81,Vector3(x+cos(angle)*.128,.94,z+sin(angle)*.128),Color("d6caa8"))
-			_cylinder(node,.17,.075,Vector3(x,1.38,z),PALETTE.stone.lightened(.05))
-			_box(node, Vector3(0.35, 0.14, 0.35), Vector3(x, 1.46, z), PALETTE.stone)
-	_box(node, Vector3(width + 0.15, 0.22, 1.55), Vector3(0, 1.66, 0), PALETTE.stone.darkened(.04))
-	_box(node,Vector3(width+.24,.07,1.65),Vector3(0,1.52,0),PALETTE.gold)
-	_box(node,Vector3(width+.24,.07,1.65),Vector3(0,1.80,0),PALETTE.marble)
-	for side in [-1,1]:
-		for i in 7:
-			_box(node,Vector3(.065,.085,.035),Vector3((i-3)*width/7.0,1.66,side*.79),team.darkened(.08))
-	for sign_x in [-1, 1]:
-		var roof := _box(node, Vector3(width * 0.59, 0.095, 1.68), Vector3(sign_x * width * 0.24, 1.92, 0), PALETTE.roof)
-		roof.rotation.z = sign_x * -0.35
-		for row in 8:
-			var tile := _box(node, Vector3(width * .59,.021,.018),Vector3(sign_x*width*.24,1.973,-.74+row*.21),PALETTE.roof.lightened(.065))
-			tile.rotation.z = sign_x * -.35
-	_cylinder(node, .055, 1.64, Vector3(0, 2.08, 0), PALETTE.roof.darkened(.12)).rotation.z = PI / 2.0
-	_sphere(node, Vector3(0.12, 0.12, 0.12), Vector3(0, 2.18, 0), PALETTE.gold)
-	for s in [-1,1]:
-		_cylinder(node,.065,.55,Vector3(s*width*.43,2.03,-.25),PALETTE.gold)
-		var flag := _box(node,Vector3(.25,.33,.035),Vector3(s*width*.43,2.09,-.25),team)
-		flag.rotation.z=s*.09
-	if temple:
-		# Central ceremonial brazier and laurel crest distinguish the crown objective.
-		_cylinder(node,.25,.17,Vector3(0,.49,.58),PALETTE.gold)
-		_sphere(node,Vector3(.13,.22,.13),Vector3(0,.70,.58),Color("ffbe67"))
-		for i in 9:
-			var a := i*PI/8
-			_sphere(node,Vector3(.045,.07,.025),Vector3(cos(a)*.22,1.06+sin(a)*.24,.56),PALETTE.gold)
-	_weather_architecture(node)
+	preload("res://presentation/olympus_architecture.gd").new(self).build(node, temple, team)
 	_add_health(node, 3.1, 1.4, team)
 	return node
 
