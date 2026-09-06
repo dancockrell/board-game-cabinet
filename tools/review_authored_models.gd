@@ -231,4 +231,11 @@ func _pose_ready(node: Node) -> void:
 				var local := skeleton.get_bone_global_pose(parent).affine_inverse() * desired
 				skeleton.set_bone_pose_rotation(i,local.basis.get_rotation_quaternion())
 				skeleton.force_update_all_bone_transforms()
+		# Generated finger chains use local Y along the phalanx; curl around X.
+		for i in skeleton.get_bone_count():
+			var label := str(skeleton.get_bone_name(i))
+			if label in ["bone_23", "bone_24", "bone_28", "bone_29", "bone_30"]:
+				var rest_rotation := skeleton.get_bone_pose_rotation(i)
+				skeleton.set_bone_pose_rotation(i,rest_rotation * Quaternion(Vector3.RIGHT,deg_to_rad(48.0)))
+		skeleton.force_update_all_bone_transforms()
 	for child in node.get_children(): _pose_ready(child)

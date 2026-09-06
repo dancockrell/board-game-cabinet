@@ -11,3 +11,13 @@ Native comparison shows much better adult proportions, armor layering and painte
 Next bounded work: inspect weapon and hand vertex influences, isolate weapon as a rigid attachment, close finger pose without crushing the hand, then author a short idle/walk/thrust test. Compare in movement and both team directions before admission. Preserve raw model and derive any edited GLB separately. Do not generate another roster until this one model passes.
 
 Validation: native four-view pose renders and arena comparison scripts executed successfully. This is visual development evidence, not runtime regression or performance acceptance. Model remains 17,246 triangles and one material.
+
+## Motion investigation
+
+`tools/hoplite_motion_trial.gd` now captures a deterministic 120-frame, 30 fps skeleton trial: two seconds of walking and two of arm attack motion. It is a diagnostic, not an authored gameplay animation. Native selected-frame review exposed that the source's Left arm chain controls the visible spear arm. Finger curl now targets that side's named finger chains.
+
+A 90-degree wrist turn badly distorts the spear. Rejected and removed that pose; do not hide the defect with camera choice. Weapon must be isolated and rigidly bound before convincing thrust motion. The retained trial keeps the transverse spear, so it is explicitly not an accepted attack.
+
+`tools/inspect_hoplite_connectivity.py` provides a read-only indexed mesh component audit. Source has 233 indexed components; these may include UV/normal seams and must not be treated as 233 semantic parts. Positional welding and spatial inspection are required before selecting spear vertices. Source GLB remains unchanged.
+
+Native final diagnostic completed successfully (120 frames). No live roster change or new Windows release. No credits used. Remaining acceptance: rigid weapon attachment, convincing grip, planted feet, shoulder deformation and an attack directed toward its target.
