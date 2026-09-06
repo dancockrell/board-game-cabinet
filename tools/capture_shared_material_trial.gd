@@ -32,6 +32,7 @@ func _run() -> void:
 	app.set_process_input(false)
 	app.set_process_unhandled_input(false)
 	app.sound.set_muted(true)
+	app._show_overlay(false)
 	var stage: Node3D = app.board.get_node("OlympusStage")
 	var selected: Array[MeshInstance3D] = []
 	var untouched := {}
@@ -49,6 +50,7 @@ func _run() -> void:
 		return
 	var material := StandardMaterial3D.new()
 	material.albedo_texture = maps.diff
+	material.albedo_color = Color(0.45, 0.45, 0.45, 1.0)
 	material.normal_enabled = true
 	material.normal_texture = maps.nor_gl
 	material.normal_scale = 0.7
@@ -85,6 +87,8 @@ func _run() -> void:
 		return
 	var report := {"status": "staged_trial_not_shipped", "source_id": "rock-boulder-dry-1k", "source_license": "CC0-1.0 per existing approved material ledger", "sources": sources, "selected_rock_count": selected.size(), "unchanged_other_stage_mesh_count": untouched.size(), "selection": "OlympusStage direct SphereMesh children with radial_segments=7, rings=4, y<-1.3, abs(x)>6; exact count18 required", "selected_nodes": changed, "mapping": "world triplanar scale0.75; OpenGL normal; ARM red AO, green roughness, blue metallic", "capture": output, "capture_sha256": FileAccess.get_sha256(output)}
 	var file := FileAccess.open(output.get_basename() + ".json", FileAccess.WRITE)
+	report["albedo_multiplier"] = [0.45, 0.45, 0.45, 1.0]
+	report["intro_overlay_hidden"] = true
 	file.store_string(JSON.stringify(report, "\t") + "\n")
 	file.close()
 	print("Shared material trial: 18 rocks, %s other stage meshes unchanged. %s" % [untouched.size(), output])
