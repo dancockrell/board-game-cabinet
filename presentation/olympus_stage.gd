@@ -1,5 +1,6 @@
 extends Node3D
 ## Presentation-only scenery. Never owns combat, placement, or navigation state.
+const ROCK = preload("res://themes/olympus_shared_rock.tres")
 const WATER = preload("res://presentation/olympus_water.gdshader")
 const PAVING = preload("res://presentation/olympus_paving.gdshader")
 const STONE = preload("res://presentation/olympus_limestone.gdshader")
@@ -282,5 +283,7 @@ func _sea() -> void:
 			rock.rotation = Vector3(rng.randf_range(-.3,.3),rng.randf_range(0,TAU),rng.randf_range(-.2,.2))
 			var offset := Vector3.ZERO if i == 0 else Vector3(rng.randf_range(-.45,.65),rng.randf_range(-.08,.02),rng.randf_range(-1.2,1.25))
 			rock.position = clusters[group] + offset
-			rock.material_override = _material(Color("555b50").darkened(rng.randf_range(0.0,0.12)))
+			rng.randf_range(0.0,0.12) # Preserve the seeded layout sequence.
+			rock.material_override = ROCK
+			rock.add_to_group("olympus_coastal_rocks")
 			add_child(rock)

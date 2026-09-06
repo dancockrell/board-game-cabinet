@@ -1,6 +1,6 @@
 extends SceneTree
-## External-source material feasibility study. Never modifies runtime assets.
-const MAP_ROOT := "C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/approved_cc0/PolyHaven/rock-boulder-dry-1k/source_files"
+## Native review of the shared material now used by the stage.
+const MAP_ROOT := "res://assets/olympus_arena/materials/rock-boulder-dry-1k"
 const DEFAULT_OUTPUT := "C:/Users/Admin/Documents/Codex/2026-09-05/referenced-chatgpt-conversation-this-is-an-2/outputs/Olympus-Reuse-Audit/shared-rock-arena-trial.png"
 
 func _initialize() -> void: _run.call_deferred()
@@ -8,19 +8,16 @@ func _initialize() -> void: _run.call_deferred()
 func _run() -> void:
 	var output := DEFAULT_OUTPUT
 	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--capture="): output = argument.trim_prefix("--capture=")
+		if argument.begins_with("--review-output="): output = argument.trim_prefix("--review-output=")
 	if not output.is_absolute_path() or DisplayServer.get_name() == "headless":
 		_fail("An absolute output and graphics display are required.")
 		return
-	var maps := {}
 	var sources := []
 	for role in ["diff", "arm", "nor_gl"]:
 		var path := MAP_ROOT.path_join("rock_boulder_dry_%s_1k.jpg" % role)
-		var image := Image.load_from_file(path)
-		if image == null or image.is_empty():
-			_fail("Missing approved source map: " + path)
+		if not FileAccess.file_exists(path):
+			_fail("Missing bundled map: " + path)
 			return
-		maps[role] = ImageTexture.create_from_image(image)
 		sources.append({"role": role, "path": path, "sha256": FileAccess.get_sha256(path)})
 	root.size = Vector2i(1440, 960)
 	root.content_scale_size = Vector2i(1440, 960)
@@ -48,33 +45,19 @@ func _run() -> void:
 	if selected.size() != 18:
 		_fail("Outcrop fingerprint changed: expected exactly 18, found %s. No material replaced." % selected.size())
 		return
-	var material := StandardMaterial3D.new()
-	material.albedo_texture = maps.diff
-	material.albedo_color = Color(0.45, 0.45, 0.45, 1.0)
-	material.normal_enabled = true
-	material.normal_texture = maps.nor_gl
-	material.normal_scale = 0.7
-	material.roughness_texture = maps.arm
-	material.roughness_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_GREEN
-	material.metallic_texture = maps.arm
-	material.metallic_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_BLUE
-	material.metallic = 1.0
-	material.ao_enabled = true
-	material.ao_texture = maps.arm
-	material.ao_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_RED
-	material.uv1_triplanar = true
-	material.uv1_world_triplanar = true
-	material.uv1_scale = Vector3.ONE * 0.75
+	var material = preload("res://themes/olympus_shared_rock.tres")
 	var changed := []
 	for rock in selected:
-		rock.material_override = material
+		if rock.material_override != material:
+			_fail("Stage did not use the canonical rock material.")
+			return
 		changed.append({"path": str(stage.get_path_to(rock)), "position": [rock.position.x, rock.position.y, rock.position.z]})
 	for mesh in untouched:
 		if mesh.material_override != untouched[mesh]:
 			_fail("Unexpected non-rock material change.")
 			return
 	var label := Label.new()
-	label.text = "STAGED SHARED MATERIAL TRIAL — NOT SHIPPED"
+	label.text = "SHARED ROCK MATERIAL / RUNTIME REVIEW"
 	label.position = Vector2(40, 925)
 	label.add_theme_font_size_override("font_size", 20)
 	label.add_theme_color_override("font_color", Color("ffe2a5"))
@@ -85,7 +68,7 @@ func _run() -> void:
 	if root.get_texture().get_image().save_png(output) != OK:
 		_fail("Failed saving capture.")
 		return
-	var report := {"status": "staged_trial_not_shipped", "source_id": "rock-boulder-dry-1k", "source_license": "CC0-1.0 per existing approved material ledger", "sources": sources, "selected_rock_count": selected.size(), "unchanged_other_stage_mesh_count": untouched.size(), "selection": "OlympusStage direct SphereMesh children with radial_segments=7, rings=4, y<-1.3, abs(x)>6; exact count18 required", "selected_nodes": changed, "mapping": "world triplanar scale0.75; OpenGL normal; ARM red AO, green roughness, blue metallic", "capture": output, "capture_sha256": FileAccess.get_sha256(output)}
+	var report := {"status": "runtime_material_review", "source_id": "rock-boulder-dry-1k", "source_license": "CC0-1.0 per existing approved material ledger", "sources": sources, "selected_rock_count": selected.size(), "unchanged_other_stage_mesh_count": untouched.size(), "selection": "OlympusStage direct SphereMesh children with radial_segments=7, rings=4, y<-1.3, abs(x)>6; exact count18 required", "selected_nodes": changed, "mapping": "Canonical themes/olympus_shared_rock.tres: world triplanar scale0.75; OpenGL normal; ARM red AO, green roughness, blue metallic", "capture": output, "capture_sha256": FileAccess.get_sha256(output)}
 	var file := FileAccess.open(output.get_basename() + ".json", FileAccess.WRITE)
 	report["albedo_multiplier"] = [0.45, 0.45, 0.45, 1.0]
 	report["intro_overlay_hidden"] = true

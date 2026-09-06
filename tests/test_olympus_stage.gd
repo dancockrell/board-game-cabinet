@@ -11,6 +11,14 @@ func _run() -> void:
 	root.add_child(board)
 	var stage = board.get_node("OlympusStage")
 	check(stage.get_child_count() < 1000, "Scenery stays below 1000 mesh instances")
+	var coastal = get_nodes_in_group("olympus_coastal_rocks")
+	check(coastal.size() == 18, "Only 18 coastal outcrops use the shared rock material")
+	for rock in coastal:
+		check(rock.material_override == stage.ROCK, "Outcrop uses canonical reusable material")
+	check(stage.ROCK.normal_enabled and stage.ROCK.normal_texture != null, "Rock normal map is present")
+	check(stage.ROCK.roughness_texture_channel == BaseMaterial3D.TEXTURE_CHANNEL_GREEN, "ARM roughness uses green")
+	check(stage.ROCK.metallic_texture_channel == BaseMaterial3D.TEXTURE_CHANNEL_BLUE, "ARM metallic uses blue")
+	check(stage.ROCK.ao_texture_channel == BaseMaterial3D.TEXTURE_CHANNEL_RED, "ARM AO uses red")
 	var mesh: ArrayMesh = stage._beveled_box(Vector3(2,1,3))
 	var arrays := mesh.surface_get_arrays(0)
 	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
@@ -28,7 +36,7 @@ func _run() -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--capture="):
 			check(root.get_texture().get_image().save_png(arg.trim_prefix("--capture=")) == OK, "Native diorama capture saved")
-	print("Olympus stage: 90 geometry/budget checks, %s failures; %s stage nodes" % [failures,stage.get_child_count()])
+	print("Olympus stage: 113 geometry/material/budget checks, %s failures; %s stage nodes" % [failures,stage.get_child_count()])
 	board.free()
 	await process_frame
 	quit(1 if failures else 0)
