@@ -33,3 +33,7 @@ The Kenney Protagonists `characterMedium.fbx` alternative was also rendered and 
 ## Battlefield readability
 
 Buildings now use a theme-controlled visual wrapper at 0.62 scale, reducing their ground footprint by about 62 percent. Health bars sit at 1.95 units. Camera size is 14.0 to fill more of the panel. Tower coordinates, combat ranges and authoritative state remain unchanged. Native opening capture reviewed; 35 board and 45 application checks pass.
+
+## Match UI simplification
+
+Removed both sidebars, duplicate champion portrait, permanent explanatory copy and large next-card panel. Arena viewport is now 1440 by 724. Header contains timer, compact score, pause and menu; hand, energy and small next-card preview sit below the battlefield. Card descriptions remain tooltips; placement guidance appears only when selected. Restart, sound and cabinet navigation live in Menu. Removed routine success notices. Native app validation: 52 checks pass, including drag placement and menu sound toggling. Windows export smoke exits 0.
