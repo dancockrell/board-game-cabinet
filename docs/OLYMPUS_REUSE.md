@@ -19,3 +19,7 @@ Magnific MCP explicitly reports unlimited does not apply to this connector sessi
 The shared inventory cites exact inspected repository heads and source paths. Its entries are candidates, not blanket asset approval. Preserve source hashes, original materials/animations and per-project visual decisions. Existing four-view GLB reviewer provides inspection evidence; it does not approve quality automatically.
 
 Prior procedural-detail plans and the generated-model-first production plan are superseded by the shared reuse strategy. `GENERATED_3D_WORKFLOW.md` remains historical provenance for the purchased experiment, not authorization to generate more assets.
+
+## Zero-cost material trial
+
+`tools/capture_shared_material_trial.gd` loads the existing shared `rock-boulder-dry-1k` color, OpenGL normal and ARM maps directly for a staged native capture. It verifies exactly 18 intended outcrop meshes and preserves material references on the other 767 stage meshes. The report records source hashes, map channels and any color multiplier; raw source files are untouched. This demonstrates reuse and material compatibility, not runtime admission or a full visual-quality pass.
