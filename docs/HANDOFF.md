@@ -2,7 +2,11 @@
 
 Updated 2026-09-06. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Current art direction: replace procedural production method
+## Current priority: zero-budget shared reuse
+
+See [Olympus reuse checkpoint](OLYMPUS_REUSE.md) and its linked shared strategy. DR Companion and Pirate Island take priority. Reuse existing art; only verified free guided generation is allowed. The generated-model experiment below is historical source evidence, not the current production plan.
+
+## Previous art direction: replace procedural production method
 
 The user rejected the sanctuary models as clay-like and explicitly requested properly authored assets. The procedural checkpoint below is historical implementation evidence, not an accepted quality baseline. Further primitive-detail roster passes are superseded by the [generated 3D workflow](GENERATED_3D_WORKFLOW.md): reference design, dedicated textured-mesh generation, multi-angle inspection, modeling cleanup, rigging and native admission. Begin with one Hoplite and one temple; do not batch the roster before this method passes review.
 
@@ -141,4 +145,5 @@ Each slice should take roughly ten minutes of focused work and end in its own re
 The [original chess plan](PLAN.md) remains useful architecture history. The [Ninth Gate design](NINTH_GATE_DESIGN.md), [verification](NINTH_GATE_VERIFICATION.md), and [rejected art checkpoint](ART_DIRECTION_STATUS.md) explain older work; their product instructions have been superseded. Do not regenerate or restore the rejected commander art.
 
 Greek mythological subject matter does not grant permission to copy a modern game's character designs, a film's costume designs, a translation, a soundtrack, or commercial artwork. The new implementation uses original assets and its own presentation. The repository remains private; no source licence or change of visibility is implied.
+
 
