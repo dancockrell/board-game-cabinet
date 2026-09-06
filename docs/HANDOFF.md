@@ -6,6 +6,10 @@ Updated 2026-09-06. Repository: [dancockrell/board-game-cabinet](https://github.
 
 See [Olympus reuse checkpoint](OLYMPUS_REUSE.md) and its linked shared strategy. DR Companion and Pirate Island take priority. Reuse existing art; only verified free guided generation is allowed. The generated-model experiment below is historical source evidence, not the current production plan.
 
+## Active model method
+
+See [Hoplite source reuse trial](HOPLITE_SOURCE_REUSE.md): existing textured source posed and compared in the arena. It is a review candidate; open weapon grip and missing clips prevent live admission. No paid work.
+
 ## Model surface pass
 
 Cloth and bronze now reuse four existing CC0 Poly Haven normal/roughness maps from the shared library. See `assets/olympus_arena/materials/miniature-surfaces/provenance.json` for source URLs and hashes. Resource materials use local triplanar mapping so texture follows animated parts without requiring new UVs. Cloth applies to capes and hoplite linen; bronze applies to the existing primary armor palette. Team colors and skin remain unchanged. Native roster inspection shows a subtle surface improvement, not a replacement for authored shapes. No generation or paid work.

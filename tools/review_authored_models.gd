@@ -2,6 +2,7 @@ extends SceneTree
 ## Review an external GLB without admitting it into the game's asset library.
 ## godot --path . --script tools/review_authored_models.gd -- --model=C:/raw/model.glb --capture-dir=C:/review
 
+var _ready_pose := false
 var _mesh_count := 0
 var _triangles := 0
 var _materials: Dictionary = {}
@@ -17,6 +18,7 @@ func _run() -> void:
 	var destination := ""
 	var target_height := 2.0
 	for argument in OS.get_cmdline_user_args():
+		if argument == "--ready-pose": _ready_pose = true
 		if argument.begins_with("--model="): model_path = argument.trim_prefix("--model=")
 		elif argument.begins_with("--capture-dir="): destination = argument.trim_prefix("--capture-dir=")
 		elif argument.begins_with("--height="): target_height = argument.trim_prefix("--height=").to_float()
@@ -49,6 +51,7 @@ func _run() -> void:
 	var normalized := Node3D.new()
 	world.add_child(normalized)
 	normalized.add_child(imported)
+	if _ready_pose: _pose_ready(imported)
 	_inspect(imported)
 	if not _has_bounds or _bounds.size.y <= 0.00001:
 		_fail("Imported model has no usable mesh height.")
@@ -84,7 +87,7 @@ func _run() -> void:
 	var report := {
 		"source": model_path, "source_sha256": FileAccess.get_sha256(model_path),
 		"mesh_instances": _mesh_count, "triangles_instanced": _triangles,
-		"unique_materials": _materials.size(), "animation_count": _animations.size(),
+		"unique_materials": _materials.size(), "ready_pose_trial": _ready_pose, "animation_count": _animations.size(),
 		"animations": _animations, "source_bounds": _bounds_json(source_bounds),
 		"normalized_bounds": _bounds_json(final_bounds), "uniform_scale": uniform_scale,
 		"target_height_m": target_height, "captures": captures,
@@ -202,3 +205,30 @@ func _bounds_json(value: AABB) -> Dictionary:
 func _fail(message: String) -> void:
 	push_error(message)
 	quit(2)
+
+func _pose_ready(node: Node) -> void:
+	if node is Skeleton3D:
+		var skeleton := node as Skeleton3D
+		skeleton.force_update_all_bone_transforms()
+		for i in skeleton.get_bone_count():
+			var label := str(skeleton.get_bone_name(i))
+			if label.ends_with("0_Right_Limb_0") or label.ends_with("0_Left_Limb_0"):
+				var current := skeleton.get_bone_global_pose(i)
+				var sign_value := 1.0 if current.origin.z > 0.0 else -1.0
+				var desired := current
+				desired.basis = Basis(Vector3.RIGHT, sign_value * deg_to_rad(62.0)) * current.basis
+				var parent := skeleton.get_bone_parent(i)
+				var local := skeleton.get_bone_global_pose(parent).affine_inverse() * desired if parent >= 0 else desired
+				skeleton.set_bone_pose_rotation(i, local.basis.get_rotation_quaternion())
+				skeleton.force_update_all_bone_transforms()
+		for i in skeleton.get_bone_count():
+			var label := str(skeleton.get_bone_name(i))
+			if label.ends_with("0_Right_Limb_1") or label.ends_with("0_Left_Limb_1"):
+				var current := skeleton.get_bone_global_pose(i)
+				var desired := current
+				desired.basis = Basis(Vector3.BACK, deg_to_rad(48.0)) * current.basis
+				var parent := skeleton.get_bone_parent(i)
+				var local := skeleton.get_bone_global_pose(parent).affine_inverse() * desired
+				skeleton.set_bone_pose_rotation(i,local.basis.get_rotation_quaternion())
+				skeleton.force_update_all_bone_transforms()
+	for child in node.get_children(): _pose_ready(child)
