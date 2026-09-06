@@ -21,3 +21,11 @@ A 90-degree wrist turn badly distorts the spear. Rejected and removed that pose;
 `tools/inspect_hoplite_connectivity.py` provides a read-only indexed mesh component audit. Source has 233 indexed components; these may include UV/normal seams and must not be treated as 233 semantic parts. Positional welding and spatial inspection are required before selecting spear vertices. Source GLB remains unchanged.
 
 Native final diagnostic completed successfully (120 frames). No live roster change or new Windows release. No credits used. Remaining acceptance: rigid weapon attachment, convincing grip, planted feet, shoulder deformation and an attack directed toward its target.
+
+## Equipment correction feedback
+
+User explicitly rejects source shield size and spear direction. Permission to reuse this source is not quality approval. The source should not be described as a high-quality final model.
+
+A separate equipment-v002 derivative tested 1.45x shield-plane enlargement. Native rendering exposed broken rim/attachment deformation; REJECTED, not runtime. Script is retained only to reproduce the failed experiment. The spatial selection affects attached hand vertices and is not semantic equipment segmentation. Do not continue tuning that selection into production. Original GLB remains intact.
+
+Required method: separate complete shield and spear geometry in a mesh editor, correct scale and orientation as rigid objects, then bind them to explicit hand/forearm attachment transforms. Distinguish the leaf-shaped spearhead from the small butt spike; thrust must lead with the spearhead. Recheck rear straps, wrist alignment, complete rim, and both team directions. No new generation was performed.
