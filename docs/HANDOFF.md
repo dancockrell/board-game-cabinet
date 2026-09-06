@@ -2,7 +2,11 @@
 
 Updated 2026-09-06. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Latest integrated sanctuary checkpoint
+## Current art direction: replace procedural production method
+
+The user rejected the sanctuary models as clay-like and explicitly requested properly authored assets. The procedural checkpoint below is historical implementation evidence, not an accepted quality baseline. Further primitive-detail roster passes are superseded by the [generated 3D workflow](GENERATED_3D_WORKFLOW.md): reference design, dedicated textured-mesh generation, multi-angle inspection, modeling cleanup, rigging and native admission. Begin with one Hoplite and one temple; do not batch the roster before this method passes review.
+
+## Historical integrated sanctuary checkpoint
 
 The user specifically requested much better buildings and parallel model work. The arena now uses complete Doric architecture in `presentation/olympus_architecture.gd`: enclosed cellae, recessed entrances, three-step bases, four/eight fluted columns with entasis and capitals, solid pediments, carved frieze details, overlapping pan tiles, raised cover tiles and ridge caps. Heights remain around 2.3 arena units so the gameplay camera and troop visibility retain their existing contract. `tools/capture_olympus_architecture.gd` renders a close study using the actual runtime buildings.
 
@@ -137,3 +141,4 @@ Each slice should take roughly ten minutes of focused work and end in its own re
 The [original chess plan](PLAN.md) remains useful architecture history. The [Ninth Gate design](NINTH_GATE_DESIGN.md), [verification](NINTH_GATE_VERIFICATION.md), and [rejected art checkpoint](ART_DIRECTION_STATUS.md) explain older work; their product instructions have been superseded. Do not regenerate or restore the rejected commander art.
 
 Greek mythological subject matter does not grant permission to copy a modern game's character designs, a film's costume designs, a translation, a soundtrack, or commercial artwork. The new implementation uses original assets and its own presentation. The repository remains private; no source licence or change of visibility is implied.
+
