@@ -144,21 +144,16 @@ func _column(pos: Vector3) -> void:
 	_box(Vector3(0.48, 0.10, 0.48), pos + Vector3.UP * 1.31, IVORY)
 	_sphere(Vector3(0.14, 0.18, 0.14), pos + Vector3.UP * 1.48, BRONZE)
 
-func _medallion(pos: Vector3, radius: float, color: Color) -> void:
-	_cylinder(radius, 0.018, pos, SAND)
-	_cylinder(radius * 0.92, 0.025, pos + Vector3.UP * 0.004, IVORY)
-	for i in 16:
-		var angle := TAU * i / 16.0
-		var chip := _box(Vector3(0.065, 0.016, 0.21), pos + Vector3(cos(angle)*radius*0.73, 0.025, sin(angle)*radius*0.73), color)
-		chip.rotation.y = -angle + PI / 2.0
-	# Small tesserae border in limestone, faded pigment and warm stone.
-	for i in 48:
-		var angle := TAU * i / 48.0
-		var tile_color: Color = color.lerp(SAND,0.5) if i % 4 == 0 else IVORY.darkened(0.09 if i % 2 else 0.03)
-		var tile := _box(Vector3(0.052,0.012,0.067),pos+Vector3(cos(angle)*radius*.87,.022,sin(angle)*radius*.87),tile_color)
-		tile.rotation.y = -angle
-	_cylinder(radius * 0.40, 0.027, pos + Vector3.UP * 0.012, color)
-	_cylinder(radius * 0.29, 0.03, pos + Vector3.UP * 0.017, IVORY)
+func _medallion(pos: Vector3, radius: float, _color: Color) -> void:
+	var medallion := MeshInstance3D.new()
+	medallion.name = "OwlInlayPlayer" if pos.z > 0 else "OwlInlayRival"
+	var plane := PlaneMesh.new()
+	plane.size = Vector2.ONE * radius * 2.0
+	medallion.mesh = plane
+	medallion.material_override = preload("res://themes/olympus_owl_inlay.tres")
+	medallion.position = pos + Vector3.UP * 0.03
+	medallion.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(medallion)
 
 func _material(color: Color) -> ShaderMaterial:
 	if _materials.has(color): return _materials[color]

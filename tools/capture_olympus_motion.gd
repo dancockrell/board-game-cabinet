@@ -46,7 +46,7 @@ func _run() -> void:
 	app.sound.set_muted(true)
 	app._start_or_restart()
 	app._countdown_remaining = 0.0
-	app.notice = "Pick a card, then deploy on your blue half."
+	app.notice = ""
 	app.session.new_game(42)
 	app._refresh()
 	# Every simulation step is rendered during warmup so recent effects expire normally.

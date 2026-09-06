@@ -68,6 +68,35 @@
         "ARM R=AO G=roughness B=metallic"
       ],
       "review": "Native runtime capture reviewed 2026-09-06; 18 outcrops only,113 stage geometry/material checks pass; source geometry unchanged. Subtle material improvement, not completed environment art."
+    },
+    {
+      "id": "owl-inlay-v1",
+      "runtime_path": "res://assets/olympus_arena/ornaments/owl-inlay-v1.png",
+      "sha256": "76d99e6bb8489a42d692f0a20241cb9bf8ea2625472aae30f18fead02366d77f",
+      "source_tool": "Magnific browser Image Generator",
+      "source_model": "Google Nano Banana 2 Lite, Thinking Fast",
+      "creation_id": "79AMrYCJAL",
+      "source_url": "https://www.magnific.com/app/creation/79AMrYCJAL",
+      "generation_date": "2026-09-06",
+      "cost_mode": "Browser Generate Unlimited displayed immediately before submission; no API generation",
+      "paid_calls": 0,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "status": "approved-runtime",
+      "runtime_consumers": [
+        "res://themes/olympus_owl_inlay.tres",
+        "res://presentation/olympus_stage.gd"
+      ],
+      "transformations": [
+        "Byte-identical PNG download",
+        "UV0.07..0.93 circular shader mask",
+        "Subdued stone tint; no bitmap modification"
+      ],
+      "prompt_record": "res://assets/olympus_arena/ornaments/OWL-INLAY-PROVENANCE.md",
+      "license": "Generated output; not asserted CC0",
+      "review": "Reviewed in native arena at normal camera; flat circle, literal owl/olive motif, restrained stone palette. Mipmaps enabled for distant viewing. Decorative only, no collision or game-state role."
     }
   ],
   "model_contract": "res://docs/OLYMPUS_ART_PIPELINE.md"
