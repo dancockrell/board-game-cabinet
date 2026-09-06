@@ -22,10 +22,10 @@ Prior procedural-detail plans and the generated-model-first production plan are 
 
 ## Integrated shared-rock material
 
-The stage now uses `themes/olympus_shared_rock.tres` on its18 coastal outcrops. Three source maps are bundled byte-identically with hashes and attribution in the art manifest; it no longer depends on a local shared-library checkout to run. World triplanar mapping, ARM channels and the0.45 albedo multiplier match the reviewed trial. Native review and113 geometry/material/budget checks pass. Existing rock geometry remains unchanged.
+The stage now uses `themes/olympus_shared_rock.tres` on its 18 coastal outcrops. Three source maps are bundled byte-identically with hashes and attribution in the art manifest; it no longer depends on a local shared-library checkout to run. World triplanar mapping, ARM channels and the 0.45 albedo multiplier match the reviewed trial. Native review and 113 geometry/material/budget checks pass. Existing rock geometry remains unchanged.
 
 `tools/capture_shared_material_trial.gd` now reviews the canonical runtime resource rather than implementing a second material. Use `--review-output=ABSOLUTE.png`; `--capture` is reserved by the app and can exit before the review finishes.
 
 Paid work is prohibited for ordinary production. Emergency finishing work requires a specific future user authorization; this policy is not permission for an agent to declare an emergency and spend.
 
-The Kenney Protagonists `characterMedium.fbx` alternative was also rendered and rejected: roughly3.3heads tall, oversized head and childlike torso. Its58-bone skeleton does not make it a suitable adult body. Keep the existing source; do not retarget or replace the roster with it.
+The Kenney Protagonists `characterMedium.fbx` alternative was also rendered and rejected: roughly 3.3 heads tall, oversized head and childlike torso. Its 58-bone skeleton does not make it a suitable adult body. Keep the existing source; do not retarget or replace the roster with it.
