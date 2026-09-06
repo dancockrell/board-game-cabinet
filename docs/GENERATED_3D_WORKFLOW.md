@@ -60,3 +60,9 @@ The corrected native 960 x 960 captures show a complete Hoplite in T-pose. The h
 The temple captures show a complete textured roof, walls and open colonnade from multiple angles. Column and foundation edges remain imperfect, and fine roof detail partly resides in the color texture. Status: retain as architecture cleanup source; staged arena review only.
 
 This checkpoint establishes a different working method and portable generated models, not completion of professional model authoring. The next production work is mesh/material cleanup and authored animation, not another primitive-detail pass or an unreviewed full-roster generation batch.
+
+## Native arena trial
+
+`tools/capture_generated_temple_trial.gd` substitutes the two central temple visuals in a staged opening capture while preserving the existing board, camera, authoritative tower roots and other buildings. The screenshot is explicitly labeled STAGED ASSET TRIAL / NOT SHIPPED. This verifies the generated building can be loaded and viewed at the real board camera; it does not validate gameplay integration, destruction, team materials or performance.
+
+The candidate source package contains the untouched GLBs, reference images, four-angle captures, staged temple trial, structural inventory and hashes. Review tools and this handoff are committed to the repository. The package is an art-source checkpoint, not an updated Windows game build.
