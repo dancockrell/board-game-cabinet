@@ -29,10 +29,8 @@ var energy_label: Label
 var energy_bar: ProgressBar
 var next_label: Label
 var selection_label: Label
-var description_label: Label
 var notice_label: Label
 var match_label: Label
-var card_preview: TextureRect
 var battle_overlay: Panel
 var overlay_title: Label
 var overlay_text: Label
@@ -40,7 +38,7 @@ var start_button: Button
 var pause_button: Button
 var sound
 var muted := false
-var notice := "Choose a card, then click your half of the arena. You can also drag cards."
+var notice := ""
 
 func _ready() -> void:
 	catalog = session.catalog()
@@ -73,17 +71,17 @@ func _build_ui() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 	# The arena fills the central stage; information stays outside the deployment surface.
-	_panel(Rect2(264,68,912,710), Color("987f51"))
+	
 	surface = SubViewportContainer.new()
-	surface.position = Vector2(270,74)
-	surface.size = Vector2(900,698)
+	surface.position = Vector2(0,54)
+	surface.size = Vector2(1440,724)
 	surface.stretch = true
 	surface.mouse_filter = Control.MOUSE_FILTER_STOP
 	surface.gui_input.connect(_arena_input)
 	surface.mouse_exited.connect(func(): _last_pointer=Vector2(-999,-999); board.clear_preview())
 	add_child(surface)
 	viewport = SubViewport.new()
-	viewport.size = Vector2i(900,698)
+	viewport.size = Vector2i(1440,724)
 	viewport.own_world_3d = true
 	viewport.msaa_3d = Viewport.MSAA_4X
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
@@ -94,57 +92,47 @@ func _build_ui() -> void:
 	hud_fx.position = surface.position
 	hud_fx.size = surface.size
 	add_child(hud_fx)
-	_label("OLYMPUS",Vector2(25,16),34,Color("f5d390"))
-	_label("A R E N A",Vector2(29,56),15,Color("a5c5cb"))
-	_panel(Rect2(580,9,280,54),Color("152f3e"))
-	timer_label = _label("3:00",Vector2(616,13),32,Color("fff0cd"))
-	match_label = _label("PRACTICE MATCH",Vector2(719,31),12,Color("a9d7dd"))
-	_button("Chess cabinet",Vector2(1220,22),Vector2(194,42),func(): get_tree().change_scene_to_file("res://app/main.tscn"))
-	_panel(Rect2(20,108,225,612),Color("102936"))
-	_label("YOUR CHAMPIONS",Vector2(36,124),15,Color("b9a272"))
-	card_preview = TextureRect.new()
-	card_preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	card_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	card_preview.position = Vector2(31,158)
-	card_preview.size = Vector2(203,270)
-	card_preview.clip_contents = true
-	card_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(card_preview)
-	selection_label = _paragraph("Pick your opening",Vector2(36,447),Vector2(195,64),25)
-	selection_label.add_theme_color_override("font_color",Color("ffdda0"))
-	description_label = _paragraph("",Vector2(36,519),Vector2(193,123),17)
-	_label("1–4  SELECT    •    DRAG TO PLAY",Vector2(33,679),11,Color("97b6be"))
-	_panel(Rect2(1194,108,225,280),Color("102936"))
-	_label("TEMPLE CLASH",Vector2(1212,129),15,Color("b9a272"))
-	score_label = _label("YOU 0 : 0 RIVAL",Vector2(1212,169),21,Color("ffdda0"))
-	_label("BLUE  /  YOUR ARMY",Vector2(1212,217),15,Color("7bbefd"))
-	_label("RED  /  RIVAL ARMY",Vector2(1212,246),15,Color("ff9180"))
-	_paragraph("Break the enemy temple.
-Or take more towers.",Vector2(1212,304),Vector2(185,66),17)
-	_panel(Rect2(1194,405,225,193),Color("102936"))
-	_label("UP NEXT",Vector2(1212,423),13,Color("b9a272"))
+	_label("OLYMPUS",Vector2(24,15),19,Color("cfbb91"))
+	timer_label = _label("3:00",Vector2(681,8),30,Color("fff0cd"))
+	match_label = _label("",Vector2(794,20),13,Color("a9d7dd"))
+	score_label = _label("YOU 0 : 0 RIVAL",Vector2(467,18),17,Color("d6dfe0"))
+	pause_button = _button("Pause",Vector2(1200,8),Vector2(90,38),_toggle_pause)
+	var menu := MenuButton.new()
+	menu.name = "MatchMenu"
+	menu.text = "Menu"
+	menu.position = Vector2(1302,8)
+	menu.size = Vector2(112,38)
+	add_child(menu)
+	menu.get_popup().add_item("Restart match",0)
+	menu.get_popup().add_check_item("Sound",1)
+	menu.get_popup().set_item_checked(1,true)
+	menu.get_popup().add_separator()
+	menu.get_popup().add_item("Chess cabinet",2)
+	menu.get_popup().id_pressed.connect(func(id):
+		match id:
+			0: _restart_confirm()
+			1:
+				muted = not muted
+				sound.set_muted(muted)
+				menu.get_popup().set_item_checked(1,not muted)
+			2: get_tree().change_scene_to_file("res://app/main.tscn")
+	)
+	# The hand owns card identity and tooltips; no duplicate portrait sidebar.
+	selection_label = _paragraph("",Vector2(447,779),Vector2(560,26),16)
+	selection_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var next_art := TextureRect.new()
 	next_art.name = "NextArt"
-	next_art.position = Vector2(1212,456)
-	next_art.size = Vector2(72,96)
+	next_art.position = Vector2(1030,835)
+	next_art.size = Vector2(48,64)
 	next_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	next_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	next_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(next_art)
-	next_label = _paragraph("",Vector2(1294,470),Vector2(107,74),19)
-	_label("Cards cycle after every play",Vector2(1212,570),12,Color("97b6be"))
-	pause_button = _button("Pause",Vector2(1194,620),Vector2(105,43),_toggle_pause)
-	_button("Restart",Vector2(1310,620),Vector2(109,43),_restart_confirm)
-	var mute := CheckButton.new()
-	mute.text = "Sound"
-	mute.button_pressed = true
-	mute.position = Vector2(1230,681)
-	mute.toggled.connect(func(on): muted = not on; sound.set_muted(muted))
-	add_child(mute)
-	_panel(Rect2(264,785,912,168),Color("102733"))
+	_label("NEXT",Vector2(1030,812),12,Color("97b6be"))
+	next_label = _paragraph("",Vector2(1090,850),Vector2(135,45),14)
 	for slot in 4:
 		var button := Button.new()
-		button.position = Vector2(473+slot*134,791)
+		button.position = Vector2(447+slot*140,808)
 		button.size = Vector2(124,132)
 		button.pivot_offset = Vector2(62,132)
 		button.clip_contents = true
@@ -191,8 +179,8 @@ Or take more towers.",Vector2(1212,304),Vector2(185,66),17)
 	drag_proxy.visible = false
 	add_child(drag_proxy)
 	energy_bar = ProgressBar.new()
-	energy_bar.position = Vector2(379,931)
-	energy_bar.size = Vector2(708,12)
+	energy_bar.position = Vector2(447,946)
+	energy_bar.size = Vector2(544,6)
 	energy_bar.max_value = 10
 	energy_bar.show_percentage = false
 	var fill := StyleBoxFlat.new()
@@ -202,8 +190,8 @@ Or take more towers.",Vector2(1212,304),Vector2(185,66),17)
 	add_child(energy_bar)
 	for pip_index in 10:
 		var pip := Panel.new()
-		pip.position = Vector2(383 + pip_index * 70.3, 933)
-		pip.size = Vector2(62, 8)
+		pip.position = Vector2(449 + pip_index * 54.2, 947)
+		pip.size = Vector2(48, 4)
 		pip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var pip_style := StyleBoxFlat.new()
 		pip_style.bg_color = Color("e394ff")
@@ -211,12 +199,12 @@ Or take more towers.",Vector2(1212,304),Vector2(185,66),17)
 		pip.add_theme_stylebox_override("panel", pip_style)
 		add_child(pip)
 		energy_pips.append(pip)
-	energy_label = _label("5 / 10",Vector2(289,843),24,Color("e9b5ff"))
-	_label("ELIXIR",Vector2(291,879),13,Color("b4a0cc"))
-	notice_label = _paragraph("",Vector2(25,747),Vector2(215,176),16)
+	energy_label = _label("5 / 10",Vector2(334,854),24,Color("e9b5ff"))
+	_label("ELIXIR",Vector2(337,887),11,Color("b4a0cc"))
+	notice_label = _paragraph("",Vector2(30,813),Vector2(278,103),16)
 	battle_overlay = _panel(Rect2(445,290,550,294),Color("102b3e"))
 	overlay_title = _label("ENTER THE ARENA",Vector2(480,317),30,Color("ffdda0"))
-	overlay_text = _paragraph("Four cards. Two lanes. One temple to break.\n\nChoose a card and deploy on the blue half.\nYour troops take it from there.",Vector2(480,374),Vector2(480,120),19)
+	overlay_text = _paragraph("Drag a card onto your half of the board.\nDestroy the rival temple to win.",Vector2(480,374),Vector2(480,120),19)
 	start_button = _button("BATTLE",Vector2(580,510),Vector2(280,50),_start_or_restart)
 	var battle_style := StyleBoxFlat.new()
 	battle_style.bg_color = Color("b7792d")
@@ -295,7 +283,7 @@ func _process(delta:float) -> void:
 		var button: Button = cards[slot].button
 		var active: bool = slot == selected_slot
 		var hovered: bool = button.is_hovered()
-		button.position.y = lerpf(button.position.y, 779.0 if active else 791.0, 1.0-exp(-delta*18.0))
+		button.position.y = lerpf(button.position.y, 798.0 if active else 808.0, 1.0-exp(-delta*18.0))
 		button.scale = button.scale.lerp(Vector2.ONE * (1.055 if active else 1.025 if hovered else 1.0),1.0-exp(-delta*18.0))
 	if selected_slot >= 0 and _last_pointer.x > -900: _preview(_last_pointer)
 	if board and not state.is_empty(): board.show_state(state,delta)
@@ -307,7 +295,7 @@ func _refresh() -> void:
 	if sound: sound.consume_state(state)
 	var seconds:=maxi(0,int(ceil(float(state.time_remaining))))
 	timer_label.text="%d:%02d" % [seconds/60,seconds%60]
-	match_label.text="DOUBLE ELIXIR" if float(state.elapsed)>=120 else "PRACTICE MATCH"
+	match_label.text="DOUBLE ELIXIR" if float(state.elapsed)>=120 else ""
 	if state.get("overtime",false): match_label.text="SUDDEN DEATH"
 	var crowns:=[0,0]
 	for tower in state.towers:
@@ -334,13 +322,9 @@ func _refresh() -> void:
 		cards[slot].button.add_theme_color_override("font_color", Color("fff0c6") if slot == selected_slot else Color("e7e1d2"))
 	if selected_slot>=0:
 		var kind:String=state.hand[selected_slot]
-		selection_label.text=catalog[kind].name+" / "+str(catalog[kind].cost)
-		description_label.text=catalog[kind].description
-		card_preview.texture=_texture(kind)
+		selection_label.text = catalog[kind].name + (" - aim anywhere" if kind == "thunderbolt" else " - deploy on your half")
 	else:
-		selection_label.text="Choose your next card" if started else "Pick your opening"
-		description_label.text="Select a card below, then click your half of the arena. Your troops will move and fight automatically."
-		card_preview.texture=_texture(state.hand[0])
+		selection_label.text = ""
 	if selected_slot < 0: board.clear_preview()
 	notice_label.text=notice
 	if hud_fx: hud_fx.consume_state(state)
@@ -383,18 +367,17 @@ func _start_or_restart() -> void:
 		hud_fx.show_countdown("3")
 	sound.start_match()
 	sound.play_countdown(3)
-	notice="The gates are opening..."
+	notice=""
 	_refresh()
 
 func _select_card(slot:int) -> void:
 	if state.phase=="finished": return
 	if _countdown_remaining > 0.0:
-		notice="The battle begins after the count."
+		notice=""
 		_refresh()
 		return
 	selected_slot=slot
-	notice="Deploy %s on your half." % catalog[state.hand[slot]].name
-	if state.hand[slot]=="thunderbolt": notice="Aim Thunderbolt anywhere in the arena."
+	notice=""
 	_refresh()
 
 func _card_input(event:InputEvent,slot:int) -> void:
@@ -451,7 +434,7 @@ func _deploy_at(local:Vector2) -> void:
 		board.show_deployment(Vector2.INF,false)
 		sound.pitch_scale=1.2
 		sound.play_move_sound()
-		notice="Deployed! Your hand has cycled. Build your next push."
+		notice=""
 	else:
 		notice=str(result.get("error","You cannot deploy there."))
 		if hud_fx: hud_fx.show_banner("NOT HERE", 0.65)
@@ -463,7 +446,7 @@ func _toggle_pause() -> void:
 	pause_button.text="Resume" if paused else "Pause"
 	if paused: sound.stop_match()
 	else: sound.start_match()
-	notice="Paused. Press Space or Resume to continue." if paused else "Battle resumed."
+	notice="Paused" if paused else ""
 	_refresh()
 
 func _restart_confirm() -> void:
