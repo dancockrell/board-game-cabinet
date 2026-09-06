@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/materials/miniature-surfaces/metal_plate_02_nor_gl_1k.jpg" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/materials/miniature-surfaces/metal_plate_02_arm_1k.jpg" id="2"]
+[resource]
+resource_name = "Miniature bronze surface"
+metallic = 0.65
+roughness = 0.8
+roughness_texture = ExtResource("2")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_scale = 0.22
+normal_texture = ExtResource("1")
+uv1_triplanar = true
+uv1_scale = Vector3(2, 2, 2)

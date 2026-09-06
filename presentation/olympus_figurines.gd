@@ -33,6 +33,10 @@ func tapered_limb(p: Node3D, a: Vector3, b: Vector3, upper: float, lower: float)
 func _finish(mesh: MeshInstance3D, color: Color) -> MeshInstance3D:
 	if not _paint.has(color):
 		var material := StandardMaterial3D.new()
+		if color in [gold, bronze, Color("977347"), Color("574c37")]:
+			material = preload("res://themes/olympus_bronze_paint.tres").duplicate()
+		elif color == Color("bcaf92") or color == Color("bcaf92").darkened(.12):
+			material = preload("res://themes/olympus_cloth_paint.tres").duplicate()
 		material.albedo_color = color
 		material.roughness = .84
 		if color == gold or color == bronze:
@@ -79,7 +83,8 @@ func cape(p: Node3D, team: Color, width := .30, length := .54) -> void:
 			for i in [0,2,1,1,2,3]: surface.add_vertex(corners[i])
 	surface.generate_normals()
 	var mesh := _finish(host._mesh(cloth,surface.commit(),Vector3.ZERO,team),team)
-	var material := mesh.material_override.duplicate() as StandardMaterial3D
+	var material := preload("res://themes/olympus_cloth_paint.tres").duplicate() as StandardMaterial3D
+	material.albedo_color = team
 	material.cull_mode=BaseMaterial3D.CULL_DISABLED
 	mesh.material_override=material
 	for i in 8:

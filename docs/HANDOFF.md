@@ -6,6 +6,10 @@ Updated 2026-09-06. Repository: [dancockrell/board-game-cabinet](https://github.
 
 See [Olympus reuse checkpoint](OLYMPUS_REUSE.md) and its linked shared strategy. DR Companion and Pirate Island take priority. Reuse existing art; only verified free guided generation is allowed. The generated-model experiment below is historical source evidence, not the current production plan.
 
+## Model surface pass
+
+Cloth and bronze now reuse four existing CC0 Poly Haven normal/roughness maps from the shared library. See `assets/olympus_arena/materials/miniature-surfaces/provenance.json` for source URLs and hashes. Resource materials use local triplanar mapping so texture follows animated parts without requiring new UVs. Cloth applies to capes and hoplite linen; bronze applies to the existing primary armor palette. Team colors and skin remain unchanged. Native roster inspection shows a subtle surface improvement, not a replacement for authored shapes. No generation or paid work.
+
 ## Latest playable polish checkpoint
 
 See [free inlay and hand polish](OLYMPUS_INLAY_CHECKPOINT.md). Current runtime source is `c5d7e5e`: quiet owl floor mosaics, slimmer card framing and readable unaffordable cards. The stage has 651 nodes; 113 stage checks and 55 native app checks pass. A six-second legal-play capture and Windows export launch were verified. These are targeted presentation checks, not a new full-match balance acceptance or complete cabinet regression.
