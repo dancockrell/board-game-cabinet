@@ -39,3 +39,16 @@ Raw downloads belong in `work/art-source/olympus/authored-v001/`. Review artifac
 - Integration owner (after visual admission): data-driven model Resource, wrapper scale/orientation, team accent and snapshot animation adapter. Validate lifecycle, fallback and unchanged authoritative state.
 
 The initial experiment determines whether generated source meshes reduce the cleanup burden enough to use for the roster. If they fail, record that and use authored/licensed source assets or a dedicated artist rather than expanding a failing generation recipe.
+
+## Export findings (2026-09-06)
+
+Both jobs completed and produced ordinary portable GLBs. Structural inventory via `tools/inspect_generated_glb.py`:
+
+- Hoplite: 17,246 triangles, one material, one embedded color image, one 38-joint skin, zero animation clips. SHA-256 `aa5443f30fd1c87268d92a0e7f2257458b85eaf7098d63b7f5335b1e7652bbe9`.
+- Temple: 24,627 triangles, one material, one embedded color image, no skeleton or clips. SHA-256 `4dc2d5ddf05ecd236ab322e62262832b2024dee794899a5dad88728a10a9c268`.
+- Both materials use metallic 0 and roughness approximately 0.9. Neither contains normal, metallic/roughness or occlusion textures. Detailed generation therefore did not deliver a complete PBR material set. Bronze highlights in the color image must not be mistaken for physically responsive metal.
+- Magnific creation metadata reports Hoplite mode `person-to-3d`, despite the requested `tripo-v31` argument. Temple reports `tripo-image-to-3d-high`. Record the actual route rather than assuming the requested route was honored unchanged.
+
+The first viewer iteration used undeformed mesh bounds and placed the skinned Hoplite below the floor. That capture was a review-tool defect, not evidence of missing legs. The viewer must evaluate skin transforms before positioning the model.
+
+The temple's generated columns have open gaps and the building has a modeled rear. Its boundaries are softer and less exact than the source reference, and the roof texture contains baked shading. It is a useful cleanup candidate, not yet admitted architecture. The original bytes remain preserved. No generated assets replace the playable roster in this checkpoint.
