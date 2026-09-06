@@ -29,3 +29,7 @@ The stage now uses `themes/olympus_shared_rock.tres` on its 18 coastal outcrops.
 Paid work is prohibited for ordinary production. Emergency finishing work requires a specific future user authorization; this policy is not permission for an agent to declare an emergency and spend.
 
 The Kenney Protagonists `characterMedium.fbx` alternative was also rendered and rejected: roughly 3.3 heads tall, oversized head and childlike torso. Its 58-bone skeleton does not make it a suitable adult body. Keep the existing source; do not retarget or replace the roster with it.
+
+## Battlefield readability
+
+Buildings now use a theme-controlled visual wrapper at 0.62 scale, reducing their ground footprint by about 62 percent. Health bars sit at 1.95 units. Camera size is 14.0 to fill more of the panel. Tower coordinates, combat ranges and authoritative state remain unchanged. Native opening capture reviewed; 35 board and 45 application checks pass.

@@ -27,7 +27,7 @@ func _setup() -> void:
 	camera = Camera3D.new()
 	add_child(camera)
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 14.85
+	camera.size = 14.0
 	camera.position = Vector3(0, 16.4, 20.6)
 	camera.look_at(Vector3(0, 0.15, 0))
 	camera.current = true
@@ -235,8 +235,12 @@ func _make_tower(data: Dictionary) -> Node3D:
 	node.position = Vector3(float(data["x"]), 0.1, float(data["z"]))
 	var team: Color = PALETTE.player if int(data["side"]) == 0 else PALETTE.enemy
 	var temple: bool = str(data.get("kind", "tower")) == "temple"
-	preload("res://presentation/olympus_architecture.gd").new(self).build(node, temple, team)
-	_add_health(node, 3.1, 1.4, team)
+	var architecture := Node3D.new()
+	architecture.name = "Architecture"
+	architecture.scale = PALETTE.building_scale
+	node.add_child(architecture)
+	preload("res://presentation/olympus_architecture.gd").new(self).build(architecture, temple, team)
+	_add_health(node, 1.95, 1.05, team)
 	return node
 
 func _weather_architecture(node: Node3D) -> void:

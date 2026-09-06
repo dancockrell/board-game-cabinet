@@ -8,3 +8,6 @@ extends Resource
 @export var player := Color("337ddd")
 @export var enemy := Color("d85151")
 @export var roof := Color("89543d")
+
+## Compact landmarks keep the lanes readable at the play camera.
+@export var building_scale := Vector3(0.62, 0.62, 0.62)

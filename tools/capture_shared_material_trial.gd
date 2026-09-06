@@ -7,8 +7,10 @@ func _initialize() -> void: _run.call_deferred()
 
 func _run() -> void:
 	var output := DEFAULT_OUTPUT
+	var review_title := "SHARED ROCK MATERIAL / RUNTIME REVIEW"
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--review-output="): output = argument.trim_prefix("--review-output=")
+		if argument.begins_with("--review-title="): review_title = argument.trim_prefix("--review-title=")
 	if not output.is_absolute_path() or DisplayServer.get_name() == "headless":
 		_fail("An absolute output and graphics display are required.")
 		return
@@ -57,7 +59,7 @@ func _run() -> void:
 			_fail("Unexpected non-rock material change.")
 			return
 	var label := Label.new()
-	label.text = "SHARED ROCK MATERIAL / RUNTIME REVIEW"
+	label.text = review_title
 	label.position = Vector2(40, 925)
 	label.add_theme_font_size_override("font_size", 20)
 	label.add_theme_color_override("font_color", Color("ffe2a5"))
