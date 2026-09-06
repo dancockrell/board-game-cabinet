@@ -6,6 +6,12 @@ Updated 2026-09-06. Repository: [dancockrell/board-game-cabinet](https://github.
 
 See [Olympus reuse checkpoint](OLYMPUS_REUSE.md) and its linked shared strategy. DR Companion and Pirate Island take priority. Reuse existing art; only verified free guided generation is allowed. The generated-model experiment below is historical source evidence, not the current production plan.
 
+## Latest playable polish checkpoint
+
+See [free inlay and hand polish](OLYMPUS_INLAY_CHECKPOINT.md). Current runtime source is `c5d7e5e`: quiet owl floor mosaics, slimmer card framing and readable unaffordable cards. The stage has 651 nodes; 113 stage checks and 55 native app checks pass. A six-second legal-play capture and Windows export launch were verified. These are targeted presentation checks, not a new full-match balance acceptance or complete cabinet regression.
+
+No paid generation was used. One image was generated through Magnific's visibly confirmed Generate Unlimited browser button. Do not use headless generation or generate models. The figures remain below the desired visual standard; reuse strategy remains current authority.
+
 ## Previous art direction: replace procedural production method
 
 The user rejected the sanctuary models as clay-like and explicitly requested properly authored assets. The procedural checkpoint below is historical implementation evidence, not an accepted quality baseline. Further primitive-detail roster passes are superseded by the [generated 3D workflow](GENERATED_3D_WORKFLOW.md): reference design, dedicated textured-mesh generation, multi-angle inspection, modeling cleanup, rigging and native admission. Begin with one Hoplite and one temple; do not batch the roster before this method passes review.
