@@ -52,3 +52,11 @@ Both jobs completed and produced ordinary portable GLBs. Structural inventory vi
 The first viewer iteration used undeformed mesh bounds and placed the skinned Hoplite below the floor. That capture was a review-tool defect, not evidence of missing legs. The viewer must evaluate skin transforms before positioning the model.
 
 The temple's generated columns have open gaps and the building has a modeled rear. Its boundaries are softer and less exact than the source reference, and the roof texture contains baked shading. It is a useful cleanup candidate, not yet admitted architecture. The original bytes remain preserved. No generated assets replace the playable roster in this checkpoint.
+
+## Multi-angle review decision
+
+The corrected native 960 x 960 captures show a complete Hoplite in T-pose. The helmet, owl shield, cuirass, skirt and footwear provide a coherent textured source. Hands do not form a convincing spear grip; arm contours are uneven/faceted, and the shield attachment needs inspection and correction. No locomotion or attack performance has been demonstrated. Status: retain as cleanup source; not approved for gameplay.
+
+The temple captures show a complete textured roof, walls and open colonnade from multiple angles. Column and foundation edges remain imperfect, and fine roof detail partly resides in the color texture. Status: retain as architecture cleanup source; staged arena review only.
+
+This checkpoint establishes a different working method and portable generated models, not completion of professional model authoring. The next production work is mesh/material cleanup and authored animation, not another primitive-detail pass or an unreviewed full-roster generation batch.
