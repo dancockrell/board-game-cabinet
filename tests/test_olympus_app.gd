@@ -61,7 +61,11 @@ func _run() -> void:
 	expect(is_equal_approx(app.state.energy[0], 2.0), "UI deployment spends exact card cost")
 	expect(app.state.hand[0] == "heracles" and app.selected_slot == -1, "Successful deployment rotates hand and clears selection")
 	expect(app.state == app.session.snapshot(), "Displayed state matches authoritative deployment")
+	var waiting_card: Dictionary = app.cards[1]
+	expect(waiting_card.icon.modulate != Color.WHITE and waiting_card.button.modulate == Color.WHITE, "Insufficient elixir dims portrait without dimming cost or text")
+	expect(waiting_card.cost.text == str(app.catalog[app.state.hand[1]].cost), "Unaffordable card preserves its exact visible cost")
 	app._select_card(1)
+	expect(app.cards[1].button.get_theme_stylebox("normal").border_width_left == 3 and app.cards[1].button.get_theme_stylebox("hover").border_width_left == 3, "Selection outline remains visible while hovered")
 	var before_invalid: Dictionary = app.session.snapshot()
 	app._deploy_at(app.board.camera.unproject_position(Vector3(2.7, 0, -4)))
 	expect(app.session.snapshot() == before_invalid, "Enemy-half click is atomic and rejected")

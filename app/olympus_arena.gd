@@ -18,7 +18,7 @@ var _dragging := false
 var _last_pointer := Vector2(-999,-999)
 var _textures: Dictionary = {}
 var cards: Array = []
-var energy_pips: Array[Panel] = []
+var _card_frames: Dictionary = {}
 var hud_fx
 var _countdown_remaining := 0.0
 var _countdown_number := 0
@@ -118,6 +118,12 @@ func _build_ui() -> void:
 			2: get_tree().change_scene_to_file("res://app/main.tscn")
 	)
 	# The hand owns card identity and tooltips; no duplicate portrait sidebar.
+	_card_frames = {
+		"normal": _card_frame(Color("8e7d5a"), Color("122630"), 1),
+		"hover": _card_frame(Color("c8b17d"), Color("1c3540"), 2),
+		"selected": _card_frame(Color("ffe3a2"), Color("263944"), 3),
+		"waiting": _card_frame(Color("435762"), Color("101f29"), 1),
+	}
 	selection_label = _paragraph("",Vector2(447,779),Vector2(560,26),16)
 	selection_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var next_art := TextureRect.new()
@@ -136,40 +142,47 @@ func _build_ui() -> void:
 		button.size = Vector2(124,132)
 		button.pivot_offset = Vector2(62,132)
 		button.clip_contents = true
+		button.add_theme_stylebox_override("hover", _card_frames.hover)
+		button.add_theme_stylebox_override("pressed", _card_frames.selected)
+		button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+		button.add_theme_stylebox_override("disabled", _card_frames.waiting)
 		button.gui_input.connect(func(event): _card_input(event,slot))
 		button.pressed.connect(func(): _select_card(slot))
 		add_child(button)
 		var icon := TextureRect.new()
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		icon.position = Vector2(4,4)
-		icon.size = Vector2(116,103)
+		icon.position = Vector2(5,5)
+		icon.size = Vector2(114,100)
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		button.add_child(icon)
 		var name_label := Label.new()
-		name_label.position = Vector2(3,107)
+		name_label.position = Vector2(3,106)
 		name_label.size = Vector2(118,23)
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		name_label.add_theme_font_size_override("font_size",16)
+		name_label.add_theme_font_size_override("font_size",15)
 		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		button.add_child(name_label)
 		var cost_bg := Panel.new()
-		cost_bg.position = Vector2(7,6)
-		cost_bg.size = Vector2(32,35)
+		cost_bg.position = Vector2(9,9)
+		cost_bg.size = Vector2(30,30)
 		cost_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var gem := StyleBoxFlat.new()
-		gem.bg_color = Color("863bc5")
-		gem.border_color = Color("efbbff")
-		gem.set_border_width_all(2)
-		gem.set_corner_radius_all(12)
+		gem.bg_color = Color("653190")
+		gem.border_color = Color("dba7f6")
+		gem.set_border_width_all(1)
+		gem.set_corner_radius_all(15)
 		cost_bg.add_theme_stylebox_override("panel",gem)
 		button.add_child(cost_bg)
 		var cost_label := Label.new()
-		cost_label.position = Vector2(14,7)
-		cost_label.add_theme_font_size_override("font_size",23)
+		cost_label.position = Vector2(9,9)
+		cost_label.size = Vector2(30,30)
+		cost_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		cost_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		cost_label.add_theme_font_size_override("font_size",20)
 		cost_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		button.add_child(cost_label)
-		cards.append({"button":button,"icon":icon,"name":name_label,"cost":cost_label})
+		cards.append({"button":button,"icon":icon,"name":name_label,"cost":cost_label,"cost_style":gem})
 	drag_proxy = TextureRect.new()
 	drag_proxy.size = Vector2(104, 138)
 	drag_proxy.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -180,25 +193,28 @@ func _build_ui() -> void:
 	add_child(drag_proxy)
 	energy_bar = ProgressBar.new()
 	energy_bar.position = Vector2(447,946)
-	energy_bar.size = Vector2(544,6)
+	energy_bar.size = Vector2(544,5)
 	energy_bar.max_value = 10
 	energy_bar.show_percentage = false
 	var fill := StyleBoxFlat.new()
 	fill.bg_color = Color("c37af1")
-	fill.set_corner_radius_all(6)
+	fill.set_corner_radius_all(2)
 	energy_bar.add_theme_stylebox_override("fill",fill)
 	add_child(energy_bar)
-	for pip_index in 10:
-		var pip := Panel.new()
-		pip.position = Vector2(449 + pip_index * 54.2, 947)
-		pip.size = Vector2(48, 4)
-		pip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var pip_style := StyleBoxFlat.new()
-		pip_style.bg_color = Color("e394ff")
-		pip_style.set_corner_radius_all(4)
-		pip.add_theme_stylebox_override("panel", pip_style)
-		add_child(pip)
-		energy_pips.append(pip)
+	var track := StyleBoxFlat.new()
+	track.bg_color = Color("30263d")
+	track.set_corner_radius_all(3)
+	energy_bar.add_theme_stylebox_override("background",track)
+	energy_bar.size = Vector2(544,5)
+	energy_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Nine dividers reveal ten equal charges without a second competing fill layer.
+	for divider_index in range(1,10):
+		var divider := ColorRect.new()
+		divider.position = Vector2(447 + divider_index * 54.4 - 1,946)
+		divider.size = Vector2(2,5)
+		divider.color = Color("091e2a")
+		divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(divider)
 	energy_label = _label("5 / 10",Vector2(334,854),24,Color("e9b5ff"))
 	_label("ELIXIR",Vector2(337,887),11,Color("b4a0cc"))
 	notice_label = _paragraph("",Vector2(30,813),Vector2(278,103),16)
@@ -212,6 +228,17 @@ func _build_ui() -> void:
 	battle_style.set_border_width_all(2)
 	battle_style.set_corner_radius_all(12)
 	start_button.add_theme_stylebox_override("normal",battle_style)
+
+func _card_frame(border: Color, background: Color, width: int) -> StyleBoxFlat:
+	var frame := StyleBoxFlat.new()
+	frame.bg_color = background
+	frame.border_color = border
+	frame.set_border_width_all(width)
+	frame.set_corner_radius_all(7)
+	frame.shadow_color = Color(0,0,0,0.32)
+	frame.shadow_size = 3
+	frame.shadow_offset = Vector2(0,2)
+	return frame
 
 func _panel(rect:Rect2,color:Color) -> Panel:
 	var panel:=Panel.new()
@@ -303,10 +330,6 @@ func _refresh() -> void:
 	score_label.text="YOU %s  :  %s RIVAL" % [crowns[0],crowns[1]]
 	energy_label.text="%s / 10" % int(floor(state.energy[0]))
 	energy_bar.value=state.energy[0]
-	for pip_index in energy_pips.size():
-		var charge := clampf(float(state.energy[0]) - pip_index, 0.0, 1.0)
-		energy_pips[pip_index].modulate = Color(1.0, 1.0, 1.0, 0.18 + charge * 0.82)
-		energy_pips[pip_index].scale.y = 0.65 + charge * 0.35
 	timer_label.modulate = Color("ff8a72") if seconds <= 10 and state.phase == "playing" else Color.WHITE
 	get_node("NextArt").texture = _texture(state.get("next_card","hoplites"))
 	next_label.text=catalog.get(state.get("next_card",""),{}).get("name","-")
@@ -317,7 +340,15 @@ func _refresh() -> void:
 		cards[slot].name.text=card.name
 		cards[slot].cost.text=str(card.cost)
 		cards[slot].button.tooltip_text=card.description
-		cards[slot].button.modulate=Color("ffe9b2") if slot==selected_slot else Color.WHITE if state.energy[0]>=card.cost else Color("8496a7")
+		var affordable: bool = state.energy[0] >= card.cost
+		var selected: bool = slot == selected_slot
+		# Dim only the illustration: cost and identity must stay readable while waiting.
+		cards[slot].icon.modulate = Color.WHITE if affordable else Color("697783")
+		cards[slot].name.modulate = Color("fff0ce") if selected else Color("e2e8e9")
+		cards[slot].cost_style.bg_color = Color("653190") if affordable else Color("303342")
+		cards[slot].cost_style.border_color = Color("dba7f6") if affordable else Color("9297ae")
+		cards[slot].button.add_theme_stylebox_override("normal", _card_frames.selected if selected else _card_frames.normal if affordable else _card_frames.waiting)
+		cards[slot].button.add_theme_stylebox_override("hover", _card_frames.selected if selected else _card_frames.hover)
 		cards[slot].button.disabled=state.phase=="finished"
 		cards[slot].button.add_theme_color_override("font_color", Color("fff0c6") if slot == selected_slot else Color("e7e1d2"))
 	if selected_slot>=0:
