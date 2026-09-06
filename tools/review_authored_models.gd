@@ -39,6 +39,10 @@ func _run() -> void:
 	if imported == null:
 		_fail("GLB did not generate a scene.")
 		return
+	# Override the cabinet's 3:2 canvas stretch and minimum window dimensions.
+	root.min_size = Vector2i.ZERO
+	root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
+	root.content_scale_size = Vector2i(960, 960)
 	root.size = Vector2i(960, 960)
 	var world := Node3D.new()
 	root.add_child(world)
@@ -84,7 +88,7 @@ func _run() -> void:
 		"animations": _animations, "source_bounds": _bounds_json(source_bounds),
 		"normalized_bounds": _bounds_json(final_bounds), "uniform_scale": uniform_scale,
 		"target_height_m": target_height, "captures": captures,
-		"review_notes": "Rest-pose geometry bounds; front is viewed from +Z. No authored materials were overridden. Rendered images are inspection evidence, not asset approval."
+		"review_notes": "Evaluated initial skeleton-pose geometry bounds; front is viewed from +Z. No authored materials were overridden. Rendered images are inspection evidence, not asset approval."
 	}
 	var report_path := destination.path_join("review.json")
 	var file := FileAccess.open(report_path, FileAccess.WRITE)
@@ -109,7 +113,7 @@ func _inspect(node: Node) -> void:
 		var instance := node as MeshInstance3D
 		if instance.mesh != null:
 			_mesh_count += 1
-			var transformed := instance.global_transform * instance.mesh.get_aabb()
+			var transformed := _evaluated_bounds(instance)
 			_bounds = _bounds.merge(transformed) if _has_bounds else transformed
 			_has_bounds = true
 			for surface in instance.mesh.get_surface_count():
@@ -122,6 +126,45 @@ func _inspect(node: Node) -> void:
 				if material != null: _materials[material.get_instance_id()] = material.resource_name
 	for child in node.get_children(): _inspect(child)
 
+func _evaluated_bounds(instance: MeshInstance3D) -> AABB:
+	var skeleton := instance.get_node_or_null(instance.skeleton) as Skeleton3D
+	if skeleton == null or instance.skin == null:
+		return instance.global_transform * instance.mesh.get_aabb()
+	# Imported mesh AABBs can describe bind geometry far below its posed skeleton.
+	# Evaluate the same joint palette used by skinning before framing or flooring.
+	skeleton.force_update_all_bone_transforms()
+	var palette: Array[Transform3D] = []
+	for joint in instance.skin.get_bind_count():
+		var bone := instance.skin.get_bind_bone(joint)
+		var bone_name := instance.skin.get_bind_name(joint)
+		if not bone_name.is_empty(): bone = skeleton.find_bone(bone_name)
+		if bone < 0 or bone >= skeleton.get_bone_count():
+			push_error("Invalid skin bind: " + str(joint))
+			return instance.global_transform * instance.mesh.get_aabb()
+		palette.append(skeleton.global_transform * skeleton.get_bone_global_pose(bone) * instance.skin.get_bind_pose(joint))
+	var result := AABB()
+	var initialized := false
+	for surface in instance.mesh.get_surface_count():
+		var arrays := instance.mesh.surface_get_arrays(surface)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var bones: PackedInt32Array = arrays[Mesh.ARRAY_BONES] if arrays[Mesh.ARRAY_BONES] != null else PackedInt32Array()
+		var weights: PackedFloat32Array = arrays[Mesh.ARRAY_WEIGHTS] if arrays[Mesh.ARRAY_WEIGHTS] != null else PackedFloat32Array()
+		var influence_count := int(weights.size() / maxi(1, vertices.size()))
+		for vertex_index in vertices.size():
+			var point := Vector3.ZERO
+			var total := 0.0
+			for influence in influence_count:
+				var offset := vertex_index * influence_count + influence
+				var joint := bones[offset]
+				if weights[offset] > 0.0 and joint >= 0 and joint < palette.size():
+					point += (palette[joint] * vertices[vertex_index]) * weights[offset]
+					total += weights[offset]
+			if total <= 0.0: point = instance.global_transform * vertices[vertex_index]
+			else: point /= total
+			result = result.expand(point) if initialized else AABB(point, Vector3.ZERO)
+			initialized = true
+	return result if initialized else instance.global_transform * instance.mesh.get_aabb()
+
 func _make_studio(world: Node3D, span: float) -> void:
 	var environment := WorldEnvironment.new()
 	environment.environment = Environment.new()
@@ -129,17 +172,18 @@ func _make_studio(world: Node3D, span: float) -> void:
 	environment.environment.background_color = Color("33383d")
 	environment.environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.environment.ambient_light_color = Color("e2e6ed")
-	environment.environment.ambient_light_energy = 0.45
+	environment.environment.ambient_light_energy = 0.18
 	environment.environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	environment.environment.tonemap_exposure = 0.8
 	world.add_child(environment)
 	var key := DirectionalLight3D.new()
 	key.rotation_degrees = Vector3(-48, -35, 0)
-	key.light_energy = 1.05
+	key.light_energy = 0.55
 	key.shadow_enabled = true
 	world.add_child(key)
 	var fill := DirectionalLight3D.new()
 	fill.rotation_degrees = Vector3(-30, 145, 0)
-	fill.light_energy = 0.35
+	fill.light_energy = 0.12
 	world.add_child(fill)
 	var floor_mesh := MeshInstance3D.new()
 	var plane := PlaneMesh.new()
