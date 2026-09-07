@@ -2,10 +2,7 @@
   "version": 1,
   "status": "planning_only_no_generated_clips",
   "counting_unit": "distinct ordered playback clip; frames are not clips",
-  "minimum_base_clips_per_item": 20,
-  "expansion_multiplier": 20,
-  "working_target_clips_per_item": 400,
-  "interpretation_status": "awaiting_user_clarification",
+  "interpretation_status": "user_clarified_variety_and_smoothness_not_fixed_quota",
   "budget": "no_paid_generation",
   "families": {
     "fighter": {
@@ -207,5 +204,6 @@
       "loop_or_recovery_correct",
       "no_duplicate_clip_padding"
     ]
-  }
+  },
+  "coverage_policy": "Prioritize smooth complete core actions, transitions and meaningful variants; family lists are optional planning vocabulary, not per-item minimums."
 }

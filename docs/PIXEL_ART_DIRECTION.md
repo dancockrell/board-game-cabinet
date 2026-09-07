@@ -33,4 +33,4 @@ References preserved and direction documented. No pixel-art runtime replacement 
 
 ## Animation density
 
-The user requests a richly animated whole world, with at least about twenty animations per item and twenty times ordinary sufficient coverage. See [animated world production direction](ANIMATED_WORLD.md) and [starter catalogue](ANIMATION_CATALOGUE.json). Counting interpretation is pending clarification; this does not authorize paid generation.
+The user requests a richly animated whole world, with lots of variety and smooth motion. Their clarification supersedes the provisional twenty/400 clip quotas: there is no fixed per-item count. See [animated world production direction](ANIMATED_WORLD.md) and [starter catalogue](ANIMATION_CATALOGUE.json). No paid generation is authorized.
