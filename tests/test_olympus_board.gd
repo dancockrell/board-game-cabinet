@@ -24,6 +24,9 @@ func run() -> void:
 	var state := {"units":[{"id":1,"kind":"minotaur","side":0,"x":2.7,"z":3.0,"hp":100.0,"max_hp":100.0}], "towers":[{"id":"blue","kind":"temple","side":0,"x":0.0,"z":6.6,"hp":500.0,"max_hp":500.0}], "elapsed":0.0,"events":[]}
 	board.show_state(state)
 	check(board._tokens.size() == 1, "Unit spawned")
+	var shrine=board._towers.blue.get_node("Architecture/PixelBuilding")
+	check(shrine is Sprite3D and shrine.clip.validation_error().is_empty(), "Tower uses valid authored sprite Resource")
+	check(board._towers.blue.position==Vector3(0,0.1,6.6), "Building keeps authoritative footprint origin")
 	var unit: Node3D = board._tokens[1]
 	state.units[0].z = 2.0
 	state.units[0].hp = 50.0
@@ -43,6 +46,9 @@ func run() -> void:
 	check(not unit.get_node("Hit").visible, "Damage impact expires")
 	check(board._towers.blue.visible and board._towers.blue.scale.y < 0.2, "Destroyed temple remains as ruins")
 	check(not board._towers.blue.get_node("Health").visible, "Destroyed temple health hidden")
+	state.towers[0].hp=500.0
+	board.show_state(state)
+	check(board._towers.blue.scale==Vector3.ONE and board._towers.blue.get_node("Health").visible, "Restored authoritative tower resets sprite scale and health")
 	state.units.clear()
 	board.show_state(state)
 	check(board._tokens.is_empty(), "Missing units removed")

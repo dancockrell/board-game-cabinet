@@ -2,9 +2,15 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Pixel buildings increment
+
+The six combat structures now use an original transparent owl-shrine sprite, replacing runtime procedural architecture. Main temples use a larger scale; both teams retain narrow coloured footprint borders. Clip metadata anchors the lowest step; a presentation-only forward offset places the step at the footprint edge without moving authoritative tower coordinates. Native close review caught and corrected step clipping. Source PNG is preserved unchanged with provenance in assets/olympus_arena/buildings.
+
+Validation: 38 native board checks (including sprite resource, authoritative origin, destruction and reset), 64 native model checks, and 55 native app checks passed. A 180-frame match capture completed before the final step-anchor adjustment; final adjusted close-up is outputs/Pixel-Shrine-Footprint.png. This is static building art: distinct main-temple artwork, damaged states, proper rubble and ambient animation remain unfinished. Existing destroyed-building vertical compression is a temporary presentation.
+
 ## Pixel battlefield increment
 
-Authored limestone paving now replaces procedural field/lane stone through a shared ShaderMaterial Resource. Existing footprints, ground picking and simulation are unchanged. Source and provenance live in assets/olympus_arena/terrain. Native match review exposed excessive brightness; field/lane tints were reduced. Validation: 35 native board checks and 55 native app checks passed; final 180-frame native capture completed at 30 fps with six legal placements, through 44 seconds of authoritative match time. Still inspected at outputs/Olympus-Pixel-Paving-Match.png. This is the first terrain material conversion, not a completed pixel environment; bridges, temples, borders, vegetation, water and other units still need conversion.
+Authored limestone paving now replaces procedural field/lane stone through a shared ShaderMaterial Resource. Existing footprints, ground picking and simulation are unchanged. Source and provenance live in assets/olympus_arena/terrain. Native match review exposed excessive brightness; field/lane tints were reduced. Validation: 35 native board checks and 55 native app checks passed; final 180-frame native capture completed at 30 fps with six legal placements, through 44 seconds of authoritative match time. Still inspected at outputs/Olympus-Pixel-Paving-Match.png. This is the first terrain material conversion, not a completed pixel environment; bridges, borders, vegetation, water and other units still need conversion; temples now use the sprite increment above.
 
 ## Live pixel integration checkpoint
 

@@ -1,5 +1,6 @@
 extends Node3D
 ## Persistent visual replicas of authoritative arena snapshots.
+const SHRINE_CLIP = preload("res://themes/olympus_shrine_clip.tres")
 const PALETTE = preload("res://themes/olympus_arena_theme.tres")
 const PixelActor = preload("res://presentation/pixel_actor.gd")
 const HOPLITE_GUARD = preload("res://themes/hoplite_guard_clip.tres")
@@ -245,10 +246,18 @@ func _make_tower(data: Dictionary) -> Node3D:
 	var temple: bool = str(data.get("kind", "tower")) == "temple"
 	var architecture := Node3D.new()
 	architecture.name = "Architecture"
-	architecture.scale = PALETTE.building_scale
+	architecture.scale = Vector3.ONE
 	node.add_child(architecture)
-	preload("res://presentation/olympus_architecture.gd").new(self).build(architecture, temple, team)
-	_add_health(node, 1.95, 1.05, team)
+	var building := PixelActor.new()
+	building.name = "PixelBuilding"
+	# Put the front step at the forward footprint edge; replica origin stays authoritative.
+	building.position = Vector3(0, 0.05, 0.45 if temple else 0.36)
+	building.pixel_size = 0.0017 if temple else 0.0014
+	architecture.add_child(building)
+	building.reset_playback(SHRINE_CLIP)
+	_cylinder(node, 0.72 if temple else 0.59, 0.025, Vector3(0, 0.01, 0), team.darkened(.4))
+	_cylinder(node, 0.66 if temple else 0.53, 0.027, Vector3(0, 0.012, 0), Color("666855"))
+	_add_health(node, 2.3 if temple else 1.95, 1.05, team)
 	return node
 
 func _weather_architecture(node: Node3D) -> void:

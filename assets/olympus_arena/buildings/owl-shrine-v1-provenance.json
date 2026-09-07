@@ -1,0 +1,15 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-17ea1e47-226c-4310-887b-d343dfed047b.png",
+  "sha256": "18f8c9898e8093dd12e2f3c97650afca380f11a19b68dd76195c8576c7fff8c2",
+  "created": "2026-09-07",
+  "status": "runtime static building increment",
+  "request": "Single compact Greek defensive shrine; elevated front orthographic; detailed pixel art; bronze, limestone, terracotta; real alpha; no scenery or text",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "alpha": "Source RGBA preserved; runtime alpha scissor 0.5; no background keying",
+  "validation": "Native close-up inspected on arena; board origin, destruction scale, reset and health checks pass",
+  "limitations": "One shared sprite at two scales; bespoke main temple, damaged art and rubble remain unfinished. Camera-facing presentation is intended for fixed gameplay camera."
+}
