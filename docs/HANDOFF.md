@@ -1,12 +1,16 @@
 # Board Game Cabinet handoff
 
-Updated 2026-09-06. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
+Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
+
+## Current visual authority
+
+The user selected pixel art and elevated gameplay perspective from two supplied references. [Pixel art direction](PIXEL_ART_DIRECTION.md) is now the visual authority. Realistic miniature repair below is historical; the next visual slice is one directional Greek sprite tested in the arena. References are not runtime assets or instructions to build their western game.
 
 ## Current priority: zero-budget shared reuse
 
 See [Olympus reuse checkpoint](OLYMPUS_REUSE.md) and its linked shared strategy. DR Companion and Pirate Island take priority. Reuse existing art; only verified free guided generation is allowed. The generated-model experiment below is historical source evidence, not the current production plan.
 
-## Active model method
+## Historical model method
 
 See [Hoplite source reuse trial](HOPLITE_SOURCE_REUSE.md): existing textured source posed and compared in the arena. It is a review candidate; open weapon grip and missing clips prevent live admission. No paid work.
 
