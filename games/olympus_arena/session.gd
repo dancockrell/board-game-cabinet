@@ -7,6 +7,7 @@ const MAX_UNITS := 64
 const RIVER_BANK := 0.8
 const BRIDGE_HALF_WIDTH := 0.50
 const GROUND_SPACING := 0.58
+const ALLY_BODY_RADIUS := {"hoplites":0.41, "atalanta":0.41, "medusa":0.41, "heracles":0.50, "minotaur":0.55, "hydra":0.58}
 const DECK := ["hoplites", "atalanta", "minotaur", "medusa", "heracles", "hydra", "harpies", "thunderbolt"]
 var bot_enabled := true
 var _rng := RandomNumberGenerator.new()
@@ -96,8 +97,12 @@ func _deploy(side: int, slot: int, position: Vector2) -> Dictionary:
 		_event("lightning", position, side)
 	else:
 		for index in range(int(card.count)):
-			var spread := (index - (int(card.count) - 1) * 0.5) * 0.42
-			var point := Vector2(clampf(position.x + spread, -4.6, 4.6), position.y)
+			var formation_gap := 0.42 if kind == "harpies" else 0.82
+			var spread := (index - (int(card.count) - 1) * 0.5) * formation_gap
+			var half_formation := (int(card.count) - 1) * 0.5 * formation_gap
+			# Shift the whole formation inward at the edge rather than stack clamped bodies.
+			var center_x := clampf(position.x, -4.6 + half_formation, 4.6 - half_formation)
+			var point := Vector2(center_x + spread, position.y)
 			_state.units.append({"id":_next_id, "side":side, "kind":kind, "x":point.x, "z":point.y, "hp":card.hp, "max_hp":card.hp, "range":card.range, "damage":card.damage, "speed":card.speed, "cooldown":0.2, "slow":0.0, "flying":kind == "harpies", "lane":-2.7 if position.x < 0 else 2.7, "crossed":false, "charge_distance":0.0, "charge_ready":false, "recovery_time":0.0, "heal_clock":0.0})
 			_next_id += 1
 		_event("summon", position, side)
@@ -271,7 +276,8 @@ func _step_unit(unit: Dictionary) -> void:
 
 func _separate_units() -> void:
 	# Two deterministic soft passes preserve crowd flow without teleporting fighters.
-	# Distances stay below melee range so adjacent opposing units can still fight.
+	# Allies reserve readable body space; opponents remain within melee reach.
+	# Soft constraints allow bottlenecks to compress without blocking legal deployment.
 	for iteration in range(2):
 		var pushes: Array[Vector2] = []
 		pushes.resize(_state.units.size())
@@ -283,6 +289,8 @@ func _separate_units() -> void:
 				var b: Dictionary = _state.units[second]
 				if b.hp <= 0 or a.flying != b.flying: continue
 				var gap := 0.32 if a.flying else GROUND_SPACING
+				if not a.flying and a.side == b.side:
+					gap = float(ALLY_BODY_RADIUS.get(a.kind, 0.41)) + float(ALLY_BODY_RADIUS.get(b.kind, 0.41))
 				var difference := _position(a) - _position(b)
 				var distance := difference.length()
 				if distance >= gap: continue
