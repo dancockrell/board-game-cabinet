@@ -325,7 +325,7 @@ func _process(delta:float) -> void:
 func _refresh() -> void:
 	state=session.snapshot()
 	if sound: sound.consume_state(state)
-	var seconds:=maxi(0,int(ceil(float(state.time_remaining))))
+	var seconds:=maxi(0,int(ceil(float(state.time_remaining) - 0.00001)))
 	timer_label.text="%d:%02d" % [seconds/60,seconds%60]
 	match_label.text="DOUBLE ELIXIR" if float(state.elapsed)>=120 else ""
 	if state.get("overtime",false): match_label.text="SUDDEN DEATH"

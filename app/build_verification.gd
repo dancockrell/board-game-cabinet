@@ -43,6 +43,8 @@ func run(app: Control, directory: String) -> void:
 	_check(app.battle_overlay.visible and app.start_button.text == "REMATCH", "Result screen offers rematch")
 	var expected := "VICTORY!" if app.state.winner == 0 else "DEFEAT" if app.state.winner == 1 else "DRAW"
 	_check(app.overlay_title.text == expected, "Result title agrees with winner")
+	if float(app.state.time_remaining) < 0.00001:
+		_check(app.timer_label.text == "0:00", "Expired match clock displays zero")
 	await _capture(app, directory.path_join("result.png"))
 	var report := {"seed":42, "ticks":ticks, "simulation_seconds":app.state.elapsed,
 		"winner":app.state.winner, "legal_deployments":placements, "walking_actor_samples":walk_samples,
