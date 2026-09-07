@@ -30,3 +30,7 @@ No paid generation or paid model work. Existing assets may serve as source/refer
 ## Current status
 
 References preserved and direction documented. No pixel-art runtime replacement or finished Greek sprite is claimed in this checkpoint. The previous Hoplite mesh, grip and equipment experiments remain historical evidence, not the art target.
+
+## Animation density
+
+The user requests a richly animated whole world, with at least about twenty animations per item and twenty times ordinary sufficient coverage. See [animated world production direction](ANIMATED_WORLD.md) and [starter catalogue](ANIMATION_CATALOGUE.json). Counting interpretation is pending clarification; this does not authorize paid generation.
