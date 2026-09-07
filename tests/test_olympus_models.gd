@@ -35,7 +35,7 @@ func _run() -> void:
 				meshes += 1
 				valid = valid and node.mesh != null and node.global_transform.is_finite() and absf(node.global_basis.determinant()) > .0000001
 			for child in node.get_children(): pending.append(child)
-		if token.get_meta("kind") in ["hoplites","atalanta","medusa","minotaur"]:
+		if token.get_meta("kind") in ["hoplites","atalanta","medusa","minotaur","heracles","harpies"]:
 			var sprite=figure.get_node_or_null("PixelActor")
 			check(sprite!=null and sprite.texture!=null and sprite.clip.validation_error()=="","Authored character uses valid pixel clip")
 		else:

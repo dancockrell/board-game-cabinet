@@ -161,6 +161,15 @@ func run() -> void:
 	state.elapsed=10.1
 	board.show_state(state,.1)
 	check(attacking.clip==board.NORTH_REST, "Next stationary simulation tick stops stride")
+	state.units.append({"id":99,"kind":"harpies","side":0,"x":-2.0,"z":2.0,"hp":100.0,"max_hp":100.0,"flying":true})
+	board.show_state(state,0.0)
+	var harpy=board._tokens[99].get_node("Figure/PixelActor")
+	var first_wing=harpy.texture.region
+	board.show_state(state,.2)
+	check(harpy.clip==board.HARPIES_FLIGHT.north and harpy.texture.region!=first_wing,"Stationary hovering advances wing phases without restarting each snapshot")
+	var paused_wing=harpy.texture.region
+	board.show_state(state,0.0)
+	check(harpy.texture.region==paused_wing,"Paused hovering retains exact wing phase")
 	await process_frame
 	print("Olympus board: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)
