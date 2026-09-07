@@ -66,7 +66,7 @@ func _run() -> void:
 		if wait_for_thrust:
 			for token in app.board._tokens.values():
 				var sprite=token.get_node_or_null("Figure/PixelActor")
-				if sprite != null and sprite.clip==app.board.THRUST_CLIP: found_thrust=true
+				if sprite != null and sprite.clip in [app.board.THRUST_CLIP,app.board.NORTH_ATTACK]: found_thrust=true
 			if found_thrust:
 				# End on a complete three-frame simulation interval.
 				if frame%3==2:
@@ -84,7 +84,7 @@ func _run() -> void:
 		await RenderingServer.frame_post_draw
 		for token in app.board._tokens.values():
 			var sprite=token.get_node_or_null("Figure/PixelActor")
-			if sprite != null and sprite.clip==app.board.THRUST_CLIP: pixel_attack_frames+=1
+			if sprite != null and sprite.clip in [app.board.THRUST_CLIP,app.board.NORTH_ATTACK]: pixel_attack_frames+=1
 		var filename := "frame-%04d.png" % frame
 		error = root.get_texture().get_image().save_png(directory.path_join(filename))
 		if error != OK:

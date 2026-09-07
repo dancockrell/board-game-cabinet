@@ -2,6 +2,12 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Upward-facing Hoplite increment
+
+Hoplites now select rear rest/attack when movement or the authoritative attack vector lies in the upward 90-degree sector. Recovery keeps that direction; damage retains rear orientation and existing impact feedback instead of playing the front guard clip. Rest updates do not reset attack/hit event deduplication. Initial dagger-like rear source was rejected and preserved locally; corrected full spear source/provenance is in assets/olympus_arena/sprites. Magenta-backed rendering now averages a 4x4 screen-pixel footprint after key removal, improving small-scale clarity without averaging magenta into edges; this costs 16 source samples per fragment.
+
+Native corrected study and legal match reviewed; final filtered capture contains 180 frames from 6.9 to 12.9 seconds and ten attack actor-frames, with two legal deployments. outputs/Hoplite-North-Live.mp4. Validation: 47 native board, 28 native sprite, 64 native model and 55 native app checks passed. Left/down directions still use the existing front/right fallback. Rear spear aim is diagonal and approximate, no rear guard animation yet, and locomotion remains static. Goal remains incomplete. This source increment is newer than the Windows checkpoint.
+
 ## First authored thrust animation
 
 Hoplites now play a provisional four-frame thrust from exact authoritative hit events. Uneven source layout is handled by per-frame crops/pivots and two neighbour masks. Source pixels are unchanged. Scale returns to normal after recovery; hit and attack event IDs are tracked separately. Native study reviewed through draw/contact/recovery and native legal-match capture confirmed ten actor-frames using the attack clip. The capture began at 6.9 seconds, used two legal deployments, and ended at 12.9 seconds; outputs/Hoplite-Thrust-Live.mp4 and Hoplite-Thrust-Study.mp4. Earlier fixed-time captures contained zero thrust frames and were not accepted as animation evidence.

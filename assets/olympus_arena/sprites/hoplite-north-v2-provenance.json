@@ -1,0 +1,11 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-fd6e5cb6-312c-4c3a-a6d3-9ca54c5f92a8.png",
+  "rejected_source": "exec-ed1f03b2-5d62-42e0-8ed9-48cc2229d887.png",
+  "sha256": "452089f4b65b7b4a44813cfd94e28da461bfb674771d0b414bb7eb15c898ecf2",
+  "status": "provisional rear rest and rear attack for upward direction sector",
+  "correction": "First source shortened weapon into dagger-like silhouette; second restored full shaft and butt",
+  "masking": "Saturated magenta key; source unchanged; 4x4 post-key pixel footprint sampling avoids magenta mipmap contamination",
+  "authoring": "Four per-frame foot pivots, 1.18 draw scale; rest from first frame",
+  "limitations": "Rear strike points diagonally rather than precisely up; no locomotion, rear guard, left/down attack clips yet. Rest currently slides during travel."
+}

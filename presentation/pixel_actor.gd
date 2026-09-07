@@ -24,6 +24,13 @@ func play_attack(event_id: int, action: Clip) -> bool:
 	_reaction_elapsed=0.0
 	return true
 
+func set_rest_pose(rest: Clip) -> bool:
+	if rest==null or not rest.looping or not rest.validation_error().is_empty(): return false
+	if rest==_rest_clip: return true
+	_rest_clip=rest
+	if _reaction_elapsed<0: return set_clip(rest)
+	return true
+
 func react_to_hit(event_id: int, reaction: Clip) -> bool:
 	if event_id <= _last_hit_event or reaction == null or reaction.looping: return false
 	if not set_clip(reaction): return false

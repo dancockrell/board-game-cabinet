@@ -103,6 +103,17 @@ func run() -> void:
 	check(attacking.clip==board.THRUST_CLIP, "Exact Hoplite attack event starts thrust clip")
 	board.show_state(state,.6)
 	check(attacking.clip.looping and attacking.scale==Vector3.ONE, "Live Hoplite returns to rest without replaying old attack")
+	state.units[-1].z=1.9
+	board.show_state(state,.1)
+	check(attacking.clip==board.NORTH_REST, "Upward movement selects rear rest")
+	state.events.append({"id":5,"kind":"hit","source_id":4,"source_type":"unit","side":0,"source_x":2.0,"source_z":1.9,"x":2.0,"z":1.0})
+	board.show_state(state)
+	check(attacking.clip==board.NORTH_ATTACK, "Upward authoritative target selects rear attack")
+	board.show_state(state,.6)
+	check(attacking.clip==board.NORTH_REST, "Rear attack recovers without turning to camera")
+	state.units[-1].hp=80.0
+	board.show_state(state,.1)
+	check(attacking.clip==board.NORTH_REST, "Rear damage keeps orientation while impact marker handles feedback")
 	await process_frame
 	print("Olympus board: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)

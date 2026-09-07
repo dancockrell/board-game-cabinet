@@ -1,4 +1,5 @@
 extends SceneTree
+const NorthRest=preload("res://themes/hoplite_north_rest.tres")
 const ThrustClip=preload("res://themes/hoplite_thrust_clip.tres")
 const GuardClip=preload("res://themes/hoplite_guard_clip.tres")
 const Clip=preload("res://presentation/sprite_clip.gd")
@@ -59,6 +60,11 @@ func _initialize() -> void:
 		check(actor.clip==rest and actor.scale==Vector3.ONE and actor.material_override==null, "Attack recovery restores rest scale and native alpha material")
 		actor.reset_playback(rest)
 		check(actor.play_attack(0,ThrustClip), "Rematch resets attack event numbering")
+		var attack_clip=actor.clip
+		check(actor.set_rest_pose(NorthRest) and actor.clip==attack_clip, "Facing change updates recovery pose without interrupting action")
+		check(not actor.play_attack(0,ThrustClip), "Facing changes preserve event deduplication")
+		actor.advance_visual(1)
+		check(actor.clip==NorthRest, "Action recovers to updated directional rest")
 		actor.free()
 	print("Sprite clip: %s checks, %s failures"%[checks,failures])
 	quit(1 if failures else 0)
