@@ -36,7 +36,7 @@ func advance_visual(delta: float) -> void:
 
 func _init() -> void:
 	billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
 	alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 	alpha_scissor_threshold = .5
 	shaded = false

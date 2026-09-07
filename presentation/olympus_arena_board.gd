@@ -1,6 +1,8 @@
 extends Node3D
 ## Persistent visual replicas of authoritative arena snapshots.
 const PALETTE = preload("res://themes/olympus_arena_theme.tres")
+const PixelActor = preload("res://presentation/pixel_actor.gd")
+const HOPLITE_GUARD = preload("res://themes/hoplite_guard_clip.tres")
 const LIMESTONE = preload("res://presentation/olympus_limestone.gdshader")
 var camera: Camera3D
 var _tokens: Dictionary = {}
@@ -109,13 +111,18 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		node.get_node("Figure").position.x = visual_offset.x
 		node.get_node("Figure").position.z = visual_offset.z
 		if previous.distance_to(target) > 0.004:
-			node.get_node("Figure").rotation.y = atan2(target.x - previous.x, target.z - previous.z)
+			if not node.get_node("Figure").has_node("PixelActor"):
+				node.get_node("Figure").rotation.y = atan2(target.x - previous.x, target.z - previous.z)
 			node.set_meta("walking_until", _time + .14)
 		_health(node, float(unit["hp"]) / maxf(1.0, float(unit.get("max_hp", unit["hp"]))))
 		_ability_status(node, unit)
 		_damage_feedback(node, float(unit["hp"]), delta)
 		var attack_strength := clampf((float(node.get_meta("attack_until", 0.0)) - _time) / 0.24, 0.0, 1.0)
-		_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)
+		var sprite = node.get_node("Figure").get_node_or_null("PixelActor")
+		if sprite != null:
+			sprite.advance_visual(delta)
+		else:
+			_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)
 	for id in _tokens.keys():
 		if not alive.has(id):
 			_departure(_tokens[id])
@@ -178,6 +185,7 @@ func _mark_attack_events(events: Array) -> void:
 		if closest: closest.set_meta("attack_until", _time + 0.24)
 
 func _tint_ghost(node: Node) -> void:
+	if node is Sprite3D: node.modulate=Color(.35,.8,1,.45)
 	if node is MeshInstance3D:
 		var material := StandardMaterial3D.new()
 		material.albedo_color = Color(.35,.8,1,.45)
@@ -285,7 +293,19 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	var size := 1.10 if kind in ["heracles", "minotaur", "hydra"] else .86
 	figure.scale = Vector3.ONE * size
 	if _figure_factory == null: _figure_factory = preload("res://presentation/olympus_figurines.gd").new(self)
-	_figure_factory.build(figure, kind, team)
+	if kind == "hoplites":
+		figure.rotation=Vector3.ZERO
+		var sprite:=PixelActor.new()
+		sprite.name="PixelActor"
+		sprite.pixel_size=.0027
+		figure.add_child(sprite)
+		var rest=HOPLITE_GUARD.duplicate()
+		rest.regions.assign([HOPLITE_GUARD.regions[0]])
+		rest.durations=PackedFloat32Array([1.0])
+		rest.looping=true
+		sprite.reset_playback(rest)
+	else:
+		_figure_factory.build(figure, kind, team)
 	_add_health(node, 2.10 if size > 1 else 1.75, .78, team)
 	return node
 
@@ -331,6 +351,11 @@ func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
 	var timer := maxf(0.0, float(node.get_meta("hit_time", 0.0)) - delta)
 	var previous_hp := float(node.get_meta("previous_hp", hp))
 	if hp < previous_hp:
+		var sprite = node.get_node_or_null("Figure/PixelActor")
+		if sprite != null:
+			var serial := int(node.get_meta("damage_serial",0))+1
+			node.set_meta("damage_serial",serial)
+			sprite.react_to_hit(serial,HOPLITE_GUARD)
 		timer = 0.22
 		var number := Label3D.new()
 		number.text = "−%d" % roundi(previous_hp-hp)
