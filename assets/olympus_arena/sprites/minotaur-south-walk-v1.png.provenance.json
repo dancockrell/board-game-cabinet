@@ -1,0 +1,9 @@
+{
+  "asset": "assets\\olympus_arena\\sprites\\minotaur-south-walk-v1.png",
+  "sha256": "9c7e5361c7d74afa7f9b1f6985328ff95116fc11e089e486a971f84d8549e7e1",
+  "generator": "built-in image_gen",
+  "source": "exec-02b22315-6e2b-4d92-8b06-b1e6b6d05480.png",
+  "reference": "minotaur-south-v1.png",
+  "prompt_summary": "Same Greek bull; four alternating-hoof walking phases with steady waist-held axe, elevated camera, solid magenta.",
+  "admission": "provisional native-reviewed alternating hooves; unchanged source"
+}

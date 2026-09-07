@@ -1,0 +1,13 @@
+{
+  "asset": "assets\\olympus_arena\\sprites\\minotaur-north-walk-v1.png",
+  "sha256": "ee2f1b29e6a542a7d9cdc8909f6bd743621f95b52840a6be76d60d8a780249a6",
+  "generator": "built-in image_gen",
+  "source": "exec-95e8e9c6-032d-4bfa-8b9b-fdba3d261232.png",
+  "reference": [
+    "minotaur-north-v1.png",
+    "minotaur-south-walk-v1.png"
+  ],
+  "rejected_source": "exec-4006b316-6f64-40fe-9cc3-4dba6bec3e02.png duplicated axe head",
+  "prompt_summary": "Rear four alternating-hoof walk phases, steady waist axe, same Greek bull. Targeted correction removed extra axe blade and separated opposite foot supports. Solid magenta.",
+  "admission": "native-reviewed source, no destructive processing"
+}

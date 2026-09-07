@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/minotaur-north-walk-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+magenta_backing = true
+draw_scale = 1.36
+depth_bias = 0.20
+regions = Array[Rect2i]([Rect2i(0,0,543,724),Rect2i(543,0,543,724),Rect2i(1086,0,543,724),Rect2i(1629,0,543,724)])
+frame_pivots = Array[Vector2]([Vector2(282,594),Vector2(289,590),Vector2(277,594),Vector2(279,590)])
+durations = PackedFloat32Array(0.16,0.16,0.16,0.16)
+looping = true
