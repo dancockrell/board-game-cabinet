@@ -1,0 +1,29 @@
+{
+  "generator": "built-in image_gen",
+  "external_paid_api": false,
+  "status": "provisional runtime character package",
+  "sources": [
+    {
+      "file": "heracles-v1.png",
+      "sha256": "c1835dae8afa254c9de5aaecf02a6ebed4795f9789bf82589a482498873fa1b5",
+      "generation_id": "exec-15cab279-6007-481a-9014-626cb0a152ef"
+    },
+    {
+      "file": "heracles-north-v1.png",
+      "sha256": "6c38e385241f21e5ecb2d8af4c8f13d3f985d826285f8228f600535ae600fd0f",
+      "generation_id": "exec-03155fc5-7608-4f56-9aff-7d7cea5e04e4"
+    }
+  ],
+  "reference": "atalanta-v2.png (style only)",
+  "prompt_summary": [
+    "Rich crisp pixel-art Greek Heracles: muscular adult bearded hero, tawny lion hood and mane cape, bare chest, red Greek skirt, sandals and large wooden club in anatomical right hand. Four columns east/west/north/south, three rows ready/wind-up/strike, full bodies, solid magenta, no shadows or labels.",
+    "Isolated north row: three back-facing poses, ready, right-arm raised wind-up, forward-away club strike. Same costume and scale, large blank padding."
+  ],
+  "admission": "East/west/south use first sheet. North column of first sheet is NOT admitted because wind-up changes hand. Isolated north row replaces it. Source pixels preserved; runtime shader keys saturated magenta.",
+  "limitations": [
+    "Three-pose attack including recovery, no locomotion or hit/death animation yet.",
+    "North strike reads as raised forward swing with diagonal screen-right aim; not a full overhead-to-ground slam.",
+    "Small costume/proportion changes between north and original sheet.",
+    "No team palette variant."
+  ]
+}

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(1152,365,384,345), Rect2i(1152,710,384,314), Rect2i(1152,0,384,365)])
+frame_pivots = Array[Vector2]([Vector2(181,322), Vector2(185,250), Vector2(181,354)])
+durations = PackedFloat32Array(0.13, 0.16, 0.12)
+looping = false
+draw_scale = 2.0
+magenta_backing = true

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-north-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(0,0,591,887)])
+frame_pivots = Array[Vector2]([Vector2(299,700)])
+durations = PackedFloat32Array(1)
+looping = true
+draw_scale = 1.40
+magenta_backing = true
