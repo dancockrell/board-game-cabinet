@@ -1,0 +1,18 @@
+{
+  "generator": "built-in image_gen",
+  "source": "exec-15b6d128-c90a-47e9-b50f-07f971103d5d.png",
+  "sha256": "9be82e3d86cdf39ec3970992d556ef5a4eb706f4074b709c84cc01caaf4c88ea",
+  "status": "first usable candidate; native review required",
+  "prompt": "Three-headed olive emerald bronze Hydra; four south-facing and four north-facing sequential relaxed, inhale, bite, recoil poses. Pixel art, elevated tactical camera. Corrected background only to solid magenta.",
+  "source_dimensions": [
+    1536,
+    1024
+  ],
+  "crop_layout": "four 384px columns; south y0 height460; north y460 height564",
+  "limits": [
+    "Only north and south facings",
+    "Three distinct breathing poses; four attack phases; no walk/death animation",
+    "North tails below foot pivot use existing bounded keyed depth bias",
+    "High-amplitude inhale needs future in-between poses"
+  ]
+}
