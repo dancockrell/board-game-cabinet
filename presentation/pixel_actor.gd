@@ -98,11 +98,14 @@ func show_time(seconds: float) -> void:
 	var index := clip.frame_at(seconds)
 	if index < 0 or index == _shown: return
 	_shown=index
+	var source: Texture2D = clip.atlas if clip.frame_atlases.is_empty() else clip.frame_atlases[index]
+	_atlas.atlas = source
 	_atlas.region=Rect2(clip.regions[index])
 	var half_cell := Vector2(clip.regions[index].size)*.5
 	var anchor: Vector2 = clip.pivot if clip.frame_pivots.is_empty() else clip.frame_pivots[index]
 	offset=Vector2(half_cell.x-anchor.x,anchor.y-half_cell.y)
 	if clip.magenta_backing:
+		material_override.set_shader_parameter("source_atlas", source)
 		var cut := Rect2i() if clip.frame_cutouts.is_empty() else clip.frame_cutouts[index]
-		var dimensions := clip.atlas.get_size()
+		var dimensions := source.get_size()
 		material_override.set_shader_parameter("cutout", Vector4(cut.position.x/dimensions.x,cut.position.y/dimensions.y,cut.size.x/dimensions.x,cut.size.y/dimensions.y))

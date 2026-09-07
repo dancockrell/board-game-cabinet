@@ -42,6 +42,19 @@ func _initialize() -> void:
 	clip.durations[0]=.125
 	clip.regions[1]=Rect2i(50,0,32,32)
 	check(not clip.validation_error().is_empty(),"Reject atlas overflow")
+	clip.regions[1]=Rect2i(32,0,32,32)
+	var second_source := ImageTexture.create_from_image(Image.create(96,32,false,Image.FORMAT_RGBA8))
+	clip.frame_atlases=[clip.atlas,second_source]
+	clip.regions[1]=Rect2i(64,0,32,32)
+	check(clip.validation_error().is_empty(),"Frame bounds use their own source dimensions")
+	clip.frame_atlases.pop_back()
+	check(not clip.validation_error().is_empty(),"Reject incomplete per-frame source list")
+	clip.frame_atlases.append(null)
+	check(not clip.validation_error().is_empty(),"Reject missing per-frame texture")
+	clip.frame_atlases[1]=second_source
+	var multi_source=clip.duplicate()
+	multi_source.magenta_backing=true
+	clip.frame_atlases.clear()
 	if DisplayServer.get_name() != "headless":
 		clip.regions[1]=Rect2i(32,0,32,32)
 		clip.pivot=Vector2(16,30)
@@ -50,6 +63,12 @@ func _initialize() -> void:
 		check(actor.offset==Vector2(0,14),"Foot pivot raises image above origin")
 		actor.show_time(.125)
 		check(actor.texture.region.position==Vector2(32,0),"Actor displays ordered second frame")
+		actor.set_clip(multi_source)
+		actor.show_time(.125)
+		check(actor.texture.atlas==second_source and actor.material_override.get_shader_parameter("source_atlas")==second_source,"Keyed frame switches texture and shader together")
+		actor.show_time(0)
+		check(actor.texture.atlas==clip.atlas and actor.material_override.get_shader_parameter("source_atlas")==clip.atlas,"Rewind restores first source")
+		actor.set_clip(clip)
 		var rest=clip.duplicate()
 		rest.looping=true
 		check(actor.reset_playback(rest),"Rest clip resets reaction state")
