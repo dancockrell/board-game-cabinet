@@ -34,3 +34,7 @@ References preserved and direction documented. No pixel-art runtime replacement 
 ## Animation density
 
 The user requests a richly animated whole world, with lots of variety and smooth motion. Their clarification supersedes the provisional twenty/400 clip quotas: there is no fixed per-item count. See [animated world production direction](ANIMATED_WORLD.md) and [starter catalogue](ANIMATION_CATALOGUE.json). No paid generation is authorized.
+
+## Generator update
+
+User explicitly selected the built-in image generator instead of Magnific. Use it for current sprite work; see [first Hoplite trial](PIXEL_HOPLITE_TRIAL.md). This does not authorize external paid model APIs.
