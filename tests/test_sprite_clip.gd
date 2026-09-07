@@ -1,4 +1,5 @@
 extends SceneTree
+const SouthWalk=preload("res://themes/hoplite_south_walk.tres")
 const NorthWalk=preload("res://themes/hoplite_north_walk.tres")
 const SouthAttack=preload("res://themes/hoplite_south_attack.tres")
 const NorthRest=preload("res://themes/hoplite_north_rest.tres")
@@ -11,6 +12,7 @@ func check(value: bool, label: String) -> void:
 	checks+=1
 	if not value: failures+=1; push_error(label)
 func _initialize() -> void:
+	check(SouthWalk.validation_error()=="", "South stride atlas and pivots are valid")
 	check(NorthWalk.validation_error()=="", "Walk source uses valid typed per-frame pivots")
 	check(GuardClip is Clip and GuardClip.validation_error()=="","Shipped guard Resource loads its script, atlas and timing")
 	check(ThrustClip.validation_error()=="", "Irregular thrust frame contract is valid")

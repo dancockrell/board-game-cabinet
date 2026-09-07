@@ -86,7 +86,7 @@ func _run() -> void:
 		for token in app.board._tokens.values():
 			var sprite=token.get_node_or_null("Figure/PixelActor")
 			if sprite != null and sprite.clip in [app.board.THRUST_CLIP,app.board.NORTH_ATTACK,app.board.SOUTH_ATTACK,app.board.WEST_ATTACK]: pixel_attack_frames+=1
-			if sprite != null and sprite.clip == app.board.NORTH_WALK: pixel_walk_frames+=1
+			if sprite != null and sprite.clip in [app.board.NORTH_WALK,app.board.SOUTH_WALK]: pixel_walk_frames+=1
 		var filename := "frame-%04d.png" % frame
 		error = root.get_texture().get_image().save_png(directory.path_join(filename))
 		if error != OK:

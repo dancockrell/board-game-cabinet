@@ -120,7 +120,10 @@ func run() -> void:
 	check(attacking.clip==board.NORTH_REST, "Rear damage keeps orientation while impact marker handles feedback")
 	state.units[-1].z=2.0
 	board.show_state(state,.1)
-	check(attacking.clip==board.SOUTH_REST, "Downward movement selects south rest")
+	check(attacking.clip==board.SOUTH_WALK, "Downward movement selects south walk")
+	state.elapsed+=.1
+	board.show_state(state,.1)
+	check(attacking.clip==board.SOUTH_REST, "Stationary tick restores south rest")
 	state.events.append({"id":6,"kind":"hit","source_id":4,"source_type":"unit","side":0,"source_x":2.0,"source_z":2.0,"x":2.0,"z":3.0})
 	board.show_state(state)
 	check(attacking.clip==board.SOUTH_ATTACK, "Downward target selects south attack")

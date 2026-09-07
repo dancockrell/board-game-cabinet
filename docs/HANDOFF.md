@@ -2,7 +2,13 @@
 
 Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## First northward walking cycle (current)
+## Southward walking cycle (current)
+
+Both main-lane directions now have authored walking clips. South adds four alternating planted/raised-leg phases with upright spear and consistent shield hand. Two generated drafts repeated a leading leg; targeted corrections produced the admitted v3 source. Rejected drafts are preserved locally under work/rejected-south-walk. The unmodified source, provenance and individual pivots are committed. Source generation used only built-in image_gen.
+
+Native 90-frame study inspected at outputs/Hoplite-South-Walk.mp4; both raised-leg phases have intact equipment and stable torso placement. 62 board, 40 native sprite and 56 native app checks pass. This is a staged study, not a newly recorded full match. The high-knee march still needs in-betweens and better stance transitions. East/west movement, the remaining roster and environment remain unfinished. Windows checkpoint remains older than current source.
+
+## First northward walking cycle
 
 Northward Hoplites now use four curated walking phases from a six-pose built-in generation (source phases 1, 2, 5, 6). The unused middle pair did not improve sequence order. Individual crops and torso-aligned pivots preserve the complete spear and stable body placement. Source is unchanged with saturated-magenta masking. This is a provisional four-phase march, not a smooth finished locomotion set: other directions still glide, upper-body movement is limited and transitions to wider attack stances remain abrupt.
 

@@ -1,4 +1,5 @@
 extends SceneTree
+const SouthWalk = preload("res://themes/hoplite_south_walk.tres")
 const NorthWalk = preload("res://themes/hoplite_north_walk.tres")
 const WestRest = preload("res://themes/hoplite_west_rest.tres")
 const WestClip = preload("res://themes/hoplite_west_attack.tres")
@@ -113,11 +114,13 @@ func _review_guard(output: String) -> void:
 	actor.pixel_size=.003
 	actor.position=Vector3(0,.15,3)
 	actor.reset_playback(WestRest if action==WestClip else (SouthRest if action==SouthClip else (NorthRest if action==NorthClip else rest)))
-	var walking := "--north-walk" in OS.get_cmdline_user_args()
+	var south_walking := "--south-walk" in OS.get_cmdline_user_args()
+	var walking := "--north-walk" in OS.get_cmdline_user_args() or south_walking
 	if walking:
-		actor.reset_playback(NorthRest)
-		if not actor.set_locomotion(NorthWalk):
-			push_error("Walking clip rejected: " + NorthWalk.validation_error())
+		var walk = SouthWalk if south_walking else NorthWalk
+		actor.reset_playback(SouthRest if south_walking else NorthRest)
+		if not actor.set_locomotion(walk):
+			push_error("Walking clip rejected: " + walk.validation_error())
 			quit(2)
 			return
 	var title:=Label.new()

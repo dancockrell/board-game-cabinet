@@ -1,4 +1,5 @@
 extends Node3D
+const SOUTH_WALK = preload("res://themes/hoplite_south_walk.tres")
 const NORTH_WALK = preload("res://themes/hoplite_north_walk.tres")
 ## Persistent visual replicas of authoritative arena snapshots.
 const WEST_ATTACK = preload("res://themes/hoplite_west_attack.tres")
@@ -137,7 +138,8 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 				node.set_meta("motion_active", moved)
 				node.set_meta("motion_tick", float(state.get("elapsed", -1.0)))
 			var moving := bool(node.get_meta("motion_active", false))
-			sprite.set_locomotion(NORTH_WALK if moving and str(node.get_meta("pixel_facing", "east")) == "north" else null)
+			var walks := {"north": NORTH_WALK, "south": SOUTH_WALK}
+			sprite.set_locomotion(walks.get(str(node.get_meta("pixel_facing", "east"))) if moving else null)
 			sprite.advance_visual(delta)
 		else:
 			_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)

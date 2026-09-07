@@ -1,0 +1,12 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-dc198e2d-3a63-4f2b-a4d7-10be78d73a0a.png",
+  "reference": "hoplite-south-v1.png",
+  "sha256": "de1709f77b5a3c90bf543fe6c743a52899756a08bd448eab0766ec504cdd3885",
+  "status": "provisional four-phase south march",
+  "corrections": "Two targeted edits corrected repeated leading leg and wrong fourth raised knee. Rejected sources retained locally under work/rejected-south-walk.",
+  "prompt": "Four front elevated walking phases alternating planted and raised legs. Preserve south hoplite bronze helmet blue crest, white tunic blue Greek-key hem, bronze greaves; shield image right, upright spear image left. Stable pelvis, rich pixel art, flat saturated magenta, no text floor or shadows. Final targeted repair raised the knee under shield in fourth figure and planted the leg under spear.",
+  "masking": "Unchanged keyed source, individual torso pivots, scale 1.03",
+  "validation": "Native 90-frame close study inspected both raised-leg phases; 62 board, 40 native sprite, 56 native app checks passed",
+  "limitations": "High-knee four-frame march, limited torso motion, abrupt rest/attack transition. No east/west walk yet. No new full-match recording for this increment."
+}
