@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/medusa-walk-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(0,625,313,285),Rect2i(939,625,315,285),Rect2i(626,625,313,285),Rect2i(313,625,313,285)])
+frame_pivots = Array[Vector2]([Vector2(195,273),Vector2(104,273),Vector2(142,272),Vector2(185,273)])
+durations = PackedFloat32Array(0.12,0.12,0.12,0.12)
+looping = true
+draw_scale = 1.78
+magenta_backing = true

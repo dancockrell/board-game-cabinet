@@ -22,3 +22,9 @@ The source rows are south, north, east and west. Columns are ready, gather and r
 ## Remaining animation work
 
 Walking, hit reaction and death animation are not included in v1. Add these from the same identity rather than recoloring unrelated source art. Snake count and fabric folds vary slightly between generated phases. Add in-betweens and refine posture transitions after first roster integration. Gameplay gaze effects are separate from the sprite and must be driven by authoritative hit events.
+
+## Provisional walking addition
+
+`medusa-walk-v1.png` adds four directional locomotion resources, `themes/medusa_{direction}_walk.tres`. These use the same pixel_size 0.0027 with draw_scale 1.78 to match the differently sized source poses. North/south select two opposite-foot contacts from the generation; its requested passing poses repeated, so they were not counted as additional phases. East/west use four varied stride/flex poses. The result is readable but still has abrupt contacts and needs proper in-betweens for finished smoothness.
+
+The native study now accepts `--walk`, starts all four locomotion clips, captures 90 frames and checks stopping returns each actor to its directional rest. `outputs/Medusa-Walk-Study.mp4` passed; frames 0 and 6 inspected for opposite feet and intact silhouettes. Board integration remains coordinator-owned. No further source iterations were made during this roster pass.

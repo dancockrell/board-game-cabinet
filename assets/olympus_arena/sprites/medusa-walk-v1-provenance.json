@@ -1,0 +1,133 @@
+{
+  "asset_id": "olympus-medusa-walk-v1",
+  "generator": "Built-in image_gen, no external API",
+  "source": "C:/Users/Admin/.codex/generated_images/01a07d04-6afa-7073-aa6c-ae13d1ab8de2/exec-f9ded39a-202f-49bc-949f-605eeb195b21.png",
+  "sha256": "45375bc5ae52cd6642a3f0313673f9831c5b1f4ef06cda3d5a2975e737070b32",
+  "reference": "medusa-v1.png",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "prompt_summary": "Same Medusa identity and elevated camera. Four directional rows south/north/east/west with four sequential contact/pass/opposite contact/opposite pass walking poses per row, alternating anatomical feet, magenta backing, no shadows or scene.",
+  "observations": "Source supplied 16 poses but front/back passing phases were not distinct enough; select two visibly opposite foot contacts for front/back. Side views use four varying stride poses. This is a provisional gait, not smooth finished animation.",
+  "geometry": {
+    "south": {
+      "row": [
+        0,
+        325
+      ],
+      "selected_columns": [
+        0,
+        2
+      ],
+      "pivots": [
+        [
+          188,
+          317
+        ],
+        [
+          190,
+          317
+        ],
+        [
+          136,
+          317
+        ],
+        [
+          107,
+          317
+        ]
+      ]
+    },
+    "north": {
+      "row": [
+        325,
+        300
+      ],
+      "selected_columns": [
+        0,
+        1
+      ],
+      "pivots": [
+        [
+          192,
+          289
+        ],
+        [
+          174,
+          290
+        ],
+        [
+          134,
+          290
+        ],
+        [
+          110,
+          288
+        ]
+      ]
+    },
+    "east": {
+      "row": [
+        625,
+        285
+      ],
+      "selected_columns": [
+        0,
+        3,
+        2,
+        1
+      ],
+      "pivots": [
+        [
+          195,
+          273
+        ],
+        [
+          185,
+          273
+        ],
+        [
+          142,
+          272
+        ],
+        [
+          104,
+          273
+        ]
+      ]
+    },
+    "west": {
+      "row": [
+        910,
+        344
+      ],
+      "selected_columns": [
+        0,
+        3,
+        2,
+        1
+      ],
+      "pivots": [
+        [
+          180,
+          292
+        ],
+        [
+          158,
+          294
+        ],
+        [
+          121,
+          292
+        ],
+        [
+          100,
+          294
+        ]
+      ]
+    }
+  },
+  "background": "Original magenta retained, runtime chroma shader",
+  "admission": "Native 90-frame four-direction walking study passed, stop-to-rest verified; frames0 and6 inspected. Provisional two-phase north/south and four-phase east/west, not final smoothness."
+}

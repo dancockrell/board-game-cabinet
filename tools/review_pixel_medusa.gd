@@ -1,4 +1,10 @@
 extends SceneTree
+const WALK = {
+    "south": preload("res://themes/medusa_south_walk.tres"),
+    "north": preload("res://themes/medusa_north_walk.tres"),
+    "east": preload("res://themes/medusa_east_walk.tres"),
+    "west": preload("res://themes/medusa_west_walk.tres")
+}
 ## Four authored facings, staged attack/recovery; no fabricated gameplay events.
 const REST = {
     "south": preload("res://themes/medusa_south_rest.tres"),
@@ -26,6 +32,7 @@ func _run() -> void:
     board.camera.position=Vector3(0,10.5,14)
     board.camera.look_at(Vector3(0,.6,3))
     var actors=[]
+    var walking := "--walk" in OS.get_cmdline_user_args()
     for facing in REST:
         if not REST[facing].validation_error().is_empty() or not ATTACK[facing].validation_error().is_empty():
             push_error("Invalid Medusa clip "+facing)
@@ -35,20 +42,22 @@ func _run() -> void:
         board.add_child(actor)
         actor.position=Vector3(-3.0+actors.size()*2.0,.15,3)
         if not actor.reset_playback(REST[facing]): quit(1); return
+        if walking and not actor.set_locomotion(WALK[facing]): quit(1); return
         actors.append(actor)
     var title=Label.new()
-    title.text="MEDUSA / SOUTH, NORTH, EAST, WEST / STAGED GAZE AND RECOVERY"
+    title.text="MEDUSA / SOUTH, NORTH, EAST, WEST / " + ("WALK STUDY" if walking else "STAGED GAZE AND RECOVERY")
     title.position=Vector2(30,25)
     root.add_child(title)
     Engine.max_fps=30
     for frame in 90:
         for i in actors.size():
-            if frame in [15,55]: actors[i].play_attack(frame,ATTACK[REST.keys()[i]])
+            if frame in [15,55] and not walking: actors[i].play_attack(frame,ATTACK[REST.keys()[i]])
             actors[i].advance_visual(1.0/30.0)
         for tick in 2: await process_frame
         await RenderingServer.frame_post_draw
         if root.get_texture().get_image().save_png(output.path_join("frame-%04d.png"%frame))!=OK: quit(2); return
     for i in actors.size():
+        if walking: actors[i].set_locomotion(null)
         if actors[i].clip!=REST[REST.keys()[i]]:
             push_error("Medusa failed to recover "+REST.keys()[i]); quit(1); return
     print("Medusa: 8 resource validations, 4 attack/recovery checks, 90 native frames; passed")
