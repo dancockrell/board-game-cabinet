@@ -2,6 +2,10 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Live pixel integration checkpoint
+
+[Pixel Hoplites now run in matches](PIXEL_LIVE_CHECKPOINT.md), reacting to authoritative health loss. Windows interim build smoke passed. Static locomotion, fixed facing, missing attacks and legacy rest of roster remain visible work; do not confuse this with the goal being complete.
+
 ## Active delivery goal
 
 [Make the playable pixel-art Greek arena game](ACTIVE_GAME_GOAL.md) is the user-requested active goal. First event-driven guard clip is implemented and tested in native diagnostic; actual match integration, locomotion, attack and roster conversion remain.
