@@ -1,0 +1,12 @@
+{
+  "asset": "assets\\olympus_arena\\sprites\\minotaur-south-v1.png",
+  "sha256": "eca6d8e96f5fd5a7a46fad363a114715a3c4dfefac8f94b076f303ac726a5d67",
+  "generator": "built-in image_gen",
+  "source": "exec-def4e7e3-8fbd-4c0e-bde3-b2e3793dbf12.png",
+  "lineage": [
+    "exec-f9201542-9edc-4ae6-9a5b-0b5e3b544760.png (cropped, rejected)",
+    "exec-67ae33f0-9f81-4d4e-bb11-d4ef29910edc.png (baked checkerboard, rejected)"
+  ],
+  "admission": "provisional native-reviewed four-phase south-east chop; shader keys generated magenta without source editing",
+  "prompt_summary": "Greek brown-fur Minotaur, bronze bracers and axe, blue Greek-key skirt; four overhead chop phases, elevated pixel-art camera. Correct framing; replace checkerboard with solid magenta."
+}
