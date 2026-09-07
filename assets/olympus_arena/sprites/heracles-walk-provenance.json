@@ -1,0 +1,23 @@
+{
+  "generator": "built-in image_gen",
+  "reference": "heracles-v1.png",
+  "sources": [
+    {
+      "file": "heracles-walk-v1.png",
+      "generation_id": "exec-0c37a9d6-1243-4839-9ca4-57073d21a8cc",
+      "sha256": "db0988ab185e41b74484eac5ad25c4ae01f39543718e502bbcf464210c203795"
+    },
+    {
+      "file": "heracles-walk-v2.png",
+      "generation_id": "exec-243f8aac-404f-4455-a12a-f5a164dfa622",
+      "sha256": "a688d701b9adc94da3109d1d56420a0b284f717bb107066093dcdea9e2d61dc2"
+    }
+  ],
+  "prompt": "Eight Heracles walk frames, four columns two rows: rear north then front south. Left contact, opposite knee passing, right contact, opposite knee passing. Same lion pelt, red skirt, right-hand wooden club, pixel style, solid magenta and no floor/shadows. Correct only legs in right two columns to alternate supporting feet without mirroring club or torso.",
+  "selection": "North uses corrected v2 all four cells. South uses v2 cells 0,2,3 and original v1 cell1 because correction also reversed cell1; per-frame atlas preserves genuinely opposite knee phases.",
+  "limitations": [
+    "Four-phase provisional march, limited torso counter-swing and mane secondary motion.",
+    "Minor scale/proportion drift against resting sheets.",
+    "East/west walk and hit/death motions still absent."
+  ]
+}

@@ -12,9 +12,11 @@ const ATTACK = {
     "east": preload("res://themes/heracles_east_attack.tres"),
     "west": preload("res://themes/heracles_west_attack.tres")
 }
+const WALK = {"south": preload("res://themes/heracles_south_walk.tres"), "north": preload("res://themes/heracles_north_walk.tres")}
 func _initialize() -> void: _run.call_deferred()
 func _run() -> void:
     var output := ""
+    var walking := "--walk" in OS.get_cmdline_user_args()
     for arg in OS.get_cmdline_user_args():
         if arg.begins_with("--capture-dir="): output=arg.trim_prefix("--capture-dir=")
     if not output.is_absolute_path(): quit(2); return
@@ -35,15 +37,18 @@ func _run() -> void:
         board.add_child(actor)
         actor.position=Vector3(-3.0+actors.size()*2.0,.15,3)
         if not actor.reset_playback(REST[facing]): quit(1); return
+        if walking and WALK.has(facing): actor.set_locomotion(WALK[facing])
         actors.append(actor)
     var title=Label.new()
     title.text="HERACLES / SOUTH, NORTH, EAST, WEST / STAGED CLUB STRIKE AND RECOVERY"
+    if walking: title.text="HERACLES / SOUTH + NORTH WALK / ATTACK INTERRUPTION AND STOP / STAGED"
     title.position=Vector2(30,25)
     root.add_child(title)
     Engine.max_fps=30
     for frame in 90:
         for i in actors.size():
-            if frame in [15,55]: actors[i].play_attack(frame,ATTACK[REST.keys()[i]])
+            if frame in ([45] if walking else [15,55]): actors[i].play_attack(frame,ATTACK[REST.keys()[i]])
+            if walking and frame == 75: actors[i].set_locomotion(null)
             actors[i].advance_visual(1.0/30.0)
         for tick in 2: await process_frame
         await RenderingServer.frame_post_draw

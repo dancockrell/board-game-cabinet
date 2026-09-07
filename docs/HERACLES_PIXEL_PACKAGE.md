@@ -14,4 +14,10 @@ Foot anchors are per-frame and source pixels are not cropped or repainted offlin
 
 ## Remaining work
 
-Walking, hit/death reactions, more in-betweens, diagonal facing refinements and team palette variants remain. The north contact still reads as a forward high swing with a diagonal aim, rather than a deep overhead ground strike. Slight body/costume drift remains between sheets. Integration and full-match validation belong to the coordinator.
+East/west walking, hit/death reactions, more in-betweens, diagonal facing refinements and team palette variants remain. The north contact still reads as a forward high swing with a diagonal aim, rather than a deep overhead ground strike. Slight body/costume drift remains between sheets. Integration and full-match validation belong to the coordinator.
+
+## North/south locomotion
+
+`heracles_north_walk.tres` and `heracles_south_walk.tres` supply four alternating-foot phases at 0.16 seconds per frame. Scale 1.75 normalizes their taller sheet drawings to the rest silhouette. Use `set_locomotion` while authoritative movement is active; existing PixelActor yields to attacks and resumes or stops automatically. South deliberately uses the original sheet for frame 1 to preserve the opposite raised knee after the correction changed that pose. Both full source sheets remain intact; no offline pixel edits.
+
+`tests/test_heracles_walk.gd`: 16 native checks cover loop timing, start, persistence, attack interruption, resume and stop. `tools/review_pixel_heracles.gd -- --walk --capture-dir=ABSOLUTE_DIRECTORY` records 90 native frames at camera size 14, walking then an attack and a stop. These are staged visuals, not match evidence. Locomotion is provisional: four clear foot phases, limited upper-body motion and slight scale drift against the ready pose.
