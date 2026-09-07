@@ -1,0 +1,73 @@
+extends RefCounted
+## Explicit release diagnostic; never enabled by normal launch or player UI.
+var failures: Array[String] = []
+var placements := 0
+var walk_samples := 0
+
+func run(app: Control, directory: String) -> void:
+	if not directory.is_absolute_path() or DirAccess.make_dir_recursive_absolute(directory) != OK:
+		push_error("Build verification requires a writable absolute directory")
+		app.get_tree().quit(2)
+		return
+	app.set_process(false)
+	app.set_process_input(false)
+	app.set_process_unhandled_input(false)
+	app.get_tree().root.gui_disable_input=true
+	app.sound.set_muted(true)
+	app._start_or_restart()
+	app._countdown_remaining=0.0
+	app.session.new_game(42)
+	app._refresh()
+	var ticks := 0
+	while app.state.phase == "playing" and ticks < 3000:
+		if ticks % 10 == 0:
+			for slot in 4:
+				var location := Vector2(-2.7 if placements % 2 == 0 else 2.7, 1.3)
+				if app.state.hand[slot] == "thunderbolt": location.y=-3.0
+				if app.session.deploy(slot, location).get("ok", false):
+					placements+=1
+					break
+		app.session.tick()
+		app._refresh()
+		app.board.show_state(app.state, .1)
+		for token in app.board._tokens.values():
+			var sprite=token.get_node_or_null("Figure/PixelActor")
+			if sprite != null and sprite.clip in [app.board.NORTH_WALK,app.board.SOUTH_WALK]: walk_samples+=1
+		ticks+=1
+		await app.get_tree().process_frame
+		if ticks in [50,300]: await _capture(app, directory.path_join("battle-%04d.png" % ticks))
+	_check(app.state.phase == "finished", "Match reaches terminal state within 300 seconds")
+	_check(app.state == app.session.snapshot(), "Displayed result matches authoritative state")
+	_check(placements > 0, "Player made legal deployments")
+	_check(walk_samples > 0, "Export contains active walking sprites")
+	_check(app.battle_overlay.visible and app.start_button.text == "REMATCH", "Result screen offers rematch")
+	var expected := "VICTORY!" if app.state.winner == 0 else "DEFEAT" if app.state.winner == 1 else "DRAW"
+	_check(app.overlay_title.text == expected, "Result title agrees with winner")
+	await _capture(app, directory.path_join("result.png"))
+	var report := {"seed":42, "ticks":ticks, "simulation_seconds":app.state.elapsed,
+		"winner":app.state.winner, "legal_deployments":placements, "walking_actor_samples":walk_samples,
+		"timing":"Accelerated simulation with one native render opportunity per 0.1-second tick; not real-time video",
+		"exported":OS.has_feature("standalone")}
+	app._start_or_restart()
+	_check(app.state.phase == "playing" and app.state.elapsed == 0 and app.state.units.is_empty(), "Rematch resets match state")
+	report["failures"]=failures
+	report["passed"]=failures.is_empty()
+	var file := FileAccess.open(directory.path_join("verification.json"), FileAccess.WRITE)
+	if file == null:
+		push_error("Cannot write verification report")
+		app.get_tree().quit(2)
+		return
+	file.store_string(JSON.stringify(report, "\t"))
+	file.close()
+	print("Export match verification: %d ticks, %d legal deployments, %d failures" % [ticks,placements,failures.size()])
+	app.get_tree().quit(0 if failures.is_empty() else 1)
+
+func _check(condition: bool, description: String) -> void:
+	if not condition:
+		failures.append(description)
+		push_error(description)
+
+func _capture(app: Control, path: String) -> void:
+	await app.get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	_check(app.get_viewport().get_texture().get_image().save_png(path) == OK, "Native screenshot writes " + path.get_file())

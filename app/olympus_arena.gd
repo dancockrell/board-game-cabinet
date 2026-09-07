@@ -39,6 +39,7 @@ var pause_button: Button
 var sound
 var muted := false
 var notice := ""
+var _build_verifier: RefCounted
 
 func _ready() -> void:
 	catalog = session.catalog()
@@ -47,6 +48,10 @@ func _ready() -> void:
 	add_child(sound)
 	_refresh()
 	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--verify-build="):
+			_build_verifier=preload("res://app/build_verification.gd").new()
+			_build_verifier.run.call_deferred(self,argument.trim_prefix("--verify-build="))
+			return
 		if argument.begins_with("--capture="):
 			_capture(argument.trim_prefix("--capture="))
 
