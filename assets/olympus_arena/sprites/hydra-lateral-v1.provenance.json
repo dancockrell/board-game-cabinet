@@ -1,0 +1,16 @@
+{
+  "sha256": "FCFA45B59DD2BE75B58B772AB9A56015479EE96B679B2399E6B0357D132EFC25",
+  "prompt": "Reference Hydra identity and palette. Two rows four columns: east then west ready, inhale, bite, recoil. Exactly three heads, stout four-legged olive emerald bronze body, elevated pixel art camera, pure magenta backing, full creature margins. Same anchored body scale in each cell.",
+  "source_dimensions": [
+    1536,
+    1024
+  ],
+  "source": "exec-ef00d043-68f3-4417-aad4-af8e3e7fac14.png",
+  "limits": [
+    "Three-quarter lateral head turn rather than strict side profile",
+    "Three unique idle poses, four attack poses",
+    "Large inhale needs in-betweens; no walk"
+  ],
+  "generator": "built-in image_gen",
+  "status": "Native 90-frame study inspected; bounds and timing checks passed; board integration coordinator-owned"
+}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/hydra-lateral-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(0,512,384,512),Rect2i(384,512,384,512),Rect2i(0,512,384,512),Rect2i(1152,512,384,512)])
+pivot = Vector2(192,425)
+durations = PackedFloat32Array(0.45,0.35,0.45,0.35)
+draw_scale = 1.0
+depth_bias = 0.12
+looping = true
+magenta_backing = true
+
