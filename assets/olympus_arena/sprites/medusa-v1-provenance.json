@@ -1,0 +1,95 @@
+{
+  "asset_id": "olympus-medusa-v1",
+  "generator": "Built-in image_gen; no external API",
+  "generated_source": "C:/Users/Admin/.codex/generated_images/01a07d04-6afa-7073-aa6c-ae13d1ab8de2/exec-5a0dd7cd-b10b-46c7-8fcd-a403d735543a.png",
+  "sha256": "9c4636a745075b791f171fa54e8a897049661b1685ad540474668024cb3729fb",
+  "style_reference": "hoplite-south-v1.png",
+  "dimensions": [
+    1086,
+    1448
+  ],
+  "background": "Saturated magenta, original pixels preserved; runtime chroma shader. No pale background removal.",
+  "contract": "Adult Greek gorgon with olive snake hair, bronze diadem/bracers/belt, ivory chiton with emerald Greek-key trim, sandals and human legs. Elevated orthographic pixel sprite. South/north/east/west rows, ready/gather/gaze release columns.",
+  "prompt_summary": "Twelve isolated full-body Medusa sprites, 3 columns and 4 directional rows, consistent rich pixel-art Greek style matching hoplite reference. Three sequential petrifying gaze phases per row, no weapon, all limbs in frame, identical costume, pure magenta backing, no text/grid/scenery.",
+  "frame_geometry": {
+    "south": [
+      0,
+      380,
+      [
+        [
+          199,
+          361
+        ],
+        [
+          164,
+          361
+        ],
+        [
+          120,
+          368
+        ]
+      ]
+    ],
+    "north": [
+      380,
+      345,
+      [
+        [
+          202,
+          324
+        ],
+        [
+          162,
+          325
+        ],
+        [
+          122,
+          331
+        ]
+      ]
+    ],
+    "east": [
+      725,
+      340,
+      [
+        [
+          214,
+          325
+        ],
+        [
+          160,
+          325
+        ],
+        [
+          102,
+          325
+        ]
+      ]
+    ],
+    "west": [
+      1065,
+      383,
+      [
+        [
+          196,
+          331
+        ],
+        [
+          164,
+          331
+        ],
+        [
+          154,
+          331
+        ]
+      ]
+    ]
+  },
+  "admission": "Native four-direction stage reviewed: 8 resource validations and 4 attack/recovery checks pass; release inspected frame24, source preserved. Runtime integration separately owned by coordinator.",
+  "limitations": [
+    "Only three unique phases per direction with reverse gather used as recovery; no walking yet.",
+    "Small costume folds, snake count and posture vary between frames.",
+    "World effect for petrification remains separate from art; no baked beam.",
+    "West crops intentionally unequal to preserve release hand."
+  ]
+}
