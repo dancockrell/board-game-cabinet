@@ -2,7 +2,27 @@
 
 Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Windows pixel march checkpoint (current)
+## Parallel animated-world integration (current)
+
+Dedicated character work now supplies all seven combat types in the chosen pixel style. The board renders authored sprites for Hoplites, Atalanta, Medusa, Minotaur, Heracles, Hydra and Harpies; legacy figurine generation remains preserved but is no longer the normal roster renderer. Every attack is still triggered by the exact authoritative source ID. Multi-source SpriteClip frames preserve original generated PNGs while allowing draw/release phases from separate sheets.
+
+| Character | Integrated motion | Remaining animation limits |
+| --- | --- | --- |
+| Hoplites | Four attack/rest facings, four walking directions | Lateral march uses shared contact pose; richer transitions needed |
+| Atalanta | Four draw/release facings, north/south walk | Side walking and nocking in-betweens absent |
+| Medusa | Four directional gaze clips and walks | Front/rear gait has two contact phases |
+| Minotaur | Front/rear axe chops and walks | Lateral art and richer weight transfer absent |
+| Heracles | Four club attacks, north/south walk | Lateral walk and additional in-betweens absent |
+| Hydra | Front/rear breathing/head motion and bite | No lateral art or true locomotion cycle |
+| Harpies | Continuous front/rear wingbeats and talon strike | No lateral art; short four-phase wing loop |
+
+World motion: stepped sea/river ripples and waterfall flow, fluttering pennants/sails and traveling wakes, authored cypress/olive planters with leaf-only breeze, 1.35-second temple collapse with dust/debris, and 0.78-second unit departure with copied-frame dissolution. Manual clocks follow pause; rematch clears transient effects without replaying unit deaths. Authoritative positions and removal remain immediate. Gardens preserve footprint anchors and reduce stage to451 nodes.
+
+Native integration: 73 board checks, 79 roster checks, 56 app checks; stage agent176 checks; focused character/effect checks documented with their packages. A complete legal match has rendered all seven pixel character kinds, 30 legal player deployments and tower collapse; captures are accelerated functional evidence rather than real-time footage. Combined real-time and Windows checkpoints are refreshed separately. Original legacy shared archive remains untouched.
+
+GitHub Actions on327f80e failed before starting any job steps: account payment/spending-limit annotation. This is an external CI gate; local validation and successful pushes do not imply green hosted CI. No billing change requested or made.
+
+## Windows pixel march checkpoint (historical)
 
 Workspace outputs/Olympus-Pixel-March-Windows.zip refreshes the executable through source d2d8df2, including all four Hoplite attack facings, north/south walks, shrines/rubble and pixel paving. The package includes build source/hash, generation provenance, Godot notices and VERIFICATION.json. It is a local development artifact, not a GitHub release or final art acceptance.
 

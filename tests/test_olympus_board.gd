@@ -141,17 +141,18 @@ func run() -> void:
 	check(attacking.clip==board.SOUTH_REST, "South attack recovers in matching direction")
 	state.units[-1].x=1.9
 	board.show_state(state,.1)
-	check(attacking.clip==board.WEST_REST, "Leftward movement selects authored west rest")
+	check(attacking.clip==board.WEST_WALK, "Leftward movement selects authored west march")
 	state.events.append({"id":7,"kind":"hit","source_id":4,"source_type":"unit","side":0,"source_x":1.9,"source_z":2.0,"x":1.0,"z":2.0})
 	board.show_state(state)
 	check(attacking.clip==board.WEST_ATTACK, "Leftward target selects authored west attack without mirroring")
+	state.elapsed+=.6
 	board.show_state(state,.6)
 	check(attacking.clip==board.WEST_REST, "West attack recovers in matching direction")
 	board.show_state(state,.1)
 	check(attacking.clip==board.WEST_REST, "Stationary snapshot preserves west direction")
 	state.units[-1].x=2.0
 	board.show_state(state,.1)
-	check(attacking.clip==board._tokens[4].get_meta("front_rest"), "Rightward movement returns to east rest")
+	check(attacking.clip==board.EAST_WALK, "Rightward movement selects east march")
 	state.elapsed=10.0
 	state.units[-1].z=1.8
 	board.show_state(state,.1)
@@ -170,6 +171,15 @@ func run() -> void:
 	var paused_wing=harpy.texture.region
 	board.show_state(state,0.0)
 	check(harpy.texture.region==paused_wing,"Paused hovering retains exact wing phase")
+	var departures_before=board._departures.size()
+	state.units.pop_back()
+	board.show_state(state,0.0)
+	check(not board._tokens.has(99) and board._departures.size()==departures_before+1,"Removed unit leaves authority immediately while a separate pixel departure plays")
+	var departure=board._departures.back()
+	board.show_state(state,0.0)
+	check(departure.elapsed==0.0,"Paused departure clock stays frozen")
+	board.show_state(state,.9)
+	check(board._departures.is_empty(),"Pixel departures expire within their bounded lifetime")
 	await process_frame
 	print("Olympus board: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)

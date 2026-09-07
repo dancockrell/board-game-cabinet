@@ -69,6 +69,7 @@ func _run() -> void:
 	state.elapsed=0.0
 	board.show_state(state,.1)
 	check(board._tokens.is_empty(),"Rematch discards all roster replicas")
+	check(board._departures.is_empty(),"Rematch does not spawn death animations for reset units")
 	await process_frame
 	board.queue_free()
 	for frame in 4: await process_frame

@@ -1,4 +1,8 @@
 extends Node3D
+const DepartureFX = preload("res://presentation/olympus_unit_departure_fx.gd")
+const EAST_WALK = preload("res://themes/hoplite_east_walk.tres")
+const WEST_WALK = preload("res://themes/hoplite_west_walk.tres")
+const MINOTAUR_WALK = {"north":preload("res://themes/minotaur_north_walk.tres"),"south":preload("res://themes/minotaur_south_walk.tres")}
 const HERACLES_WALK = {"north":preload("res://themes/heracles_north_walk.tres"),"south":preload("res://themes/heracles_south_walk.tres")}
 const ATALANTA_WALK = {"north":preload("res://themes/atalanta_north_walk.tres"),"south":preload("res://themes/atalanta_south_walk.tres")}
 const HYDRA_IDLE = {"north":preload("res://themes/hydra_north_idle.tres"),"south":preload("res://themes/hydra_south_idle.tres")}
@@ -48,6 +52,7 @@ var ambient_life
 var combat_fx
 var stage
 var _collapses: Array = []
+var _departures: Array = []
 
 func _ready() -> void:
 	_setup()
@@ -115,13 +120,24 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 	_setup()
 	stage.advance_visual(delta)
 	_time += delta
-	if float(state.get("elapsed", 0.0)) < _last_elapsed:
+	var resetting := float(state.get("elapsed", 0.0)) < _last_elapsed
+	if resetting:
+		for departure in _departures:
+			if is_instance_valid(departure): departure.queue_free()
+		_departures.clear()
 		for collapse in _collapses: collapse.fx.queue_free()
 		_collapses.clear()
 		_last_event = -1
 		for effect in _effects: effect.node.queue_free()
 		_effects.clear()
 	_last_elapsed = float(state.get("elapsed", 0.0))
+	for i in range(_departures.size()-1,-1,-1):
+		var departure = _departures[i]
+		if not is_instance_valid(departure):
+			_departures.remove_at(i)
+			continue
+		departure.advance_visual(delta)
+		if departure.elapsed >= DepartureFX.LIFETIME: _departures.remove_at(i)
 	for i in range(_collapses.size()-1,-1,-1):
 		var collapse = _collapses[i]
 		collapse.fx.advance_visual(delta)
@@ -165,11 +181,12 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 				node.set_meta("motion_active", moved)
 				node.set_meta("motion_tick", float(state.get("elapsed", -1.0)))
 			var moving := bool(node.get_meta("motion_active", false))
-			var walks := {"north": NORTH_WALK, "south": SOUTH_WALK}
+			var walks := {"north": NORTH_WALK, "south": SOUTH_WALK, "east":EAST_WALK, "west":WEST_WALK}
 			if str(node.get_meta("kind", "")) != "hoplites": walks={}
 			if str(node.get_meta("kind", "")) == "medusa": walks=MEDUSA_WALK
 			if str(node.get_meta("kind", "")) == "atalanta": walks=ATALANTA_WALK
 			if str(node.get_meta("kind", "")) == "heracles": walks=HERACLES_WALK
+			if str(node.get_meta("kind", "")) == "minotaur": walks=MINOTAUR_WALK
 			var locomotion=walks.get(str(node.get_meta("pixel_facing", "east"))) if moving else null
 			if str(node.get_meta("kind", "")) == "harpies":
 				locomotion=HARPIES_FLIGHT[str(node.get_meta("pixel_facing", "south"))]
@@ -181,7 +198,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)
 	for id in _tokens.keys():
 		if not alive.has(id):
-			_departure(_tokens[id])
+			if not resetting: _departure(_tokens[id])
 			_tokens[id].queue_free()
 			_tokens.erase(id)
 	_mark_attack_events(state.get("events", []))
@@ -290,6 +307,13 @@ func _tint_ghost(node: Node) -> void:
 	for child in node.get_children(): _tint_ghost(child)
 
 func _departure(unit: Node3D) -> void:
+	var source = unit.get_node_or_null("Figure/PixelActor")
+	if source != null:
+		var departure := DepartureFX.new()
+		add_child(departure)
+		if departure.begin(source): _departures.append(departure)
+		else: departure.queue_free()
+		return
 	# A short separate cosmetic burst never delays authoritative unit removal.
 	var cloud := Node3D.new()
 	add_child(cloud)
