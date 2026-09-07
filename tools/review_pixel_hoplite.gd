@@ -7,6 +7,9 @@ func _run() -> void:
 		if arg.begins_with("--source="): source=arg.trim_prefix("--source=")
 		if arg.begins_with("--capture="): output=arg.trim_prefix("--capture=")
 	if not source.is_absolute_path() or not output.is_absolute_path(): quit(2); return
+	if "--guard-motion" in OS.get_cmdline_user_args():
+		await _review_guard(output)
+		return
 	var img:=Image.load_from_file(source)
 	if img==null: quit(2); return
 	var texture:=ImageTexture.create_from_image(img)
@@ -77,3 +80,38 @@ func _review_poses(texture: Texture2D, output: String) -> void:
 	await RenderingServer.frame_post_draw
 	var error:=root.get_texture().get_image().save_png(output)
 	quit(0 if error==OK else 2)
+
+func _review_guard(output: String) -> void:
+	root.size=Vector2i(1440,960)
+	var board:=preload("res://presentation/olympus_arena_board.gd").new()
+	root.add_child(board)
+	board.camera.size=6.0
+	board.camera.position=Vector3(0,10.5,14)
+	board.camera.look_at(Vector3(0,.6,3))
+	var guard=load("res://themes/hoplite_guard_clip.tres")
+	var rest=guard.duplicate()
+	rest.regions.assign([guard.regions[0]])
+	rest.durations=PackedFloat32Array([1.0])
+	rest.looping=true
+	var actor:=preload("res://presentation/pixel_actor.gd").new()
+	board.add_child(actor)
+	actor.pixel_size=.003
+	actor.position=Vector3(0,.15,3)
+	actor.reset_playback(rest)
+	var title:=Label.new()
+	title.text="HOPLITE GUARD / EVENT-DRIVEN ANIMATION TRIAL / NOT GAMEPLAY"
+	title.position=Vector2(30,25)
+	root.add_child(title)
+	var folder:=output.get_basename()+"-frames"
+	DirAccess.make_dir_recursive_absolute(folder)
+	for frame in 90:
+		if frame==15: actor.react_to_hit(1,guard)
+		if frame==25: actor.react_to_hit(1,guard) # repeated snapshot must not restart
+		actor.advance_visual(1.0/30.0)
+		for tick in 2: await process_frame
+		await RenderingServer.frame_post_draw
+		var img:=root.get_texture().get_image()
+		if img.save_png(folder.path_join("frame-%04d.png"%frame))!=OK: quit(2); return
+		if frame==24: img.save_png(output)
+	print("Guard trial: 90 frames, repeated event did not restart playback")
+	quit()

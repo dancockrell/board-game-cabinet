@@ -1,0 +1,18 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-edeae209-3033-482c-a9c5-db219114efa7.png",
+  "sha256": "7d01404937ad3a0c8ebf0092bb698ef9ed4ad324b4f427b34542fc7532846b3e",
+  "status": "native_animation_trial_not_live_roster",
+  "request": "Four ordered low-to-high shield-block frames, fixed planted feet, identity from personality candidate; true alpha",
+  "observed": "RGBA 2172x724, four shield heights; scale and owl details still require gameplay review",
+  "presentation_sequence": [
+    0,
+    1,
+    2,
+    3,
+    2,
+    1,
+    0
+  ],
+  "sequence_note": "Authored symmetric shield lowering after impact hold, no invented walk cycle"
+}

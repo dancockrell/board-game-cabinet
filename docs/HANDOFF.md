@@ -2,6 +2,10 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Active delivery goal
+
+[Make the playable pixel-art Greek arena game](ACTIVE_GAME_GOAL.md) is the user-requested active goal. First event-driven guard clip is implemented and tested in native diagnostic; actual match integration, locomotion, attack and roster conversion remain.
+
 ## Latest pose production
 
 [Hoplite pose reserve](HOPLITE_POSE_RESERVE.md): 18 varied static candidates, six inspected in the native chroma preview. Shared 2D sources and rejected-output findings preserved. No finished animation implied.

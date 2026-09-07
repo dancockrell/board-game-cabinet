@@ -4,6 +4,35 @@ const Clip = preload("res://presentation/sprite_clip.gd")
 var clip: Clip
 var _atlas := AtlasTexture.new()
 var _shown := -1
+var _rest_clip: Clip
+var _reaction_elapsed := -1.0
+var _last_hit_event := -1
+
+func reset_playback(rest: Clip) -> bool:
+	if not set_clip(rest): return false
+	_rest_clip=rest
+	_reaction_elapsed=-1.0
+	_last_hit_event=-1
+	return true
+
+func react_to_hit(event_id: int, reaction: Clip) -> bool:
+	if event_id <= _last_hit_event or reaction == null or reaction.looping: return false
+	if not set_clip(reaction): return false
+	_last_hit_event=event_id
+	_reaction_elapsed=0.0
+	return true
+
+func advance_visual(delta: float) -> void:
+	if _reaction_elapsed < 0 or not is_finite(delta) or delta < 0: return
+	_reaction_elapsed+=delta
+	var duration:=0.0
+	for seconds in clip.durations: duration+=seconds
+	if _reaction_elapsed >= duration and _rest_clip != null:
+		set_clip(_rest_clip)
+		_reaction_elapsed=-1.0
+	else:
+		show_time(_reaction_elapsed)
+
 
 func _init() -> void:
 	billboard = BaseMaterial3D.BILLBOARD_ENABLED
