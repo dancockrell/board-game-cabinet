@@ -1,4 +1,5 @@
 extends SceneTree
+const GuardClip = preload("res://themes/hoplite_guard_clip.tres")
 func _initialize() -> void: _run.call_deferred()
 func _run() -> void:
 	var source:=ProjectSettings.globalize_path("res://docs/art-references/hoplite-directions-candidate.png")
@@ -88,8 +89,10 @@ func _review_guard(output: String) -> void:
 	board.camera.size=6.0
 	board.camera.position=Vector3(0,10.5,14)
 	board.camera.look_at(Vector3(0,.6,3))
-	var guard=load("res://themes/hoplite_guard_clip.tres")
-	var rest=guard.duplicate()
+	var guard=GuardClip
+	var rest=preload("res://presentation/sprite_clip.gd").new()
+	rest.atlas=guard.atlas
+	rest.pivot=guard.pivot
 	rest.regions.assign([guard.regions[0]])
 	rest.durations=PackedFloat32Array([1.0])
 	rest.looping=true

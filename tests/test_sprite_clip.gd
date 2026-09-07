@@ -1,9 +1,11 @@
 extends SceneTree
+const GuardClip=preload("res://themes/hoplite_guard_clip.tres")
 const Clip=preload("res://presentation/sprite_clip.gd")
 var failures:=0
 func check(value: bool, label: String) -> void:
 	if not value: failures+=1; push_error(label)
 func _initialize() -> void:
+	check(GuardClip is Clip and GuardClip.validation_error()=="","Shipped guard Resource loads its script, atlas and timing")
 	var clip:=Clip.new()
 	var img:=Image.create(64,32,false,Image.FORMAT_RGBA8)
 	clip.atlas=ImageTexture.create_from_image(img)
@@ -40,5 +42,5 @@ func _initialize() -> void:
 		actor.reset_playback(rest)
 		check(actor.react_to_hit(0,clip),"Rematch accepts new event numbering")
 		actor.free()
-	print("Sprite clip: %s checks, %s failures"%[7 if DisplayServer.get_name()=="headless" else 16,failures])
+	print("Sprite clip: %s checks, %s failures"%[8 if DisplayServer.get_name()=="headless" else 17,failures])
 	quit(1 if failures else 0)
