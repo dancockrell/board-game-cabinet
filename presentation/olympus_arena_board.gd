@@ -273,7 +273,7 @@ func _mark_attack_events(events: Array) -> void:
 			var sprite=attacker.get_node_or_null("Figure/PixelActor")
 			if sprite != null:
 				var direction:=Vector2(float(event.x)-float(event.get("source_x",attacker.position.x)),float(event.z)-float(event.get("source_z",attacker.position.z)))
-				_face_pixel_unit(attacker,direction)
+				_face_pixel_unit(attacker,direction,true)
 				var facing=str(attacker.get_meta("pixel_facing","east"))
 				var attacks:={"north":NORTH_ATTACK,"south":SOUTH_ATTACK,"west":WEST_ATTACK,"east":THRUST_CLIP}
 				if str(attacker.get_meta("kind", "")) == "atalanta": attacks=ATALANTA_ATTACK
@@ -284,13 +284,28 @@ func _mark_attack_events(events: Array) -> void:
 				if str(attacker.get_meta("kind", "")) == "hydra": attacks=HYDRA_ATTACK
 				sprite.play_attack(event_id, attacks[facing])
 
-func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
+func _face_pixel_unit(node: Node3D, direction: Vector2, attack_target := false) -> void:
 	var sprite=node.get_node_or_null("Figure/PixelActor")
 	if sprite==null or direction.length_squared()<0.000001: return
+	# Crowd correction is movement, not a new attack direction. Keep a playing
+	# action oriented toward its actual target until the action finishes.
+	if not attack_target and sprite._reaction_elapsed >= 0.0: return
+	var previous := str(node.get_meta("pixel_facing", ""))
 	var north:=direction.y<0 and absf(direction.y)>=absf(direction.x)
 	var south:=direction.y>0 and absf(direction.y)>=absf(direction.x)
 	var facing:="north" if north else ("south" if south else ("west" if direction.x<0 else "east"))
-	if str(node.get_meta("kind", "")) in ["minotaur","harpies","hydra"]: facing="north" if direction.y<0 else "south"
+	if str(node.get_meta("kind", "")) in ["minotaur","harpies","hydra"]:
+		# With only front/rear art, almost lateral motion must not flip the
+		# entire creature because of a tiny positive/negative crowd adjustment.
+		facing="north" if direction.y<0 else "south"
+		if previous in ["north","south"] and absf(direction.normalized().y)<0.2:
+			facing=previous
+	elif not attack_target and previous in ["north","south","east","west"]:
+		var axes := {"north":Vector2.UP,"south":Vector2.DOWN,"east":Vector2.RIGHT,"west":Vector2.LEFT}
+		# A ten-degree overlap around the 45-degree movement boundary prevents
+		# repeated turns while following a bridge or separating from an ally.
+		if direction.normalized().dot(axes[previous]) >= cos(deg_to_rad(55.0)):
+			facing=previous
 	node.set_meta("pixel_facing",facing)
 	var poses:={"north":NORTH_REST,"south":SOUTH_REST,"west":WEST_REST,"east":node.get_meta("front_rest")}
 	if str(node.get_meta("kind", "")) == "atalanta": poses=ATALANTA_REST
