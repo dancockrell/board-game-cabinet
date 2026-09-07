@@ -177,17 +177,12 @@ func _mark_attack_events(events: Array) -> void:
 		var event_id := int(event.get("id", -1))
 		if event_id <= _last_event: continue
 		_last_event = event_id
-		if str(event.get("kind", "")) != "hit" or not event.has("source_x"): continue
-		var source := Vector2(float(event.source_x), float(event.source_z))
-		var closest: Node3D
-		var best := 0.8
-		for token in _tokens.values():
-			if int(token.get_meta("side", -1)) != int(event.get("side", -2)): continue
-			var distance := Vector2(token.position.x, token.position.z).distance_to(source)
-			if distance < best:
-				best = distance
-				closest = token
-		if closest: closest.set_meta("attack_until", _time + 0.24)
+		if str(event.get("kind", "")) != "hit": continue
+		# Missing/departed sources are skipped, never reassigned to a nearby actor.
+		if str(event.get("source_type", "")) != "unit": continue
+		var attacker = _tokens.get(event.get("source_id"))
+		if attacker != null:
+			attacker.set_meta("attack_until", _time + 0.24)
 
 func _tint_ghost(node: Node) -> void:
 	if node is Sprite3D: node.modulate=Color(.35,.8,1,.45)

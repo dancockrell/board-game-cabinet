@@ -329,7 +329,7 @@ func _attack(unit: Dictionary, target: Dictionary) -> void:
 		for enemy in _state.units:
 			if str(enemy.id) != str(target.get("id")) and enemy.side != unit.side and not enemy.flying and _position(enemy).distance_to(_position(target)) < 1.0:
 				_hurt(enemy, float(unit.damage) * 0.65)
-	_event("hit", _position(target), unit.side, _position(unit), {"source_kind":unit.kind, "target_kind":target.kind, "damage":damage, "charged":charged})
+	_event("hit", _position(target), unit.side, _position(unit), {"source_id":unit.id, "source_type":"unit", "target_id":target.id, "source_kind":unit.kind, "target_kind":target.kind, "damage":damage, "charged":charged})
 
 func _hurt(target: Dictionary, damage: float) -> void:
 	target.hp -= damage
@@ -353,7 +353,7 @@ func _step_tower(tower: Dictionary) -> void:
 		var damage := 32.0 if tower.kind == "tower" else 42.0
 		_hurt(closest, damage)
 		tower.cooldown = 0.9
-		_event("hit", _position(closest), tower.side, _position(tower), {"source_kind":tower.kind, "target_kind":closest.kind, "damage":damage})
+		_event("hit", _position(closest), tower.side, _position(tower), {"source_id":tower.id, "source_type":"tower", "target_id":closest.id, "source_kind":tower.kind, "target_kind":closest.kind, "damage":damage})
 
 func _cleanup() -> void:
 	_state.units = _state.units.filter(func(unit: Dictionary) -> bool: return unit.hp > 0)

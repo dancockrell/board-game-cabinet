@@ -2,6 +2,10 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Attack source identity
+
+Hit events now include source_id, source_type and target_id from the authoritative simulation. Attack feedback targets that exact unit; it no longer chooses the nearest friendly replica. Missing sources and tower attacks cannot animate nearby troops. Native regression includes a closer neighbour and separate tower/missing-source events. 775 arena-rule checks and 41 native board checks pass. New thrust pose sheet is preserved as a candidate only; see HOPLITE_POSE_RESERVE.md for layout and scale defects. Latest Windows checkpoint predates this source change.
+
 ## Destroyed building increment
 
 Zero-health towers now switch to matching authored rubble instead of compressing the intact shrine. Repeated dead snapshots retain the current sprite/material; restoring a tower restores the intact clip and removes the chroma material. Authoritative coordinates and scale remain unchanged. Initial checkerboard output was rejected; built-in generation corrected its background to saturated magenta. The source is preserved unchanged, and an opt-in clip shader discards only strongly saturated magenta. Native close-up reviewed in outputs/Pixel-Shrine-Ruins.png; this is static rubble, not animated collapse. Board transition/reset checks, native sprite/app checks and 773 arena rules checks pass.

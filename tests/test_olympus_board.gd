@@ -79,14 +79,20 @@ func run() -> void:
 	board.show_state(state, 0.6)
 	board.show_state(state, 0.6)
 	check(board.combat_fx.effects.is_empty(), "Event visual expires")
-	state.events.append({"id":1,"kind":"hit","x":1.0,"z":1.0,"side":0,"source_x":0.0,"source_z":0.0})
-	state.units = [{"id":2,"kind":"atalanta","side":0,"x":0.0,"z":0.0,"hp":100.0,"max_hp":100.0}]
+	state.events.append({"id":1,"kind":"hit","source_id":2,"source_type":"unit","x":1.0,"z":1.0,"side":0,"source_x":0.0,"source_z":0.0})
+	state.units = [{"id":2,"kind":"atalanta","side":0,"x":0.4,"z":0.0,"hp":100.0,"max_hp":100.0}]
+	state.units.append({"id":3,"kind":"atalanta","side":0,"x":0.0,"z":0.0,"hp":100.0,"max_hp":100.0})
 	board.show_state(state)
 	var has_tracer := false
 	for effect in board.combat_fx.effects:
 		if str(effect.motion) == "projectile": has_tracer = true
 	check(has_tracer, "Source-aware hit creates tracer")
 	check(float(board._tokens[2].get_meta("attack_until", 0.0)) > board._time, "Hit event triggers presentation-only attack follow-through")
+	check(not board._tokens[3].has_meta("attack_until"), "Closer neighbour does not steal identified attack")
+	state.events.append({"id":2,"kind":"hit","source_id":3,"source_type":"tower","side":0,"x":1.0,"z":1.0})
+	state.events.append({"id":3,"kind":"hit","source_id":999,"source_type":"unit","side":0,"x":1.0,"z":1.0})
+	board.show_state(state)
+	check(not board._tokens[3].has_meta("attack_until"), "Tower and missing sources are never reassigned to a unit")
 	board.show_state(state, 0.2)
 	board.show_state(state, 0.4)
 	check(board.combat_fx.effects.is_empty(), "Tracer and impact expire")

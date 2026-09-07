@@ -148,10 +148,12 @@ func _combat_checks() -> void:
 	_check(enemy.hp < enemy_before, "Heracles hitting a string-ID tower also splashes nearby integer-ID units")
 	var hit: Dictionary = game.snapshot().events.back()
 	_check(hit.has("source_x") and hit.has("source_z") and is_equal_approx(hit.source_x, hero.x) and is_equal_approx(hit.source_z, hero.z), "Hit event records authoritative projectile origin")
+	_check(hit.source_id==hero.id and hit.source_type=="unit" and hit.target_id==tower.id, "Unit attack preserves exact source and target IDs")
 	_check(hit.source_kind == "heracles" and hit.target_kind == "tower" and is_equal_approx(hit.damage, hero.damage), "Unit hit identifies attacker, target type, and applied damage")
 	tower.cooldown = 0.0
 	game._step_tower(tower)
 	var tower_hit: Dictionary = game.snapshot().events.back()
+	_check(tower_hit.source_id==tower.id and tower_hit.source_type=="tower" and tower_hit.target_id==hero.id, "Tower attack preserves exact source and target IDs")
 	_check(tower_hit.source_kind == "tower" and tower_hit.target_kind == "heracles" and tower_hit.damage == 32.0, "Tower hit identifies source and target types with actual damage")
 
 func _check(condition: bool, label: String) -> void:

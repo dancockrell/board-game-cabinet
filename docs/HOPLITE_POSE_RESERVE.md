@@ -21,3 +21,7 @@ Run:
 `godot --path . --script tools/review_pixel_hoplite.gd -- --source=ABSOLUTE/docs/art-references/hoplite-personality-candidate.png --capture=ABSOLUTE/output.png --pose-sheet`
 
 Next: preserve strong combat contacts and reactions, generate targeted intermediate poses for one complete action, validate transitions at game scale. Do not bulk-generate a roster before one sequence works.
+
+## Thrust sequence candidate
+
+2026-09-07 built-in generation exec-7934d9ba-8084-453c-a364-aac22fa903f5.png, preserved at docs/art-references/hoplite-thrust-candidate.png. Four distinct drawn-back/extend/thrust/retract poses with saturated magenta backing. This improves action contacts over the earlier generic reserve, but it is not admitted: output is 2172x724 instead of the requested four square cells; spear and foot extents cross nominal equal cell boundaries, and body scale differs from the live guard clip. Do not cut it automatically into quarters or count it as a finished attack. Needs source-specific regions/pivots or corrected layout, native playback review, and matching attack directions.
