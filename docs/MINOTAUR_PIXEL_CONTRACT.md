@@ -4,6 +4,7 @@ Provisional authored sprite replacement. Built-in image generation only; source 
 
 ## Integration
 
+- `themes/minotaur_north_rest.tres` / `themes/minotaur_north_attack.tres`: rear counterpart, same timing, no mirroring. Native review accepts `--north`.
 - `themes/minotaur_south_rest.tres`: single ready frame, looping.
 - `themes/minotaur_south_attack.tres`: four frames, 0.59-second two-handed axe chop, nonlooping. Actual art faces southeast.
 - Use `PixelActor`, suggested pixel_size 0.0034. Resources apply draw_scale 1.9 and depth_bias 0.20. Keep node at authoritative unit position; frame pivots anchor hooves.
@@ -12,4 +13,4 @@ Provisional authored sprite replacement. Built-in image generation only; source 
 
 ## Validation and limits
 
-Native import and staged resource/recovery checks passed. Contact frame inspected with clean empty background and intact axe; only one facing admitted so far. Four frames remain a coarse chop; no walking, rear animation or death sequence yet. Small purple contour remnants remain around isolated fur pixels at close zoom. This is a usable first roster conversion, not final art acceptance.
+Native import and staged resource/recovery checks passed. Contact frame inspected with clean empty background and intact axe; front and rear facings admitted. Four frames remain a coarse chop; no walking, lateral animation or death sequence yet. Small purple contour remnants remain around isolated fur pixels at close zoom. This is a usable first roster conversion, not final art acceptance.

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/minotaur-north-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+magenta_backing = true
+draw_scale = 1.9
+depth_bias = 0.20
+regions = Array[Rect2i]([Rect2i(0,0,543,724)])
+pivot = Vector2(359,606)
+durations = PackedFloat32Array(1.0)
+looping = true

@@ -1,0 +1,9 @@
+{
+  "asset": "assets\\olympus_arena\\sprites\\minotaur-north-v1.png",
+  "sha256": "5cd552422ab10bac5c29cea8a1e7ef1322c7c2b0c0e2c0110cb5b00ea6b56388",
+  "generator": "built-in image_gen",
+  "source": "exec-5c5b947d-f3e7-42dc-bb9d-c132cac9fdbf.png",
+  "reference": "minotaur-south-v1.png",
+  "prompt_summary": "Rear counterpart; same Greek brown bull with blue skirt and bronze axe, four sequential overhead chop phases, elevated camera, solid magenta with wide gutters.",
+  "admission": "provisional native-reviewed rear ready and chop, no source processing"
+}
