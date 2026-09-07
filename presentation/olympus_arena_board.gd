@@ -53,6 +53,7 @@ var combat_fx
 var stage
 var _collapses: Array = []
 var _departures: Array = []
+var damage_numbers
 
 func _ready() -> void:
 	_setup()
@@ -113,6 +114,8 @@ func _setup() -> void:
 	add_child(ambient_life)
 	combat_fx = preload("res://presentation/olympus_combat_fx.gd").new()
 	add_child(combat_fx)
+	damage_numbers = preload("res://presentation/olympus_damage_numbers.gd").new()
+	add_child(damage_numbers)
 	_preview = _cylinder(self, 0.6, 0.035, Vector3.ZERO, Color(0.3, 0.8, 1, 0.5))
 	_preview.visible = false
 
@@ -122,6 +125,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 	_time += delta
 	var resetting := float(state.get("elapsed", 0.0)) < _last_elapsed
 	if resetting:
+		damage_numbers.clear()
 		for departure in _departures:
 			if is_instance_valid(departure): departure.queue_free()
 		_departures.clear()
@@ -131,6 +135,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		for effect in _effects: effect.node.queue_free()
 		_effects.clear()
 	_last_elapsed = float(state.get("elapsed", 0.0))
+	damage_numbers.advance_visual(delta)
 	for i in range(_departures.size()-1,-1,-1):
 		var departure = _departures[i]
 		if not is_instance_valid(departure):
@@ -497,21 +502,8 @@ func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
 			node.set_meta("damage_serial",serial)
 			if str(node.get_meta("kind", ""))=="hoplites" and node.get_meta("pixel_facing","east")=="east": sprite.react_to_hit(serial,HOPLITE_GUARD)
 		timer = 0.22
-		var number := Label3D.new()
-		number.text = "−%d" % roundi(previous_hp-hp)
-		number.font_size = 42
-		number.pixel_size = .009
-		number.outline_size = 8
-		number.modulate = Color("fff2bc")
-		number.outline_modulate = Color("583328")
-		number.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-		number.no_depth_test = true
-		add_child(number)
-		number.position = node.position + Vector3(.12,1.62,0)
-		var rise := create_tween().set_parallel(true)
-		rise.tween_property(number,"position:y",number.position.y+.65,.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		rise.tween_property(number,"modulate:a",0.0,.25).set_delay(.30)
-		rise.chain().tween_callback(number.queue_free)
+		var height: float = node.get_node("Health").position.y + 0.32
+		damage_numbers.show_loss(node.get_instance_id(), node.position + Vector3(0,height,0), previous_hp-hp)
 	node.set_meta("previous_hp", hp)
 	node.set_meta("hit_time", timer)
 	var hit: MeshInstance3D = node.get_node("Hit")

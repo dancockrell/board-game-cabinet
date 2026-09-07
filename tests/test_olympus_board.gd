@@ -157,8 +157,9 @@ func run() -> void:
 	state.units[-1].z=1.8
 	board.show_state(state,.1)
 	check(attacking.clip==board.NORTH_WALK, "New simulation tick starts stride")
+	var stride_before: float = attacking._motion_elapsed
 	board.show_state(state,.2)
-	check(attacking.clip==board.NORTH_WALK and attacking.texture.region==Rect2(board.NORTH_WALK.regions[1]), "Repeated render snapshot retains and advances stride")
+	check(attacking.clip==board.NORTH_WALK and is_equal_approx(attacking._motion_elapsed,stride_before+.2) and attacking.texture.region==Rect2(board.NORTH_WALK.regions[board.NORTH_WALK.frame_at(stride_before+.2)]), "Repeated render snapshot retains and advances the existing stride phase")
 	state.elapsed=10.1
 	board.show_state(state,.1)
 	check(attacking.clip==board.NORTH_REST, "Next stationary simulation tick stops stride")
