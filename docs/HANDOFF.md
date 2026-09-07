@@ -2,7 +2,15 @@
 
 Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Southward walking cycle (current)
+## Windows pixel march checkpoint (current)
+
+Workspace outputs/Olympus-Pixel-March-Windows.zip refreshes the executable through source d2d8df2, including all four Hoplite attack facings, north/south walks, shrines/rubble and pixel paving. The package includes build source/hash, generation provenance, Godot notices and VERIFICATION.json. It is a local development artifact, not a GitHub release or final art acceptance.
+
+The exported executable supports an explicit diagnostic launch: `Olympus.exe -- --verify-build=C:/absolute/output-directory`. Normal launch is unchanged. This runs legal seed-42 deployments and ticks, captures native battle/result images, checks state agreement, terminal outcome and rematch, and writes a report before exiting. Simulation is accelerated with render opportunities per tick; screenshots do not represent real-time footage. No player saves are touched. Earlier checks completed 1,800 ticks, 30 legal deployments and 1,630 walking actor samples. Native result inspection also caught a floating-point timer residue showing 0:01 at expiry; the final source clamps that residue and verifies 0:00.
+
+Arena rules: 775 checks pass. Preserved chess rules/perft pass; independent oracle covers 960 positions and 23,179 moves without failures. Other art, roster and polish work remains as described below. Older Windows references below are historical checkpoints.
+
+## Southward walking cycle
 
 Both main-lane directions now have authored walking clips. South adds four alternating planted/raised-leg phases with upright spear and consistent shield hand. Two generated drafts repeated a leading leg; targeted corrections produced the admitted v3 source. Rejected drafts are preserved locally under work/rejected-south-walk. The unmodified source, provenance and individual pivots are committed. Source generation used only built-in image_gen.
 
