@@ -1,0 +1,12 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-a3dc796f-eb49-4639-93da-0706d47729e4.png",
+  "sha256": "48ae9e5034487713f6fd534df5948fd9032833afa618f4fb4d46598ea87030f6",
+  "created": "2026-09-07",
+  "status": "runtime terrain increment, native review; not final battlefield",
+  "request": "Original warm Greek limestone paving, overhead, restrained pixel art, no objects, typography or directional shadows.",
+  "reference": "User-provided pixel-world sheet: style reference only, not shipped",
+  "masking": "Opaque source; no masking or image postprocessing",
+  "mapping": "One full patch per half-field; shader clamps bounds, does not rely on seamless tiling",
+  "limitations": "Rest of stage and roster still use legacy art; nearest mipmap sampling means pixel clusters soften with distance."
+}

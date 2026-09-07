@@ -2,13 +2,17 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Pixel battlefield increment
+
+Authored limestone paving now replaces procedural field/lane stone through a shared ShaderMaterial Resource. Existing footprints, ground picking and simulation are unchanged. Source and provenance live in assets/olympus_arena/terrain. Native match review exposed excessive brightness; field/lane tints were reduced. Validation: 35 native board checks and 55 native app checks passed; final 180-frame native capture completed at 30 fps with six legal placements, through 44 seconds of authoritative match time. Still inspected at outputs/Olympus-Pixel-Paving-Match.png. This is the first terrain material conversion, not a completed pixel environment; bridges, temples, borders, vegetation, water and other units still need conversion.
+
 ## Live pixel integration checkpoint
 
 [Pixel Hoplites now run in matches](PIXEL_LIVE_CHECKPOINT.md), reacting to authoritative health loss. Windows interim build smoke passed. Static locomotion, fixed facing, missing attacks and legacy rest of roster remain visible work; do not confuse this with the goal being complete.
 
 ## Active delivery goal
 
-[Make the playable pixel-art Greek arena game](ACTIVE_GAME_GOAL.md) is the user-requested active goal. First event-driven guard clip is implemented and tested in native diagnostic; actual match integration, locomotion, attack and roster conversion remain.
+[Make the playable pixel-art Greek arena game](ACTIVE_GAME_GOAL.md) is the user-requested active goal. First event-driven guard clip is implemented and tested in native diagnostic; actual match integration is implemented; locomotion, attack and roster conversion remain.
 
 ## Latest pose production
 
@@ -16,7 +20,7 @@ Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.
 
 ## Latest implementation and shared archive
 
-See [pixel implementation checkpoint](PIXEL_IMPLEMENTATION.md): old art/model workshop preserved in shared storage; new sprite clip Resource and camera-facing renderer implemented and tested. Static front/back native preview exists; live roster migration remains pending coherent animation.
+See [pixel implementation checkpoint](PIXEL_IMPLEMENTATION.md): old art/model workshop preserved in shared storage; new sprite clip Resource and camera-facing renderer implemented and tested. Static front/back native preview exists; Hoplites run in matches, while full roster migration remains pending coherent animation.
 
 ## Current visual authority
 

@@ -2,7 +2,7 @@ extends Node3D
 ## Presentation-only scenery. Never owns combat, placement, or navigation state.
 const ROCK = preload("res://themes/olympus_shared_rock.tres")
 const WATER = preload("res://presentation/olympus_water.gdshader")
-const PAVING = preload("res://presentation/olympus_paving.gdshader")
+const PIXEL_PAVING = preload("res://themes/olympus_pixel_paving.tres")
 const STONE = preload("res://presentation/olympus_limestone.gdshader")
 const IVORY = Color("989184")
 const SAND = Color("7c715f")
@@ -39,16 +39,11 @@ func _foundation() -> void:
 func _field() -> void:
 	for side in [-1, 1]:
 		var field := _box(Vector3(10.25, 0.10, 7.5), Vector3(0, 0.025, side * 4.55), IVORY)
-		var paving := ShaderMaterial.new()
-		paving.shader = PAVING
-		paving.set_shader_parameter("stone_color", Color("7c8074") if side == 1 else Color("858070"))
-		field.material_override = paving
+		field.material_override = PIXEL_PAVING
 		for x in [-2.7, 2.7]:
 			var lane := _box(Vector3(1.65, 0.025, 6.95), Vector3(x, 0.086, side * 4.35), IVORY)
-			var lane_mat := ShaderMaterial.new()
-			lane_mat.shader = PAVING
-			lane_mat.set_shader_parameter("stone_color", IVORY)
-			lane_mat.set_shader_parameter("block_size", 0.55)
+			var lane_mat := PIXEL_PAVING.duplicate()
+			lane_mat.set_shader_parameter("tint", Color(0.72, 0.77, 0.70))
 			lane.material_override = lane_mat
 			for edge in [-0.86, 0.86]:
 				_box(Vector3(0.04, 0.026, 6.95), Vector3(x + edge, 0.09, side * 4.35), SAND)
