@@ -1,0 +1,20 @@
+{
+  "generator": "built-in image_gen",
+  "source": "exec-499aa2a6-4176-4f1a-a756-83e1bbeb97f9.png",
+  "sha256": "9922dff1af3d596e91b75e422aa729e21824ee1a12085f985cbf8e6e363b4689",
+  "reference": "hoplite-west-v1.png",
+  "status": "provisional lateral march; selected raised-leg phases, shared contact pose",
+  "sequence": [
+    0,
+    1,
+    0,
+    3
+  ],
+  "processing": "Unmodified source. Runtime magenta key and individual crop/pivot Resource metadata. No body mirroring.",
+  "prompt": "Two rows of four independent west/east hoplite walking frames, upright spear right hand and owl shield left hand. Flat magenta. Correction: opposite lifted knee in fourth column.",
+  "limitations": [
+    "Both lifted-leg phases present; opposite extended-contact phase not achieved. Shared contact pose deliberately reused.",
+    "Four temporal phases, three distinct poses per direction. Not a smooth final walk.",
+    "Last correction exec-25819140-7a39-4bc4-a49e-343ad0aae816.png regressed and is not admitted."
+  ]
+}
