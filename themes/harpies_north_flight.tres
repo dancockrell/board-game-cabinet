@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/harpies-flight-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(0,450,335,437),Rect2i(335,450,475,437),Rect2i(810,450,260,437),Rect2i(1070,450,345,437)])
+frame_pivots = Array[Vector2]([Vector2(174,400),Vector2(230,406),Vector2(126,395),Vector2(170,405)])
+durations = PackedFloat32Array(0.12,0.1,0.12,0.1)
+looping = true
+magenta_backing = true
+draw_scale = 1.25

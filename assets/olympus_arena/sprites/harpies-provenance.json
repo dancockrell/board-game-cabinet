@@ -1,0 +1,19 @@
+{
+  "character": "harpies",
+  "tool": "built-in image_gen",
+  "date": "2026-09-08",
+  "source_file": "harpies-flight-v1.png",
+  "sha256": "2d44b41abc0de2aacf018ee9530d138fea29e7628fb0c50533102541a9501a74",
+  "source_output": "exec-e72bdf9b-b0bb-413f-b2b0-981dcda41487.png",
+  "reference": "atalanta-v2.png style only",
+  "workflow": "Initial generated ten pose sheet; built-in edit replaced incorrect brown background with flat magenta and widened gutters; original selected output copied byte-for-byte. Runtime shader keying, no destructive image mask.",
+  "prompt_contract": "Adult Greek harpy in ivory tunic and green sash, brown feather wings instead of arms, bird talons, north and south rows. Four flight phases: raised, horizontal, lowered, folded upstroke. Fifth pose talon lunge. Flat magenta, no shadows, complete feather tips, separated sprites.",
+  "status": "provisional native-reviewed character candidate",
+  "limitations": [
+    "Only north/south facings authored",
+    "Four flight phases, no in-betweens",
+    "Single held strike pose bracketed by wing poses",
+    "Small costume/feather shape drift remains",
+    "Integration and full match acceptance owned by coordinator"
+  ]
+}
