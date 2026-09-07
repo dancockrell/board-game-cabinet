@@ -38,6 +38,8 @@ jobs:
         run: |
           Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_chess.gd
           Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_chess_oracle.gd
+      - name: Sprite frame ordering and timing
+        run: Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_sprite_clip.gd
       - name: Sessions and adapters
         run: |
           Godot_v4.3-stable_linux.x86_64 --headless --path . --script res://tests/test_session.gd

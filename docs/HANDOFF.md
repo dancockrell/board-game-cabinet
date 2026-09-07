@@ -2,6 +2,10 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Latest implementation and shared archive
+
+See [pixel implementation checkpoint](PIXEL_IMPLEMENTATION.md): old art/model workshop preserved in shared storage; new sprite clip Resource and camera-facing renderer implemented and tested. Static front/back native preview exists; live roster migration remains pending coherent animation.
+
 ## Current visual authority
 
 The user selected pixel art and elevated gameplay perspective from two supplied references. [Pixel art direction](PIXEL_ART_DIRECTION.md) is now the visual authority. Realistic miniature repair below is historical; the next visual slice is one directional Greek sprite tested in the arena. References are not runtime assets or instructions to build their western game.
