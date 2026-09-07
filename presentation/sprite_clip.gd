@@ -5,6 +5,7 @@ extends Resource
 @export var durations: PackedFloat32Array = PackedFloat32Array()
 @export var pivot := Vector2.ZERO
 @export var looping := true
+@export var magenta_backing := false
 
 func validation_error() -> String:
 	if atlas == null or regions.is_empty(): return "Missing atlas or frames"

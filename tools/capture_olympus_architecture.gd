@@ -17,7 +17,7 @@ func _run() -> void:
 	board.camera.look_at(Vector3(0,1.0,3.5))
 	board.show_state({"units":[],"events":[],"elapsed":1.0,"towers":[
 		{"id":"study_temple","kind":"temple","side":0,"x":-1.75,"z":3.5,"hp":1800.0,"max_hp":1800.0},
-		{"id":"study_shrine","kind":"tower","side":1,"x":1.75,"z":3.5,"hp":1100.0,"max_hp":1100.0}]})
+		{"id":"study_shrine","kind":"tower","side":1,"x":1.75,"z":3.5,"hp":0.0 if "--ruins" in OS.get_cmdline_user_args() else 1100.0,"max_hp":1100.0}]})
 	for tower in board._towers.values(): tower.get_node("Health").hide()
 	var panel:=ColorRect.new()
 	panel.color=Color("102b35")

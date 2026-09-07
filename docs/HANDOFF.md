@@ -2,11 +2,15 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Destroyed building increment
+
+Zero-health towers now switch to matching authored rubble instead of compressing the intact shrine. Repeated dead snapshots retain the current sprite/material; restoring a tower restores the intact clip and removes the chroma material. Authoritative coordinates and scale remain unchanged. Initial checkerboard output was rejected; built-in generation corrected its background to saturated magenta. The source is preserved unchanged, and an opt-in clip shader discards only strongly saturated magenta. Native close-up reviewed in outputs/Pixel-Shrine-Ruins.png; this is static rubble, not animated collapse. Board transition/reset checks, native sprite/app checks and 773 arena rules checks pass.
+
 ## Pixel buildings increment
 
 The six combat structures now use an original transparent owl-shrine sprite, replacing runtime procedural architecture. Main temples use a larger scale; both teams retain narrow coloured footprint borders. Clip metadata anchors the lowest step; a presentation-only forward offset places the step at the footprint edge without moving authoritative tower coordinates. Native close review caught and corrected step clipping. Source PNG is preserved unchanged with provenance in assets/olympus_arena/buildings.
 
-Validation: 38 native board checks (including sprite resource, authoritative origin, destruction and reset), 64 native model checks, and 55 native app checks passed. A 180-frame match capture completed before the final step-anchor adjustment; final adjusted close-up is outputs/Pixel-Shrine-Footprint.png. This is static building art: distinct main-temple artwork, damaged states, proper rubble and ambient animation remain unfinished. Existing destroyed-building vertical compression is a temporary presentation.
+Validation: 38 native board checks (including sprite resource, authoritative origin, destruction and reset), 64 native model checks, and 55 native app checks passed. A 180-frame match capture completed before the final step-anchor adjustment; final adjusted close-up is outputs/Pixel-Shrine-Footprint.png. This is static building art: distinct main-temple artwork, mid-damage states and ambient animation remain unfinished. Rubble now replaces the temporary vertical compression, as described above.
 
 ## Pixel battlefield increment
 

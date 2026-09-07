@@ -44,11 +44,14 @@ func run() -> void:
 	state.towers[0].hp = 0.0
 	board.show_state(state, 0.3)
 	check(not unit.get_node("Hit").visible, "Damage impact expires")
-	check(board._towers.blue.visible and board._towers.blue.scale.y < 0.2, "Destroyed temple remains as ruins")
+	check(board._towers.blue.visible and shrine.clip == board.RUBBLE_CLIP and board._towers.blue.scale == Vector3.ONE, "Destroyed temple remains as ruins")
 	check(not board._towers.blue.get_node("Health").visible, "Destroyed temple health hidden")
+	var rubble_material=shrine.material_override
+	board.show_state(state)
+	check(rubble_material != null and shrine.material_override==rubble_material, "Repeated destroyed snapshot retains rubble presentation")
 	state.towers[0].hp=500.0
 	board.show_state(state)
-	check(board._towers.blue.scale==Vector3.ONE and board._towers.blue.get_node("Health").visible, "Restored authoritative tower resets sprite scale and health")
+	check(board._towers.blue.scale==Vector3.ONE and board._towers.blue.get_node("Health").visible and shrine.clip==board.SHRINE_CLIP and shrine.material_override==null, "Restored authoritative tower resets sprite scale and health")
 	state.units.clear()
 	board.show_state(state)
 	check(board._tokens.is_empty(), "Missing units removed")

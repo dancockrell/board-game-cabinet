@@ -1,0 +1,11 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-7a20d4dd-0be7-476c-9d79-148ccdfd47c5.png",
+  "sha256": "70fb95eb818825f45fce1b954df944390595c1d1f176d979e6d078ea394f27fc",
+  "reference": "owl-shrine-v1.png",
+  "rejected_source": "exec-61b5b5cd-160e-499e-be91-37a16531331b.png",
+  "correction": "Initial output had painted checkerboard. Generator replaced it with saturated magenta. No pale background extraction.",
+  "masking": "Source RGB preserved unchanged. Sprite Resource opts into saturated-magenta discard shader; nearest sampling avoids chroma bleeding through mipmaps.",
+  "status": "Runtime static rubble, native close review",
+  "limitations": "Not a frame sequence or animated collapse; no mid-damage stage; small-scale detail is dense."
+}

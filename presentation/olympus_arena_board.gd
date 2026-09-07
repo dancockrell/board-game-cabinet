@@ -1,5 +1,6 @@
 extends Node3D
 ## Persistent visual replicas of authoritative arena snapshots.
+const RUBBLE_CLIP = preload("res://themes/olympus_shrine_rubble_clip.tres")
 const SHRINE_CLIP = preload("res://themes/olympus_shrine_clip.tres")
 const PALETTE = preload("res://themes/olympus_arena_theme.tres")
 const PixelActor = preload("res://presentation/pixel_actor.gd")
@@ -134,7 +135,10 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		var id = tower["id"]
 		if not _towers.has(id): _towers[id] = _make_tower(tower)
 		var node: Node3D = _towers[id]
-		node.scale.y = 1.0 if float(tower["hp"]) > 0 else 0.14
+		var destroyed := float(tower["hp"]) <= 0
+		if not node.has_meta("destroyed") or node.get_meta("destroyed") != destroyed:
+			node.set_meta("destroyed", destroyed)
+			node.get_node("Architecture/PixelBuilding").reset_playback(RUBBLE_CLIP if destroyed else SHRINE_CLIP)
 		node.get_node("Health").visible = float(tower["hp"]) > 0
 		_health(node, float(tower["hp"]) / maxf(1.0, float(tower.get("max_hp", tower["hp"]))))
 		_damage_feedback(node, float(tower["hp"]), delta)

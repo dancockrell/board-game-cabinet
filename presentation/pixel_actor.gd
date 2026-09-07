@@ -45,6 +45,12 @@ func _init() -> void:
 func set_clip(value: Clip) -> bool:
 	if value == null or not value.validation_error().is_empty(): return false
 	clip = value
+	material_override = null
+	if clip.magenta_backing:
+		var keyed := ShaderMaterial.new()
+		keyed.shader = preload("res://presentation/pixel_chroma.gdshader")
+		keyed.set_shader_parameter("source_atlas", clip.atlas)
+		material_override = keyed
 	_atlas.atlas = clip.atlas
 	texture = _atlas
 	_shown = -1
