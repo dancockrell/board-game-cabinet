@@ -1,5 +1,7 @@
 extends Node3D
 ## Presentation-only scenery. Never owns combat, placement, or navigation state.
+const FOLIAGE = preload("res://presentation/olympus_foliage.gdshader")
+const GARDEN_ATLAS = preload("res://assets/olympus_arena/sprites/greek-garden-v1.png")
 const ROCK = preload("res://themes/olympus_shared_rock.tres")
 const WATER = preload("res://presentation/olympus_water.gdshader")
 const PIXEL_PAVING = preload("res://themes/olympus_pixel_paving.tres")
@@ -13,10 +15,14 @@ var _materials: Dictionary = {}
 var _box_meshes: Dictionary = {}
 var _water_materials: Array[ShaderMaterial] = []
 var _water_time := 0.0
+var _foliage_materials: Array[ShaderMaterial] = []
 
 func advance_visual(delta: float) -> void:
 	_water_time += maxf(delta, 0.0)
 	for material in _water_materials:
+		material.set_shader_parameter("animation_time", _water_time)
+
+	for material in _foliage_materials:
 		material.set_shader_parameter("animation_time", _water_time)
 
 func _ready() -> void:
@@ -122,24 +128,36 @@ func _borders() -> void:
 func _gardens() -> void:
 	for side in [-1, 1]:
 		for z in [-7.8, -5.3, 5.3, 7.8]:
-			var pos := Vector3(side * 5.70, 0.05, z)
-			_cylinder(0.29, 0.32, pos + Vector3.UP * 0.13, Color("895d47"))
-			_cylinder(0.32, 0.065, pos + Vector3.UP * 0.31, Color("ac8062"))
-			_cylinder(0.04, 0.45, pos + Vector3.UP * 0.54, Color("766c49"))
-			for layer in 5:
-				var width := 0.21 - layer * 0.028
-				var crown := _sphere(Vector3(width, 0.30, width * 0.91), pos + Vector3(sin(layer*2.0)*0.035, 0.61+layer*0.20,cos(layer)*0.035), Color("47553e").lightened(layer * 0.015))
-				crown.rotation.y = layer * 1.1
-				for twig in 3:
-					var angle := twig*TAU/3.0 + layer*1.3
-					_sphere(Vector3(width*.57,.15,width*.46), crown.position + Vector3(cos(angle)*width*.6,.02,sin(angle)*width*.6), Color("596448").darkened(layer*.02))
+			_garden_sprite(Vector3(side * 5.70, 0.05, z), true)
 		for x in [-4.2, 4.2]:
-			var pos := Vector3(x, 0.02, side * 8.65)
-			_box(Vector3(1.2, 0.23, 0.68), pos + Vector3.UP * 0.10, SAND)
-			_box(Vector3(1.12, 0.025, 0.60), pos + Vector3.UP * 0.23, Color("56684b"))
-			for i in 5:
-				var shrub := _sphere(Vector3(0.17 + (i%2)*0.04, 0.12 + (i%3)*0.025, 0.18), pos + Vector3((i-2)*0.22, 0.30 + sin(i*2.1)*0.025, sin(i)*0.06), Color("72785a").darkened((i%3)*0.04))
-				shrub.rotation = Vector3(.1*i,i*.91,.08*i)
+			_garden_sprite(Vector3(x, 0.02, side * 8.65), false)
+
+func _garden_sprite(pos: Vector3, cypress: bool) -> void:
+	var sprite := Sprite3D.new()
+	sprite.name = "PixelCypress" if cypress else "PixelOliveTrough"
+	sprite.set_meta("cypress", cypress)
+	var region := Rect2(150,20,350,940) if cypress else Rect2(590,470,800,490)
+	var pivot := Vector2(166,926) if cypress else Vector2(404,476)
+	var atlas := AtlasTexture.new()
+	atlas.atlas = GARDEN_ATLAS
+	atlas.region = region
+	sprite.texture = atlas
+	sprite.pixel_size = 0.00185 if cypress else 0.0016
+	sprite.offset = Vector2(region.size.x * 0.5 - pivot.x, pivot.y - region.size.y * 0.5)
+	sprite.position = pos
+	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var material := ShaderMaterial.new()
+	material.shader = FOLIAGE
+	material.set_shader_parameter("source_atlas", GARDEN_ATLAS)
+	material.set_shader_parameter("phase", pos.x * 0.73 + pos.z * 0.39)
+	material.set_shader_parameter("foliage_top", 0.04 if cypress else 0.49)
+	material.set_shader_parameter("foliage_bottom", 0.65 if cypress else 0.80)
+	material.set_shader_parameter("sway", 0.006 if cypress else 0.003)
+	sprite.material_override = material
+	_foliage_materials.append(material)
+	sprite.add_to_group("olympus_pixel_gardens")
+	add_child(sprite)
 
 func _column(pos: Vector3) -> void:
 	_box(Vector3(0.65, 0.15, 0.65), pos, SAND)

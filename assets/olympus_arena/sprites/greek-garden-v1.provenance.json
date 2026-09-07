@@ -1,0 +1,10 @@
+{
+  "asset": "greek-garden-v1.png",
+  "generator": "built-in image_gen",
+  "source": "exec-3cb29c3b-c28a-400c-b900-121fc3372639.png",
+  "sha256": "20fd99fde4180f783f66e854ea523a90391206b1ba5887ca8701bb4aebb8998b",
+  "background": "saturated magenta; original unchanged; shader keys and despills before downsampling",
+  "status": "integrated provisional environment art",
+  "prompt": "Two separate Greek coastal pixel-art props: narrow terracotta-potted Mediterranean cypress and wide low limestone olive-shrub trough; elevated orthographic three-quarter camera; rich clustered natural-color pixels; uniform magenta background; no labels or cast background shadows.",
+  "animation": "Leaf-only UV wind with individual phase; planter pixels and world anchors fixed; stage advance_visual clock."
+}

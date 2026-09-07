@@ -1,7 +1,9 @@
 extends SceneTree
 var failures := 0
+var checks := 0
 func _initialize() -> void: call_deferred("_run")
 func check(ok: bool, text: String) -> void:
+	checks += 1
 	if not ok:
 		failures += 1
 		push_error(text)
@@ -11,6 +13,27 @@ func _run() -> void:
 	root.add_child(board)
 	var stage = board.get_node("OlympusStage")
 	check(stage.get_child_count() < 1000, "Scenery stays below 1000 mesh instances")
+	var gardens = get_nodes_in_group("olympus_pixel_gardens")
+	check(gardens.size() == 12, "Eight cypress and four olive troughs replace the old garden geometry")
+	var cypress_count := 0
+	var original_positions: Array[Vector3] = []
+	for garden in gardens:
+		check(garden is Sprite3D, "Garden is authored sprite art")
+		original_positions.append(garden.position)
+		if garden.get_meta("cypress"):
+			cypress_count += 1
+			check(is_equal_approx(absf(garden.position.x),5.7), "Cypress stays on the existing rim footprint")
+		else:
+			check(is_equal_approx(absf(garden.position.z),8.65), "Trough stays on existing end rim footprint")
+	check(cypress_count == 8, "All eight cypress planters remain present")
+	stage.advance_visual(0.4)
+	for garden in gardens:
+		check(is_equal_approx(garden.material_override.get_shader_parameter("animation_time"),0.4), "Foliage follows the stage visual clock")
+	stage.advance_visual(0.0)
+	stage.advance_visual(-1.0)
+	for i in gardens.size():
+		check(gardens[i].position == original_positions[i], "Wind never changes garden anchors")
+		check(is_equal_approx(gardens[i].material_override.get_shader_parameter("animation_time"),0.4), "Paused or negative delta does not advance foliage")
 	var coastal = get_nodes_in_group("olympus_coastal_rocks")
 	check(coastal.size() == 18, "Only 18 coastal outcrops use the shared rock material")
 	for rock in coastal:
@@ -36,7 +59,7 @@ func _run() -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--capture="):
 			check(root.get_texture().get_image().save_png(arg.trim_prefix("--capture=")) == OK, "Native diorama capture saved")
-	print("Olympus stage: 113 geometry/material/budget checks, %s failures; %s stage nodes" % [failures,stage.get_child_count()])
+	print("Olympus stage: %s geometry/material/foliage/budget checks, %s failures; %s stage nodes" % [checks,failures,stage.get_child_count()])
 	board.free()
 	await process_frame
 	quit(1 if failures else 0)
