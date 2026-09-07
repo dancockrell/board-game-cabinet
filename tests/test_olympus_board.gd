@@ -46,6 +46,13 @@ func run() -> void:
 	check(not unit.get_node("Hit").visible, "Damage impact expires")
 	check(board._towers.blue.visible and shrine.clip == board.RUBBLE_CLIP and board._towers.blue.scale == Vector3.ONE, "Destroyed temple remains as ruins")
 	check(not board._towers.blue.get_node("Health").visible, "Destroyed temple health hidden")
+	check(board._collapses.size()==1, "Intact-to-destroyed tower starts one collapse")
+	board.show_state(state,0.0)
+	check(board._collapses.size()==1 and board._collapses[0].fx.age==0.0, "Repeat and paused snapshot do not duplicate or advance collapse")
+	board.show_state(state,.4)
+	check(is_equal_approx(board._collapses[0].fx.age,.4), "Collapse follows presentation clock")
+	board.show_state(state,1.0)
+	check(board._collapses.is_empty(), "Collapse is removed after rubble settles")
 	var rubble_material=shrine.material_override
 	board.show_state(state)
 	check(rubble_material != null and shrine.material_override==rubble_material, "Repeated destroyed snapshot retains rubble presentation")
@@ -88,6 +95,8 @@ func run() -> void:
 		if str(effect.motion) == "projectile": has_tracer = true
 	check(has_tracer, "Source-aware hit creates tracer")
 	check(float(board._tokens[2].get_meta("attack_until", 0.0)) > board._time, "Hit event triggers presentation-only attack follow-through")
+	check(board._tokens[2].get_node("Figure/PixelActor").clip==board.ATALANTA_ATTACK.south, "Exact archer source selects authored directional attack")
+	check(board._tokens[3].get_node("Figure/PixelActor").clip==board.ATALANTA_REST.north, "Uninvolved archer keeps her own ready pose")
 	check(not board._tokens[3].has_meta("attack_until"), "Closer neighbour does not steal identified attack")
 	state.events.append({"id":2,"kind":"hit","source_id":3,"source_type":"tower","side":0,"x":1.0,"z":1.0})
 	state.events.append({"id":3,"kind":"hit","source_id":999,"source_type":"unit","side":0,"x":1.0,"z":1.0})

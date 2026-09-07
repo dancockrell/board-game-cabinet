@@ -35,13 +35,13 @@ func _run() -> void:
 				meshes += 1
 				valid = valid and node.mesh != null and node.global_transform.is_finite() and absf(node.global_basis.determinant()) > .0000001
 			for child in node.get_children(): pending.append(child)
-		if token.get_meta("kind")=="hoplites":
+		if token.get_meta("kind") in ["hoplites","atalanta","medusa","minotaur"]:
 			var sprite=figure.get_node_or_null("PixelActor")
-			check(sprite!=null and sprite.texture!=null and sprite.clip.validation_error()=="","Hoplite uses valid pixel clip")
+			check(sprite!=null and sprite.texture!=null and sprite.clip.validation_error()=="","Authored character uses valid pixel clip")
 		else:
 			check(meshes>10 and valid,"Complete finite geometry for "+str(token.get_meta("kind"))+" side "+str(token.get_meta("side")))
 		if token.get_meta("kind") == "minotaur":
-			check(figure.get_node("ArmR").get_child_count()>4,"Weapon geometry belongs to animated arm")
+			check(figure.get_node("PixelActor").clip in board.MINOTAUR_REST.values(),"Minotaur uses authored body and axe pose")
 		for indicator in token.get_node("Health").get_children():
 			check(indicator.cast_shadow==GeometryInstance3D.SHADOW_CASTING_SETTING_OFF,"World-space health indicators do not cast shadows")
 	for unit in state.units:
@@ -53,6 +53,7 @@ func _run() -> void:
 		check(token.get_node("Figure").transform.is_finite(),"Walk and attack pose stays finite")
 	var hoplite=board._tokens[0]
 	state.units[0].hp=75.0
+	state.elapsed=1.2
 	board.show_state(state,.05)
 	var sprite=hoplite.get_node("Figure/PixelActor")
 	check(hoplite.get_meta("damage_serial")==1 and sprite.clip==board.SOUTH_REST and hoplite.get_node("Hit").visible,"Authoritative damage preserves south view with impact feedback")

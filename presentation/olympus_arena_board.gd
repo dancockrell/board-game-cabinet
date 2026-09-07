@@ -1,4 +1,11 @@
 extends Node3D
+const MINOTAUR_REST = {"north":preload("res://themes/minotaur_north_rest.tres"), "south":preload("res://themes/minotaur_south_rest.tres")}
+const MINOTAUR_ATTACK = {"north":preload("res://themes/minotaur_north_attack.tres"), "south":preload("res://themes/minotaur_south_attack.tres")}
+const MEDUSA_REST = {"east": preload("res://themes/medusa_east_rest.tres"), "west": preload("res://themes/medusa_west_rest.tres"), "north": preload("res://themes/medusa_north_rest.tres"), "south": preload("res://themes/medusa_south_rest.tres")}
+const MEDUSA_ATTACK = {"east": preload("res://themes/medusa_east_attack.tres"), "west": preload("res://themes/medusa_west_attack.tres"), "north": preload("res://themes/medusa_north_attack.tres"), "south": preload("res://themes/medusa_south_attack.tres")}
+const CollapseFX = preload("res://presentation/olympus_collapse_fx.gd")
+const ATALANTA_REST = {"east": preload("res://themes/atalanta_east_rest.tres"), "west": preload("res://themes/atalanta_west_rest.tres"), "north": preload("res://themes/atalanta_north_rest.tres"), "south": preload("res://themes/atalanta_south_rest.tres")}
+const ATALANTA_ATTACK = {"east": preload("res://themes/atalanta_east_attack.tres"), "west": preload("res://themes/atalanta_west_attack.tres"), "north": preload("res://themes/atalanta_north_attack.tres"), "south": preload("res://themes/atalanta_south_attack.tres")}
 const SOUTH_WALK = preload("res://themes/hoplite_south_walk.tres")
 const NORTH_WALK = preload("res://themes/hoplite_north_walk.tres")
 ## Persistent visual replicas of authoritative arena snapshots.
@@ -30,6 +37,8 @@ var _ghost: Node3D
 var _ghost_kind := ""
 var ambient_life
 var combat_fx
+var stage
+var _collapses: Array = []
 
 func _ready() -> void:
 	_setup()
@@ -84,7 +93,7 @@ func _setup() -> void:
 	fill.light_energy = 0.16
 	fill.shadow_enabled = false
 	add_child(fill)
-	var stage = preload("res://presentation/olympus_stage.gd").new()
+	stage = preload("res://presentation/olympus_stage.gd").new()
 	add_child(stage)
 	ambient_life = preload("res://presentation/olympus_ambient_life.gd").new()
 	add_child(ambient_life)
@@ -95,12 +104,21 @@ func _setup() -> void:
 
 func show_state(state: Dictionary, delta: float = 0.0) -> void:
 	_setup()
+	stage.advance_visual(delta)
 	_time += delta
 	if float(state.get("elapsed", 0.0)) < _last_elapsed:
+		for collapse in _collapses: collapse.fx.queue_free()
+		_collapses.clear()
 		_last_event = -1
 		for effect in _effects: effect.node.queue_free()
 		_effects.clear()
 	_last_elapsed = float(state.get("elapsed", 0.0))
+	for i in range(_collapses.size()-1,-1,-1):
+		var collapse = _collapses[i]
+		collapse.fx.advance_visual(delta)
+		if collapse.fx.age >= CollapseFX.DURATION:
+			collapse.fx.queue_free()
+			_collapses.remove_at(i)
 	combat_fx.consume_state(state, delta)
 	camera.h_offset = combat_fx.camera_impulse.x
 	camera.v_offset = combat_fx.camera_impulse.y
@@ -139,6 +157,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 				node.set_meta("motion_tick", float(state.get("elapsed", -1.0)))
 			var moving := bool(node.get_meta("motion_active", false))
 			var walks := {"north": NORTH_WALK, "south": SOUTH_WALK}
+			if str(node.get_meta("kind", "")) != "hoplites": walks={}
 			sprite.set_locomotion(walks.get(str(node.get_meta("pixel_facing", "east"))) if moving else null)
 			sprite.advance_visual(delta)
 		else:
@@ -155,6 +174,17 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		var node: Node3D = _towers[id]
 		var destroyed := float(tower["hp"]) <= 0
 		if not node.has_meta("destroyed") or node.get_meta("destroyed") != destroyed:
+			if destroyed and node.has_meta("destroyed"):
+				var collapse := CollapseFX.new()
+				add_child(collapse)
+				collapse.position=node.position
+				collapse.begin(node.get_node("Architecture/PixelBuilding"))
+				_collapses.append({"fx":collapse,"tower":id})
+			elif not destroyed:
+				for i in range(_collapses.size()-1,-1,-1):
+					if _collapses[i].tower==id:
+						_collapses[i].fx.queue_free()
+						_collapses.remove_at(i)
 			node.set_meta("destroyed", destroyed)
 			node.get_node("Architecture/PixelBuilding").reset_playback(RUBBLE_CLIP if destroyed else SHRINE_CLIP)
 		node.get_node("Health").visible = float(tower["hp"]) > 0
@@ -207,6 +237,9 @@ func _mark_attack_events(events: Array) -> void:
 				_face_pixel_unit(attacker,direction)
 				var facing=str(attacker.get_meta("pixel_facing","east"))
 				var attacks:={"north":NORTH_ATTACK,"south":SOUTH_ATTACK,"west":WEST_ATTACK,"east":THRUST_CLIP}
+				if str(attacker.get_meta("kind", "")) == "atalanta": attacks=ATALANTA_ATTACK
+				if str(attacker.get_meta("kind", "")) == "medusa": attacks=MEDUSA_ATTACK
+				if str(attacker.get_meta("kind", "")) == "minotaur": attacks=MINOTAUR_ATTACK
 				sprite.play_attack(event_id, attacks[facing])
 
 func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
@@ -215,8 +248,12 @@ func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
 	var north:=direction.y<0 and absf(direction.y)>=absf(direction.x)
 	var south:=direction.y>0 and absf(direction.y)>=absf(direction.x)
 	var facing:="north" if north else ("south" if south else ("west" if direction.x<0 else "east"))
+	if str(node.get_meta("kind", "")) == "minotaur": facing="north" if direction.y<0 else "south"
 	node.set_meta("pixel_facing",facing)
 	var poses:={"north":NORTH_REST,"south":SOUTH_REST,"west":WEST_REST,"east":node.get_meta("front_rest")}
+	if str(node.get_meta("kind", "")) == "atalanta": poses=ATALANTA_REST
+	if str(node.get_meta("kind", "")) == "medusa": poses=MEDUSA_REST
+	if str(node.get_meta("kind", "")) == "minotaur": poses=MINOTAUR_REST
 	sprite.set_rest_pose(poses[facing])
 
 func _tint_ghost(node: Node) -> void:
@@ -336,7 +373,7 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	var size := 1.10 if kind in ["heracles", "minotaur", "hydra"] else .86
 	figure.scale = Vector3.ONE * size
 	if _figure_factory == null: _figure_factory = preload("res://presentation/olympus_figurines.gd").new(self)
-	if kind == "hoplites":
+	if kind in ["hoplites", "atalanta", "medusa", "minotaur"]:
 		figure.rotation=Vector3.ZERO
 		var sprite:=PixelActor.new()
 		sprite.name="PixelActor"
@@ -346,6 +383,9 @@ func _make_unit(kind: String, side: int) -> Node3D:
 		rest.regions.assign([HOPLITE_GUARD.regions[0]])
 		rest.durations=PackedFloat32Array([1.0])
 		rest.looping=true
+		if kind=="atalanta": rest=ATALANTA_REST["north" if side==0 else "south"]
+		if kind=="medusa": rest=MEDUSA_REST["north" if side==0 else "south"]
+		if kind=="minotaur": rest=MINOTAUR_REST["north" if side==0 else "south"]
 		sprite.reset_playback(rest)
 		node.set_meta("front_rest",rest)
 	else:
@@ -399,7 +439,7 @@ func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
 		if sprite != null:
 			var serial := int(node.get_meta("damage_serial",0))+1
 			node.set_meta("damage_serial",serial)
-			if node.get_meta("pixel_facing","east")=="east": sprite.react_to_hit(serial,HOPLITE_GUARD)
+			if str(node.get_meta("kind", ""))=="hoplites" and node.get_meta("pixel_facing","east")=="east": sprite.react_to_hit(serial,HOPLITE_GUARD)
 		timer = 0.22
 		var number := Label3D.new()
 		number.text = "−%d" % roundi(previous_hp-hp)

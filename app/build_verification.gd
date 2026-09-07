@@ -3,6 +3,8 @@ extends RefCounted
 var failures: Array[String] = []
 var placements := 0
 var walk_samples := 0
+var collapse_samples := 0
+var pixel_characters: Array[String] = []
 
 func run(app: Control, directory: String) -> void:
 	if not directory.is_absolute_path() or DirAccess.make_dir_recursive_absolute(directory) != OK:
@@ -33,6 +35,12 @@ func run(app: Control, directory: String) -> void:
 		for token in app.board._tokens.values():
 			var sprite=token.get_node_or_null("Figure/PixelActor")
 			if sprite != null and sprite.clip in [app.board.NORTH_WALK,app.board.SOUTH_WALK]: walk_samples+=1
+			if sprite != null:
+				var kind=str(token.get_meta("kind", ""))
+				if not pixel_characters.has(kind): pixel_characters.append(kind)
+		if not app.board._collapses.is_empty():
+			collapse_samples+=1
+			if collapse_samples in [2,5,9]: await _capture(app,directory.path_join("collapse-%02d.png" % collapse_samples))
 		ticks+=1
 		await app.get_tree().process_frame
 		if ticks in [50,300]: await _capture(app, directory.path_join("battle-%04d.png" % ticks))
@@ -47,6 +55,7 @@ func run(app: Control, directory: String) -> void:
 		_check(app.timer_label.text == "0:00", "Expired match clock displays zero")
 	await _capture(app, directory.path_join("result.png"))
 	var report := {"seed":42, "ticks":ticks, "simulation_seconds":app.state.elapsed,
+		"collapse_samples":collapse_samples,"pixel_characters":pixel_characters,
 		"winner":app.state.winner, "legal_deployments":placements, "walking_actor_samples":walk_samples,
 		"timing":"Accelerated simulation with one native render opportunity per 0.1-second tick; not real-time video",
 		"exported":not OS.has_feature("editor"), "executable":OS.get_executable_path()}
