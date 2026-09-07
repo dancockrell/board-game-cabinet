@@ -11,6 +11,13 @@ const BLUE = Color("456879")
 const RED = Color("945c4d")
 var _materials: Dictionary = {}
 var _box_meshes: Dictionary = {}
+var _water_materials: Array[ShaderMaterial] = []
+var _water_time := 0.0
+
+func advance_visual(delta: float) -> void:
+	_water_time += maxf(delta, 0.0)
+	for material in _water_materials:
+		material.set_shader_parameter("animation_time", _water_time)
 
 func _ready() -> void:
 	name = "OlympusStage"
@@ -58,13 +65,19 @@ func _river() -> void:
 	material.shader = WATER
 	material.set_shader_parameter("deep_color", Color("14383d"))
 	material.set_shader_parameter("shallow_color", Color("305a59"))
+	material.set_shader_parameter("river", true)
+	material.set_shader_parameter("caustic_strength", 0.30)
+	_water_materials.append(material)
 	water.material_override = material
 	for side in [-1, 1]:
 		_box(Vector3(10.9, 0.15, 0.16), Vector3(0, 0.06, side * 0.88), SAND)
 		_box(Vector3(10.9, 0.045, 0.10), Vector3(0, 0.16, side * 0.88), IVORY)
 		# Water spills out through the sides of the island.
 		var fall := _box(Vector3(0.06, 0.78, 1.45), Vector3(side * 5.72, -0.35, 0), Color.WHITE)
-		fall.material_override = material
+		var fall_material := material.duplicate() as ShaderMaterial
+		fall_material.set_shader_parameter("waterfall", true)
+		_water_materials.append(fall_material)
+		fall.material_override = fall_material
 
 func _bridge(x: float) -> void:
 	_box(Vector3(1.82, 0.12, 2.12), Vector3(x, 0.105, 0), SAND)
@@ -256,6 +269,7 @@ func _sea() -> void:
 	material.set_shader_parameter("caustic_strength",0.13)
 	material.set_shader_parameter("deep_color",Color("071a24"))
 	material.set_shader_parameter("shallow_color",Color("14363b"))
+	_water_materials.append(material)
 	sea.material_override = material
 	# Uneven outcrops, not a necklace of identically spaced stones.
 	var clusters := [Vector3(-7.15,-1.45,-6.4),Vector3(-7.35,-1.48,5.8),Vector3(7.35,-1.46,-2.6),Vector3(7.0,-1.46,8.4)]
