@@ -2,7 +2,17 @@
 
 Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Published animated-world Windows checkpoint (current)
+## Readable-combat Windows checkpoint (current)
+
+[Olympus: clearer combat and matching pixel cards](https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-readable-combat-2026-09-08) is the latest Windows development build. Runtime source `f8d9273ea98ad0b3765c3a4d935ad323aa9388f3`. ZIP size 82,724,389 bytes; GitHub asset SHA256 matches local `B6912FE1FBA8A5F47050883238B18D9D2B4DC78C635AD0FF96065CBF7BD8E15A`. Executable SHA256 `83F3058ECE2ED3293CA5F053CEEDE4C077BA3D42C80D0F537D61FC418F182A06`.
+
+Three parallel slices plus coordinator integration: allied body spacing (ordinary pair 0.82, large pairs up to 1.16; opponents retain melee contact gap 0.58); stride phase continuity across facing changes and action recovery; pixel unit cards matching runtime sprites; grouped damage bursts above health bars with pause/rematch cleanup. Separation is soft and still permits temporary crowd overlaps. No new art generation was required; portraits use non-destructive runtime atlas crops.
+
+Validation: 2,412 focused spacing checks; 775 existing arena rules; 15 motion continuity and 45 sprite Resource checks; 13 damage feedback checks; 73 board, 16 portrait and 56 app checks. Exported executable exited 0 after a complete seed-42 match: 1,800 ticks, 30 legal deployments, all seven pixel character types, collapse, result and rematch; no failures. The diagnostic is accelerated. Separate `outputs/Readable-Combat-Live.mp4` contains 180 native gameplay frames at 30 fps after 45 seconds of legal play. Final frame and portrait contact sheet inspected.
+
+Package contains provenance, engine notices, build notes and verification JSON. Hosted CI remains gated by account billing, as recorded below. Remaining animation/quality work is unchanged: richer unique poses, side-view coverage, coherent transitions and final balance. Earlier release remains preserved.
+
+## Published animated-world Windows checkpoint (historical)
 
 [Development prerelease: Olympus animated pixel world](https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-pixel-world-2026-09-08) contains the Windows ZIP, SHA256 sidecar, native real-time gameplay MP4 and exported verification JSON. Runtime source is `4bbf5c994c1d2f33ce719c9e64a10caa820bbe67`; subsequent documentation commits do not change that executable. Extract the ZIP and open Olympus.exe.
 
