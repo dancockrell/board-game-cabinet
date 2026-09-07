@@ -35,7 +35,7 @@ func _run() -> void:
 				meshes += 1
 				valid = valid and node.mesh != null and node.global_transform.is_finite() and absf(node.global_basis.determinant()) > .0000001
 			for child in node.get_children(): pending.append(child)
-		if token.get_meta("kind") in ["hoplites","atalanta","medusa","minotaur","heracles","harpies"]:
+		if token.get_meta("kind") in ["hoplites","atalanta","medusa","minotaur","heracles","harpies","hydra"]:
 			var sprite=figure.get_node_or_null("PixelActor")
 			check(sprite!=null and sprite.texture!=null and sprite.clip.validation_error()=="","Authored character uses valid pixel clip")
 		else:
@@ -46,17 +46,21 @@ func _run() -> void:
 			check(indicator.cast_shadow==GeometryInstance3D.SHADOW_CASTING_SETTING_OFF,"World-space health indicators do not cast shadows")
 	for unit in state.units:
 		unit.z += .06
-		state.events.append({"id":unit.id,"kind":"hit","source_kind":unit.kind,"side":unit.side,"source_x":unit.x,"source_z":unit.z,"x":unit.x,"z":unit.z-.4})
+		state.events.append({"id":unit.id,"kind":"hit","source_id":unit.id,"source_type":"unit","source_kind":unit.kind,"side":unit.side,"source_x":unit.x,"source_z":unit.z,"x":unit.x,"z":unit.z-.4})
 	state.elapsed=1.1
 	board.show_state(state,.1)
 	for token in board._tokens.values():
 		check(token.get_node("Figure").transform.is_finite(),"Walk and attack pose stays finite")
+		var actor=token.get_node("Figure/PixelActor")
+		check(not actor.clip.looping and actor.clip.validation_error()=="","Every roster source triggers a valid one-shot attack")
+	state.elapsed=1.2
+	board.show_state(state,.8)
 	var hoplite=board._tokens[0]
 	state.units[0].hp=75.0
-	state.elapsed=1.2
+	state.elapsed=1.3
 	board.show_state(state,.05)
 	var sprite=hoplite.get_node("Figure/PixelActor")
-	check(hoplite.get_meta("damage_serial")==1 and sprite.clip==board.SOUTH_REST and hoplite.get_node("Hit").visible,"Authoritative damage preserves south view with impact feedback")
+	check(hoplite.get_meta("damage_serial")==1 and sprite.clip==board.NORTH_REST and hoplite.get_node("Hit").visible,"Authoritative damage preserves attack-facing view with impact feedback")
 	board.show_state(state,.05)
 	check(hoplite.get_meta("damage_serial")==1,"Repeated health snapshot does not replay hit")
 	check(hoplite.position==Vector3(state.units[0].x,.12,state.units[0].z),"Sprite presentation preserves authoritative position")

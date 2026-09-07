@@ -1,4 +1,8 @@
 extends Node3D
+const HERACLES_WALK = {"north":preload("res://themes/heracles_north_walk.tres"),"south":preload("res://themes/heracles_south_walk.tres")}
+const ATALANTA_WALK = {"north":preload("res://themes/atalanta_north_walk.tres"),"south":preload("res://themes/atalanta_south_walk.tres")}
+const HYDRA_IDLE = {"north":preload("res://themes/hydra_north_idle.tres"),"south":preload("res://themes/hydra_south_idle.tres")}
+const HYDRA_ATTACK = {"north":preload("res://themes/hydra_north_attack.tres"),"south":preload("res://themes/hydra_south_attack.tres")}
 const HERACLES_REST = {"east":preload("res://themes/heracles_east_rest.tres"),"west":preload("res://themes/heracles_west_rest.tres"),"north":preload("res://themes/heracles_north_rest.tres"),"south":preload("res://themes/heracles_south_rest.tres")}
 const HERACLES_ATTACK = {"east":preload("res://themes/heracles_east_attack.tres"),"west":preload("res://themes/heracles_west_attack.tres"),"north":preload("res://themes/heracles_north_attack.tres"),"south":preload("res://themes/heracles_south_attack.tres")}
 const HARPIES_FLIGHT = {"north":preload("res://themes/harpies_north_flight.tres"),"south":preload("res://themes/harpies_south_flight.tres")}
@@ -164,9 +168,13 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			var walks := {"north": NORTH_WALK, "south": SOUTH_WALK}
 			if str(node.get_meta("kind", "")) != "hoplites": walks={}
 			if str(node.get_meta("kind", "")) == "medusa": walks=MEDUSA_WALK
+			if str(node.get_meta("kind", "")) == "atalanta": walks=ATALANTA_WALK
+			if str(node.get_meta("kind", "")) == "heracles": walks=HERACLES_WALK
 			var locomotion=walks.get(str(node.get_meta("pixel_facing", "east"))) if moving else null
 			if str(node.get_meta("kind", "")) == "harpies":
 				locomotion=HARPIES_FLIGHT[str(node.get_meta("pixel_facing", "south"))]
+			if str(node.get_meta("kind", "")) == "hydra":
+				locomotion=HYDRA_IDLE[str(node.get_meta("pixel_facing", "south"))]
 			sprite.set_locomotion(locomotion)
 			sprite.advance_visual(delta)
 		else:
@@ -251,6 +259,7 @@ func _mark_attack_events(events: Array) -> void:
 				if str(attacker.get_meta("kind", "")) == "minotaur": attacks=MINOTAUR_ATTACK
 				if str(attacker.get_meta("kind", "")) == "heracles": attacks=HERACLES_ATTACK
 				if str(attacker.get_meta("kind", "")) == "harpies": attacks=HARPIES_ATTACK
+				if str(attacker.get_meta("kind", "")) == "hydra": attacks=HYDRA_ATTACK
 				sprite.play_attack(event_id, attacks[facing])
 
 func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
@@ -259,7 +268,7 @@ func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
 	var north:=direction.y<0 and absf(direction.y)>=absf(direction.x)
 	var south:=direction.y>0 and absf(direction.y)>=absf(direction.x)
 	var facing:="north" if north else ("south" if south else ("west" if direction.x<0 else "east"))
-	if str(node.get_meta("kind", "")) in ["minotaur","harpies"]: facing="north" if direction.y<0 else "south"
+	if str(node.get_meta("kind", "")) in ["minotaur","harpies","hydra"]: facing="north" if direction.y<0 else "south"
 	node.set_meta("pixel_facing",facing)
 	var poses:={"north":NORTH_REST,"south":SOUTH_REST,"west":WEST_REST,"east":node.get_meta("front_rest")}
 	if str(node.get_meta("kind", "")) == "atalanta": poses=ATALANTA_REST
@@ -267,6 +276,7 @@ func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
 	if str(node.get_meta("kind", "")) == "minotaur": poses=MINOTAUR_REST
 	if str(node.get_meta("kind", "")) == "heracles": poses=HERACLES_REST
 	if str(node.get_meta("kind", "")) == "harpies": poses=HARPIES_FLIGHT
+	if str(node.get_meta("kind", "")) == "hydra": poses=HYDRA_IDLE
 	sprite.set_rest_pose(poses[facing])
 
 func _tint_ghost(node: Node) -> void:
@@ -386,7 +396,7 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	var size := 1.10 if kind in ["heracles", "minotaur", "hydra"] else .86
 	figure.scale = Vector3.ONE * size
 	if _figure_factory == null: _figure_factory = preload("res://presentation/olympus_figurines.gd").new(self)
-	if kind in ["hoplites", "atalanta", "medusa", "minotaur", "heracles", "harpies"]:
+	if kind in ["hoplites", "atalanta", "medusa", "minotaur", "heracles", "harpies", "hydra"]:
 		figure.rotation=Vector3.ZERO
 		var sprite:=PixelActor.new()
 		sprite.name="PixelActor"
@@ -403,6 +413,10 @@ func _make_unit(kind: String, side: int) -> Node3D:
 		if kind=="harpies":
 			rest=HARPIES_FLIGHT["north" if side==0 else "south"]
 			sprite.position.y=1.0
+			node.set_meta("pixel_facing","north" if side==0 else "south")
+		if kind=="hydra":
+			rest=HYDRA_IDLE["north" if side==0 else "south"]
+			sprite.pixel_size=.005
 			node.set_meta("pixel_facing","north" if side==0 else "south")
 		sprite.reset_playback(rest)
 		node.set_meta("front_rest",rest)
