@@ -4,6 +4,15 @@ const Session = preload("res://games/olympus_arena/session.gd")
 const Arena = preload("res://presentation/olympus_arena_board.gd")
 const MoveAudio = preload("res://presentation/olympus_audio.gd")
 const HudFx = preload("res://presentation/olympus_hud_fx.gd")
+const PORTRAITS = {
+	"hoplites": preload("res://themes/hoplite_south_rest.tres"),
+	"atalanta": preload("res://themes/atalanta_south_rest.tres"),
+	"minotaur": preload("res://themes/minotaur_south_rest.tres"),
+	"medusa": preload("res://themes/medusa_south_rest.tres"),
+	"heracles": preload("res://themes/heracles_south_rest.tres"),
+	"hydra": preload("res://themes/hydra_south_idle.tres"),
+	"harpies": preload("res://themes/harpies_south_flight.tres"),
+}
 var session = Session.new()
 var board
 var state: Dictionary = {}
@@ -17,6 +26,7 @@ var _accumulator := 0.0
 var _dragging := false
 var _last_pointer := Vector2(-999,-999)
 var _textures: Dictionary = {}
+var _portrait_material: ShaderMaterial
 var cards: Array = []
 var _card_frames: Dictionary = {}
 var hud_fx
@@ -336,12 +346,12 @@ func _refresh() -> void:
 	energy_label.text="%s / 10" % int(floor(state.energy[0]))
 	energy_bar.value=state.energy[0]
 	timer_label.modulate = Color("ff8a72") if seconds <= 10 and state.phase == "playing" else Color.WHITE
-	get_node("NextArt").texture = _texture(state.get("next_card","hoplites"))
+	_set_portrait(get_node("NextArt"),state.get("next_card","hoplites"))
 	next_label.text=catalog.get(state.get("next_card",""),{}).get("name","-")
 	for slot in 4:
 		var kind:String=state.hand[slot]
 		var card:Dictionary=catalog[kind]
-		cards[slot].icon.texture=_texture(kind)
+		_set_portrait(cards[slot].icon,kind)
 		cards[slot].name.text=card.name
 		cards[slot].cost.text=str(card.cost)
 		cards[slot].button.tooltip_text=card.description
@@ -375,6 +385,19 @@ func _refresh() -> void:
 
 func _texture(kind:String) -> Texture2D:
 	if not _textures.has(kind):
+		if PORTRAITS.has(kind):
+			var clip = PORTRAITS[kind]
+			var portrait := AtlasTexture.new()
+			portrait.atlas = clip.atlas if clip.frame_atlases.is_empty() else clip.frame_atlases[0]
+			var region: Rect2 = Rect2(clip.regions[0])
+			# Upper-body framing uses the exact battlefield art, with no derived bitmap.
+			region.size.y *= 0.78
+			# The minotaur's attack sheet reserves substantial overhead axe space.
+			if kind == "minotaur": region = Rect2(175,290,300,285)
+			portrait.region = region
+			portrait.filter_clip = true
+			_textures[kind] = portrait
+			return portrait
 		var order := ["hoplites","atalanta","minotaur","medusa","heracles","hydra","harpies","thunderbolt"]
 		var index := order.find(kind)
 		if index < 0: return null
@@ -384,6 +407,17 @@ func _texture(kind:String) -> Texture2D:
 		atlas.filter_clip = true
 		_textures[kind] = atlas
 	return _textures[kind]
+
+func _set_portrait(control: TextureRect, kind: String) -> void:
+	control.texture = _texture(kind)
+	control.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	control.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	control.material = null
+	if PORTRAITS.has(kind):
+		if _portrait_material == null:
+			_portrait_material = ShaderMaterial.new()
+			_portrait_material.shader = preload("res://presentation/olympus_card_portrait.gdshader")
+		control.material = _portrait_material
 
 func _show_overlay(show:bool) -> void:
 	for control in [battle_overlay,overlay_title,overlay_text,start_button]: control.visible=show
@@ -422,6 +456,9 @@ func _card_input(event:InputEvent,slot:int) -> void:
 		if selected_slot == slot:
 			_dragging=true
 			drag_proxy.texture = cards[slot].icon.texture
+			drag_proxy.material = cards[slot].icon.material
+			drag_proxy.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			drag_proxy.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			drag_proxy.position = event.global_position - drag_proxy.size * 0.5
 			drag_proxy.visible = true
 
