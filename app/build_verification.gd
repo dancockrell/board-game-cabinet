@@ -47,7 +47,7 @@ func run(app: Control, directory: String) -> void:
 	var report := {"seed":42, "ticks":ticks, "simulation_seconds":app.state.elapsed,
 		"winner":app.state.winner, "legal_deployments":placements, "walking_actor_samples":walk_samples,
 		"timing":"Accelerated simulation with one native render opportunity per 0.1-second tick; not real-time video",
-		"exported":OS.has_feature("standalone")}
+		"exported":not OS.has_feature("editor"), "executable":OS.get_executable_path()}
 	app._start_or_restart()
 	_check(app.state.phase == "playing" and app.state.elapsed == 0 and app.state.units.is_empty(), "Rematch resets match state")
 	report["failures"]=failures
