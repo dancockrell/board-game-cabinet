@@ -9,6 +9,9 @@ const CAPTURE_FRAMES := 6 * FPS
 var warmup_frames := WARMUP_FRAMES
 var pixel_attack_frames := 0
 var pixel_walk_frames := 0
+var action_frames_by_kind := {}
+var walking_frames_by_kind := {}
+var ambient_frames_by_kind := {}
 var wait_for_thrust := false
 var app
 var directory := ""
@@ -87,6 +90,13 @@ func _run() -> void:
 			var sprite=token.get_node_or_null("Figure/PixelActor")
 			if sprite != null and sprite.clip in [app.board.THRUST_CLIP,app.board.NORTH_ATTACK,app.board.SOUTH_ATTACK,app.board.WEST_ATTACK]: pixel_attack_frames+=1
 			if sprite != null and sprite.clip in [app.board.NORTH_WALK,app.board.SOUTH_WALK]: pixel_walk_frames+=1
+			if sprite == null: continue
+			var kind := str(token.get_meta("kind", "unknown"))
+			if sprite._reaction_elapsed >= 0.0:
+				action_frames_by_kind[kind] = int(action_frames_by_kind.get(kind,0))+1
+			elif sprite._motion_clip != null:
+				var counts: Dictionary = ambient_frames_by_kind if kind in ["hydra","harpies"] else walking_frames_by_kind
+				counts[kind] = int(counts.get(kind,0))+1
 		var filename := "frame-%04d.png" % frame
 		error = root.get_texture().get_image().save_png(directory.path_join(filename))
 		if error != OK:
@@ -103,6 +113,10 @@ func _run() -> void:
 		"fps": FPS, "frames": CAPTURE_FRAMES, "duration_seconds": 6,
 		"pixel_attack_actor_frames":pixel_attack_frames, "warmup_seconds": float(warmup_frames) / FPS, "simulation_tick_seconds": 0.1,
 		"pixel_walk_actor_frames":pixel_walk_frames,
+		"action_actor_frames_by_kind":action_frames_by_kind,
+		"walking_actor_frames_by_kind":walking_frames_by_kind,
+		"ambient_actor_frames_by_kind":ambient_frames_by_kind,
+		"animation_count_definition":"Rendered actor-frames, not unique drawings. Actions include attacks and hit reactions; ambient includes Hydra breathing and Harpy flight.",
 		"player_legal_placements": placements,
 		"final_elapsed": app.state.elapsed,
 		"final_unit_count": app.state.units.size(),
