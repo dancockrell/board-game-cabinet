@@ -14,10 +14,23 @@ var _motion_elapsed := 0.0
 func set_locomotion(walk: Clip) -> bool:
 	if walk != null and (not walk.looping or not walk.validation_error().is_empty()): return false
 	if walk == _motion_clip: return true
+	# Locomotion clips represent the same stride cycle in different facings.
+	# Transfer phase rather than restarting the leading foot on every turn.
+	var phase := 0.0
+	if _motion_clip != null:
+		phase = fposmod(_motion_elapsed, _clip_duration(_motion_clip)) / _clip_duration(_motion_clip)
 	_motion_clip=walk
-	_motion_elapsed=0.0
-	if _reaction_elapsed < 0: return set_clip(walk if walk != null else _rest_clip)
+	_motion_elapsed=phase * _clip_duration(walk) if walk != null else 0.0
+	if _reaction_elapsed < 0:
+		var accepted := set_clip(walk if walk != null else _rest_clip)
+		if accepted and walk != null: show_time(_motion_elapsed)
+		return accepted
 	return true
+
+func _clip_duration(value: Clip) -> float:
+	var duration := 0.0
+	for seconds in value.durations: duration += seconds
+	return duration
 
 func reset_playback(rest: Clip) -> bool:
 	if not set_clip(rest): return false
@@ -58,11 +71,13 @@ func advance_visual(delta: float) -> void:
 			show_time(_motion_elapsed)
 		return
 	_reaction_elapsed+=delta
-	var duration:=0.0
-	for seconds in clip.durations: duration+=seconds
+	var duration := _clip_duration(clip)
 	if _reaction_elapsed >= duration and _rest_clip != null:
+		# Hold the stride during the action; only the time after its end belongs
+		# to locomotion. This also makes recovery independent of render rate.
+		if _motion_clip != null: _motion_elapsed += _reaction_elapsed - duration
 		set_clip(_motion_clip if _motion_clip != null else _rest_clip)
-		_motion_elapsed=0.0
+		if _motion_clip != null: show_time(_motion_elapsed)
 		_reaction_elapsed=-1.0
 	else:
 		show_time(_reaction_elapsed)

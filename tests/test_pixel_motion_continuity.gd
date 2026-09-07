@@ -1,0 +1,79 @@
+extends SceneTree
+const Clip = preload("res://presentation/sprite_clip.gd")
+const Actor = preload("res://presentation/pixel_actor.gd")
+var checks := 0
+var failures := 0
+
+func check(value: bool, label: String) -> void:
+	checks += 1
+	if not value:
+		failures += 1
+		push_error(label)
+
+func make_clip(seconds: float, looping: bool = true):
+	var result := Clip.new()
+	result.atlas = ImageTexture.create_from_image(Image.create(64, 16, false, Image.FORMAT_RGBA8))
+	result.regions = [Rect2i(0,0,16,16), Rect2i(16,0,16,16), Rect2i(32,0,16,16), Rect2i(48,0,16,16)]
+	result.durations = PackedFloat32Array([seconds,seconds,seconds,seconds])
+	result.looping = looping
+	return result
+
+func _initialize() -> void:
+	if DisplayServer.get_name() == "headless":
+		push_error("Motion continuity tests require native rendering")
+		quit(1)
+		return
+	var rest = make_clip(.25)
+	var north = make_clip(.25)
+	var east = make_clip(.5)
+	var attack = make_clip(.125, false)
+	var actor := Actor.new()
+	actor.reset_playback(rest)
+	actor.set_locomotion(north)
+	actor.advance_visual(2.625)
+	check(actor._shown == 2, "Stride loops before turning")
+	actor.set_locomotion(east)
+	check(is_equal_approx(actor._motion_elapsed,1.25) and actor._shown == 2, "Turning maps normalized phase to a different cycle duration immediately")
+	actor.set_locomotion(east)
+	check(is_equal_approx(actor._motion_elapsed,1.25), "Repeated facing does not change phase")
+	actor.advance_visual(0)
+	check(actor._shown == 2 and is_equal_approx(actor._motion_elapsed,1.25), "Paused locomotion holds its exact phase")
+	check(not actor.set_locomotion(attack) and actor.clip == east, "Invalid one-shot locomotion leaves current cycle intact")
+	actor.play_attack(1,attack)
+	actor.advance_visual(.25)
+	check(actor.clip == attack and actor._shown == 2, "One-shot remains visible while walking clock is suspended")
+	actor.set_locomotion(north)
+	check(actor.clip == attack and actor._shown == 2 and is_equal_approx(actor._motion_elapsed,.625), "Turning during attack preserves hidden stride without exposing it")
+	actor.advance_visual(0)
+	check(is_equal_approx(actor._reaction_elapsed,.25), "Pause also freezes action recovery")
+	actor.advance_visual(.375)
+	check(actor.clip == north and is_equal_approx(actor._motion_elapsed,.75) and actor._shown == 3, "Recovery restores held phase plus only post-action elapsed time")
+	var split := Actor.new()
+	split.reset_playback(rest)
+	split.set_locomotion(north)
+	split.advance_visual(.625)
+	split.play_attack(1,attack)
+	split.advance_visual(.25)
+	split.advance_visual(.25)
+	split.advance_visual(.125)
+	check(is_equal_approx(split._motion_elapsed,actor._motion_elapsed) and split._shown == actor._shown, "Recovery is equivalent across different render step partitions")
+	actor.play_attack(2,attack)
+	actor.set_locomotion(null)
+	actor.advance_visual(.75)
+	check(actor.clip == rest and actor._motion_elapsed == 0, "Stopping during action returns to rest without stale walking")
+	actor.set_locomotion(east)
+	check(actor._shown == 0, "New movement after stop begins a fresh stride")
+	actor.advance_visual(.75)
+	actor.react_to_hit(1,attack)
+	actor.advance_visual(.5)
+	check(actor.clip == east and is_equal_approx(actor._motion_elapsed,.75), "Hit recovery retains stride phase as well as attack recovery")
+	actor.reset_playback(rest)
+	check(actor._motion_clip == null and actor._motion_elapsed == 0 and actor._reaction_elapsed < 0, "Rematch reset clears all motion and action timing")
+	actor.set_locomotion(north)
+	actor.advance_visual(-1)
+	actor.advance_visual(NAN)
+	check(actor._shown == 0 and actor._motion_elapsed == 0, "Invalid deltas cannot advance or corrupt playback")
+	actor.free()
+	split.free()
+	print("Pixel motion continuity: %s checks, %s failures" % [checks,failures])
+	quit(1 if failures else 0)
