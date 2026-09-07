@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-v2.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-release-v1.png" id="3"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+frame_atlases = Array[Texture2D]([ExtResource("2"), ExtResource("3")])
+regions = Array[Rect2i]([Rect2i(1152,512,384,512), Rect2i(1152,512,384,512)])
+pivot = Vector2(178,423)
+durations = PackedFloat32Array(0.09, 0.15)
+looping = false
+draw_scale = 1.60
+magenta_backing = true

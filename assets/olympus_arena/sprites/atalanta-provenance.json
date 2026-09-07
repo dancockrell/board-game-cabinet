@@ -1,0 +1,35 @@
+{
+  "character": "Atalanta",
+  "sources": [
+    {
+      "file": "atalanta-v2.png",
+      "sha256": "bf56cba3758b094933e6275ebc6158fd610a6a4f159e3880a50436d5dc1ffa5d",
+      "generator": "OpenAI built-in image generation",
+      "status": "provisional runtime sprite source",
+      "background": "saturated magenta; original pixels preserved; runtime chroma key",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "file": "atalanta-release-v1.png",
+      "sha256": "1636af227033bb2c436bd4705cbf84e494bb0c4aa4661b53f9a6dfac36079448",
+      "generator": "OpenAI built-in image generation",
+      "status": "provisional runtime sprite source",
+      "background": "saturated magenta; original pixels preserved; runtime chroma key",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    }
+  ],
+  "release_source": "C:/Users/Admin/.codex/generated_images/01a07d04-2a90-7ed0-b4ec-733f14fe804c/exec-18c1712c-34b8-4ae4-95e4-0604f1ba5f03.png",
+  "release_edit": "Preserve original upper row and identity. Lower row releases arrow: arrow absent, relaxed string, drawing hand follows through behind cheek.",
+  "limitations": [
+    "Four directions, not eight",
+    "North and south aim diagonally in image plane",
+    "Walking, nocking and hit reaction poses not yet authored",
+    "Fixed team colors shared between opponents"
+  ]
+}
