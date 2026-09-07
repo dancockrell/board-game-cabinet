@@ -2,7 +2,17 @@
 
 Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Parallel animated-world integration (current)
+## Published animated-world Windows checkpoint (current)
+
+[Development prerelease: Olympus animated pixel world](https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-pixel-world-2026-09-08) contains the Windows ZIP, SHA256 sidecar, native real-time gameplay MP4 and exported verification JSON. Runtime source is `4bbf5c994c1d2f33ce719c9e64a10caa820bbe67`; subsequent documentation commits do not change that executable. Extract the ZIP and open Olympus.exe.
+
+- ZIP: `Olympus-Animated-World-Windows.zip`, 82,719,799 bytes; SHA256 `D5E42A32A63F4C1EC0B91F5C65C9436D6A50D28BF5A995FBD3186E8B049F6E00`.
+- Executable SHA256: `5562E5CC75B62372ADCF4678FF59DC8E5C28DD7D7E93D257CD9C8D1495FCB769`.
+- Exported diagnostic exited 0: 1,800 ticks, 30 legal deployments, all seven pixel character kinds, 3,181 walking actor samples, 1,692 continuous idle samples, 26 collapse samples, terminal result and rematch checks; no failures. These are accelerated functional samples, not unique drawings.
+- Native battle and collapse screenshots inspected from `outputs/Animated-World-Export-Verification`. `outputs/Animated-World-Final-Live.mp4` captures six seconds at 30 fps after 45 seconds of legal play. It is separate real-time motion evidence.
+- Package includes generation provenance, Godot notices, third-party notes, build source/hash and verification JSON. This remains a development checkpoint; directional coverage, smoother transitions and balance need further work.
+
+## Parallel animated-world integration
 
 Dedicated character work now supplies all seven combat types in the chosen pixel style. The board renders authored sprites for Hoplites, Atalanta, Medusa, Minotaur, Heracles, Hydra and Harpies; legacy figurine generation remains preserved but is no longer the normal roster renderer. Every attack is still triggered by the exact authoritative source ID. Multi-source SpriteClip frames preserve original generated PNGs while allowing draw/release phases from separate sheets.
 
