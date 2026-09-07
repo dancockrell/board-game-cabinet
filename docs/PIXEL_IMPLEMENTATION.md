@@ -9,7 +9,7 @@ C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates
 
 presentation/sprite_clip.gd defines ordered atlas regions, individual frame durations, equal-cell pivot, loop/one-shot timing and validation. presentation/pixel_actor.gd renders this Resource using nearest filtering, camera-facing Sprite3D and source-alpha scissoring. It never changes simulation state. Frame time comes from the caller, so simulation and presentation clocks need not diverge. Invalid clips are rejected without overwriting the current clip.
 
-Ten focused checks cover timing, looping, one-shot hold, malformed duration, atlas bounds and foot-pivot placement. Included in existing local verification and CI workflows. Native preview tool tools/review_pixel_hoplite.gd uses actual arena lighting/terrain and two static candidate views. Run with --capture=ABSOLUTE.png; optional --source=ABSOLUTE.png.
+Seven headless checks and three additional native rendering checks cover timing, looping, one-shot hold, malformed duration, atlas bounds and foot-pivot placement. Included in existing local verification and CI workflows. Native preview tool tools/review_pixel_hoplite.gd uses actual arena lighting/terrain and two static candidate views. Run with --capture=ABSOLUTE.png; optional --source=ABSOLUTE.png.
 
 ## Candidate status
 
