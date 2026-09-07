@@ -1,5 +1,7 @@
 extends Node3D
 ## Persistent visual replicas of authoritative arena snapshots.
+const SOUTH_ATTACK = preload("res://themes/hoplite_south_attack.tres")
+const SOUTH_REST = preload("res://themes/hoplite_south_rest.tres")
 const NORTH_ATTACK = preload("res://themes/hoplite_north_attack.tres")
 const NORTH_REST = preload("res://themes/hoplite_north_rest.tres")
 const THRUST_CLIP = preload("res://themes/hoplite_thrust_clip.tres")
@@ -191,14 +193,16 @@ func _mark_attack_events(events: Array) -> void:
 			if sprite != null:
 				var direction:=Vector2(float(event.x)-float(event.get("source_x",attacker.position.x)),float(event.z)-float(event.get("source_z",attacker.position.z)))
 				_face_pixel_unit(attacker,direction)
-				sprite.play_attack(event_id, NORTH_ATTACK if attacker.get_meta("facing_north",false) else THRUST_CLIP)
+				var facing=str(attacker.get_meta("pixel_facing","east"))
+				sprite.play_attack(event_id, NORTH_ATTACK if facing=="north" else (SOUTH_ATTACK if facing=="south" else THRUST_CLIP))
 
 func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
 	var sprite=node.get_node_or_null("Figure/PixelActor")
 	if sprite==null or direction.length_squared()<0.000001: return
 	var north:=direction.y<0 and absf(direction.y)>=absf(direction.x)
-	node.set_meta("facing_north",north)
-	sprite.set_rest_pose(NORTH_REST if north else node.get_meta("front_rest"))
+	var south:=direction.y>0 and absf(direction.y)>=absf(direction.x)
+	node.set_meta("pixel_facing","north" if north else ("south" if south else "east"))
+	sprite.set_rest_pose(NORTH_REST if north else (SOUTH_REST if south else node.get_meta("front_rest")))
 
 func _tint_ghost(node: Node) -> void:
 	if node is Sprite3D: node.modulate=Color(.35,.8,1,.45)
@@ -380,7 +384,7 @@ func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
 		if sprite != null:
 			var serial := int(node.get_meta("damage_serial",0))+1
 			node.set_meta("damage_serial",serial)
-			if not node.get_meta("facing_north",false): sprite.react_to_hit(serial,HOPLITE_GUARD)
+			if node.get_meta("pixel_facing","east")=="east": sprite.react_to_hit(serial,HOPLITE_GUARD)
 		timer = 0.22
 		var number := Label3D.new()
 		number.text = "−%d" % roundi(previous_hp-hp)

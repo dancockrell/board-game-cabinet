@@ -1,4 +1,5 @@
 extends SceneTree
+const SouthAttack=preload("res://themes/hoplite_south_attack.tres")
 const NorthRest=preload("res://themes/hoplite_north_rest.tres")
 const ThrustClip=preload("res://themes/hoplite_thrust_clip.tres")
 const GuardClip=preload("res://themes/hoplite_guard_clip.tres")
@@ -17,6 +18,10 @@ func _initialize() -> void:
 	invalid=ThrustClip.duplicate()
 	invalid.draw_scale=0.0
 	check(not invalid.validation_error().is_empty(), "Reject zero art scale")
+	check(SouthAttack.validation_error()=="", "South attack depth metadata is valid")
+	invalid=SouthAttack.duplicate()
+	invalid.depth_bias=1.0
+	check(not invalid.validation_error().is_empty(), "Reject excessive sprite depth offset")
 	var clip:=Clip.new()
 	var img:=Image.create(64,32,false,Image.FORMAT_RGBA8)
 	clip.atlas=ImageTexture.create_from_image(img)

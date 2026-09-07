@@ -55,7 +55,7 @@ func _run() -> void:
 	state.units[0].hp=75.0
 	board.show_state(state,.05)
 	var sprite=hoplite.get_node("Figure/PixelActor")
-	check(hoplite.get_meta("damage_serial")==1 and not sprite.clip.looping,"Authoritative damage starts pixel reaction")
+	check(hoplite.get_meta("damage_serial")==1 and sprite.clip==board.SOUTH_REST and hoplite.get_node("Hit").visible,"Authoritative damage preserves south view with impact feedback")
 	board.show_state(state,.05)
 	check(hoplite.get_meta("damage_serial")==1,"Repeated health snapshot does not replay hit")
 	check(hoplite.position==Vector3(state.units[0].x,.12,state.units[0].z),"Sprite presentation preserves authoritative position")

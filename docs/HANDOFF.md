@@ -2,6 +2,12 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Downward-facing Hoplite increment
+
+South movement/target vectors now select matching front rest and four-frame attack. North/south damage preserves facing and existing impact markers; east retains its shield reaction. Direction metadata uses pixel_facing rather than a north-only flag. Native contact study caught the below-foot spear tip clipping into terrain; a bounded 0.20 camera-depth bias in the keyed material resolves it without changing screen placement or authoritative coordinates. This has a close-occlusion tradeoff and is not a simulation offset.
+
+Native 90-frame study inspected: outputs/Hoplite-South-Study.mp4. This is a staged animation review, not a newly captured legal match. 13 headless sprite, 30 native sprite, 51 native board, 64 native model and 55 native app checks pass. Three provisional facings now exist; left-facing fallback, locomotion, guard reactions for north/south, emblem consistency and the remaining roster are unfinished. Source unchanged with provenance in assets/olympus_arena/sprites. Windows checkpoint predates this change.
+
 ## Upward-facing Hoplite increment
 
 Hoplites now select rear rest/attack when movement or the authoritative attack vector lies in the upward 90-degree sector. Recovery keeps that direction; damage retains rear orientation and existing impact feedback instead of playing the front guard clip. Rest updates do not reset attack/hit event deduplication. Initial dagger-like rear source was rejected and preserved locally; corrected full spear source/provenance is in assets/olympus_arena/sprites. Magenta-backed rendering now averages a 4x4 screen-pixel footprint after key removal, improving small-scale clarity without averaging magenta into edges; this costs 16 source samples per fragment.

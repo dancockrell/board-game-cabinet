@@ -9,6 +9,7 @@ extends Resource
 @export var frame_pivots: Array[Vector2] = []
 @export var frame_cutouts: Array[Rect2i] = []
 @export var draw_scale := 1.0
+@export var depth_bias := 0.0
 
 func validation_error() -> String:
 	if atlas == null or regions.is_empty(): return "Missing atlas or frames"
@@ -16,6 +17,7 @@ func validation_error() -> String:
 	if not frame_pivots.is_empty() and frame_pivots.size()!=regions.size(): return "Each irregular frame needs a pivot"
 	if not frame_cutouts.is_empty() and (not magenta_backing or frame_cutouts.size()!=regions.size()): return "Cutouts require keyed frames and one rectangle per frame"
 	if not is_finite(draw_scale) or draw_scale<=0: return "Invalid draw scale"
+	if not is_finite(depth_bias) or depth_bias<0 or depth_bias>0.3 or (depth_bias>0 and not magenta_backing): return "Invalid keyed-sprite depth bias"
 	var bounds := Rect2i(Vector2i.ZERO,Vector2i(atlas.get_size()))
 	for i in regions.size():
 		if regions[i].size.x <= 0 or regions[i].size.y <= 0 or not bounds.encloses(regions[i]): return "Frame outside atlas"

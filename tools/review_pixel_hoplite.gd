@@ -1,4 +1,6 @@
 extends SceneTree
+const SouthRest = preload("res://themes/hoplite_south_rest.tres")
+const SouthClip = preload("res://themes/hoplite_south_attack.tres")
 const NorthRest = preload("res://themes/hoplite_north_rest.tres")
 const NorthClip = preload("res://themes/hoplite_north_attack.tres")
 const ThrustClip = preload("res://themes/hoplite_thrust_clip.tres")
@@ -95,6 +97,7 @@ func _review_guard(output: String) -> void:
 	var guard=GuardClip
 	var action=ThrustClip if "--thrust-motion" in OS.get_cmdline_user_args() else guard
 	if "--north-motion" in OS.get_cmdline_user_args(): action=NorthClip
+	if "--south-motion" in OS.get_cmdline_user_args(): action=SouthClip
 	var rest=preload("res://presentation/sprite_clip.gd").new()
 	rest.atlas=guard.atlas
 	rest.pivot=guard.pivot
@@ -105,7 +108,7 @@ func _review_guard(output: String) -> void:
 	board.add_child(actor)
 	actor.pixel_size=.003
 	actor.position=Vector3(0,.15,3)
-	actor.reset_playback(NorthRest if action==NorthClip else rest)
+	actor.reset_playback(SouthRest if action==SouthClip else (NorthRest if action==NorthClip else rest))
 	var title:=Label.new()
 	title.text="HOPLITE / ACTION TIMING STUDY / NOT GAMEPLAY"
 	title.position=Vector2(30,25)

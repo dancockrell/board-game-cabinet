@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/hoplite-south-v1.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(0,0,543,724),Rect2i(543,0,543,724),Rect2i(1086,0,543,724),Rect2i(1629,0,543,724)])
+frame_pivots = Array[Vector2]([Vector2(300,608),Vector2(281,608),Vector2(246,608),Vector2(236,608)])
+durations = PackedFloat32Array(0.10,0.08,0.12,0.14)
+draw_scale = 1.06
+depth_bias = 0.20
+looping = false
+magenta_backing = true

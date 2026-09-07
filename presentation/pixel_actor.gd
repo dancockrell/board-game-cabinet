@@ -67,6 +67,7 @@ func set_clip(value: Clip) -> bool:
 		var keyed := ShaderMaterial.new()
 		keyed.shader = preload("res://presentation/pixel_chroma.gdshader")
 		keyed.set_shader_parameter("source_atlas", clip.atlas)
+		keyed.set_shader_parameter("depth_bias", clip.depth_bias)
 		material_override = keyed
 	_atlas.atlas = clip.atlas
 	texture = _atlas
