@@ -12,4 +12,14 @@ The initial runtime set now has four directional ready poses and four two-frame 
 
 The 384 by 512 source cells use individually selected foot anchors, with a shared 1.60 draw scale. Native four-direction review at the game's .0027 pixel size confirmed unclipped bows and stable foot placement through draw and release. Outputs `Atalanta-Study-05.png`, `-11.png`, `-16.png`, `-23.png`, and `-40.png` show rest, draw, release and recovery respectively; regenerate them with `tools/review_atalanta.gd -- --capture=<absolute-output-prefix>`.
 
-Validation: `tests/test_atalanta_clips.gd` checks all four resources, one-shot recovery and duplicate-event handling (24 checks). `tests/test_sprite_clip.gd` also checks per-frame atlas bounds, missing sources and synchronized shader/texture switching (45 native checks). This is a first animated character conversion, not the finished animation library: walking, nocking, intermediate draw, hit reactions and more facing angles remain to be authored. North/south attacks are angled in the image plane. Team distinction remains the board's rings and health bars.
+Validation: `tests/test_atalanta_clips.gd` checks all four resources, one-shot recovery and duplicate-event handling (24 checks). `tests/test_sprite_clip.gd` also checks per-frame atlas bounds, missing sources and synchronized shader/texture switching (45 native checks). North/south attacks are angled in the image plane. Team distinction remains the board's rings and health bars.
+
+## North/south walking
+
+`atalanta_north_walk.tres` and `atalanta_south_walk.tres` provide four genuinely alternating contact/passing phases at 0.16 seconds per phase. Bow remains in the left hand, quiver remains on the opposite hip and upper-body identity remains consistent with ready/shooting. Draw scale remains 1.60 at the actor's .0027 pixel size. Individual head-centered X anchors remove sheet spacing drift; foot Y anchors align the ground plane.
+
+The first generated sheet repeated leg phases. A single targeted image-generation correction supplied usable opposite-leg frames; the clips select phases individually across the two original sheets. Neither full sheet is treated as a valid animation in its printed order. `atalanta-walk-provenance.json` records precise frame choices and source digests. No source image was mechanically mirrored or painted over.
+
+`tools/review_atalanta_walk.gd -- --capture=<absolute-output-folder>` captures 90 native frames including rest, several complete loops and stop/recovery. The four phase samples were inspected at frames 10, 15, 20 and 25. `tests/test_atalanta_walk.gd` passed 16 checks covering source validity, ordered phases, looping and recovery from shooting into motion and from motion into rest. Parent board integration must choose these Resources for Atalanta north/south movement; the clip never moves the authoritative unit root.
+
+This remains a narrow four-phase walk. East/west locomotion, nocking, intermediate draws, hit reactions and additional animation in-betweens remain to be authored.

@@ -1,0 +1,46 @@
+{
+  "character": "Atalanta",
+  "generator": "OpenAI built-in image generation",
+  "status": "provisional admitted north/south four-phase walking",
+  "sources": [
+    {
+      "file": "atalanta-walk-a.png",
+      "sha256": "dc499d1d2895dab39195e83ce0e6b0be99ae81c907c1db8ddbc90c7ef4a5df25",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "file": "atalanta-walk-b.png",
+      "sha256": "a40cc67304556faeaa8fdb6e819e478c84c414140b43bdcc87d4c8a843a93765",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    }
+  ],
+  "generation_source": "C:/Users/Admin/.codex/generated_images/01a07d04-2a90-7ed0-b4ec-733f14fe804c/exec-97bb6da5-c322-4b0a-b655-7d4c84ca274c.png",
+  "correction_source": "C:/Users/Admin/.codex/generated_images/01a07d04-2a90-7ed0-b4ec-733f14fe804c/exec-074f7f37-e127-49f5-b8d5-14512cf262ad.png",
+  "reference": "atalanta-v2.png",
+  "north_sequence": [
+    "b row0 col0",
+    "a row0 col1",
+    "a row0 col0",
+    "b row0 col3"
+  ],
+  "south_sequence": [
+    "a row1 col0",
+    "a row1 col1",
+    "b row1 col2",
+    "b row1 col3"
+  ],
+  "selection_reason": "Initial sheet repeated contact legs. One targeted correction supplied opposite-leg phases. Individually selected and ordered source frames alternate feet; no whole-sheet admission.",
+  "source_processing": "Original generated pixels unchanged; per-frame source atlases, regions and pivots; saturated magenta chroma shader",
+  "validation": "Native inspection of four phases, start and stop; 16 walking checks",
+  "limitations": [
+    "Four-phase cycle; additional in-betweens not authored",
+    "Narrow stride and restrained arm movement",
+    "East/west walking not authored"
+  ]
+}
