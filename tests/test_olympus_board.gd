@@ -123,6 +123,19 @@ func run() -> void:
 	check(board._tokens[4].position==Vector3(2.0,.12,2.0), "South render depth offset never moves authoritative position")
 	board.show_state(state,.6)
 	check(attacking.clip==board.SOUTH_REST, "South attack recovers in matching direction")
+	state.units[-1].x=1.9
+	board.show_state(state,.1)
+	check(attacking.clip==board.WEST_REST, "Leftward movement selects authored west rest")
+	state.events.append({"id":7,"kind":"hit","source_id":4,"source_type":"unit","side":0,"source_x":1.9,"source_z":2.0,"x":1.0,"z":2.0})
+	board.show_state(state)
+	check(attacking.clip==board.WEST_ATTACK, "Leftward target selects authored west attack without mirroring")
+	board.show_state(state,.6)
+	check(attacking.clip==board.WEST_REST, "West attack recovers in matching direction")
+	board.show_state(state,.1)
+	check(attacking.clip==board.WEST_REST, "Stationary snapshot preserves west direction")
+	state.units[-1].x=2.0
+	board.show_state(state,.1)
+	check(attacking.clip==board._tokens[4].get_meta("front_rest"), "Rightward movement returns to east rest")
 	await process_frame
 	print("Olympus board: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)

@@ -1,6 +1,12 @@
 # Board Game Cabinet handoff
 
-Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
+Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
+
+## Leftward-facing Hoplite increment (current)
+
+All four cardinal sectors now select authored rest/attack sprites. West uses its own source rather than mirroring equipment hands. Unequal source spacing is handled with individual crops, foot pivots and two small neighbour exclusions; the source PNG remains unchanged. Movement to the left, exact-source attack, recovery, stationary facing and return to east have regression coverage. North, south and west damage preserve orientation with impact feedback; only east has a shield reaction.
+
+Native 90-frame staged study captured; contact and recovery inspected in outputs/Hoplite-West-Study.mp4. This is animation review, not a new legal-match recording. 56 native board and 55 native app checks pass. Four facings remain provisional: identity/emblem drift, abrupt facing transitions, static locomotion and legacy roster/environment are still unfinished. The Windows checkpoint predates these directional changes. Earlier increment sections below describe historical state, not current missing facings.
 
 ## Downward-facing Hoplite increment
 

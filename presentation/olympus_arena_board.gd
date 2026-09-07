@@ -1,5 +1,7 @@
 extends Node3D
 ## Persistent visual replicas of authoritative arena snapshots.
+const WEST_ATTACK = preload("res://themes/hoplite_west_attack.tres")
+const WEST_REST = preload("res://themes/hoplite_west_rest.tres")
 const SOUTH_ATTACK = preload("res://themes/hoplite_south_attack.tres")
 const SOUTH_REST = preload("res://themes/hoplite_south_rest.tres")
 const NORTH_ATTACK = preload("res://themes/hoplite_north_attack.tres")
@@ -194,15 +196,18 @@ func _mark_attack_events(events: Array) -> void:
 				var direction:=Vector2(float(event.x)-float(event.get("source_x",attacker.position.x)),float(event.z)-float(event.get("source_z",attacker.position.z)))
 				_face_pixel_unit(attacker,direction)
 				var facing=str(attacker.get_meta("pixel_facing","east"))
-				sprite.play_attack(event_id, NORTH_ATTACK if facing=="north" else (SOUTH_ATTACK if facing=="south" else THRUST_CLIP))
+				var attacks:={"north":NORTH_ATTACK,"south":SOUTH_ATTACK,"west":WEST_ATTACK,"east":THRUST_CLIP}
+				sprite.play_attack(event_id, attacks[facing])
 
 func _face_pixel_unit(node: Node3D, direction: Vector2) -> void:
 	var sprite=node.get_node_or_null("Figure/PixelActor")
 	if sprite==null or direction.length_squared()<0.000001: return
 	var north:=direction.y<0 and absf(direction.y)>=absf(direction.x)
 	var south:=direction.y>0 and absf(direction.y)>=absf(direction.x)
-	node.set_meta("pixel_facing","north" if north else ("south" if south else "east"))
-	sprite.set_rest_pose(NORTH_REST if north else (SOUTH_REST if south else node.get_meta("front_rest")))
+	var facing:="north" if north else ("south" if south else ("west" if direction.x<0 else "east"))
+	node.set_meta("pixel_facing",facing)
+	var poses:={"north":NORTH_REST,"south":SOUTH_REST,"west":WEST_REST,"east":node.get_meta("front_rest")}
+	sprite.set_rest_pose(poses[facing])
 
 func _tint_ghost(node: Node) -> void:
 	if node is Sprite3D: node.modulate=Color(.35,.8,1,.45)

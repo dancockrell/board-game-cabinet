@@ -1,0 +1,10 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-a921ab64-ac16-4e05-b03d-171fd22330fb.png",
+  "sha256": "6dbf2145f3ad2d746d9c62216449d52a7d9dd4c2acb80cd4fe53f15964a9d5e2",
+  "status": "provisional west rest and four-frame attack",
+  "authoring": "Unequal source crops, individual foot pivots, 1.26 scale, two rectangular neighbour exclusions",
+  "masking": "Source unchanged; saturated magenta filtered after key removal",
+  "validation": "Native 90-frame study; contact and recovery inspected. 56 native board and 55 native app checks passed.",
+  "limitations": "Identity and silhouette drift across directions; four authored poses are not a smooth walk cycle. No west shield reaction; damage retains impact markers."
+}
