@@ -2,6 +2,10 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## Latest pose production
+
+[Hoplite pose reserve](HOPLITE_POSE_RESERVE.md): 18 varied static candidates, six inspected in the native chroma preview. Shared 2D sources and rejected-output findings preserved. No finished animation implied.
+
 ## Latest implementation and shared archive
 
 See [pixel implementation checkpoint](PIXEL_IMPLEMENTATION.md): old art/model workshop preserved in shared storage; new sprite clip Resource and camera-facing renderer implemented and tested. Static front/back native preview exists; live roster migration remains pending coherent animation.
