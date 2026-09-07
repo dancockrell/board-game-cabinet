@@ -195,3 +195,7 @@ The [original chess plan](PLAN.md) remains useful architecture history. The [Nin
 Greek mythological subject matter does not grant permission to copy a modern game's character designs, a film's costume designs, a translation, a soundtrack, or commercial artwork. The new implementation uses original assets and its own presentation. The repository remains private; no source licence or change of visibility is implied.
 
 
+
+## Windows shrine checkpoint
+
+Local package: workspace outputs/Olympus-Pixel-Shrines-Windows.zip, source dbf1b22. Native exported screenshot inspected and 90-frame smoke exited 0. Executable SHA256 78631C55C35F9829876C6ED0F2B3AFF182DA28319BC083B308BFFBDDCFD60027. Includes notices, provenance and build notes. Local artifact only, not a GitHub release; incomplete art and animation requirements remain.
