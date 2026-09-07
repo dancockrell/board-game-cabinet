@@ -8,10 +8,22 @@ var _rest_clip: Clip
 var _reaction_elapsed := -1.0
 var _last_hit_event := -1
 var _last_attack_event := -1
+var _motion_clip: Clip
+var _motion_elapsed := 0.0
+
+func set_locomotion(walk: Clip) -> bool:
+	if walk != null and (not walk.looping or not walk.validation_error().is_empty()): return false
+	if walk == _motion_clip: return true
+	_motion_clip=walk
+	_motion_elapsed=0.0
+	if _reaction_elapsed < 0: return set_clip(walk if walk != null else _rest_clip)
+	return true
 
 func reset_playback(rest: Clip) -> bool:
 	if not set_clip(rest): return false
 	_rest_clip=rest
+	_motion_clip=null
+	_motion_elapsed=0.0
 	_reaction_elapsed=-1.0
 	_last_hit_event=-1
 	_last_attack_event=-1
@@ -28,7 +40,7 @@ func set_rest_pose(rest: Clip) -> bool:
 	if rest==null or not rest.looping or not rest.validation_error().is_empty(): return false
 	if rest==_rest_clip: return true
 	_rest_clip=rest
-	if _reaction_elapsed<0: return set_clip(rest)
+	if _reaction_elapsed<0 and _motion_clip==null: return set_clip(rest)
 	return true
 
 func react_to_hit(event_id: int, reaction: Clip) -> bool:
@@ -39,12 +51,18 @@ func react_to_hit(event_id: int, reaction: Clip) -> bool:
 	return true
 
 func advance_visual(delta: float) -> void:
-	if _reaction_elapsed < 0 or not is_finite(delta) or delta < 0: return
+	if not is_finite(delta) or delta < 0: return
+	if _reaction_elapsed < 0:
+		if _motion_clip != null:
+			_motion_elapsed+=delta
+			show_time(_motion_elapsed)
+		return
 	_reaction_elapsed+=delta
 	var duration:=0.0
 	for seconds in clip.durations: duration+=seconds
 	if _reaction_elapsed >= duration and _rest_clip != null:
-		set_clip(_rest_clip)
+		set_clip(_motion_clip if _motion_clip != null else _rest_clip)
+		_motion_elapsed=0.0
 		_reaction_elapsed=-1.0
 	else:
 		show_time(_reaction_elapsed)

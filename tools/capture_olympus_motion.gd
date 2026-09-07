@@ -8,6 +8,7 @@ const WARMUP_FRAMES := 38 * FPS
 const CAPTURE_FRAMES := 6 * FPS
 var warmup_frames := WARMUP_FRAMES
 var pixel_attack_frames := 0
+var pixel_walk_frames := 0
 var wait_for_thrust := false
 var app
 var directory := ""
@@ -85,6 +86,7 @@ func _run() -> void:
 		for token in app.board._tokens.values():
 			var sprite=token.get_node_or_null("Figure/PixelActor")
 			if sprite != null and sprite.clip in [app.board.THRUST_CLIP,app.board.NORTH_ATTACK,app.board.SOUTH_ATTACK,app.board.WEST_ATTACK]: pixel_attack_frames+=1
+			if sprite != null and sprite.clip == app.board.NORTH_WALK: pixel_walk_frames+=1
 		var filename := "frame-%04d.png" % frame
 		error = root.get_texture().get_image().save_png(directory.path_join(filename))
 		if error != OK:
@@ -100,6 +102,7 @@ func _run() -> void:
 		"scene": "res://app/olympus_arena.tscn", "seed": 42,
 		"fps": FPS, "frames": CAPTURE_FRAMES, "duration_seconds": 6,
 		"pixel_attack_actor_frames":pixel_attack_frames, "warmup_seconds": float(warmup_frames) / FPS, "simulation_tick_seconds": 0.1,
+		"pixel_walk_actor_frames":pixel_walk_frames,
 		"player_legal_placements": placements,
 		"final_elapsed": app.state.elapsed,
 		"final_unit_count": app.state.units.size(),

@@ -105,7 +105,11 @@ func run() -> void:
 	check(attacking.clip.looping and attacking.scale==Vector3.ONE, "Live Hoplite returns to rest without replaying old attack")
 	state.units[-1].z=1.9
 	board.show_state(state,.1)
-	check(attacking.clip==board.NORTH_REST, "Upward movement selects rear rest")
+	check(attacking.clip==board.NORTH_WALK, "Upward displacement selects rear walking cycle")
+	check(board._tokens[4].position==Vector3(2.0,.12,1.9), "Walking never offsets authoritative replica position")
+	state.elapsed+=.1
+	board.show_state(state,.1)
+	check(attacking.clip==board.NORTH_REST, "Stationary snapshot stops the stride")
 	state.events.append({"id":5,"kind":"hit","source_id":4,"source_type":"unit","side":0,"source_x":2.0,"source_z":1.9,"x":2.0,"z":1.0})
 	board.show_state(state)
 	check(attacking.clip==board.NORTH_ATTACK, "Upward authoritative target selects rear attack")
@@ -136,6 +140,15 @@ func run() -> void:
 	state.units[-1].x=2.0
 	board.show_state(state,.1)
 	check(attacking.clip==board._tokens[4].get_meta("front_rest"), "Rightward movement returns to east rest")
+	state.elapsed=10.0
+	state.units[-1].z=1.8
+	board.show_state(state,.1)
+	check(attacking.clip==board.NORTH_WALK, "New simulation tick starts stride")
+	board.show_state(state,.2)
+	check(attacking.clip==board.NORTH_WALK and attacking.texture.region==Rect2(board.NORTH_WALK.regions[1]), "Repeated render snapshot retains and advances stride")
+	state.elapsed=10.1
+	board.show_state(state,.1)
+	check(attacking.clip==board.NORTH_REST, "Next stationary simulation tick stops stride")
 	await process_frame
 	print("Olympus board: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)

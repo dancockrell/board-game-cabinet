@@ -72,7 +72,9 @@ func _run() -> void:
 	expect(app.notice.contains("your side"), "Illegal placement explains the correction")
 	app._toggle_pause()
 	var before_pause: Dictionary = app.session.snapshot()
+	var visual_time_before_pause: float = app.board._time
 	app._process(0.2)
+	expect(app.board._time == visual_time_before_pause, "Pause freezes board animation time as well as simulation")
 	expect(app.session.snapshot() == before_pause and app.pause_button.text == "Resume", "Pause holds authoritative time and updates control")
 	app._toggle_pause()
 	app._process(0.2)

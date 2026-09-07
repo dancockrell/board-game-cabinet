@@ -1,0 +1,11 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-69c58516-44c7-43f3-b4ba-b8dce4ea9cfd.png",
+  "reference": "hoplite-north-v2.png",
+  "sha256": "631d6caca2235f74de3783674e1b5b026bc939658f32af0aa207b64fd09f2989",
+  "status": "provisional north walk, source phases 1,2,5,6",
+  "masking": "Unmodified saturated magenta source; runtime chroma filter",
+  "validation": "Native four-phase close study and 180-frame legal match captured. Corrected tick/render distinction gives 144 walking actor-frames.",
+  "limitations": "Only north; four phases, limited torso motion, abrupt rest transition, other directions still glide",
+  "prompt": "Six evenly spaced rear-facing Greek hoplite walking frames; bronze helmet and greaves, blue crest, white tunic and blue Greek-key hem. Identity reference north-v2. Left shield at image left, right long upright spear at image right, no mirroring. Alternating left contact/right passing/right contact/left passing, visible trailing soles, narrow gait, stable pelvis, subtle reciprocal shoulders. Rich crisp pixel art, saturated magenta background, no floor, shadows, text, checkerboard or white."
+}

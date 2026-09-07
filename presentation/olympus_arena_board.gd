@@ -1,4 +1,5 @@
 extends Node3D
+const NORTH_WALK = preload("res://themes/hoplite_north_walk.tres")
 ## Persistent visual replicas of authoritative arena snapshots.
 const WEST_ATTACK = preload("res://themes/hoplite_west_attack.tres")
 const WEST_REST = preload("res://themes/hoplite_west_rest.tres")
@@ -130,6 +131,13 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		var attack_strength := clampf((float(node.get_meta("attack_until", 0.0)) - _time) / 0.24, 0.0, 1.0)
 		var sprite = node.get_node("Figure").get_node_or_null("PixelActor")
 		if sprite != null:
+			var moved := previous.distance_to(target) > 0.004
+			# Render-only repeats must retain movement until a new authoritative tick.
+			if not state.has("elapsed") or moved or not node.has_meta("motion_tick") or float(node.get_meta("motion_tick", -1.0)) != float(state.elapsed):
+				node.set_meta("motion_active", moved)
+				node.set_meta("motion_tick", float(state.get("elapsed", -1.0)))
+			var moving := bool(node.get_meta("motion_active", false))
+			sprite.set_locomotion(NORTH_WALK if moving and str(node.get_meta("pixel_facing", "east")) == "north" else null)
 			sprite.advance_visual(delta)
 		else:
 			_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)

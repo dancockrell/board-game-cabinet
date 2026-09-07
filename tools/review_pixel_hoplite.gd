@@ -1,4 +1,5 @@
 extends SceneTree
+const NorthWalk = preload("res://themes/hoplite_north_walk.tres")
 const WestRest = preload("res://themes/hoplite_west_rest.tres")
 const WestClip = preload("res://themes/hoplite_west_attack.tres")
 const SouthRest = preload("res://themes/hoplite_south_rest.tres")
@@ -112,6 +113,13 @@ func _review_guard(output: String) -> void:
 	actor.pixel_size=.003
 	actor.position=Vector3(0,.15,3)
 	actor.reset_playback(WestRest if action==WestClip else (SouthRest if action==SouthClip else (NorthRest if action==NorthClip else rest)))
+	var walking := "--north-walk" in OS.get_cmdline_user_args()
+	if walking:
+		actor.reset_playback(NorthRest)
+		if not actor.set_locomotion(NorthWalk):
+			push_error("Walking clip rejected: " + NorthWalk.validation_error())
+			quit(2)
+			return
 	var title:=Label.new()
 	title.text="HOPLITE / ACTION TIMING STUDY / NOT GAMEPLAY"
 	title.position=Vector2(30,25)
@@ -119,8 +127,8 @@ func _review_guard(output: String) -> void:
 	var folder:=output.get_basename()+"-frames"
 	DirAccess.make_dir_recursive_absolute(folder)
 	for frame in 90:
-		if frame==15: actor.play_attack(1,action) if action!=guard else actor.react_to_hit(1,action)
-		if frame==25: actor.play_attack(1,action) if action!=guard else actor.react_to_hit(1,action) # repeated snapshot must not restart
+		if frame==15 and not walking: actor.play_attack(1,action) if action!=guard else actor.react_to_hit(1,action)
+		if frame==25 and not walking: actor.play_attack(1,action) if action!=guard else actor.react_to_hit(1,action) # repeated snapshot must not restart
 		actor.advance_visual(1.0/30.0)
 		for tick in 2: await process_frame
 		await RenderingServer.frame_post_draw

@@ -2,7 +2,15 @@
 
 Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Leftward-facing Hoplite increment (current)
+## First northward walking cycle (current)
+
+Northward Hoplites now use four curated walking phases from a six-pose built-in generation (source phases 1, 2, 5, 6). The unused middle pair did not improve sequence order. Individual crops and torso-aligned pivots preserve the complete spear and stable body placement. Source is unchanged with saturated-magenta masking. This is a provisional four-phase march, not a smooth finished locomotion set: other directions still glide, upper-body movement is limited and transitions to wider attack stances remain abrupt.
+
+PixelActor has an independent looping movement clock beneath one-shot attacks/reactions. Repeated render snapshots preserve locomotion; only a new authoritative simulation tick can stop it when displacement ceases. This distinction was caught in native gameplay capture: the first hookup stopped on every render repeat and was corrected. Pause freezes board animation time. Neither clip playback nor pivots move authoritative unit coordinates.
+
+Native close study: outputs/Hoplite-North-Walk-Fixed.mp4. Corrected legal match: outputs/Hoplite-Walk-Live-Fixed.mp4, 180 frames from 2 to 8 seconds, two legal placements, 144 walking actor-frames and 13 attack actor-frames. Counts describe actors using clips, not unique animation drawings. Native sprite/board/app validation is recorded with this increment. Windows checkpoint still predates these changes. Next art work must broaden locomotion and the roster; this does not complete the delivery goal.
+
+## Leftward-facing Hoplite increment
 
 All four cardinal sectors now select authored rest/attack sprites. West uses its own source rather than mirroring equipment hands. Unequal source spacing is handled with individual crops, foot pivots and two small neighbour exclusions; the source PNG remains unchanged. Movement to the left, exact-source attack, recovery, stationary facing and return to east have regression coverage. North, south and west damage preserve orientation with impact feedback; only east has a shield reaction.
 

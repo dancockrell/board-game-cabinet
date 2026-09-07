@@ -313,7 +313,7 @@ func _process(delta:float) -> void:
 		button.position.y = lerpf(button.position.y, 798.0 if active else 808.0, 1.0-exp(-delta*18.0))
 		button.scale = button.scale.lerp(Vector2.ONE * (1.055 if active else 1.025 if hovered else 1.0),1.0-exp(-delta*18.0))
 	if selected_slot >= 0 and _last_pointer.x > -900: _preview(_last_pointer)
-	if board and not state.is_empty(): board.show_state(state,delta)
+	if board and not state.is_empty(): board.show_state(state,0.0 if paused or not started or state.get("phase", "") != "playing" else delta)
 	if board and board.ambient_life: board.ambient_life.advance(delta, paused or not started)
 	if hud_fx: hud_fx.advance(delta)
 
