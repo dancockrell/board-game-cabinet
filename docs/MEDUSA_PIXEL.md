@@ -10,7 +10,7 @@ The source rows are south, north, east and west. Columns are ready, gather and r
 
 - Rest resources: `themes/medusa_{south,north,east,west}_rest.tres`.
 - Attack resources: `themes/medusa_{south,north,east,west}_attack.tres`.
-- PixelActor pixel_size: 0.0027. Resource draw_scale: 1.55.
+- PixelActor pixel_size: 0.0027. Resource draw_scale: 1.9.
 - Source row boundaries: 0, 380, 725, 1065, 1448. Individual foot anchors keep contact stable.
 - West row uses unequal column boundaries 0, 362, 700, 1086 to preserve the reaching hand.
 - Parent board chooses facing from authoritative movement/attack direction and never moves game coordinates for animation.
@@ -25,6 +25,6 @@ Walking, hit reaction and death animation are not included in v1. Add these from
 
 ## Provisional walking addition
 
-`medusa-walk-v1.png` adds four directional locomotion resources, `themes/medusa_{direction}_walk.tres`. These use the same pixel_size 0.0027 with draw_scale 1.78 to match the differently sized source poses. North/south select two opposite-foot contacts from the generation; its requested passing poses repeated, so they were not counted as additional phases. East/west use four varied stride/flex poses. The result is readable but still has abrupt contacts and needs proper in-betweens for finished smoothness.
+`medusa-walk-v1.png` adds four directional locomotion resources, `themes/medusa_{direction}_walk.tres`. These use the same pixel_size 0.0027 with draw_scale 2.18 to match the differently sized source poses. North/south select two opposite-foot contacts from the generation; its requested passing poses repeated, so they were not counted as additional phases. East/west use four varied stride/flex poses. The result is readable but still has abrupt contacts and needs proper in-betweens for finished smoothness.
 
 The native study now accepts `--walk`, starts all four locomotion clips, captures 90 frames and checks stopping returns each actor to its directional rest. `outputs/Medusa-Walk-Study.mp4` passed; frames 0 and 6 inspected for opposite feet and intact silhouettes. Board integration remains coordinator-owned. No further source iterations were made during this roster pass.

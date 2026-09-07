@@ -8,5 +8,5 @@ regions = Array[Rect2i]([Rect2i(0,625,313,285),Rect2i(939,625,315,285),Rect2i(62
 frame_pivots = Array[Vector2]([Vector2(195,273),Vector2(104,273),Vector2(142,272),Vector2(185,273)])
 durations = PackedFloat32Array(0.12,0.12,0.12,0.12)
 looping = true
-draw_scale = 1.78
+draw_scale = 2.18
 magenta_backing = true
