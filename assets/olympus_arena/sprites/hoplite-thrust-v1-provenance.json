@@ -1,0 +1,10 @@
+{
+  "source": "built-in image_gen",
+  "source_file": "exec-7934d9ba-8084-453c-a364-aac22fa903f5.png",
+  "sha256": "b122496d34b164c7fc9489787c126580991bd260311cb09add4e41e7ca0a4ab6",
+  "status": "provisional right-facing attack integrated",
+  "authoring": "Four source-specific crop regions, per-frame foot pivots, 1.22 scale correction, neighbour exclusion rectangles in frames 3 and 4; raw source unchanged",
+  "timing": "0.10 draw, 0.08 extend, 0.12 contact, 0.14 retract; returns to rest",
+  "masking": "Saturated magenta only, plus authored neighbour exclusions; no light background extraction",
+  "limitations": "Single right-facing direction currently used for all Hoplite attacks. Wrong-facing targets remain visible unfinished work. Abrupt idle-to-windup transition and modest foot/outline drift need refinement."
+}

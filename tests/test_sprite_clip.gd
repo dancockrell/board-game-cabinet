@@ -1,11 +1,21 @@
 extends SceneTree
+const ThrustClip=preload("res://themes/hoplite_thrust_clip.tres")
 const GuardClip=preload("res://themes/hoplite_guard_clip.tres")
 const Clip=preload("res://presentation/sprite_clip.gd")
 var failures:=0
+var checks:=0
 func check(value: bool, label: String) -> void:
+	checks+=1
 	if not value: failures+=1; push_error(label)
 func _initialize() -> void:
 	check(GuardClip is Clip and GuardClip.validation_error()=="","Shipped guard Resource loads its script, atlas and timing")
+	check(ThrustClip.validation_error()=="", "Irregular thrust frame contract is valid")
+	var invalid=ThrustClip.duplicate()
+	invalid.frame_pivots.clear()
+	check(not invalid.validation_error().is_empty(), "Unequal frames reject absent pivots")
+	invalid=ThrustClip.duplicate()
+	invalid.draw_scale=0.0
+	check(not invalid.validation_error().is_empty(), "Reject zero art scale")
 	var clip:=Clip.new()
 	var img:=Image.create(64,32,false,Image.FORMAT_RGBA8)
 	clip.atlas=ImageTexture.create_from_image(img)
@@ -41,6 +51,14 @@ func _initialize() -> void:
 		check(not actor.react_to_hit(6,clip),"Older events ignored")
 		actor.reset_playback(rest)
 		check(actor.react_to_hit(0,clip),"Rematch accepts new event numbering")
+		check(actor.play_attack(40,ThrustClip), "Attack event starts independent action clock")
+		actor.advance_visual(.2)
+		check(actor.scale==Vector3.ONE*ThrustClip.draw_scale and actor.texture.region==Rect2(ThrustClip.regions[2]), "Thrust reaches authored contact frame at matching scale")
+		check(not actor.play_attack(40,ThrustClip), "Repeated attack does not rewind clip")
+		actor.advance_visual(1)
+		check(actor.clip==rest and actor.scale==Vector3.ONE and actor.material_override==null, "Attack recovery restores rest scale and native alpha material")
+		actor.reset_playback(rest)
+		check(actor.play_attack(0,ThrustClip), "Rematch resets attack event numbering")
 		actor.free()
-	print("Sprite clip: %s checks, %s failures"%[8 if DisplayServer.get_name()=="headless" else 17,failures])
+	print("Sprite clip: %s checks, %s failures"%[checks,failures])
 	quit(1 if failures else 0)

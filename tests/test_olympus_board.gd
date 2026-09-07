@@ -96,6 +96,13 @@ func run() -> void:
 	board.show_state(state, 0.2)
 	board.show_state(state, 0.4)
 	check(board.combat_fx.effects.is_empty(), "Tracer and impact expire")
+	state.units.append({"id":4,"kind":"hoplites","side":0,"x":2.0,"z":2.0,"hp":100.0,"max_hp":100.0})
+	state.events.append({"id":4,"kind":"hit","source_id":4,"source_type":"unit","side":0,"x":2.5,"z":2.0})
+	board.show_state(state)
+	var attacking=board._tokens[4].get_node("Figure/PixelActor")
+	check(attacking.clip==board.THRUST_CLIP, "Exact Hoplite attack event starts thrust clip")
+	board.show_state(state,.6)
+	check(attacking.clip.looping and attacking.scale==Vector3.ONE, "Live Hoplite returns to rest without replaying old attack")
 	await process_frame
 	print("Olympus board: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)

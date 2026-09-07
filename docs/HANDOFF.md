@@ -2,6 +2,12 @@
 
 Updated 2026-09-07. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
+## First authored thrust animation
+
+Hoplites now play a provisional four-frame thrust from exact authoritative hit events. Uneven source layout is handled by per-frame crops/pivots and two neighbour masks. Source pixels are unchanged. Scale returns to normal after recovery; hit and attack event IDs are tracked separately. Native study reviewed through draw/contact/recovery and native legal-match capture confirmed ten actor-frames using the attack clip. The capture began at 6.9 seconds, used two legal deployments, and ended at 12.9 seconds; outputs/Hoplite-Thrust-Live.mp4 and Hoplite-Thrust-Study.mp4. Earlier fixed-time captures contained zero thrust frames and were not accepted as animation evidence.
+
+Validation: 11 headless and 25 native sprite checks, 43 native board checks, 64 native model checks, 55 native app checks passed. Important limitation: only a right-facing thrust exists and currently plays for every Hoplite attack, including upward targets. Directional correctness, idle-to-windup transition, locomotion and rest of roster remain unfinished. This is an intermediate animation hookup, not final art acceptance. Windows checkpoint predates it.
+
 ## Attack source identity
 
 Hit events now include source_id, source_type and target_id from the authoritative simulation. Attack feedback targets that exact unit; it no longer chooses the nearest friendly replica. Missing sources and tower attacks cannot animate nearby troops. Native regression includes a closer neighbour and separate tower/missing-source events. 775 arena-rule checks and 41 native board checks pass. New thrust pose sheet is preserved as a candidate only; see HOPLITE_POSE_RESERVE.md for layout and scale defects. Latest Windows checkpoint predates this source change.

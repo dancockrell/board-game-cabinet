@@ -7,12 +7,21 @@ var _shown := -1
 var _rest_clip: Clip
 var _reaction_elapsed := -1.0
 var _last_hit_event := -1
+var _last_attack_event := -1
 
 func reset_playback(rest: Clip) -> bool:
 	if not set_clip(rest): return false
 	_rest_clip=rest
 	_reaction_elapsed=-1.0
 	_last_hit_event=-1
+	_last_attack_event=-1
+	return true
+
+func play_attack(event_id: int, action: Clip) -> bool:
+	if event_id<=_last_attack_event or action==null or action.looping: return false
+	if not set_clip(action): return false
+	_last_attack_event=event_id
+	_reaction_elapsed=0.0
 	return true
 
 func react_to_hit(event_id: int, reaction: Clip) -> bool:
@@ -45,6 +54,7 @@ func _init() -> void:
 func set_clip(value: Clip) -> bool:
 	if value == null or not value.validation_error().is_empty(): return false
 	clip = value
+	scale = Vector3.ONE * clip.draw_scale
 	material_override = null
 	if clip.magenta_backing:
 		var keyed := ShaderMaterial.new()
@@ -64,4 +74,9 @@ func show_time(seconds: float) -> void:
 	_shown=index
 	_atlas.region=Rect2(clip.regions[index])
 	var half_cell := Vector2(clip.regions[index].size)*.5
-	offset=Vector2(half_cell.x-clip.pivot.x,clip.pivot.y-half_cell.y)
+	var anchor: Vector2 = clip.pivot if clip.frame_pivots.is_empty() else clip.frame_pivots[index]
+	offset=Vector2(half_cell.x-anchor.x,anchor.y-half_cell.y)
+	if clip.magenta_backing:
+		var cut := Rect2i() if clip.frame_cutouts.is_empty() else clip.frame_cutouts[index]
+		var dimensions := clip.atlas.get_size()
+		material_override.set_shader_parameter("cutout", Vector4(cut.position.x/dimensions.x,cut.position.y/dimensions.y,cut.size.x/dimensions.x,cut.size.y/dimensions.y))

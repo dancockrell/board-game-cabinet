@@ -1,5 +1,6 @@
 extends Node3D
 ## Persistent visual replicas of authoritative arena snapshots.
+const THRUST_CLIP = preload("res://themes/hoplite_thrust_clip.tres")
 const RUBBLE_CLIP = preload("res://themes/olympus_shrine_rubble_clip.tres")
 const SHRINE_CLIP = preload("res://themes/olympus_shrine_clip.tres")
 const PALETTE = preload("res://themes/olympus_arena_theme.tres")
@@ -183,6 +184,9 @@ func _mark_attack_events(events: Array) -> void:
 		var attacker = _tokens.get(event.get("source_id"))
 		if attacker != null:
 			attacker.set_meta("attack_until", _time + 0.24)
+			var sprite=attacker.get_node_or_null("Figure/PixelActor")
+			if sprite != null:
+				sprite.play_attack(event_id, THRUST_CLIP)
 
 func _tint_ghost(node: Node) -> void:
 	if node is Sprite3D: node.modulate=Color(.35,.8,1,.45)

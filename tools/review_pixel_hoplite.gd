@@ -1,4 +1,5 @@
 extends SceneTree
+const ThrustClip = preload("res://themes/hoplite_thrust_clip.tres")
 const GuardClip = preload("res://themes/hoplite_guard_clip.tres")
 func _initialize() -> void: _run.call_deferred()
 func _run() -> void:
@@ -90,6 +91,7 @@ func _review_guard(output: String) -> void:
 	board.camera.position=Vector3(0,10.5,14)
 	board.camera.look_at(Vector3(0,.6,3))
 	var guard=GuardClip
+	var action=ThrustClip if "--thrust-motion" in OS.get_cmdline_user_args() else guard
 	var rest=preload("res://presentation/sprite_clip.gd").new()
 	rest.atlas=guard.atlas
 	rest.pivot=guard.pivot
@@ -102,14 +104,14 @@ func _review_guard(output: String) -> void:
 	actor.position=Vector3(0,.15,3)
 	actor.reset_playback(rest)
 	var title:=Label.new()
-	title.text="HOPLITE GUARD / EVENT-DRIVEN ANIMATION TRIAL / NOT GAMEPLAY"
+	title.text="HOPLITE / ACTION TIMING STUDY / NOT GAMEPLAY"
 	title.position=Vector2(30,25)
 	root.add_child(title)
 	var folder:=output.get_basename()+"-frames"
 	DirAccess.make_dir_recursive_absolute(folder)
 	for frame in 90:
-		if frame==15: actor.react_to_hit(1,guard)
-		if frame==25: actor.react_to_hit(1,guard) # repeated snapshot must not restart
+		if frame==15: actor.play_attack(1,action) if action==ThrustClip else actor.react_to_hit(1,action)
+		if frame==25: actor.play_attack(1,action) if action==ThrustClip else actor.react_to_hit(1,action) # repeated snapshot must not restart
 		actor.advance_visual(1.0/30.0)
 		for tick in 2: await process_frame
 		await RenderingServer.frame_post_draw

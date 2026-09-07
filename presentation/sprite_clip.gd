@@ -6,15 +6,25 @@ extends Resource
 @export var pivot := Vector2.ZERO
 @export var looping := true
 @export var magenta_backing := false
+@export var frame_pivots: Array[Vector2] = []
+@export var frame_cutouts: Array[Rect2i] = []
+@export var draw_scale := 1.0
 
 func validation_error() -> String:
 	if atlas == null or regions.is_empty(): return "Missing atlas or frames"
 	if durations.size() != regions.size(): return "Each frame needs a duration"
+	if not frame_pivots.is_empty() and frame_pivots.size()!=regions.size(): return "Each irregular frame needs a pivot"
+	if not frame_cutouts.is_empty() and (not magenta_backing or frame_cutouts.size()!=regions.size()): return "Cutouts require keyed frames and one rectangle per frame"
+	if not is_finite(draw_scale) or draw_scale<=0: return "Invalid draw scale"
 	var bounds := Rect2i(Vector2i.ZERO,Vector2i(atlas.get_size()))
 	for i in regions.size():
 		if regions[i].size.x <= 0 or regions[i].size.y <= 0 or not bounds.encloses(regions[i]): return "Frame outside atlas"
 		if not is_finite(durations[i]) or durations[i] <= 0: return "Invalid duration"
-		if regions[i].size != regions[0].size: return "Frames require equal cells for stable pivots"
+		if frame_pivots.is_empty() and regions[i].size != regions[0].size: return "Unequal cells need individual pivots"
+		if not frame_pivots.is_empty() and not frame_pivots[i].is_finite(): return "Invalid frame pivot"
+		if not frame_cutouts.is_empty():
+			var cut:=frame_cutouts[i]
+			if cut.size.x<0 or cut.size.y<0 or (cut.has_area() and not bounds.encloses(cut)): return "Invalid cutout"
 	if not pivot.is_finite(): return "Invalid pivot"
 	return ""
 
