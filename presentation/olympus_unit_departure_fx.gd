@@ -1,0 +1,66 @@
+extends Node3D
+## A short, manually clocked copy of a removed unit's last visible frame.
+## The board owns this cosmetic node and frees it immediately on match reset.
+const LIFETIME := 0.78
+var elapsed := 0.0
+var ghost: Sprite3D
+var _material: ShaderMaterial
+var _flecks: Array[MeshInstance3D] = []
+
+func begin(source: Sprite3D) -> bool:
+	if ghost != null or not is_instance_valid(source) or source.texture == null or not is_inside_tree(): return false
+	global_transform = source.global_transform
+	ghost = Sprite3D.new()
+	ghost.texture = source.texture.duplicate()
+	ghost.pixel_size = source.pixel_size
+	ghost.offset = source.offset
+	ghost.centered = source.centered
+	ghost.flip_h = source.flip_h
+	ghost.flip_v = source.flip_v
+	ghost.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	ghost.shaded = false
+	ghost.double_sided = true
+	_material = ShaderMaterial.new()
+	_material.shader = preload("res://presentation/olympus_unit_departure.gdshader")
+	var atlas: Texture2D = ghost.texture
+	if atlas is AtlasTexture: atlas = atlas.atlas
+	_material.set_shader_parameter("source_atlas", atlas)
+	if source.material_override is ShaderMaterial:
+		for parameter in ["cutout", "depth_bias"]:
+			var value = source.material_override.get_shader_parameter(parameter)
+			if value != null: _material.set_shader_parameter(parameter, value)
+		_material.set_shader_parameter("magenta_backing", true)
+	ghost.material_override = _material
+	add_child(ghost)
+	var palette := [Color("bf954e"), Color("ebe0bd"), Color("426d89")]
+	for i in 12:
+		var fleck := MeshInstance3D.new()
+		var cube := BoxMesh.new()
+		cube.size = Vector3.ONE * (0.025 + (i % 3) * 0.009)
+		fleck.mesh = cube
+		var material := StandardMaterial3D.new()
+		material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		material.albedo_color = palette[i % palette.size()]
+		fleck.material_override = material
+		fleck.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		fleck.visible = false
+		add_child(fleck)
+		_flecks.append(fleck)
+	return true
+
+func advance_visual(delta: float) -> void:
+	if ghost == null or not is_finite(delta) or delta <= 0.0: return
+	elapsed = minf(elapsed + delta, LIFETIME)
+	var phase := elapsed / LIFETIME
+	_material.set_shader_parameter("departure", smoothstep(0.12, 0.84, phase))
+	# A modest loss of posture, not a flattened building-like squash.
+	ghost.position.y = -0.1 * phase
+	ghost.scale.y = 1.0 - 0.18 * phase
+	for i in _flecks.size():
+		var fleck := _flecks[i]
+		var t := clampf((phase - 0.18) / 0.82, 0.0, 1.0)
+		var angle := float(i) * 2.399963
+		fleck.visible = phase > 0.18 and phase < 0.95
+		fleck.position = Vector3(cos(angle) * t * 0.36, 0.18 + (i % 5) * 0.17 + sin(t * PI) * 0.15 - t * 0.22, sin(angle) * t * 0.24)
+		fleck.scale = Vector3.ONE * (1.0 - t)
+	if elapsed >= LIFETIME: queue_free()
