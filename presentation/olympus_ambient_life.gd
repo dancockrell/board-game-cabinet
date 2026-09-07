@@ -7,6 +7,8 @@ var _birds: Array[Node3D] = []
 var _pennants: Array[Node3D] = []
 var _embers: Array[MeshInstance3D] = []
 var _materials: Dictionary = {}
+var _cloth: Array[ShaderMaterial] = []
+var _wakes: Array[MeshInstance3D] = []
 
 func _ready() -> void:
 	name = "AmbientLife"
@@ -26,6 +28,13 @@ func _ready() -> void:
 func advance(delta: float, paused: bool = false) -> void:
 	if paused: return
 	_clock += maxf(0.0, delta)
+	for cloth in _cloth: cloth.set_shader_parameter("motion_clock", _clock)
+	for wake in _wakes:
+		var phase := fposmod(_clock * 0.65 + float(wake.get_meta("phase")), 1.0)
+		wake.position.z = 0.62 + phase * 1.05
+		wake.scale.x = 0.5 + phase * 1.8
+		wake.scale.z = 0.5 + sin(phase * PI) * 0.7
+		wake.visible = phase < 0.92
 	for i in _boats.size():
 		var boat := _boats[i]
 		var side := -1.0 if i == 0 else 1.0
@@ -65,11 +74,13 @@ func _boat(side: int) -> void:
 	_box(boat, Vector3(0.34, 0.055, 1.01), Vector3(0, 0.04, 0), Color("b18c59"))
 	_box(boat, Vector3(0.035, 1.22, 0.035), Vector3(0, 0.60, 0), Color("725640"))
 	_box(boat, Vector3(0.74, 0.027, 0.025), Vector3(0, 1.08, 0), Color("725640"))
-	var sail := _triangle(boat, Vector3(-0.36, 1.06, 0.015), Vector3(0.35, 1.06, 0.015), Vector3(0.24, 0.20, 0.12), Color("d8d0b7"))
+	var sail := _fabric(boat, Vector3(-0.36, 1.06, 0.015), Vector3(0.35, 1.06, 0.015), Vector3(0.24, 0.20, 0.12), Color("d8d0b7"), side)
 	sail.rotation.y = -0.18
 	for i in 3:
 		var wake := _box(boat, Vector3(0.26 + i * 0.18, 0.008, 0.027), Vector3(0, -0.02, 0.76 + i * 0.19), Color("7ebbb7"))
 		wake.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		wake.set_meta("phase", float(i) / 3.0)
+		_wakes.append(wake)
 
 func _bird(index: int) -> void:
 	var bird := Node3D.new()
@@ -92,9 +103,31 @@ func _pennant(pos: Vector3, blue: bool) -> void:
 	_pennants.append(holder)
 	var direction := -1.0 if pos.x < 0 else 1.0
 	var color := Color("367fa0") if blue else Color("ae6658")
-	_triangle(holder, Vector3.ZERO, Vector3(direction * 0.43, 0, 0), Vector3(direction * 0.31, -0.52, 0.03), color)
-	_triangle(holder, Vector3.ZERO, Vector3(direction * 0.31, -0.52, 0.03), Vector3(0, -0.42, 0), color)
-	_box(holder, Vector3(0.37, 0.025, 0.015), Vector3(direction * 0.2, -0.07, 0.018), Color("d5b77a"))
+	_fabric(holder, Vector3.ZERO, Vector3(direction * 0.43, 0, 0), Vector3(direction * 0.31, -0.52, 0.03), color, pos.z)
+	_fabric(holder, Vector3.ZERO, Vector3(direction * 0.31, -0.52, 0.03), Vector3(0, -0.42, 0), color, pos.z)
+
+func _fabric(parent: Node3D, a: Vector3, b: Vector3, c: Vector3, color: Color, phase: float) -> MeshInstance3D:
+	# Subdivide the source triangle so the wave bends cloth instead of rotating a rigid plate.
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var divisions := 12
+	for row in divisions:
+		for column in range(divisions - row):
+			var p := a + (b-a) * float(row) / divisions + (c-a) * float(column) / divisions
+			var u := (b-a) / divisions
+			var v := (c-a) / divisions
+			for point in [p, p+u, p+v]: surface.add_vertex(point)
+			if column < divisions-row-1:
+				for point in [p+u, p+u+v, p+v]: surface.add_vertex(point)
+	surface.generate_normals()
+	var node := _mesh(parent, surface.commit(), Vector3.ZERO, color)
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://presentation/olympus_ambient_cloth.gdshader")
+	material.set_shader_parameter("cloth_color", color)
+	material.set_shader_parameter("phase", phase)
+	node.material_override = material
+	_cloth.append(material)
+	return node
 
 func _material(color: Color) -> StandardMaterial3D:
 	if _materials.has(color): return _materials[color]
