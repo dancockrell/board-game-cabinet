@@ -10,6 +10,7 @@ var _last_hit_event := -1
 var _last_attack_event := -1
 var _motion_clip: Clip
 var _motion_elapsed := 0.0
+var _rest_elapsed := 0.0
 
 func set_locomotion(walk: Clip) -> bool:
 	if walk != null and (not walk.looping or not walk.validation_error().is_empty()): return false
@@ -23,7 +24,7 @@ func set_locomotion(walk: Clip) -> bool:
 	_motion_elapsed=phase * _clip_duration(walk) if walk != null else 0.0
 	if _reaction_elapsed < 0:
 		var accepted := set_clip(walk if walk != null else _rest_clip)
-		if accepted and walk != null: show_time(_motion_elapsed)
+		if accepted: show_time(_motion_elapsed if walk != null else _rest_elapsed)
 		return accepted
 	return true
 
@@ -37,6 +38,7 @@ func reset_playback(rest: Clip) -> bool:
 	_rest_clip=rest
 	_motion_clip=null
 	_motion_elapsed=0.0
+	_rest_elapsed=0.0
 	_reaction_elapsed=-1.0
 	_last_hit_event=-1
 	_last_attack_event=-1
@@ -52,8 +54,13 @@ func play_attack(event_id: int, action: Clip) -> bool:
 func set_rest_pose(rest: Clip) -> bool:
 	if rest==null or not rest.looping or not rest.validation_error().is_empty(): return false
 	if rest==_rest_clip: return true
+	var phase := fposmod(_rest_elapsed, _clip_duration(_rest_clip)) / _clip_duration(_rest_clip) if _rest_clip != null else 0.0
 	_rest_clip=rest
-	if _reaction_elapsed<0 and _motion_clip==null: return set_clip(rest)
+	_rest_elapsed=phase * _clip_duration(rest)
+	if _reaction_elapsed<0 and _motion_clip==null:
+		set_clip(rest)
+		show_time(_rest_elapsed)
+		return true
 	return true
 
 func react_to_hit(event_id: int, reaction: Clip) -> bool:
@@ -69,6 +76,9 @@ func advance_visual(delta: float) -> void:
 		if _motion_clip != null:
 			_motion_elapsed+=delta
 			show_time(_motion_elapsed)
+		elif _rest_clip != null:
+			_rest_elapsed+=delta
+			show_time(_rest_elapsed)
 		return
 	_reaction_elapsed+=delta
 	var duration := _clip_duration(clip)
@@ -76,8 +86,9 @@ func advance_visual(delta: float) -> void:
 		# Hold the stride during the action; only the time after its end belongs
 		# to locomotion. This also makes recovery independent of render rate.
 		if _motion_clip != null: _motion_elapsed += _reaction_elapsed - duration
+		else: _rest_elapsed += _reaction_elapsed - duration
 		set_clip(_motion_clip if _motion_clip != null else _rest_clip)
-		if _motion_clip != null: show_time(_motion_elapsed)
+		show_time(_motion_elapsed if _motion_clip != null else _rest_elapsed)
 		_reaction_elapsed=-1.0
 	else:
 		show_time(_reaction_elapsed)

@@ -40,3 +40,7 @@ The exported executable completed1,800 ticks with30 legal deployments,all seven 
 The overall game quality goal remains active. Add richer authored intermediate poses and missing lateral walking for Atalanta and Heracles, plus true Hydra locomotion. Their previous side-walk agents hit a usage limit; unfinished Heracles scaffolds are preserved outside active tests. Improve transitions and balance without restoring models. All new visual work uses the built-in image generator authorized by the user, not paid external APIs.
 
 Hosted CI was previously unable to start due to account billing/spending limits. Local and exported verification are separate evidence; do not infer current CI green status.
+
+## Idle playback repair — 2026-09-08
+
+Standing actors now advance their authored idle clips. Idle facing changes preserve normalized phase; attack recovery applies only time after the action ends, and pause/rematch preserve or clear clocks respectively. Native sprite checks passed (45) and motion continuity checks passed (20). The standard graphical verification now includes motion continuity. This source change is newer than the Windows checkpoint above; that executable does not include this repair.

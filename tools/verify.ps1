@@ -17,7 +17,7 @@ foreach ($test in @("test_sprite_clip", "test_chess", "test_chess_oracle", "test
     Invoke-GodotCheck @("--headless", "--script", "res://tests/$test.gd")
 }
 if ($Graphics) {
-    foreach ($test in @("test_sprite_clip", "test_olympus_combat_fx", "test_olympus_board", "test_olympus_stage", "test_olympus_models", "test_olympus_app", "test_olympus_2d_only")) {
+    foreach ($test in @("test_sprite_clip", "test_pixel_motion_continuity", "test_olympus_combat_fx", "test_olympus_board", "test_olympus_stage", "test_olympus_models", "test_olympus_app", "test_olympus_2d_only")) {
         Invoke-GodotCheck @("--rendering-method", "gl_compatibility", "--script", "res://tests/$test.gd")
     }
 }
