@@ -22,7 +22,25 @@ The 2026-09-08 owner decision applies to every project and shared pack: 2D artwo
 
 No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy copies in the shared library, other project checkouts, old build outputs and historical releases require separate removal. Current 2D sources, candidates and reference art remain valuable and are not deletion targets. The earlier archive-for-later decision is superseded.
 
-## Current Windows checkpoint: expanded walks and wingbeats
+## Current Windows checkpoint: drawn collapse and Harpy attack
+
+Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-drawn-collapse-2026-09-08
+
+Source: `1e867dfde8fb3c1ecc8f37035b76d690839d5c50`. Package: `Olympus-Drawn-Collapse-Windows.zip` (115,637,416 bytes).
+ZIP SHA256: `06DDD9C4BC01B523DB82CDC20B965F3698A0C18CAAEFCA368283E5A81D0DEF1E`.
+Executable SHA256: `685BFCE1B3AF1047745A36B3BFAAE292673A3F405C04B148718E5F0C4C3B2D29`.
+
+Eight authored shrine collapse drawings replace squash animation, followed by the original permanent rubble drawing. Explicit stair pivots and uniform per-frame scale preserve placement. The temporary collapse covers the transition; permanent ruins appear afterward. Large generic explosion rings/smoke were removed because they hid the masonry. See SHRINE_AUTHORED_COLLAPSE.md.
+
+Harpy south attack expands from three unique drawings/four entries to eight distinct phases while preserving0.39-second playback. See HARPY_SOUTH_ATTACK.md. Earlier richer walks, wingbeats, Hoplite thrust and saved preferences remain included.
+
+Full graphical verification passed: collapse170, event-driven attack132, Harpy dedicated checks, board85, sprite67, continuity20, stage13, roster79, app68, effects337, arena775 and preserved rules suites. Integrated 2D gate: seven kinds,30legalplacements,959effectsamples,6740planar drawings,zero failures. Native60fps studies inspected all new collapse/Harpy stages. Exported executable passed1800ticks,30legaldeployments,seven types,13collapse samples,result/rematch,zero failures; exported collapse capture inspected. Videos are isolated motion studies, not normal-speed full-match footage.
+
+Atalanta front/rear attack expansion attempts were not admitted: equipment/clothing continuity failed. The original two-frame attacks remain, including the known legacy rear handedness defect. Rejected north artwork was physically removed from runtime assets after verifying its unchanged shared archive; its provenance is in excluded docs. Do not cite the intermediate eight-frame native study as accepted art. See ATALANTA_NORTH_ATTACK.md and ATALANTA_SOUTH_ATTACK_REVIEW.md.
+
+Remaining: correct isolated Atalanta aim anchors before expanding bow actions, richer Heracles lateral locomotion, broader combat poses, fine gait/wing transitions and crowd readability. Minor rubble rearrangement and Harpy face/torso variation remain. The goal is still active; this is a playable development checkpoint.
+
+## Historical Windows checkpoint: expanded walks and wingbeats
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-expanded-walks-2026-09-08
 
