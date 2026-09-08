@@ -8,6 +8,8 @@ var pixel_characters: Array[String] = []
 var animated_idle_samples := 0
 var flight_samples := 0
 var clip_frames := {}
+var drawn_defeat_samples := 0
+var defeat_frames := {}
 
 func run(app: Control, directory: String) -> void:
 	if not directory.is_absolute_path() or DirAccess.make_dir_recursive_absolute(directory) != OK:
@@ -50,6 +52,12 @@ func run(app: Control, directory: String) -> void:
 					else: walk_samples+=1
 				elif sprite.clip == sprite._rest_clip and sprite.clip.regions.size() > 1:
 					animated_idle_samples+=1
+		for departure in app.board._departures:
+			if departure.drawn_actor != null:
+				drawn_defeat_samples+=1
+				var path=str(departure.drawn_actor.clip.resource_path)
+				if not defeat_frames.has(path): defeat_frames[path]=[]
+				if not defeat_frames[path].has(departure.drawn_actor._shown): defeat_frames[path].append(departure.drawn_actor._shown)
 		if not app.board._collapses.is_empty():
 			collapse_samples+=1
 			if collapse_samples in [2,5,9]: await _capture(app,directory.path_join("collapse-%02d.png" % collapse_samples))
@@ -62,6 +70,7 @@ func run(app: Control, directory: String) -> void:
 	for kind in ["hoplites","atalanta","medusa","minotaur","heracles","hydra","harpies"]:
 		_check(pixel_characters.has(kind), "Match exercises character: " + kind)
 	_check(collapse_samples > 0, "Match exercises building collapse")
+	_check(drawn_defeat_samples > 0, "Match exercises authored character defeat")
 	_check(walk_samples > 0, "Export contains active walking sprites")
 	_check(app.battle_overlay.visible and app.start_button.text == "REMATCH", "Result screen offers rematch")
 	var expected := "VICTORY!" if app.state.winner == 0 else "DEFEAT" if app.state.winner == 1 else "DRAW"
@@ -72,7 +81,7 @@ func run(app: Control, directory: String) -> void:
 	var report := {"seed":42, "ticks":ticks, "simulation_seconds":app.state.elapsed,
 		"collapse_samples":collapse_samples,"pixel_characters":pixel_characters,
 		"animated_idle_samples":animated_idle_samples,"flight_samples":flight_samples,
-		"observed_clip_frames":clip_frames,
+		"observed_clip_frames":clip_frames,"drawn_defeat_samples":drawn_defeat_samples,"observed_defeat_frames":defeat_frames,
 		"winner":app.state.winner, "legal_deployments":placements, "walking_actor_samples":walk_samples,
 		"timing":"Accelerated simulation with one native render opportunity per 0.1-second tick; not real-time video",
 		"exported":not OS.has_feature("editor"), "executable":OS.get_executable_path()}
