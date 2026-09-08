@@ -28,3 +28,14 @@ These are preserved 2D candidates, outside the shipped game. Shared-library copi
 ## Next production method
 
 The next attempt should commission **one direction and one explicit pair of opposite contact poses**, with clear colored anatomical leg annotations in the reference, then commission passing poses against that accepted pair. Large multi-direction sheets invite repeated anatomy while appearing superficially complete. Do not generate more until the parent production task chooses that bounded experiment.
+
+## Follow-up: isolated contact pair also rejected
+
+The coordinator authorized two further built-in calls on 2026-09-08. First request isolated two east-facing contact poses, explicitly placing the near knee behind the pelvis in the second pose. The output duplicated the same near-leg-forward contact. The final corrective request specified actual screen coordinates for both knees and feet, preserving the first pose and upper body. It again retained the same foreground thigh pointing forward. Neither pair is admitted, and passing poses were not commissioned against a failed contact pair.
+
+Both unchanged originals are in the same local shared candidate folder:
+
+- `heracles-east-contact-v1-rejected.png`: generation `exec-78ce9fca-60d0-44be-904c-f1e3193c84de`.
+- `heracles-east-contact-v2-rejected.png`: generation `exec-3be20014-5a2f-4712-96ca-4c7782a9cbe4`.
+
+This confirms that text-only leg-position instructions against this identity sheet are insufficient. **Do not repeat another text-only contact-pair request.** A future attempt needs a visibly posed anatomical guide or a different approved drawing workflow, preserving the 2D-only rule. Heracles lateral walk remains absent; no runtime Resource or central roster change was made.
