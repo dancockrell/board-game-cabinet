@@ -81,7 +81,14 @@ func run() -> void:
 	for tick in 1800:
 		if app.state.phase != "playing": break
 		if tick % 10 == 0:
+			# Reserve elixir for an unseen roster card instead of repeatedly
+			# spending on cheap cards and depending on the opponent for coverage.
+			var slots: Array[int] = []
 			for slot in 4:
+				if app.state.hand[slot] != "thunderbolt" and not kinds.has(app.state.hand[slot]): slots.append(slot)
+			if slots.is_empty(): slots.assign([0,1,2,3])
+			else: slots.resize(1)
+			for slot in slots:
 				var position := Vector2(-2.7 if placements % 2 == 0 else 2.7, 1.3)
 				if app.state.hand[slot] == "thunderbolt": position.y = -3.0
 				if app.session.deploy(slot, position).get("ok", false):
