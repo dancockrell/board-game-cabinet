@@ -1,0 +1,7 @@
+{
+  "generator": "OpenAI built-in imagegen",
+  "source": "exec-6f69212b-fb32-4989-b49e-e80578899e08.png",
+  "sha256": "8ab291c2beae2e81bc62e008a6d6605209a7bdc364a3a8314d47f037153e9c97",
+  "frames": 8,
+  "notes": "Untouched rear-view source; per-frame body-height normalization, explicit talon pivots. No mirrored front views."
+}

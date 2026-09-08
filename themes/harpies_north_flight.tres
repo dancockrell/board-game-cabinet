@@ -1,12 +1,13 @@
 [gd_resource type="Resource" load_steps=3 format=3]
 [ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/harpies-flight-v1.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/harpies-north-flight-eight.png" id="2"]
 [resource]
 script = ExtResource("1")
 atlas = ExtResource("2")
-regions = Array[Rect2i]([Rect2i(0,450,335,437),Rect2i(335,450,475,437),Rect2i(810,450,260,437),Rect2i(1070,450,345,437)])
-frame_pivots = Array[Vector2]([Vector2(174,400),Vector2(230,406),Vector2(126,395),Vector2(170,405)])
-durations = PackedFloat32Array(0.12,0.1,0.12,0.1)
+regions = Array[Rect2i]([Rect2i(0,0,443,480),Rect2i(443,0,444,480),Rect2i(887,0,443,480),Rect2i(1330,0,444,480),Rect2i(0,480,443,407),Rect2i(443,480,444,407),Rect2i(887,480,443,407),Rect2i(1330,480,444,407)])
+frame_pivots = Array[Vector2]([Vector2(238,445),Vector2(201,445),Vector2(216,445),Vector2(190,445),Vector2(236,317),Vector2(197,317),Vector2(207,317),Vector2(190,317)])
+durations = PackedFloat32Array(0.07,0.055,0.05,0.05,0.065,0.07,0.07,0.07)
 looping = true
 magenta_backing = true
-draw_scale = 1.25
+draw_scale = 1.75
+frame_draw_scales = PackedFloat32Array(1.5304,1.5816,1.6293,1.68,1.4318,1.4264,1.4104,1.4373)
