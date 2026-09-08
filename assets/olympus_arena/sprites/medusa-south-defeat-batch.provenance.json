@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "character": "medusa",
+  "action": "defeat",
+  "direction": "south",
+  "generator": "built-in image_gen",
+  "source_generated_image": "C:/Users/Admin/.codex/generated_images/01a0801a-5f6c-76c1-91a0-ee69c0400058/exec-adba0b69-a74d-4aac-bba3-859ae2cfa52e.png",
+  "sha256": "62a7f6cfdcef2daac0686440ddda12038d9f4f6d5013b70393c6ff17a1014573",
+  "source_batch": "art_batches/medusa_batch_01/manifest.json",
+  "exact_prompt": "Create a production pixel-art animation SPRITE SHEET using the attached Medusa as exact character/style reference, not a redesign. Adult athletic Greek woman, ivory short chiton with black Greek-key hem, gold belt/bracers/diadem/sandals, green living snake hair, warm olive skin. Crisp hand-pixel clusters with dark outline, mature detailed 2D retro game art, fixed slightly elevated game-board view. Exactly EIGHT equal columns and FOUR equal rows: 32 complete separate drawings, each inside its cell with generous padding. Landscape 2:1 canvas. NO headings, labels, gridlines, symbols or separators. Completely uniform pure saturated #FF00FF magenta background, including between snakes, no floor/shadows, no white. Consistent physical size and baseline per row, no camera rotation or cropping. Each ROW is one coherent chronological action with EIGHT distinct successive poses, read LEFT TO RIGHT. Row1 walk loop: left contact, left down, right passing, right up, right contact, right down, left passing, left up, opposing arm swing and snake sway. Row2 gaze attack: relaxed, brace, hands rise, coil, extend fingers, peak outward snake lunge, hands lower, return ready; no giant beam obscuring body. Row3 hurt recovery: ready, flinch impact, recoil, deep recoil, brace foot, rise, settle, ready. Row4 defeat: standing hit, buckle knees, one knee down, both knees, hands reach floor, torso drops, side collapse, fully settled fallen body, no gore. Do not repeat idle drawings to fill cells. Maintain identity, outfit and drawn pixel detail in all 32 cells. DIRECTION SOUTH: every pose faces the viewer, frontal with slight top visibility as reference top row. Defeat keeps front-facing anatomical continuity. Generate entire32frame sheet in one image.\n",
+  "raster_processing": "none; complete source sheet copied byte-for-byte",
+  "resource": "themes/medusa_south_defeat.tres",
+  "selected_row": 3,
+  "frames": 8,
+  "duration_seconds": 0.78,
+  "status": "resource and native actor review passed; board event integration owned by coordinator",
+  "review_note": "Head/snake silhouette is broader than canonical standing. Body height matched with uniform scale; no individual-frame rescaling. Final body holds, does not loop."
+}

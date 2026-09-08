@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/medusa-south-defeat-batch.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(51,668,117,219),Rect2i(267,674,119,213),Rect2i(489,674,118,213),Rect2i(707,674,117,213),Rect2i(919,674,119,213),Rect2i(1100,674,182,213),Rect2i(1296,674,225,213),Rect2i(1530,674,230,213)])
+frame_pivots = Array[Vector2]([Vector2(65,206),Vector2(61,193),Vector2(59,194),Vector2(59,190),Vector2(59,199),Vector2(102,195),Vector2(140,190),Vector2(150,184)])
+durations = PackedFloat32Array(0.07,0.08,0.08,0.09,0.10,0.10,0.12,0.14)
+looping = false
+draw_scale = 3
+magenta_backing = true
+
