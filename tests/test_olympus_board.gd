@@ -123,7 +123,9 @@ func run() -> void:
 	board.show_state(state)
 	var attacking=board._tokens[4].get_node("Figure/PixelActor")
 	check(attacking.clip==board.THRUST_CLIP, "Exact Hoplite attack event starts thrust clip")
-	board.show_state(state,.6)
+	var thrust_length:=0.0
+	for seconds in board.THRUST_CLIP.durations: thrust_length+=seconds
+	board.show_state(state,thrust_length+.01)
 	check(attacking.clip.looping and attacking.scale==Vector3.ONE, "Live Hoplite returns to rest without replaying old attack")
 	state.units[-1].z=1.9
 	board.show_state(state,.1)
