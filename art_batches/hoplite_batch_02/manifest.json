@@ -1,0 +1,30 @@
+{
+  "character": "hoplite",
+  "tool": "built-in image_gen",
+  "current_requested_cells": 32,
+  "runtime_admitted_drawings": 8,
+  "sheets": [
+    {
+      "file": "layout-rejected.png",
+      "status": "rejected layout; irregular count/order and wrong rear defeat; no runtime admission",
+      "prompt_file": "prompt.txt",
+      "sha256": "583adade4a5812fcf7b74d927522c7938cbb8ba7fbf9912e7c7c9a2a707a76c5",
+      "prompt": "Create ONE coherent production 2D pixel-art SPRITE SHEET for this SAME Greek hoplite, using the reference images for identity, palette and camera only. EXACT4 columns x8rows =32 separate full drawings on portrait1024x2048 canvas. Each square cell256x256 has at least24pixels pureempty gutter on ALL FOUR sides. Reduce wholefigure uniformly to FIT complete spear/shield even during pronefall. NO object can cross a cell edge. No border or text. Transparent background preferred; if unavailable perfectlyuniform saturatedmagenta #FF00FF, neverwhite/checkerboard/gradient/shadows. Refined discrete pixel clusters, darkoutline, bronze gold Corinthianhelmet BLUEcrest, ivorytunic blueGreekhem, greaves/sandals, largeBLUEowlshield anatomicalLEFT, longspear anatomicalRIGHT. Same equipment continuously inEVERYpose; no disappears or switches hands. Classic elevated2D game perspective matchingreference, not3Drender/clay. Four8frame actions, eachaction occupies TWO consecutive rows read lefttoright thennextrow. Rows1-2 SOUTH defeat towardviewer: impactrecoil,kneesbuckle,one kneeground,lowersto bothknees,bowsandshieldlowers,rolls ontoleftside,bodyresting withequipment,fullysettled corpse PG13nogore. Rows3-4 NORTH defeat rearview same8phase progression fallsforward thenprone, shieldinnerbrownstraps visibleleft andspearright, equipmentlies besidebody. Rows5-6 SOUTH shieldbash: idle,anticipatoryknee bend,drawshieldback,lungeforward,shieldstrikefullreach,recoil,stepback,guard; spearstays inrighthand stable. Rows7-8 NORTH stagger:idle,backimpact,archback,leftfootstagger,deepkneebend,catchbalance,pushup,recover. Precisely8distinctchronologicalposesperaction, notrepeatedfiller. Bodies consistentproportions, smoothlimb progression, substantialposturechanges andcrest/tunicsecondarymotion. True32cells, generousclearance priority aboveoversizedfigures. Allsprites fullycontained evenlastcolumn, nonecropped atimageedge. No floorplanes or groundshadows.\n"
+    },
+    {
+      "file": "actions-repair.png",
+      "status": "south defeat row admitted; north final poses have duplicate spears; shieldbash becomes spear thrust; remaining rows candidate only",
+      "prompt_file": "repair-prompt.txt",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_drawings": 32,
+      "sha256": "ac093d89c3bad9eb63257c8538af52c8448aab94aacfe5ad78467f9dfd3dcde1",
+      "prompt": "ONE production sprite sheet, landscape1536x1024. EXACTLY8 COLUMNS and4 ROWS,32frames. Equal192x256cells. Every drawing must fit inside itscell with20px empty margin, including spear onground. Draw figures SMALLER to preserve emptycellmargins. Match reference Greek hoplite goldhelmet bluecrest ivorytunic blueGreekhem bronzelegs largeblueowlshield onanatomicalLEFT screenright andspear onRIGHT screenleft. Classic elevated2D refined pixelart darkoutline, no3D/clay. Pureuniformmagenta#FF00FF background, no shadows, no text/grid. Eachrow has8frames LEFTTORIGHT. Row1 SOUTH defeat: uprightrecoil,kneesbuckle,rightkneel,bothknees,bowhead,fallleft,sideground,fullyprone withshieldandspearbesidebody. Row2 NORTH defeat seenrear: uprightrecoil,kneesbuckle,rightkneel,bothknees,bowhead,fallsforward,prone,settledprone. Row3 SOUTH shieldbash:guard,coilback,stepforward,shieldforward,fullstrike,recoil,stepback,guard. Row4 NORTH hurt:guard,hit,archesback,leftstagger,deepcrouch,catchbalance,rise,guard. Full equipmentinALL32frames; noswitchinghands/no disappearingweapon. Eachframe discrete andcomplete, no spritecrossescellmargin. Same scale throughoutallframes, sequentialbodyaction includingrealjointchanges. Northshieldbrowninside onleft/spearright; southblueowlshieldonright/spearleft. PG13nogore. Layoutmustbe32 independentcells in4straightrows of8, no diagonalflow and no addedrows. Reference ONLY foridentity/style, do notcopyreferenceposecount.\n"
+    }
+  ],
+  "runtime_resource": "themes/hoplite_south_defeat.tres",
+  "validation": "39 native resource checks; native90frame canonical comparison; board authoritative removal test",
+  "notes": "Pixels unchanged. Measured irregular bounding rectangles rather than assuming strict grid. First failed sheet is preserved separately, not extra action coverage."
+}

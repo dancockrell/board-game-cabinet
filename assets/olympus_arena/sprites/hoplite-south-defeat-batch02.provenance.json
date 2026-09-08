@@ -1,0 +1,94 @@
+{
+  "tool": "built-in image_gen",
+  "source_generated": "C:/Users/Admin/.codex/generated_images/01a07171-2bb1-7e43-a95f-f956c8814af6/exec-6c43ec2c-26a3-4a4a-ba01-517f71cfaa19.png",
+  "sha256": "ac093d89c3bad9eb63257c8538af52c8448aab94aacfe5ad78467f9dfd3dcde1",
+  "prompt": "ONE production sprite sheet, landscape1536x1024. EXACTLY8 COLUMNS and4 ROWS,32frames. Equal192x256cells. Every drawing must fit inside itscell with20px empty margin, including spear onground. Draw figures SMALLER to preserve emptycellmargins. Match reference Greek hoplite goldhelmet bluecrest ivorytunic blueGreekhem bronzelegs largeblueowlshield onanatomicalLEFT screenright andspear onRIGHT screenleft. Classic elevated2D refined pixelart darkoutline, no3D/clay. Pureuniformmagenta#FF00FF background, no shadows, no text/grid. Eachrow has8frames LEFTTORIGHT. Row1 SOUTH defeat: uprightrecoil,kneesbuckle,rightkneel,bothknees,bowhead,fallleft,sideground,fullyprone withshieldandspearbesidebody. Row2 NORTH defeat seenrear: uprightrecoil,kneesbuckle,rightkneel,bothknees,bowhead,fallsforward,prone,settledprone. Row3 SOUTH shieldbash:guard,coilback,stepforward,shieldforward,fullstrike,recoil,stepback,guard. Row4 NORTH hurt:guard,hit,archesback,leftstagger,deepcrouch,catchbalance,rise,guard. Full equipmentinALL32frames; noswitchinghands/no disappearingweapon. Eachframe discrete andcomplete, no spritecrossescellmargin. Same scale throughoutallframes, sequentialbodyaction includingrealjointchanges. Northshieldbrowninside onleft/spearright; southblueowlshieldonright/spearleft. PG13nogore. Layoutmustbe32 independentcells in4straightrows of8, no diagonalflow and no addedrows. Reference ONLY foridentity/style, do notcopyreferenceposecount.\n",
+  "reference": "assets/olympus_arena/sprites/hoplite-south-v1.png",
+  "treatment": "Complete original PNG copied unchanged. Read-only connected silhouette measurement; rectangles and pivots only. Magenta handled by runtime shader.",
+  "regions": [
+    [
+      26,
+      45,
+      141,
+      202
+    ],
+    [
+      209,
+      65,
+      153,
+      183
+    ],
+    [
+      406,
+      96,
+      146,
+      155
+    ],
+    [
+      598,
+      127,
+      140,
+      125
+    ],
+    [
+      788,
+      121,
+      134,
+      130
+    ],
+    [
+      955,
+      121,
+      177,
+      129
+    ],
+    [
+      1150,
+      154,
+      162,
+      105
+    ],
+    [
+      1334,
+      180,
+      181,
+      79
+    ]
+  ],
+  "pivots": [
+    [
+      76,
+      199
+    ],
+    [
+      93,
+      179
+    ],
+    [
+      80,
+      149
+    ],
+    [
+      82,
+      118
+    ],
+    [
+      66,
+      123
+    ],
+    [
+      94,
+      121
+    ],
+    [
+      65,
+      79
+    ],
+    [
+      74,
+      56
+    ]
+  ],
+  "admitted_drawings": 8,
+  "status": "runtime admitted south defeat row only; native39checks and90frame comparison inspected"
+}
