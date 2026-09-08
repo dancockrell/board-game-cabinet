@@ -50,3 +50,11 @@ Standing actors now advance their authored idle clips. Idle facing changes prese
 Added separate east/west four-pose authored walk Resources. Movement selects them; standing uses idle playback, attacks retain authoritative event timing. Built-in generation plus one background-only correction; original chroma source preserved. Four ordered native poses inspected on the battlefield, resource timing checks and integrated 2D gate passed. North/south locomotion and smoother in-betweens remain unfinished. This is newer source than the downloadable Windows checkpoint.
 
 Atalanta east/west four-pose walks are now connected to movement (native clip tests: 16 passed). Contact poses remain similar and lifted steps exaggerated; smoother intermediate poses remain required. Heracles lateral generation was rejected for repeated planted feet; see HERACLES_LATERAL_REVIEW.md. No claim of complete locomotion coverage.
+
+## Latest Windows delivery — animated sprites
+
+Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-animated-sprites-2026-09-08
+Build source: 09798cd996b6dc18b21633d687576724d139b73c. This supersedes the older downloadable checkpoint above and includes idle playback plus Atalanta/Hydra lateral walks.
+Executable SHA256: 0F5867B98542B603960EEF1230B15F60BE4D8EBBE26284B02CDFCAD57F01582D.
+ZIP SHA256: CB4373FE437D2622FFA8777BE78A093522D549126DA20A6C673A15C58D1DA76E; 76,820,127 bytes.
+Native exported verification: passed=true, failures=[], exported=true, 1,800 ticks, 30 legal deployments, seven characters, 13 collapse samples, result/state agreement and rematch reset. Battle capture inspected at outputs/Animated-Sprites-Export-Verification/battle-0300.png. Accelerated diagnostic is not real-time footage. The animated_idle_samples field groups Hydra and Harpy motion samples and should not be interpreted as proof of distinct idle frames.
