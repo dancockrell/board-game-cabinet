@@ -165,6 +165,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 				locomotion=HARPIES_FLIGHT[str(node.get_meta("pixel_facing", "south"))]
 			sprite.set_locomotion(locomotion)
 			sprite.advance_visual(delta)
+			_prepare_pixel_attack(node, unit)
 	for id in _tokens.keys():
 		if not alive.has(id):
 			if not resetting: _departure(_tokens[id])
@@ -244,14 +245,35 @@ func _mark_attack_events(events: Array) -> void:
 				var direction:=Vector2(float(event.x)-float(event.get("source_x",attacker.position.x)),float(event.z)-float(event.get("source_z",attacker.position.z)))
 				_face_pixel_unit(attacker,direction,true)
 				var facing=str(attacker.get_meta("pixel_facing","east"))
-				var attacks:={"north":NORTH_ATTACK,"south":SOUTH_ATTACK,"west":WEST_ATTACK,"east":THRUST_CLIP}
-				if str(attacker.get_meta("kind", "")) == "atalanta": attacks=ATALANTA_ATTACK
-				if str(attacker.get_meta("kind", "")) == "medusa": attacks=MEDUSA_ATTACK
-				if str(attacker.get_meta("kind", "")) == "minotaur": attacks=MINOTAUR_ATTACK
-				if str(attacker.get_meta("kind", "")) == "heracles": attacks=HERACLES_ATTACK
-				if str(attacker.get_meta("kind", "")) == "harpies": attacks=HARPIES_ATTACK
-				if str(attacker.get_meta("kind", "")) == "hydra": attacks=HYDRA_ATTACK
+				var attacks := _pixel_attacks(attacker)
 				sprite.play_attack(event_id, attacks[facing])
+
+func _pixel_attacks(node: Node3D) -> Dictionary:
+	match str(node.get_meta("kind", "")):
+		"atalanta": return ATALANTA_ATTACK
+		"medusa": return MEDUSA_ATTACK
+		"minotaur": return MINOTAUR_ATTACK
+		"heracles": return HERACLES_ATTACK
+		"harpies": return HARPIES_ATTACK
+		"hydra": return HYDRA_ATTACK
+	return {"north":NORTH_ATTACK,"south":SOUTH_ATTACK,"west":WEST_ATTACK,"east":THRUST_CLIP}
+
+func _prepare_pixel_attack(node: Node3D, unit: Dictionary) -> void:
+	var sprite = node.get_node("Figure/PixelActor")
+	var target: Dictionary = unit.get("attack_target", {})
+	if target.is_empty():
+		sprite.cancel_preparation()
+		return
+	var remaining := float(unit.get("cooldown", 1.0))
+	if remaining <= 0.0 or remaining > .5: return
+	if sprite._reaction_elapsed >= 0 and not sprite.awaiting_strike: return
+	if sprite.awaiting_strike and node.get_meta("prepared_target", null) != target.get("id"):
+		sprite.cancel_preparation()
+	_face_pixel_unit(node, Vector2(float(target.x)-float(unit.x),float(target.z)-float(unit.z)), true)
+	var action = _pixel_attacks(node).get(str(node.get_meta("pixel_facing", "east")))
+	if action != null and action.strike_time > 0 and remaining <= action.strike_time + .10001:
+		sprite.prepare_attack(action, remaining)
+		node.set_meta("prepared_target", target.get("id"))
 
 func _face_pixel_unit(node: Node3D, direction: Vector2, attack_target := false) -> void:
 	var sprite=node.get_node_or_null("Figure/PixelActor")

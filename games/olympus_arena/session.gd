@@ -218,6 +218,8 @@ func _bot_spell_target() -> Dictionary:
 	return best
 
 func _step_unit(unit: Dictionary) -> void:
+	# Read-only presentation intent; it never changes targeting, cooldown or damage.
+	unit.erase("attack_target")
 	unit.cooldown = maxf(0.0, float(unit.cooldown) - STEP)
 	unit.slow = maxf(0.0, float(unit.slow) - STEP)
 	if unit.kind == "hydra":
@@ -251,6 +253,7 @@ func _step_unit(unit: Dictionary) -> void:
 		return
 	var distance := _position(unit).distance_to(_position(target))
 	if distance <= float(unit.range):
+		unit.attack_target={"x":float(target.x),"z":float(target.z),"id":target.id}
 		if unit.cooldown <= 0:
 			_attack(unit, target)
 			unit.cooldown = 1.0 if unit.kind != "minotaur" else 1.35

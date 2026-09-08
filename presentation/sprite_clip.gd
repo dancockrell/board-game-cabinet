@@ -7,6 +7,8 @@ extends Resource
 @export var durations: PackedFloat32Array = PackedFloat32Array()
 @export var pivot := Vector2.ZERO
 @export var looping := true
+## Optional authoritative-strike synchronization point within a one-shot action.
+@export var strike_time := 0.0
 @export var magenta_backing := false
 @export var frame_pivots: Array[Vector2] = []
 @export var frame_cutouts: Array[Rect2i] = []
@@ -24,6 +26,9 @@ func validation_error() -> String:
 	if not frame_cutouts.is_empty() and (not magenta_backing or frame_cutouts.size()!=regions.size()): return "Cutouts require keyed frames and one rectangle per frame"
 	if not is_finite(draw_scale) or draw_scale<=0: return "Invalid draw scale"
 	if not is_finite(depth_bias) or depth_bias<0 or depth_bias>0.3 or (depth_bias>0 and not magenta_backing): return "Invalid keyed-sprite depth bias"
+	var total := 0.0
+	for duration in durations: total += duration
+	if not is_finite(strike_time) or strike_time < 0 or (strike_time > 0 and (looping or strike_time >= total)): return "Invalid strike time"
 	for i in regions.size():
 		var source := atlas if frame_atlases.is_empty() else frame_atlases[i]
 		if source == null: return "Missing frame source atlas"
@@ -45,6 +50,7 @@ func frame_at(seconds: float) -> int:
 	for duration in durations: length += duration
 	var cursor := fposmod(maxf(0,seconds),length) if looping else minf(maxf(0,seconds),length)
 	for i in durations.size():
-		if cursor < durations[i]: return i
+		# PackedFloat32 durations may sum just above an exact authored marker.
+		if cursor + 0.000001 < durations[i]: return i
 		cursor -= durations[i]
 	return durations.size()-1

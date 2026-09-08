@@ -10,5 +10,6 @@ regions = Array[Rect2i]([Rect2i(1152,512,384,512), Rect2i(1152,512,384,512)])
 pivot = Vector2(178,423)
 durations = PackedFloat32Array(0.09, 0.15)
 looping = false
+strike_time = 0.09
 draw_scale = 1.60
 magenta_backing = true

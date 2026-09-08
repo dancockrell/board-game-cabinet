@@ -12,6 +12,7 @@ var _motion_clip: Clip
 var _motion_elapsed := 0.0
 var _rest_elapsed := 0.0
 var damage_flash := 0.0
+var awaiting_strike := false
 
 func set_damage_flash(strength: float) -> void:
 	if not is_finite(strength): return
@@ -51,15 +52,37 @@ func reset_playback(rest: Clip) -> bool:
 	_rest_elapsed=0.0
 	set_damage_flash(0.0)
 	_reaction_elapsed=-1.0
+	awaiting_strike=false
 	_last_hit_event=-1
 	_last_attack_event=-1
 	return true
 
+func prepare_attack(action: Clip, remaining: float) -> bool:
+	if action == null or action.strike_time <= 0 or not is_finite(remaining) or remaining <= 0: return false
+	if awaiting_strike and action == clip: return true
+	if _reaction_elapsed >= 0 and not awaiting_strike: return false
+	if not set_clip(action): return false
+	awaiting_strike=true
+	_reaction_elapsed=maxf(0.0, action.strike_time-remaining)
+	show_time(_reaction_elapsed)
+	return true
+
+func cancel_preparation() -> void:
+	if not awaiting_strike: return
+	awaiting_strike=false
+	_reaction_elapsed=-1.0
+	if _rest_clip != null:
+		set_clip(_motion_clip if _motion_clip != null else _rest_clip)
+		show_time(_motion_elapsed if _motion_clip != null else _rest_elapsed)
+
 func play_attack(event_id: int, action: Clip) -> bool:
 	if event_id<=_last_attack_event or action==null or action.looping: return false
+	var prepared := awaiting_strike and clip == action
 	if not set_clip(action): return false
+	awaiting_strike=false
 	_last_attack_event=event_id
-	_reaction_elapsed=0.0
+	_reaction_elapsed=action.strike_time if prepared else 0.0
+	show_time(_reaction_elapsed)
 	return true
 
 func set_rest_pose(rest: Clip) -> bool:
@@ -77,6 +100,7 @@ func set_rest_pose(rest: Clip) -> bool:
 func react_to_hit(event_id: int, reaction: Clip) -> bool:
 	if event_id <= _last_hit_event or reaction == null or reaction.looping: return false
 	if not set_clip(reaction): return false
+	awaiting_strike=false
 	_last_hit_event=event_id
 	_reaction_elapsed=0.0
 	return true
@@ -90,6 +114,10 @@ func advance_visual(delta: float) -> void:
 		elif _rest_clip != null:
 			_rest_elapsed+=delta
 			show_time(_rest_elapsed)
+		return
+	if awaiting_strike:
+		_reaction_elapsed=minf(_reaction_elapsed+delta, maxf(0.0,clip.strike_time-.00001))
+		show_time(_reaction_elapsed)
 		return
 	_reaction_elapsed+=delta
 	var duration := _clip_duration(clip)

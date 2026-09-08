@@ -9,5 +9,6 @@ frame_pivots = Array[Vector2]([Vector2(266.00,404.48), Vector2(216.00,407.04), V
 frame_draw_scales = PackedFloat32Array(1.288000,1.364407,1.463636,1.450450,1.341667,1.319672,1.308943,1.352941)
 durations = PackedFloat32Array(0.04,0.045,0.045,0.04,0.065,0.06,0.05,0.045)
 looping = false
+strike_time = 0.17
 magenta_backing = true
 draw_scale = 1.35
