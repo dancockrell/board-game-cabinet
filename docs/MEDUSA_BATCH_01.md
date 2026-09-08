@@ -1,3 +1,5 @@
+Current admission: north/south defeat rows now play in gameplay (16 drawings) through themes/medusa_north_defeat.tres and themes/medusa_south_defeat.tres. Remaining rows retain candidate status. Original batch review below records the pre-admission findings.
+
 # Medusa batch 01 — four directional action sheets
 
 Generated 2026-09-08 with four built-in image generation calls, one full sheet per direction. This is a candidate library, not an accepted runtime replacement.

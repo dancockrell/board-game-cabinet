@@ -8,7 +8,20 @@ The user explicitly requested removal of 3D artwork. All active artwork must be 
 
 The orthographic Node3D/Sprite3D coordinate infrastructure only places flat artwork and resolves picking. It does not contain or authorize volumetric artwork. Rules and authoritative state remain RefCounted and independent of presentation.
 
-## Current batch-production direction and source status
+## Current checkpoint: drawn defeats, bridge flow and creature batches
+
+Two batch waves now contain28current sheets across allsevencharacters:896requested cells and891visible sourcefigures. Repairs are separate, not additionalcoverage. These are not891distinctapproved poses. Medusa north/south defeat rows now contribute16runtime-admitted drawings; the other rows remain candidates for measured crop/continuity review. Harpies/Minotaur/Hydra each gained four full sheets in wave2. Wider cells require aspect-ratio planning:4x8 on a square canvas gives2:1cells;4x8 on1:2portrait gives squarecells.
+
+Medusa's authoritative removal now starts the matching eight-pose fall on a separate cosmetic actor. Pause freezes it; no rules unit persists; final dissolve occurs at the end of .78seconds. Other characters and lateral directions retain their previous departure effect. Full native verifier passed, and the exported match observed56drawndefeat samples across both admitted directions, with no engine script errors.
+
+Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-drawn-defeats-2026-09-08
+Source: `82e87be961bc7b2ee3b162729ea4f88fa3d724be`.
+Package: `Olympus-Drawn-Defeat-Windows.zip`,148,382,934bytes.
+ZIP SHA256: `D4C307C8EBE228EDA27D906C0DD7D4E9E9F3A3D89354CF12AE2DA7EAE9A28AFF`.
+Executable SHA256: `72C06516C92F70702DE3F1BA5F663A76A1105312741D1D8BD5FEFD4080E323E6`.
+The package includes notices, provenance, report and engine log. Exported verification passed1800ticks/30legaldeployments/allsevencharacters/buildingcollapse/results/rematch. The accelerated .1second report samples defeatframes1-7; dedicated native board tests/review cover all8, including frame0. Candidate art_batches are excluded from export. This is a development checkpoint, not final art or balance approval.
+
+## Earlier batch-production wave and source status
 
 The owner now requests full sprite sheets in large batches, building toward thousands of drawings. Follow CHARACTER_BATCH_PRODUCTION.md. The first wave produced sixteen current directional/action sheets across Hoplites, Atalanta, Heracles and Medusa: 512 requested cells, 511 visible candidate figures. One additional Heracles west repair sheet is preserved separately and is not additional coverage. These are not 511 unique approved frames; runtime admission is zero pending per-row crop/continuity checks. Native previews and exact prompts/hashes are in art_batches and local shared candidates. Candidate batches are explicitly excluded from Windows export.
 
@@ -48,7 +61,7 @@ Heracles west walk now has seven unique drawings in .72 seconds, adding heel lan
 
 Native motion studies: Atalanta-North-Raising.mp4, Heracles-West-Seven-Poses.mp4 and Medusa-South-Six-Walk.mp4 under workspace outputs. Dedicated tests cover every source pose and board transitions. These newer source changes are not in the expanded-motion Windows download below.
 
-## Current Windows checkpoint: expanded character motion
+## Previous Windows checkpoint: expanded character motion
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-expanded-motion-2026-09-08
 
