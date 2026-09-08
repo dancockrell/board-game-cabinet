@@ -21,83 +21,11 @@
           512
         ]
       },
-      "status": "approved-runtime",
-      "runtime_consumers": [
-        "res://app/olympus_arena.gd"
-      ],
-      "review": "All eight cells were reviewed at the runtime hand crop and full-size inspection panel. Atlas bounds are covered by native application checks.",
+      "status": "historical-source-not-runtime",
+      "runtime_consumers": [],
+      "review": "Retained 2D historical source only. Runtime cards use current character sprites. Old 3D-associated materials and ornament provenance are preserved in the external archive.",
       "prompt_record": "res://assets/olympus_arena/ART-PROVENANCE.md"
-    },
-    {
-      "id": "shared-rock-boulder-dry-1k",
-      "runtime_path": "res://themes/olympus_shared_rock.tres",
-      "source_tool": "Existing shared Poly Haven material source; no generation",
-      "source_id": "rock-boulder-dry-1k",
-      "source_url": "https://polyhaven.com/a/rock_boulder_dry",
-      "license": "CC0-1.0",
-      "license_url": "https://polyhaven.com/license",
-      "files": [
-        {
-          "runtime_path": "res://assets/olympus_arena/materials/rock-boulder-dry-1k/rock_boulder_dry_diff_1k.jpg",
-          "sha256": "20f653a42fb24f42aa40641663070d578678da49af18cc1049dbdd4ed8679f3c",
-          "role": "albedo",
-          "shared_source_path": "assets/approved_cc0/PolyHaven/rock-boulder-dry-1k/source_files/rock_boulder_dry_diff_1k.jpg"
-        },
-        {
-          "runtime_path": "res://assets/olympus_arena/materials/rock-boulder-dry-1k/rock_boulder_dry_arm_1k.jpg",
-          "sha256": "350d01c63afc01cd9bcb9bc47afdd24292198ff1c5fcef1c49281c1b85dc2872",
-          "role": "arm",
-          "shared_source_path": "assets/approved_cc0/PolyHaven/rock-boulder-dry-1k/source_files/rock_boulder_dry_arm_1k.jpg"
-        },
-        {
-          "runtime_path": "res://assets/olympus_arena/materials/rock-boulder-dry-1k/rock_boulder_dry_nor_gl_1k.jpg",
-          "sha256": "5915fea28a97357c78a04fb31c2516f1f7ed1b3a9cef4ae25aa93e4655e6c595",
-          "role": "normal_gl",
-          "shared_source_path": "assets/approved_cc0/PolyHaven/rock-boulder-dry-1k/source_files/rock_boulder_dry_nor_gl_1k.jpg"
-        }
-      ],
-      "status": "approved-runtime",
-      "runtime_consumers": [
-        "res://presentation/olympus_stage.gd"
-      ],
-      "transformations": [
-        "Byte-identical source map export",
-        "Albedo multiplier0.45",
-        "Normal scale0.7",
-        "World triplanar scale0.75",
-        "ARM R=AO G=roughness B=metallic"
-      ],
-      "review": "Native runtime capture reviewed 2026-09-06; 18 outcrops only,113 stage geometry/material checks pass; source geometry unchanged. Subtle material improvement, not completed environment art."
-    },
-    {
-      "id": "owl-inlay-v1",
-      "runtime_path": "res://assets/olympus_arena/ornaments/owl-inlay-v1.png",
-      "sha256": "76d99e6bb8489a42d692f0a20241cb9bf8ea2625472aae30f18fead02366d77f",
-      "source_tool": "Magnific browser Image Generator",
-      "source_model": "Google Nano Banana 2 Lite, Thinking Fast",
-      "creation_id": "79AMrYCJAL",
-      "source_url": "https://www.magnific.com/app/creation/79AMrYCJAL",
-      "generation_date": "2026-09-06",
-      "cost_mode": "Browser Generate Unlimited displayed immediately before submission; no API generation",
-      "paid_calls": 0,
-      "dimensions": [
-        1024,
-        1024
-      ],
-      "status": "approved-runtime",
-      "runtime_consumers": [
-        "res://themes/olympus_owl_inlay.tres",
-        "res://presentation/olympus_stage.gd"
-      ],
-      "transformations": [
-        "Byte-identical PNG download",
-        "UV0.07..0.93 circular shader mask",
-        "Subdued stone tint; no bitmap modification"
-      ],
-      "prompt_record": "res://assets/olympus_arena/ornaments/OWL-INLAY-PROVENANCE.md",
-      "license": "Generated output; not asserted CC0",
-      "review": "Reviewed in native arena at normal camera; flat circle, literal owl/olive motif, restrained stone palette. Mipmaps enabled for distant viewing. Decorative only, no collision or game-state role."
     }
   ],
-  "model_contract": "res://docs/OLYMPUS_ART_PIPELINE.md"
+  "model_contract": "res://docs/OLYMPUS_BOARD_ART.md"
 }

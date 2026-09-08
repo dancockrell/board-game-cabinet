@@ -1,39 +1,9 @@
-# Olympus reuse checkpoint
+# Shared-art reuse boundary
 
-Updated 2026-09-06. Olympus is the lowest-priority consumer of shared art and has no new paid art budget.
+Updated 2026-09-08. Olympus now uses **2D artwork only**. The former PBR material and model-reuse checkpoint is retired. Do not restore legacy rock materials, miniature surfaces, procedural figures or imported GLBs.
 
-The authoritative [cross-project asset strategy](https://github.com/dancockrell/shared-game-environment-library/blob/main/docs/CROSS_PROJECT_ASSET_STRATEGY.md) lives in the existing shared repository. It contains the live audit findings, reusable sources, rejected body candidate, Magnific free browser route, and discovery links for already purchased Olympus models. Do not maintain a second shared standard here.
+Shared assets may be reused when they match the current pixel-art perspective, palette, scale, animation and provenance requirements. Preserve originals and declare project-specific crops or Resources. Existing shared ownership or licensing does not establish visual admission.
 
-## Current decision
+The removed model work remains in `C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-legacy-2d-only-2026-09-08`, with original paths and SHA256 checks in `manifest.json`. The earlier broad archive remains preserved too. Both are retired references, outside the shipped project.
 
-Keep the playable roster unchanged while testing reused sources. Kenney Mini Dungeon human has real animation clips but fails the adult visual target; do not substitute it. Its source bundle also lacks a referenced texture. The generated Hoplite has no clips and is not a modular body standard. Existing shared PBR material sources are the first low-cost integration opportunity.
-
-The shared contract uses -Z forward; this renderer uses +Z for character presentation. Use a declared visual wrapper rotation. Core coordinates and rules remain unchanged.
-
-## Generation
-
-Magnific MCP explicitly reports unlimited does not apply to this connector session. The browser Image Generator displays Unlimited generations for Nano Banana 2 Lite. Verify that label immediately before submission, select a named model, use one guided output for a proven gap and preserve lineage. Do not infer free 3D conversion or spend credits as a browser fallback. This checkpoint submitted no generation jobs.
-
-## Source and review
-
-The shared inventory cites exact inspected repository heads and source paths. Its entries are candidates, not blanket asset approval. Preserve source hashes, original materials/animations and per-project visual decisions. Existing four-view GLB reviewer provides inspection evidence; it does not approve quality automatically.
-
-Prior procedural-detail plans and the generated-model-first production plan are superseded by the shared reuse strategy. `GENERATED_3D_WORKFLOW.md` remains historical provenance for the purchased experiment, not authorization to generate more assets.
-
-## Integrated shared-rock material
-
-The stage now uses `themes/olympus_shared_rock.tres` on its 18 coastal outcrops. Three source maps are bundled byte-identically with hashes and attribution in the art manifest; it no longer depends on a local shared-library checkout to run. World triplanar mapping, ARM channels and the 0.45 albedo multiplier match the reviewed trial. Native review and 113 geometry/material/budget checks pass. Existing rock geometry remains unchanged.
-
-`tools/capture_shared_material_trial.gd` now reviews the canonical runtime resource rather than implementing a second material. Use `--review-output=ABSOLUTE.png`; `--capture` is reserved by the app and can exit before the review finishes.
-
-Paid work is prohibited for ordinary production. Emergency finishing work requires a specific future user authorization; this policy is not permission for an agent to declare an emergency and spend.
-
-The Kenney Protagonists `characterMedium.fbx` alternative was also rendered and rejected: roughly 3.3 heads tall, oversized head and childlike torso. Its 58-bone skeleton does not make it a suitable adult body. Keep the existing source; do not retarget or replace the roster with it.
-
-## Battlefield readability
-
-Buildings now use a theme-controlled visual wrapper at 0.62 scale, reducing their ground footprint by about 62 percent. Health bars sit at 1.95 units. Camera size is 14.0 to fill more of the panel. Tower coordinates, combat ranges and authoritative state remain unchanged. Native opening capture reviewed; 35 board and 45 application checks pass.
-
-## Match UI simplification
-
-Removed both sidebars, duplicate champion portrait, permanent explanatory copy and large next-card panel. Arena viewport is now 1440 by 724. Header contains timer, compact score, pause and menu; hand, energy and small next-card preview sit below the battlefield. Card descriptions remain tooltips; placement guidance appears only when selected. Restart, sound and cabinet navigation live in Menu. Removed routine success notices. Native app validation: 52 checks pass, including drag placement and menu sound toggling. Windows export smoke exits 0.
+Follow [the 2D art contract](OLYMPUS_BOARD_ART.md) and [current handoff](HANDOFF.md). No external paid generation is authorized.
