@@ -1,3 +1,5 @@
+> Historical checkpoint: the former 3D presentation described below was retired on 2026-09-08. It is not an active art specification or evidence for the current build. Rules work remains retained. Follow [the 2D-only art contract](OLYMPUS_BOARD_ART.md) and [current handoff](HANDOFF.md).
+
 # Ninth Gate prototype verification — 2026-09-05
 
 This is an original, bounded 2D war-table prototype, not a finished or balanced Kriegsspiel. The religious canon and battle story remain provisional. The current map is a contest over three crossings; a fortress siege, named scriptural commanders, flying units, and faction-specific armies are not implemented.
@@ -29,3 +31,4 @@ The final release manifest identifies the exact packaged source and executable/a
 Sustained human playtesting, alternative seeds/scenarios, side-swapped balance evaluation, strong opponent planning, minimum-size crowded-combat review, screen-reader support, and a complete manual click-through remain open. Native automated play is not a human playtest. The map currently uses custom 2D drawing and a Resource palette; a physically polished 3D wooden map table, audio, and state-driven movement animation remain future work. There is no fog occlusion behind terrain, remembered contact system, courier delay, routing, artillery, or unique herald power.
 
 The Save control stores accepted rounds, not uncommitted draft orders. The battle uses a separate save slot from chess. Returning to chess recreates that scene; save a battle before leaving if it should persist.
+

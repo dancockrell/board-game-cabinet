@@ -4,7 +4,7 @@
 
 The current request is a direct Greek-mythology arena battler in the style of Clash Royale. Build the familiar loop: two lanes, defended towers, a regenerating deployment resource, an eight-card deck with a four-card hand, and troops that walk and fight automatically during a short real-time match. The player makes deployment and timing decisions. This replaces the Ninth Gate scenario direction; it is not an adventure, a turn-based Kriegsspiel, or a collection of scripted rescue missions.
 
-Use original Greek-themed models, interface, names, code, and audio. Clash Royale is the mechanical reference, not a source of copied characters, branding, artwork, sound, or proprietary assets. Olympus Arena is a working title.
+Use original Greek-themed 2D sprite artwork, interface, names, code, and audio. No 3D models or procedural miniature fallback. Follow the current 2D-only board-art contract. Clash Royale is the mechanical reference, not a source of copied characters, branding, artwork, sound, or proprietary assets. Olympus Arena is a working title.
 
 ## What the player should understand
 
@@ -98,3 +98,4 @@ The latest pass moves the board toward a finely made Mediterranean diorama: weat
 The coastal arena now has sculpted foundations, paved lanes, faction mosaics, fluted columns, planted borders, animated water, distant boats, gulls, pennants, embers, and detailed shrine roofs. Seven miniature designs animate limbs, attack follow-through, capes, wings and Hydra necks. Eight original illustrated portraits appear in the hand, inspection panel and next-card preview. Cards lift and follow the pointer when dragged; a translucent miniature previews legal deployment. Unit-specific weapon trails, Medusa gaze, Hydra and giant impacts, harpy feathers, damage numbers, dust, tower debris, low-health smoke, summon rings and branched thunder accompany authoritative events. The camera reacts gently to major destruction. Countdown, match-phase, tower-loss and deployment HUD effects remain capped and state-driven.
 
 The current authored-art reference is the portrait atlas. Procedural figures are a better animated blockout, not the final matching 3D characters. The exact model, texture, rig, animation, provenance, fallback and admission requirements are in [the art production contract](OLYMPUS_ART_PIPELINE.md). Authored character meshes remain the largest visual opportunity. Multiplayer and progression remain outside this pass.
+

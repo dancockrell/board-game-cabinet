@@ -1,3 +1,5 @@
+> Historical checkpoint: the former 3D presentation described below was retired on 2026-09-08. It is not an active art specification or evidence for the current build. Rules work remains retained. Follow [the 2D-only art contract](OLYMPUS_BOARD_ART.md) and [current handoff](HANDOFF.md).
+
 # Board Game Cabinet: production plan
 
 ## Product goal and accepted direction
@@ -317,3 +319,4 @@ These waves deliberately contain serial rows within the integration lane. With f
 The largest early correctness risks are exceptional chess moves, draw-policy shortcuts, shallow copies, and accepting stale opponent responses. The largest presentation risks are unreadable top brands at the oblique camera angle, repetitive wood, insufficient side contrast, and UI markers hiding the simple pieces. Test and inspect these directly.
 
 The next product decisions become concrete after the first runtime review: final camera range, brand representation, board/chip proportions, keyboard interaction, review layout, and whether a bundled engine is worth its distribution cost. Tune those against the playable wooden table. Do not delay the state/rules foundation while waiting for art choices.
+

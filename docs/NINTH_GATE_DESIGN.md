@@ -1,3 +1,5 @@
+> Historical checkpoint: the former 3D presentation described below was retired on 2026-09-08. It is not an active art specification or evidence for the current build. Rules work remains retained. Follow [the 2D-only art contract](OLYMPUS_BOARD_ART.md) and [current handoff](HANDOFF.md).
+
 # The Ninth Gate: a modern Kriegsspiel
 
 Design authority, 2026-09-05. The user has now chosen **our original canon** and authorized new rules, a modern 3D presentation, and glamorous adult characters with a playful PG-13 tone. Prioritize an enjoyable, novice-readable board game. “Best Kriegsspiel” is an ambition to test with players, not an established claim. The Ninth Gate remains a working title pending naming review.
@@ -112,3 +114,4 @@ Each slice is about ten minutes of bounded work, not a promise to finish a compl
 ## Ownership and rights
 
 Write original code, explanatory prose, map art, sounds, faction identities, and symbols. Historical inspiration does not authorize copying modern translations, modern miniature designs, or another franchise's angels and demons. The [U.S. Copyright Office's game guidance](https://www.copyright.gov/register/tx-games.html) distinguishes methods of play from protected literary and pictorial expression. It does not clear a product name or establish worldwide rights. “The Ninth Gate” is a working title pending a separate naming review; no public brand clearance or project source-code licence is implied by a private GitHub repository.
+

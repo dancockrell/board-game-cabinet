@@ -1,3 +1,5 @@
+> Historical checkpoint: the former 3D presentation described below was retired on 2026-09-08. It is not an active art specification or evidence for the current build. Rules work remains retained. Follow [the 2D-only art contract](OLYMPUS_BOARD_ART.md) and [current handoff](HANDOFF.md).
+
 # Verification record — 5 September 2026
 
 This is a working foundation build, with substantial parts of the wooden vertical slice implemented. It is not declared to satisfy every product acceptance gate in PLAN.md.
@@ -58,3 +60,4 @@ The final keyboard-first regression also exposed that Godot did not assign a fir
 Delivered controls are Tab to focus the board, arrows to navigate visually, Enter/Space to select and move, and Escape to clear selection. Table settings expose sound and reduced motion. Orientation and opponent mode persist alongside those settings; camera zoom remains temporary. Copy PGN and Export PGN operate on the complete authoritative live game. The draw chooser can declare a qualifying next move, retaining the unchanged board and played history while recording the claim metadata.
 
 The next acceptance work is a sustained manual full game, human listening review, focus/contrast and screen-reader testing, and user visual approval of the brand/wood finish. The next substantial implementation is a real UCI engine connection with measured cancellation/failure recovery. Expert tutoring, PGN import, generic dead-position detection, Xiangqi and other themes remain future work. Automated checks and a shader refinement do not alone establish final premium polish.
+
