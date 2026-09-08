@@ -1,5 +1,6 @@
 extends Node3D
 const DepartureFX = preload("res://presentation/olympus_unit_departure_fx.gd")
+const MEDUSA_DEFEAT = {"north":preload("res://themes/medusa_north_defeat.tres"),"south":preload("res://themes/medusa_south_defeat.tres")}
 const EAST_WALK = preload("res://themes/hoplite_east_walk.tres")
 const WEST_WALK = preload("res://themes/hoplite_west_walk.tres")
 const MINOTAUR_WALK = {"north":preload("res://themes/minotaur_north_walk.tres"),"south":preload("res://themes/minotaur_south_walk.tres")}
@@ -326,7 +327,8 @@ func _departure(unit: Node3D) -> void:
 	if source != null:
 		var departure := DepartureFX.new()
 		add_child(departure)
-		if departure.begin(source): _departures.append(departure)
+		var defeat_clip = MEDUSA_DEFEAT.get(str(unit.get_meta("pixel_facing", ""))) if str(unit.get_meta("kind", "")) == "medusa" else null
+		if departure.begin(source, defeat_clip): _departures.append(departure)
 		else: departure.queue_free()
 		return
 func _make_tower(data: Dictionary) -> Node3D:

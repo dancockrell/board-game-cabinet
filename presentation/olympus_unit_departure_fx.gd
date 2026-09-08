@@ -6,14 +6,31 @@ var elapsed := 0.0
 var ghost: Sprite3D
 var _material: ShaderMaterial
 var _flecks: Array[Sprite3D] = []
+var drawn_actor
 
-func begin(source: Sprite3D) -> bool:
+func begin(source: Sprite3D, defeat_clip = null) -> bool:
 	if ghost != null or not is_instance_valid(source) or source.texture == null or not is_inside_tree(): return false
+	if defeat_clip != null:
+		if defeat_clip.looping or not defeat_clip.validation_error().is_empty(): return false
+		var duration := 0.0
+		for seconds in defeat_clip.durations: duration += seconds
+		if duration > LIFETIME + .00001: return false
 	global_transform = source.global_transform
-	ghost = Sprite3D.new()
-	ghost.texture = source.texture.duplicate()
+	if defeat_clip != null:
+		# Preserve parent placement, but do not multiply the old pose's draw scale
+		# into the new sheet's independently authored scale.
+		global_transform = source.get_parent_node_3d().global_transform
+		global_position = source.global_position
+		drawn_actor = preload("res://presentation/pixel_actor.gd").new()
+		ghost = drawn_actor
+		add_child(ghost)
+		drawn_actor.set_clip(defeat_clip)
+	else:
+		ghost = Sprite3D.new()
+		ghost.texture = source.texture.duplicate()
+		add_child(ghost)
 	ghost.pixel_size = source.pixel_size
-	ghost.offset = source.offset
+	if drawn_actor == null: ghost.offset = source.offset
 	ghost.centered = source.centered
 	ghost.flip_h = source.flip_h
 	ghost.flip_v = source.flip_v
@@ -25,13 +42,14 @@ func begin(source: Sprite3D) -> bool:
 	var atlas: Texture2D = ghost.texture
 	if atlas is AtlasTexture: atlas = atlas.atlas
 	_material.set_shader_parameter("source_atlas", atlas)
-	if source.material_override is ShaderMaterial:
+	var material_source = ghost if drawn_actor != null else source
+	if material_source.material_override is ShaderMaterial:
 		for parameter in ["cutout", "depth_bias"]:
-			var value = source.material_override.get_shader_parameter(parameter)
+			var value = material_source.material_override.get_shader_parameter(parameter)
 			if value != null: _material.set_shader_parameter(parameter, value)
 		_material.set_shader_parameter("magenta_backing", true)
 	ghost.material_override = _material
-	add_child(ghost)
+	if drawn_actor != null: return true
 	var palette := [Color("bf954e"), Color("ebe0bd"), Color("426d89")]
 	for i in 12:
 		var fleck := Sprite3D.new()
@@ -51,6 +69,11 @@ func advance_visual(delta: float) -> void:
 	if ghost == null or not is_finite(delta) or delta <= 0.0: return
 	elapsed = minf(elapsed + delta, LIFETIME)
 	var phase := elapsed / LIFETIME
+	if drawn_actor != null:
+		drawn_actor.show_time(elapsed)
+		_material.set_shader_parameter("departure", smoothstep(.88, 1.0, phase))
+		if elapsed >= LIFETIME: queue_free()
+		return
 	_material.set_shader_parameter("departure", smoothstep(0.12, 0.84, phase))
 	# A modest loss of posture, not a flattened building-like squash.
 	ghost.position.y = -0.1 * phase
