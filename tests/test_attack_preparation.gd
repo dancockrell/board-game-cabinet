@@ -85,6 +85,38 @@ func run():
 	check(not actor.awaiting_strike,"Lost target cancels preparation into locomotion")
 	check(actor.clip==Board.WEST_WALK,"Lost target immediately turns locomotion toward authoritative movement")
 	board.free()
+	# The longer bow draw must still release on the rules hit, not at clip start.
+	game=fixture()
+	unit=game._state.units[0]
+	unit.kind="atalanta"
+	tower=game._state.towers[0]
+	tower.x=0.0
+	tower.z=1.5
+	board=Board.new()
+	root.add_child(board)
+	board.show_state(game.snapshot(),0.0)
+	actor=board._tokens[unit.id].get_node("Figure/PixelActor")
+	var bow=Board.ATALANTA_ATTACK.north
+	hp=float(tower.hp)
+	hit=false
+	seen.clear()
+	for tick in 8:
+		game._state.elapsed+=.1
+		game._step_unit(unit)
+		snapshot=game.snapshot()
+		board.show_state(snapshot,0.0)
+		if tower.hp<hp:
+			hit=true
+			check(actor.clip==bow and not actor.awaiting_strike,"North bow commits on actual hit")
+			check(is_equal_approx(actor._reaction_elapsed,bow.strike_time),"Extended bow sequence releases at its authored marker")
+			check(actor._shown==bow.frame_at(bow.strike_time),"Hit displays release drawing rather than raising pose")
+			check(is_equal_approx(hp-tower.hp,unit.damage),"Longer bow drawing does not change damage")
+			break
+		for frame in 6:
+			if actor.awaiting_strike: seen[actor._shown]=true
+			board.show_state(snapshot,1.0/60.0)
+	check(hit and seen.size()>=2,"North bow shows distinct anticipation poses before release")
+	board.free()
 	print("Attack preparation: %s checks, %s failures"%[checks,failures])
 	quit(1 if failures else 0)
 
