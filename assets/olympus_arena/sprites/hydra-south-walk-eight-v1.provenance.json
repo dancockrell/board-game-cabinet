@@ -1,0 +1,16 @@
+{
+  "asset": "hydra-south-walk-eight-v1.png",
+  "sha256": "050744180963C17900DD8CA26D236B435CF34D694F877FE838C78DE3DE9F8D08",
+  "generator": "built-in image_gen",
+  "date": "2026-09-08",
+  "source_unchanged": true,
+  "reference": "hydra-actions-v1.png",
+  "generation_chain": ["exec-2c35edbd-28e1-407d-bcda-0f6964c03a46.png", "exec-d5a7dc6c-bebd-4c4c-b05f-3721bfdb1fb6.png", "exec-7f7e2f1a-a645-4442-b4f7-e131e52f0f05.png"],
+  "shared_archive": "assets/candidates_needing_review/olympus-hydra-longitudinal-2026-09-08",
+  "sheet": {"width":1536,"height":1024,"columns":4,"rows":2,"cell_width":384,"cell_height":512,"order":"row major","direction":"south","frames":8},
+  "corrections": ["First sheet repeated right forepaw lift in both rows.", "Targeted lower-row limb-pose edit supplied opposite forepaw lift; tail vanished in lower first frame.", "Targeted tail restoration preserved the corrected eight-pose sequence."],
+  "native_review": "60 captured frames in outputs/Hydra-South-Eight-Native, all eight phase representatives inspected against actual painted board",
+  "validation": "test_hydra_south_walk.gd passes native: eight unique source cells, ordered timing, loop, pause and reset",
+  "limitations": ["Coarse eight-pose heavy walk; rear-leg transfer remains partly occluded.", "Lower-row contact baseline requires a 40-pixel per-frame pivot correction.", "Native actor review is not proof of central board integration; coordinator owns runtime mapping."],
+  "admission": "approved for coordinator integration as first eight-pose south locomotion; further interpolation and rear-leg refinement remain"
+}

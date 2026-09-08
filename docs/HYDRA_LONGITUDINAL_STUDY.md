@@ -20,3 +20,11 @@ Reference: `assets/olympus_arena/sprites/hydra-actions-v1.png` (existing Hydra i
 ## Next attempt
 
 Use separately authored contact and passing references for each direction rather than a whole-sheet text correction. Inspect left/right weight transfer before spending work on atlas timing or pivots. Tail silhouette should remain on a consistent side in front view. Reuse the current admitted identity and shared pixel-art style.
+
+## Eight-pose south follow-up
+
+The owner requested richer action sheets. A new single-direction eight-frame sheet was generated, then corrected with a targeted lower-row limb-pose edit and a missing-tail restoration. This supplied opposite forepaw lifts without duplicating frames. Final source: `assets/olympus_arena/sprites/hydra-south-walk-eight-v1.png`; Resource: `themes/hydra_south_walk.tres`.
+
+All eight source regions are distinct. Contact baselines are corrected with explicit per-frame pivots (upper row 450, lower row 410). The 0.92-second cycle uses authored lift/contact poses and keeps the tail on screen right. Native review captured 60 frames and inspected all eight phase representatives over the actual painted board. Native clip tests pass timing, looping, pause and reset. Central integration belongs to the coordinator and is not claimed by this study.
+
+This is a useful first richer south locomotion loop, not final animation polish: rear feet are partly occluded, and body/neck transitions still benefit from additional drawn intermediates. North/rear locomotion remains unfinished. Source chain and exact hash are recorded beside the PNG; rejected intermediate 2D sheets and final source are preserved in the same shared study folder.
