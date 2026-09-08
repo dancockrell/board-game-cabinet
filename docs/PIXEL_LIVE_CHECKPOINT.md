@@ -1,3 +1,5 @@
+> Historical integration checkpoint, superseded 2026-09-08. The active game now uses 2D artwork throughout. Any model-retention or six-month return instruction below is canceled; remaining 3D copies are designated for deletion. See [current handoff](HANDOFF.md) for implementation and removal status.
+
 # First live pixel unit checkpoint
 
 The live arena now renders Hoplites with PixelActor and triggers their guard/recovery on authoritative health decreases. Repeated snapshots cannot replay damage; serial is owned by the visual replica and discarded when the replica is removed. Ghost previews support sprite tint. Game coordinates, targeting, damage and resource rules remain authoritative.

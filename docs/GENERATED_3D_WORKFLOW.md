@@ -1,3 +1,3 @@
 # Retired 3D source work
 
-Superseded by the user on 2026-09-08: 2D artwork only. This model work is archived outside the project and must not be resumed as an active game-art task. The original document is SHA256-verified in the shared olympus-legacy-2d-only-2026-09-08 archive. Follow [the active 2D contract](OLYMPUS_BOARD_ART.md).
+Superseded by the owner on 2026-09-08. This workflow must not resume. All remaining 3D copies are designated for deletion across projects and shared packs; earlier archive preservation is no longer the plan. Physical removal is pending the automatic approval-review block documented in [the handoff](HANDOFF.md). Follow [the active 2D contract](OLYMPUS_BOARD_ART.md).

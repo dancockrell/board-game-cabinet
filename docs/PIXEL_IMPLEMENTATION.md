@@ -1,9 +1,11 @@
+> Historical integration checkpoint, superseded 2026-09-08. The active game now uses 2D artwork throughout. Any model-retention or six-month return instruction below is canceled; remaining 3D copies are designated for deletion. See [current handoff](HANDOFF.md) for implementation and removal status.
+
 # Pixel implementation checkpoint
 
 The previous art and model workshop is preserved at:
 C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-legacy-2026-09-07
 
-233 files, 80,666,374 bytes, each copied file verified by SHA256. Includes old project artwork, presentation geometry builders, themes, art tools and notes, original generated 3D sources, rejected equipment derivative, and available review stills/videos. A frozen archive, not another active implementation. Local shared storage only; not published to the public shared repository. Existing runtime dependencies remain until replaced. User suggests revisiting in roughly six months; no reminder created.
+233 files, 80,666,374 bytes, each copied file verified by SHA256. Includes old project artwork, presentation geometry builders, themes, art tools and notes, original generated 3D sources, rejected equipment derivative, and available review stills/videos. A frozen archive, not another active implementation. Local shared storage only; not published to the public shared repository. Existing runtime dependencies remain until replaced. That former six-month revisit proposal was canceled by the subsequent global deletion instruction.
 
 ## New implementation
 
