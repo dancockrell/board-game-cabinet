@@ -7,6 +7,7 @@ const MAX_UNITS := 64
 const RIVER_BANK := 0.8
 const BRIDGE_HALF_WIDTH := 0.50
 const GROUND_SPACING := 0.58
+const ALLY_AIR_SPACING := 1.05
 const ALLY_BODY_RADIUS := {"hoplites":0.41, "atalanta":0.41, "medusa":0.41, "heracles":0.50, "minotaur":0.55, "hydra":0.58}
 const DECK := ["hoplites", "atalanta", "minotaur", "medusa", "heracles", "hydra", "harpies", "thunderbolt"]
 var bot_enabled := true
@@ -97,7 +98,7 @@ func _deploy(side: int, slot: int, position: Vector2) -> Dictionary:
 		_event("lightning", position, side)
 	else:
 		for index in range(int(card.count)):
-			var formation_gap := 0.42 if kind == "harpies" else 0.82
+			var formation_gap := ALLY_AIR_SPACING if kind == "harpies" else 0.82
 			var spread := (index - (int(card.count) - 1) * 0.5) * formation_gap
 			var half_formation := (int(card.count) - 1) * 0.5 * formation_gap
 			# Shift the whole formation inward at the edge rather than stack clamped bodies.
@@ -294,6 +295,8 @@ func _separate_units() -> void:
 				var b: Dictionary = _state.units[second]
 				if b.hp <= 0 or a.flying != b.flying: continue
 				var gap := 0.32 if a.flying else GROUND_SPACING
+				# Airborne allies need wing/body room too; opposing flyers retain melee reach.
+				if a.flying and a.side == b.side: gap = ALLY_AIR_SPACING
 				if not a.flying and a.side == b.side:
 					gap = float(ALLY_BODY_RADIUS.get(a.kind, 0.41)) + float(ALLY_BODY_RADIUS.get(b.kind, 0.41))
 				var difference := _position(a) - _position(b)

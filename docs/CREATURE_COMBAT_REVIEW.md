@@ -46,3 +46,21 @@ Action: increase the battlefield's useful screen allocation at this aspect ratio
 
 Normal-speed source playback works and the controller/session state remained aligned in both captures. Water and character frames change during the sample. Combat proceeds through legal automated placements. The three findings above are visible readability defects, not evidence of rules divergence. No claim is made that these samples finish visual acceptance.
 
+## Follow-up repair: authoritative Harpy formation spacing
+
+The overlap's source was the rules state: Harpies spawned only 0.42 world units apart, then allied flight separation allowed compression to 0.32. Ground allies already reserved body room. Renderer-only displacement would have separated artwork from damage/target coordinates, so the focused fix changes allied flying spacing in `games/olympus_arena/session.gd`.
+
+Harpies now spawn and softly separate at 1.05 world units. Opposing flyers retain the existing 0.32 minimum; their 0.8 attack range, damage and targeting remain unchanged. Ground separation and bridge constraints are unchanged. The actual state positions move, so deterministic match outcomes can naturally differ from the older seed-42 capture; identical combat outcomes are not an acceptance requirement.
+
+Validation:
+
+- `tests/test_harpy_formation.gd`: 60 checks passed, covering legal edge placement, traversal spacing, deterministic replay, open-water flight, real-coordinate enemy attack and coincident-ally recovery.
+- Existing crowd/bridge test: 2,412 checks passed.
+- Arena rules suite: 776 checks passed.
+- Repeated normal-speed 30–36 second sample: 180 frames, five legal deployments including warmup, authoritative snapshot match. At frame 000 the attacking pair has independently visible bodies. One dies later in the changed battle; the capture does not pretend both survive as before.
+- Controlled native traversal study: `tools/review_harpy_formation.gd`, six seconds/180 frames at 30 fps, minimum authoritative pair gap **1.05000019073486**, snapshot match true. Its fixed opening hand and disabled rival AI/shrine fire are explicit study fixtures. Frames 030 and 120 visibly show two bodies, two bars and two ground rings during movement.
+
+Evidence videos: `outputs/Harpy-Spacing-After.mp4` (real-controller battle) and `outputs/Harpy-Formation-Native.mp4` (controlled traversal). Reports/stills are under `outputs/Creature-Combat-Normal-Speed/Harpy-Spacing-After` and `outputs/Harpy-Formation-Native`.
+
+No sprite, ownership indicator or attack effect was moved independently of authoritative unit positions. Wing tips can still overlap at full extension; the repaired criterion is distinguishable individual bodies and ownership/health, not an artificial ban on all wing overlap. Shrine occlusion and battlefield screen allocation findings above remain outside this repair.
+
