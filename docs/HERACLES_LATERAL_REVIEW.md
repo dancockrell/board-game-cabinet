@@ -40,6 +40,14 @@ Both unchanged originals are in the same local shared candidate folder:
 
 This confirms that text-only leg-position instructions against this identity sheet are insufficient. **Do not repeat another text-only contact-pair request.** A future attempt needs a visibly posed anatomical guide or a different approved drawing workflow, preserving the 2D-only rule. Heracles lateral walk remains absent; no runtime Resource or central roster change was made.
 
+## Follow-up: isolated colored guide
+
+After the Atalanta single-pose method succeeded, four further Heracles calls tested that materially different method: one yellow-near/blue-far contact guide, a natural-palette restoration, one colored passing guide, and a lowered-knee natural correction. These were isolated figures, not another multi-figure sheet.
+
+The colored passing guide produced distinct geometry, but a high raised knee instead of a restrained walking step. The requested low-knee correction reverted to a straight forward leg and changed the hanging hand/skirt. The contact recolor also failed to maintain an unambiguous far-leg shadow. Together these do not establish an accepted alternating loop. No runtime Resource was added, and no native acceptance is claimed.
+
+All four unchanged originals and their hashes are in the existing local shared candidate directory under `isolated-guide-provenance.json`. Names start `heracles-isolated-`; both natural drawings remain unadmitted. The useful new evidence is that explicit colored **single-pose** guides can move the limbs, but this identity's palette-restoration/correction step does not reliably preserve the pose. Future work must validate preservation of that one passing pose before generating further frames.
+
 ## Visible colored pose-guide attempt
 
 A built-in generated four-phase red/blue leg guide was supplied alongside the Heracles identity sheet. The finished result still repeats its contact and passing poses, so no runtime clip was admitted. Both sources and SHA256 provenance are preserved in the same shared folder as heracles-colored-pose-guide.png, heracles-pose-guided-rejected.png and pose-guided-attempt.json. The guide method alone did not solve anatomical continuity.
