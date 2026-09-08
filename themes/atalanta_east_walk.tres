@@ -10,4 +10,3 @@ durations = PackedFloat32Array(0.16,0.16,0.16,0.16)
 draw_scale = 1.55
 looping = true
 magenta_backing = true
-

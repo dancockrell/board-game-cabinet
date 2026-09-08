@@ -11,4 +11,3 @@ draw_scale = 1.0
 depth_bias = 0.12
 looping = true
 magenta_backing = true
-

@@ -48,3 +48,5 @@ Standing actors now advance their authored idle clips. Idle facing changes prese
 ## Hydra lateral steps — 2026-09-08
 
 Added separate east/west four-pose authored walk Resources. Movement selects them; standing uses idle playback, attacks retain authoritative event timing. Built-in generation plus one background-only correction; original chroma source preserved. Four ordered native poses inspected on the battlefield, resource timing checks and integrated 2D gate passed. North/south locomotion and smoother in-betweens remain unfinished. This is newer source than the downloadable Windows checkpoint.
+
+Atalanta east/west four-pose walks are now connected to movement (native clip tests: 16 passed). Contact poses remain similar and lifted steps exaggerated; smoother intermediate poses remain required. Heracles lateral generation was rejected for repeated planted feet; see HERACLES_LATERAL_REVIEW.md. No claim of complete locomotion coverage.
