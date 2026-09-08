@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-08",
+  "timing_seconds": [
+    0.16,
+    0.16,
+    0.16,
+    0.16
+  ],
+  "generator": "OpenAI built-in image generation",
+  "correction_source": "C:/Users/Admin/.codex/generated_images/01a07f2d-839e-7973-b77e-5950acfdbb1e/exec-8f740456-ee7a-4867-8cc5-101cd06aa9bc.png",
+  "prompt_contract": "Same adult Greek huntress identity and crisp illustrated pixel-art; ivory tunic green trim, brown braid, bronze headband, green cloth, bow left hand and right hip quiver. 1536x1024 regular4x2 cells384x512. East row0 west row1 chronological contact/passing/opposite contact/passing. Body340px, ground440px, saturated uniform magenta backing; no floor, shadows, labels or 3D.",
+  "runtime_resources": [
+    "themes/atalanta_east_walk.tres",
+    "themes/atalanta_west_walk.tres"
+  ],
+  "pivot_method": "Per-frame skull horizontal alignment with measured ground contact baseline; draw_scale1.55 matches existing1.60 at old bodyheight.",
+  "regions": "east: row0 cells0,1,2,3; west: row1 cells0,1,2,3",
+  "generation_source": "C:/Users/Admin/.codex/generated_images/01a07f2d-839e-7973-b77e-5950acfdbb1e/exec-1e431530-92d9-452b-a0eb-b235c53362ca.png",
+  "source_processing": "Unmodified source PNGs; source A rejected for repetitive legs. Source B consumed directly with runtime magenta shader. No light-background masking, resampling or pixel edits.",
+  "reference": "atalanta-v2.png",
+  "limitations": [
+    "Four phases only; no authored additional in-betweens",
+    "Contact phases have similar overall silhouettes; passing phases provide most motion",
+    "Raised foot phase is exaggerated; provisional rather than final animation quality",
+    "Equipment remains coherent but anatomical handedness is difficult to certify from side profile",
+    "Native review is isolated and does not establish full-game integration"
+  ],
+  "validation": [
+    "Godot4.3 headless import clean",
+    "Native OpenGL 16 lateral walk checks passed including ordered phases, loop, attack recovery and stop",
+    "90-frame native sequence captured in outputs/atalanta-lateral-walk-review; four phases inspected. Initial lateral drift corrected with measured per-frame pivots."
+  ],
+  "character": "Atalanta",
+  "status": "provisional lateral walk; integration pending",
+  "correction_contract": "Only change legs and arm counter-swing; preserve identity, layout and equipment. Col1 near leg forward; col2 near leg beneath hips, far knee forward raised; col3 near leg back far leg forward; col4 far leg beneath hips near knee forward raised. Distinct contact/passing silhouettes with negative space.",
+  "sources": [
+    {
+      "file": "atalanta-lateral-walk-a.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "baeb20cf0a990bea92ff5e74af5dad2236623e4d8dc10509c5f19fa437730a85"
+    },
+    {
+      "file": "atalanta-lateral-walk-b.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "029c6a8bbf27a1d910974103d8c07970136d90d198ef539d885185efed6e6688"
+    }
+  ]
+}
