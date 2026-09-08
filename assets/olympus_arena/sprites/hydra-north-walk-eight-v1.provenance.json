@@ -1,0 +1,16 @@
+{
+  "asset": "hydra-north-walk-eight-v1.png",
+  "sha256": "B750FE936E904D9085563FB5FF8F323FE62785E983A8DAFF5B07CBFB9F7AEEFA",
+  "generator": "built-in image_gen",
+  "date": "2026-09-08",
+  "source_unchanged": true,
+  "reference": "hydra-actions-v1.png, rear-view lower row",
+  "generation_chain": ["exec-c0e013fe-1769-4d4d-975c-bce37488e37d.png", "exec-634127fa-7596-400a-af0a-800f26448cc9.png", "exec-d7534a1a-10d4-4e6e-9af0-bab6dd12e288.png"],
+  "shared_archive": "assets/candidates_needing_review/olympus-hydra-north-eight-2026-09-08",
+  "sheet": {"width":1536,"height":1024,"columns":4,"rows":2,"cell_width":384,"cell_height":512,"order":"row major","direction":"north","frames":8},
+  "generation_specification": "Eight rear-facing walking poses: left foot push-off, raised passing, reach, contact; then right foot push-off, raised passing, reach, contact. Original three heads, four legs, green/gold scale palette, elevated orthographic pixel rendering, magenta backing. Narrow tail keeps hind feet visible. Targeted correction restored alternating sides and grounded contact phases.",
+  "native_review": "60 native frames captured to outputs/Hydra-North-Eight-Native, all eight phase representatives visually inspected against painted board",
+  "validation": "Native test_hydra_north_walk.gd passes eight unique source cells, timing, loop, pause and reset. No central board integration claimed.",
+  "limitations": ["Broad high hind-leg lift reads as a heavy stomping stride; needs finer intermediates.", "Front feet remain mostly obscured by rear silhouette.", "Tail tip and hips move more abruptly at phase boundaries than final animation target."],
+  "admission": "usable first eight-pose rear locomotion Resource for coordinator integration"
+}
