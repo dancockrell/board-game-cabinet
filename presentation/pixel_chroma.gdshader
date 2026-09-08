@@ -3,6 +3,7 @@ render_mode unshaded, cull_disabled, depth_prepass_alpha;
 uniform sampler2D source_atlas : source_color, filter_nearest, repeat_disable;
 uniform vec4 cutout = vec4(0.0);
 uniform float depth_bias = 0.0;
+uniform float damage_flash = 0.0;
 void vertex() {
     vec3 s = vec3(length(MODEL_MATRIX[0].xyz), length(MODEL_MATRIX[1].xyz), length(MODEL_MATRIX[2].xyz));
     MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0] * s.x, INV_VIEW_MATRIX[1] * s.y, INV_VIEW_MATRIX[2] * s.z, MODEL_MATRIX[3]);
@@ -26,7 +27,9 @@ void fragment() {
             sum+=keyed_sample(UV+dx*((float(x)+0.5)/4.0-0.5)+dy*((float(y)+0.5)/4.0-0.5));
         }
     }
-    ALBEDO = sum.rgb/max(sum.a,0.0001);
+    vec3 base = sum.rgb/max(sum.a,0.0001);
+    float preserve_outline = smoothstep(0.04,0.22,max(base.r,max(base.g,base.b)));
+    ALBEDO = mix(base, vec3(1.0,0.87,0.63), clamp(damage_flash,0.0,1.0)*0.35*preserve_outline);
     ALPHA = sum.a/16.0;
     ALPHA_SCISSOR_THRESHOLD = 0.5;
 }

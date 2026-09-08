@@ -43,6 +43,10 @@ func run() -> void:
 	board.show_state(state,0.0)
 	check(eased_figure.position == frozen_offset and unit.position.z == 2.0, "Pause holds presentation offset without changing authoritative position")
 	check(unit.get_node("Hit").visible, "Damage impact visible")
+	var hit_sprite=unit.get_node("Figure/PixelActor")
+	check(hit_sprite.damage_flash == 1.0, "HP loss highlights struck character")
+	board.show_state(state,0.0)
+	check(hit_sprite.damage_flash == 1.0, "Pause holds the exact damage highlight")
 	state.units[0].charge_ready = true
 	board.show_state(state, 0.05)
 	check(unit.get_node("Ability").visible, "Authoritative Minotaur charge remains visible until consumed")
@@ -52,6 +56,7 @@ func run() -> void:
 	state.towers[0].hp = 0.0
 	board.show_state(state, 0.3)
 	check(not unit.get_node("Hit").visible, "Damage impact expires")
+	check(hit_sprite.damage_flash == 0.0, "Damage highlight fades back to original palette")
 	check(board._towers.blue.visible and shrine.clip == board.RUBBLE_CLIP and board._towers.blue.scale == Vector3.ONE, "Destroyed temple remains as ruins")
 	check(not board._towers.blue.get_node("Health").visible, "Destroyed temple health hidden")
 	check(board._collapses.size()==1, "Intact-to-destroyed tower starts one collapse")

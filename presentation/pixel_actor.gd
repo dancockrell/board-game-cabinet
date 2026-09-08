@@ -11,6 +11,16 @@ var _last_attack_event := -1
 var _motion_clip: Clip
 var _motion_elapsed := 0.0
 var _rest_elapsed := 0.0
+var damage_flash := 0.0
+
+func set_damage_flash(strength: float) -> void:
+	if not is_finite(strength): return
+	damage_flash=clampf(strength,0.0,1.0)
+	if material_override is ShaderMaterial:
+		material_override.set_shader_parameter("damage_flash", damage_flash)
+		modulate=Color.WHITE
+	else:
+		modulate=Color(1.0,1.0-damage_flash*.18,1.0-damage_flash*.36)
 
 func set_locomotion(walk: Clip) -> bool:
 	if walk != null and (not walk.looping or not walk.validation_error().is_empty()): return false
@@ -39,6 +49,7 @@ func reset_playback(rest: Clip) -> bool:
 	_motion_clip=null
 	_motion_elapsed=0.0
 	_rest_elapsed=0.0
+	set_damage_flash(0.0)
 	_reaction_elapsed=-1.0
 	_last_hit_event=-1
 	_last_attack_event=-1
@@ -113,6 +124,7 @@ func set_clip(value: Clip) -> bool:
 		keyed.set_shader_parameter("source_atlas", clip.atlas)
 		keyed.set_shader_parameter("depth_bias", clip.depth_bias)
 		material_override = keyed
+	set_damage_flash(damage_flash)
 	_atlas.atlas = clip.atlas
 	texture = _atlas
 	_shown = -1

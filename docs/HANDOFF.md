@@ -70,3 +70,7 @@ The additional source capture run produced battle and collapse images, then ende
 The attached-indicator source rerun completed successfully: 1,800 ticks, 30 deployments, result and rematch, passed=true and failures=[] in outputs/Attached-Indicators-Rerun/verification.json. The earlier incomplete capture did not reproduce; its cause remains unknown.
 
 The build diagnostic now separates ground-walk, flight and multi-frame idle samples, records actual observed frame indices per character/clip, and requires all seven characters plus building collapse. This is observed coverage of one seeded match, not proof of all facing/action clips or smooth animation.
+
+## Sprite damage feedback
+
+HP loss now briefly warms the struck sprite, preserving dark contours and current attack playback. The effect fades on gameplay time, holds during pause and clears on rematch; clip changes preserve its strength. East-facing Hoplite guard no longer interrupts a playing action. Native board checks84 and sprite checks47 passed. A90-frame native Hydra damage study was captured; initial pale tint rejected, revised35% highlight with dark-outline protection visually inspected. The existing Windows release predates this source change.

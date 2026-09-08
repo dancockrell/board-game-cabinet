@@ -43,6 +43,7 @@ func _run() -> void:
 	for frame in 90:
 		for i in 2:
 			var actor=actors[i]
+			if "--damage" in OS.get_cmdline_user_args(): actor.set_damage_flash(clampf(1.0-float(frame-45)/7.0,0.0,1.0) if frame>=45 else 0.0)
 			if frame==45: actor.play_attack(1,SouthAttack if i==0 else NorthAttack)
 			if frame<45: actor.show_time(frame/30.0)
 			else: actor.advance_visual(1.0/30.0)

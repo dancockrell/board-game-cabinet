@@ -411,12 +411,14 @@ func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
 		if sprite != null:
 			var serial := int(node.get_meta("damage_serial",0))+1
 			node.set_meta("damage_serial",serial)
-			if str(node.get_meta("kind", ""))=="hoplites" and node.get_meta("pixel_facing","east")=="east": sprite.react_to_hit(serial,HOPLITE_GUARD)
+			if str(node.get_meta("kind", ""))=="hoplites" and node.get_meta("pixel_facing","east")=="east" and sprite._reaction_elapsed < 0.0: sprite.react_to_hit(serial,HOPLITE_GUARD)
 		timer = 0.22
 		var height: float = node.get_node("Health").position.y + 0.32
 		damage_numbers.show_loss(node.get_instance_id(), node.position + Vector3(0,height,0) + Vector3(node.get_node("Health").position.x,0,node.get_node("Health").position.z), previous_hp-hp)
 	node.set_meta("previous_hp", hp)
 	node.set_meta("hit_time", timer)
+	var struck_sprite = node.get_node_or_null("Figure/PixelActor")
+	if struck_sprite != null: struck_sprite.set_damage_flash(clampf(timer / 0.14,0.0,1.0))
 	var hit: MeshInstance3D = node.get_node("Hit")
 	hit.visible = timer > 0.0
 	hit.scale = Vector3.ONE * (1.0 + (0.22 - timer) * 2.0)
