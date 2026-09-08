@@ -1,0 +1,18 @@
+{
+  "generator": "built-in image_gen",
+  "date": "2026-09-08",
+  "new_generation_calls": 0,
+  "source_image_unchanged": true,
+  "admitted_resource_frames": 8,
+  "direction": "north",
+  "source_batch": "art_batches/minotaur_batch_01/north.png",
+  "runtime_file": "assets/olympus_arena/sprites/minotaur-north-defeat-batch.png",
+  "sha256": "3a7006730e858984a6e9c130abc49e2d5ca00876fccc56aac7727a31c0159e97",
+  "generation_source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-a4b9299e-5c54-4933-a8c9-9f978401d40e.png",
+  "prompts": [
+    "undefined\n",
+    "Repair this ENTIRE 4column8row Minotaur animation atlas, preserving all32 poses, layout, brownminotaur, bluegoldskirt, doubleheadedbronzeaxe, pixelart and magenta. Correct axe SIDE CONSISTENCY ONLY: in ALL WALK and CHARGE poses, rows1through4, axehead must project to screenLEFT just like first cell, both hands grip shaft across FRONT of waist, left wrist near axehead. NEVER let axehead flip to screenRIGHT between steps. Specifically row1col4, row2cols2and3, row4all4 currentlywrong. Keep leg and tail phases unchanged. Rearfacing north throughout. Keep remaining attack/defeat16cells unchanged. Output full32cell sheet.\n"
+  ],
+  "south_status": "Candidate only: early defeat frames2and3 lose axe beforeframe4 restores it",
+  "runtime_wiring": "Coordinator pending"
+}
