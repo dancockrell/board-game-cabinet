@@ -1,0 +1,30 @@
+# Heracles lateral walk: rejected experiment
+
+2026-09-08. Status: **rejected, not connected to runtime**. East/west locomotion remains unfinished. This report is evidence of an unsuccessful bounded production attempt, not animation acceptance.
+
+## Contract and method
+
+Use built-in image generation only, with `assets/olympus_arena/sprites/heracles-v1.png` as the identity reference. Preserve the lion-head hood, beard, red skirt with gold hem, bronze skin, sandals, and right-hand wooden club. Target: 1536 x 1024 sheet, four columns and two rows; east-facing walk above west-facing walk. Ordered contact / passing / opposite contact / opposite passing, fixed elevated camera, stable grounded scale. Requested true transparency initially; one targeted correction requested the existing controlled magenta backing. No external API, paid model tool, or manual masking was used.
+
+## Observed results
+
+- First sheet: generator supplied a brown gradient instead of alpha. Several contact poses repeat the same leading leg. Rejected rather than attempting to remove a background matching skin, pelt and club.
+- Targeted correction: magenta backing succeeds, but the gait becomes less sequential. East poses 1–3 retain the same contact silhouette; all four west poses retain essentially the same contact stance. The sequence would shuffle instead of walk.
+- Both full sheets were inspected visually. No Resources were admitted, no roster mapping changed, and no in-engine motion acceptance is claimed.
+- Stop condition reached: one generation and one targeted fix. Do not reclassify these sheets as usable walk cycles because they contain eight figures.
+
+## Preserved sources
+
+Local shared library directory:
+`C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-lateral-rejected-2026-09-08/`
+
+| File | Built-in generation ID | SHA-256 |
+| --- | --- | --- |
+| heracles-lateral-v1-rejected.png | exec-4cdedce8-e261-4555-84c3-207f8568b690 | C3F8B24B168EF7214A798DC9876B983A8D6EDAA9717C5BD70FE6F5CDCC86077C |
+| heracles-lateral-v2-rejected.png | exec-5d3f99fc-ffbd-48bf-a174-620a523cf8c4 | 4B4DB85FAD283728B5C06EFA15D370F02EA023D0B19D5C7DB3CD593C5E3B2A0A |
+
+These are preserved 2D candidates, outside the shipped game. Shared-library copies are local, not a claim of public publication.
+
+## Next production method
+
+The next attempt should commission **one direction and one explicit pair of opposite contact poses**, with clear colored anatomical leg annotations in the reference, then commission passing poses against that accepted pair. Large multi-direction sheets invite repeated anatomy while appearing superficially complete. Do not generate more until the parent production task chooses that bounded experiment.
