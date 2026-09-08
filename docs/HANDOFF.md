@@ -2,7 +2,17 @@
 
 Updated 2026-09-08. Repository: [dancockrell/board-game-cabinet](https://github.com/dancockrell/board-game-cabinet), private.
 
-## Readable-combat Windows checkpoint (current)
+## Hydra side views and stable facing (current source/local build)
+
+Source `91d5f98b16fb04f6d4795af8b4529dfa19fd790c` adds Hydra east/west idle and bite Resources, completing four-direction coverage with three-quarter lateral art. Native staged study `outputs/Hydra-Lateral-Study.mp4` inspected; original PNG hash matches provenance. Attacks retain their true target orientation during crowd corrections, and movement facing uses a small overlap to prevent diagonal flicker. Two-view Minotaur/Harpies preserve orientation through near-horizontal corrections.
+
+Local Windows package: `outputs/Olympus-Hydra-Facings-Windows.zip`, containing source/hash build notes, provenance, notices and verification JSON. Exported executable exited 0 after 1,800 ticks, 30 legal deployments, all seven character kinds, collapse, result and rematch; no failures. Focused native facing checks 18/18, roster 79/79, existing board 73/73; Hydra Resource checks passed. Short native test now waits for sky initialization before world teardown, avoiding Godot 4.3 pending-GL-texture shutdown warnings.
+
+`outputs/Stable-Facing-Live.mp4` is six seconds of legal native gameplay before Hydra integration; its metadata now distinguishes per-character action, walking and ambient actor-frames. It must not be used as evidence that a Hydra side attack occurred in a match. The Hydra staged study and exact-source integration tests cover lateral selection separately.
+
+Atalanta and Heracles side-walking agents stopped at their usage limit before delivering art. Unfinished Heracles review/test scaffolds are preserved locally under `work/unfinished-heracles-lateral`, outside active tests. Hydra agent completed its commit before stopping; coordinator finished integration. Richer in-betweens and missing locomotion remain unfinished. Latest downloadable GitHub binary is the earlier readable-combat release below; this local Hydra package has not been attached to a release.
+
+## Readable-combat Windows checkpoint (latest GitHub binary)
 
 [Olympus: clearer combat and matching pixel cards](https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-readable-combat-2026-09-08) is the latest Windows development build. Runtime source `f8d9273ea98ad0b3765c3a4d935ad323aa9388f3`. ZIP size 82,724,389 bytes; GitHub asset SHA256 matches local `B6912FE1FBA8A5F47050883238B18D9D2B4DC78C635AD0FF96065CBF7BD8E15A`. Executable SHA256 `83F3058ECE2ED3293CA5F053CEEDE4C077BA3D42C80D0F537D61FC418F182A06`.
 
