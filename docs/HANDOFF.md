@@ -1,3 +1,13 @@
+# Saved checkpoint - work stopped at user request
+
+Latest playable release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-roster-motion-2026-09-08
+
+Windows build source: 587b93d. Local executable: outputs/Olympus-Roster-Motion-Windows/Olympus.exe. The release includes the Windows ZIP and two native motion studies. ZIP SHA256: 23761D38F1566FB84C817ED6B430A48CF7030886091D063E61F3B30310079D0B; GitHub asset digest verified equal to the local package.
+
+Full native verification passed. Exported match verification passed 1,800 ticks, 28 legal deployments, all seven characters, 26 building-collapse samples, 294 drawn-defeat samples, result and rematch checks, with no failures or engine script errors. Dedicated board tests cover every frame of all 12 admitted defeat clips. Diagnostic roster coverage now reserves elixir for unseen characters rather than starving expensive cards.
+
+Latest implementation includes 96 defeat drawings across all seven characters and authoritative allied Harpy spacing of 1.05 world units. Remaining work includes missing facings, more varied actions, shrine occlusion and playfield readability. Batch admission metadata was reconciled after the build in da91307; this does not change runtime contents. No further development is running.
+
 # Current roster animation integration - 2026-09-08
 
 All seven roster characters now have at least one drawn defeat: twelve clips and96drawings. New since the creature release: AtalantaN/S16,MinotaurN8,HopliteS8. HopliteS comes from a repaired complete32drawing batch; originals and exactprompts remain in art_batches/hoplite_batch_02 and the local shared candidate folder. MinotaurS andHopliteN remain unadmitted due to weapon continuity. Lateral facings retain previous feedback.
