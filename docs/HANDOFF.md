@@ -30,6 +30,14 @@ Attack cancellation releases its facing lock before locomotion chooses direction
 
 Remaining art work: Heracles still needs intermediate gait drawings and better rest continuity; Atalanta needs raising/draw poses and a smoother last lowering-to-rest transition; Medusa needs richer upper-body and snake motion. Four- and six-pose foundations are progress, not final smooth-animation approval. These changes are included in the expanded-motion Windows checkpoint below.
 
+## Source update after expanded-motion download
+
+Atalanta north attack now has eight independent drawings: low nock, bent draw, shoulder draw, aim, release and three lowering poses. Total duration .630 seconds; the release marker is .315 seconds. A rules-driven board test confirms this longer setup still shows release on the authoritative hit and leaves damage unchanged.
+
+Heracles west walk now has seven unique drawings in .72 seconds, adding heel landing, opposite weight acceptance and forward swing. One missing far-leg forward-swing pose still leaves an asymmetric longer passing hold. Medusa south walk now has six distinct contact/passing/reach drawings in .64 seconds, with bent knees in passing. More upper-body motion, smoother rest transitions and further intermediates remain needed.
+
+Native motion studies: Atalanta-North-Raising.mp4, Heracles-West-Seven-Poses.mp4 and Medusa-South-Six-Walk.mp4 under workspace outputs. Dedicated tests cover every source pose and board transitions. These newer source changes are not in the expanded-motion Windows download below.
+
 ## Current Windows checkpoint: expanded character motion
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-expanded-motion-2026-09-08
