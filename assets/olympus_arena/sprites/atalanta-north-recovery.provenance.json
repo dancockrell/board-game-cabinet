@@ -1,0 +1,34 @@
+{
+  "generator": "builtin imagegen",
+  "date": "2026-09-08",
+  "records": [
+    {
+      "source": "exec-b4369d70-f0a2-426f-ba06-fd1aeb7809a9.png",
+      "prompt": "Use case: precise-object-edit. Edit target: this single rear-facing Atalanta sprite. Draw the next animation pose AFTER releasing her arrow: her LEFT bow arm lowers from its current upward diagonal to horizontal at shoulder height, still holding the same bow upright at screen left; her RIGHT empty drawing hand lowers slightly away from her head toward her right shoulder, relaxed fingers. The bowstring is straight between bow tips, no arrow. Preserve EXACT character, rear view, planted feet coordinates, head position, body proportions, braid, white short tunic, green shawl on LEFT shoulder, quiver at RIGHT hip, sandals, golden palette and crisp pixel clusters. Change only arm articulation and bow position necessary for this lowering pose. Single full body centered sprite at same scale on identical flat vivid magenta backing, 1254 square. No sheet, no extra figures, no text, no floor shadow. Do not mirror. The bow is always held in anatomical LEFT hand (screen left).",
+      "status": "admitted after native sequential review",
+      "sha256": "2f667a03eb1a4afc9daf492e33b20577b36b64ba9d81d1773912495f03f2f382",
+      "runtime": "atalanta-north-lower-shoulder.png"
+    },
+    {
+      "source": "exec-b3a9e86b-5ea4-4657-936e-2973553aaf24.png",
+      "prompt": "Use case: precise-object-edit. Edit this single rear Atalanta sprite to the next LOWERING recovery animation pose. Her left arm lowers farther: left upper arm points diagonally down-left, left elbow slightly bent, LEFT bow hand now level with her waist at screen x460 y590. Same upright bow moves down with that hand, bow grip at waist level. Her empty RIGHT forearm lowers with hand at waist level on screen right, relaxed open fingers, not holding anything. Preserve EXACT planted feet, knees, torso, head and braid position, scale, rear camera and pixel style. Preserve LEFT green shoulder shawl, white short tunic, right-hip quiver and leather sandals unchanged. Single full body on identical flat vivid magenta square background. No arrow, no extra equipment, no floor shadow. Bowstring must be one straight line from bow tip to bow tip. Actual new lower arm articulation, not recolor.",
+      "status": "admitted after native sequential review",
+      "sha256": "47819cc79c19ea6380696e4a8e0567ea17653979ecd0f78463734c273a520547",
+      "runtime": "atalanta-north-lower-rest.png"
+    },
+    {
+      "source": "exec-42f83fa8-190f-4760-9061-33e08b1b0d23.png",
+      "prompt": "Use case precise-object-edit. One intermediate animation drawing of rear Atalanta. Edit target image1 (shoulder-level bow); image2 supplies the following waist-level pose. Draw the midpoint BETWEEN these two arm poses: LEFT bow hand on screen left is at lower-chest height y480, left elbow gently bent, arm slopes diagonally down-left from shoulder, holding identical upright bow. RIGHT elbow is lowered to ribcage level, empty hand at lower-chest level, fingers relaxed. Maintain the exact head, braid, torso, feet coordinates, scale and rear perspective of image1. Maintain white tunic, LEFT green shawl, RIGHT hip quiver, golden-brown braid and skin, sandals, crisp pixel-art texture. Only arms and bow positions change; no arrow; bowstring straight attached tip to tip. Single full body sprite, same 1254-square magenta backing. No duplicated figures, no text, no floor shadow.",
+      "status": "admitted after native sequential review",
+      "sha256": "67d97e23a547a8d3401727e56b4593b7bac6681ac573e1543b5bb69a4ada0b07",
+      "runtime": "atalanta-north-lower-elbow.png"
+    },
+    {
+      "source": "exec-afea7295-ff33-4c3d-be27-64567840f40d.png",
+      "prompt": "Precise sprite pose edit: keep this exact rear-facing Atalanta sprite, all torso/head/feet pixels and scale unchanged. Change LEFT bow arm to point diagonally DOWN LEFT about 25 degrees below horizontal, bow grip at screen coordinate x375 y485 on this 1254 square. This means left wrist is BETWEEN shoulder and belt in height, not up at shoulder, not down at belt. Bow stays upright in same anatomical left hand and shifts with wrist, straight relaxed string between tips. Empty right arm is halfway lowering: elbow screen-right at y520, hand bent up at y440 beside upper ribs. All other details unchanged: braid, left green shawl, white tunic, right hip quiver, sandals, backing magenta, rear camera, full body planted. A single new animation intermediate, no arrows, no text, no shadow, no extra figures.",
+      "status": "rejected: bow shape and low-hand position do not supply requested midpoint",
+      "sha256": "be3796218bdf7d0c443def73a588708c82d1996476671e358a7b32af1c20c117"
+    }
+  ],
+  "validation": "Godot native test 21 checks, zero failures; 90 frames at 30fps; inspected release14, shoulder16, elbow19, low21, rest25. No image masking or painting. Fourth attempt excluded."
+}

@@ -1,6 +1,16 @@
-# Atalanta north attack: corrected isolated anchors
+# Atalanta north attack: authored lowering recovery
 
-The live two-pose attack now uses independently authored rear aim and release PNGs. The bow remains in anatomical left hand, quiver at right hip and shawl on left shoulder, matching canonical north rest. The old attack's wrong-handed poses are no longer referenced by this Resource. This is a continuity repair, not an eight-pose expansion.
+The live attack has five independently drawn poses: corrected aim, release, shoulder-level bow lowering, bent-elbow lowering, and relaxed low-arm recovery. The three new drawings preserve left-hand bow, right-hip quiver and left-shoulder shawl. The release marker remains .09 seconds; durations are .09/.075/.075/.075/.09 (total .405 seconds). All sources use the full 1254-square canvas, pivot (675,1067) and scale .708.
+
+Four built-in imagegen calls produced three admitted poses and one rejected midpoint with altered bow shape. Exact prompts, hashes and admission decisions are in `assets/olympus_arena/sprites/atalanta-north-recovery.provenance.json`. All four unchanged originals and manifest are archived locally in shared `assets/candidates_needing_review/olympus-atalanta-north-recovery-2026-09-08`. No paid API, public shared upload, raster masking or painting was used.
+
+Native test passed 21 checks including actual independent recovery textures and return to canonical rest. A 90-frame 30fps Godot study is in `outputs/Atalanta-North-Lowering`; sequential release14, shoulder16, elbow19, low21 and recovered25 were visually inspected. Feet/head remain registered; equipment sides remain stable. The separate normal-speed MP4 uses these native frames.
+
+Remaining work: the lowering is richer, but raising/draw remain short and the final transition to canonical low, tilted-bow rest remains abrupt. Do not describe this as a complete bow animation set.
+
+## Previous anchor admission evidence
+
+Before the lowering expansion, the two-pose attack used independently authored rear aim and release PNGs. The bow remains in anatomical left hand, quiver at right hip and shawl on left shoulder, matching canonical north rest. The old attack's wrong-handed poses are no longer referenced by this Resource. This is a continuity repair, not an eight-pose expansion.
 
 Three built-in image-generation calls produced an accepted isolated aim, a rejected release with a dangling bowstring, and the accepted release with the string repaired. No raster masking, painting or mirroring was used. Full sources remain unchanged in local shared `assets/candidates_needing_review/olympus-atalanta-north-isolated-2026-09-08`; manifest includes exact prompts and separate SHA256.json records hashes. No public shared upload occurred. Only the two admitted PNGs are in the runtime asset tree.
 
