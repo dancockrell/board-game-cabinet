@@ -12,7 +12,7 @@ func run() -> void:
 	var board=preload("res://presentation/olympus_arena_board.gd").new()
 	root.add_child(board)
 	var stage=board.stage
-	check(stage.get_child_count()==1 and stage.backdrop is Sprite3D,"Scenery is one authored 2D sprite")
+	check(stage.get_child_count()==2 and stage.backdrop is Sprite3D and stage.sea_fill is Sprite3D,"Scenery and extended sea are authored 2D sprites")
 	check(stage.backdrop.texture==stage.BACKDROP,"Scene uses canonical painted background")
 	for viewport_size in [Vector2i(1440,960),Vector2i(1100,1000)]:
 		root.size=viewport_size

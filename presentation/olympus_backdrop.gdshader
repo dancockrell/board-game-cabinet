@@ -2,6 +2,7 @@ shader_type spatial;
 render_mode unshaded, cull_disabled, fog_disabled;
 uniform sampler2D art : source_color, filter_nearest;
 uniform float animation_time = 0.0;
+uniform bool sea_only = false;
 
 void vertex() {
 	vec3 s = vec3(length(MODEL_MATRIX[0].xyz),length(MODEL_MATRIX[1].xyz),length(MODEL_MATRIX[2].xyz));
@@ -12,8 +13,9 @@ bool sea(vec3 c) { return c.b > c.r*1.3 && c.g > c.r*1.3 && c.b > 0.14; }
 
 void fragment() {
 	vec2 pixels = vec2(textureSize(art,0));
-	vec4 original = texture(art,UV);
-	vec2 sample_uv = UV;
+	vec2 art_uv = sea_only ? vec2(fract(UV.x*24.0)*0.1,fract(UV.y*3.0)) : UV;
+	vec4 original = texture(art,art_uv);
+	vec2 sample_uv = art_uv;
 	float clock = floor(animation_time*8.0)/8.0;
 	if (sea(original.rgb)) {
 		sample_uv.x += floor(sin(UV.y*pixels.y*0.065+clock*1.4)*2.0)/pixels.x;
