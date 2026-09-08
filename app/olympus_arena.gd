@@ -121,8 +121,6 @@ func _build_ui() -> void:
 	menu.get_popup().add_item("Restart match",0)
 	menu.get_popup().add_check_item("Sound",1)
 	menu.get_popup().set_item_checked(1,true)
-	menu.get_popup().add_separator()
-	menu.get_popup().add_item("Chess cabinet",2)
 	menu.get_popup().id_pressed.connect(func(id):
 		match id:
 			0: _restart_confirm()
@@ -130,7 +128,6 @@ func _build_ui() -> void:
 				muted = not muted
 				sound.set_muted(muted)
 				menu.get_popup().set_item_checked(1,not muted)
-			2: get_tree().change_scene_to_file("res://app/main.tscn")
 	)
 	# The hand owns card identity and tooltips; no duplicate portrait sidebar.
 	_card_frames = {
@@ -398,14 +395,8 @@ func _texture(kind:String) -> Texture2D:
 			portrait.filter_clip = true
 			_textures[kind] = portrait
 			return portrait
-		var order := ["hoplites","atalanta","minotaur","medusa","heracles","hydra","harpies","thunderbolt"]
-		var index := order.find(kind)
-		if index < 0: return null
-		var atlas := AtlasTexture.new()
-		atlas.atlas = preload("res://assets/olympus_arena/card-atlas-v1.png")
-		atlas.region = Rect2((index % 4)*384,(index / 4)*512,384,512)
-		atlas.filter_clip = true
-		_textures[kind] = atlas
+		if kind != "thunderbolt": return null
+		_textures[kind] = preload("res://assets/olympus_arena/thunderbolt.svg")
 	return _textures[kind]
 
 func _set_portrait(control: TextureRect, kind: String) -> void:

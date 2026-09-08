@@ -1,0 +1,11 @@
+{
+  "source": "exec-53ba1e41-3622-4c51-ba07-b20f731b9ce2.png",
+  "generator": "built-in image_gen",
+  "sha256": "ED6389F941BE331D5ACE9B4C9F3F6EFCF01AEFE4D0632146AA9C1ACB7EC056E4",
+  "dimensions": [1536,1024],
+  "purpose": "Painted 2D-only Greek arena scenery replacing all mesh-built scenery.",
+  "reference_role": "Previous native gameplay screenshot used for layout, not retained 3D artwork.",
+  "prompt_summary": "Repaint an empty elevated orthographic Greek stone arena as rich classic strategy pixel art; two bridges and central river, sea, small border gardens, rocks and boats; no characters, temples, UI or text. Match existing game lane positions.",
+  "runtime": "Original image preserved unchanged. Billboard sprite registered by painted bridge centers (582,484) and (944,484) to lanes x=-2.7 and x=2.7. Palette-selective image shader animates water and leaves on a manual clock.",
+  "limitations": ["Static painted boats and border props; water and leaf colors animate.", "No 3D model artwork or model-generation fallback."]
+}

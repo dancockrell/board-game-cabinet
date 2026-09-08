@@ -34,18 +34,15 @@ const SHRINE_CLIP = preload("res://themes/olympus_shrine_clip.tres")
 const PALETTE = preload("res://themes/olympus_arena_theme.tres")
 const PixelActor = preload("res://presentation/pixel_actor.gd")
 const HOPLITE_GUARD = preload("res://themes/hoplite_guard_clip.tres")
-const LIMESTONE = preload("res://presentation/olympus_limestone.gdshader")
 var camera: Camera3D
 var _tokens: Dictionary = {}
 var _towers: Dictionary = {}
 var _materials: Dictionary = {}
-var _weathered_materials: Dictionary = {}
 var _preview: MeshInstance3D
 var _time := 0.0
 var _last_event := -1
 var _last_elapsed := 0.0
 var _effects: Array = []
-var _figure_factory: RefCounted
 var _ghost: Node3D
 var _ghost_kind := ""
 var ambient_life
@@ -70,48 +67,13 @@ func _setup() -> void:
 	camera.current = true
 	var world := WorldEnvironment.new()
 	var env := Environment.new()
-	var sky_material := ProceduralSkyMaterial.new()
-	sky_material.sky_top_color = Color("315b6a")
-	sky_material.sky_horizon_color = Color("a8c2bc")
-	sky_material.ground_horizon_color = Color("55756f")
-	sky_material.ground_bottom_color = Color("142d36")
-	sky_material.sun_angle_max = 8.0
-	var sky := Sky.new()
-	sky.sky_material = sky_material
-	env.background_mode = Environment.BG_SKY
-	env.sky = sky
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_color = Color("b9c8c6")
-	env.ambient_light_energy = 0.34
-	env.ambient_light_sky_contribution = 0.72
-	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	env.tonemap_exposure = 0.92
-	env.adjustment_enabled = true
-	env.adjustment_contrast = 1.06
-	env.adjustment_saturation = 0.92
+	env.background_mode = Environment.BG_COLOR
+	env.background_color = Color("082f3d")
 	world.environment = env
 	add_child(world)
-	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-53, -38, -7)
-	sun.light_color = Color("ffe6bd")
-	sun.light_energy = 0.86
-	sun.shadow_enabled = true
-	sun.directional_shadow_max_distance = 32.0
-	sun.shadow_bias = 0.035
-	sun.directional_shadow_blend_splits = true
-	add_child(sun)
-	# A broad cool fill keeps painted faces and shield emblems readable without
-	# flattening the warm, directional afternoon light.
-	var fill := DirectionalLight3D.new()
-	fill.rotation_degrees = Vector3(-42, 142, 0)
-	fill.light_color = Color("93b9c1")
-	fill.light_energy = 0.16
-	fill.shadow_enabled = false
-	add_child(fill)
 	stage = preload("res://presentation/olympus_stage.gd").new()
 	add_child(stage)
-	ambient_life = preload("res://presentation/olympus_ambient_life.gd").new()
-	add_child(ambient_life)
+	stage.configure(camera)
 	combat_fx = preload("res://presentation/olympus_combat_fx.gd").new()
 	add_child(combat_fx)
 	damage_numbers = preload("res://presentation/olympus_damage_numbers.gd").new()
@@ -177,7 +139,6 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		_health(node, float(unit["hp"]) / maxf(1.0, float(unit.get("max_hp", unit["hp"]))))
 		_ability_status(node, unit)
 		_damage_feedback(node, float(unit["hp"]), delta)
-		var attack_strength := clampf((float(node.get_meta("attack_until", 0.0)) - _time) / 0.24, 0.0, 1.0)
 		var sprite = node.get_node("Figure").get_node_or_null("PixelActor")
 		if sprite != null:
 			var moved := previous.distance_to(target) > 0.004
@@ -199,8 +160,6 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 				locomotion=HYDRA_IDLE[str(node.get_meta("pixel_facing", "south"))]
 			sprite.set_locomotion(locomotion)
 			sprite.advance_visual(delta)
-		else:
-			_figure_factory.animate(node.get_node("Figure"), _time + int(id) * .37, _time < float(node.get_meta("walking_until", 0.0)), bool(unit.get("flying", false)), float(node.get_meta("hit_time", 0.0)), attack_strength)
 	for id in _tokens.keys():
 		if not alive.has(id):
 			if not resetting: _departure(_tokens[id])
@@ -253,7 +212,7 @@ func show_deployment(position: Vector2, valid: bool, spell: bool = false, kind: 
 		_ghost.visible = valid
 	_preview.position = Vector3(position.x, 0.32, position.y)
 	_preview.scale = Vector3(2.3 if spell else 1.0, 1, 2.3 if spell else 1.0)
-	_preview.material_override = _material(Color(0.2, 0.8, 1, 0.55) if valid else Color(1, 0.2, 0.15, 0.5))
+	_preview.material_override.set_shader_parameter("ink", Color(0.2, 0.8, 1, 0.55) if valid else Color(1, 0.2, 0.15, 0.5))
 
 func clear_preview() -> void:
 	if _preview: _preview.visible = false
@@ -334,48 +293,6 @@ func _departure(unit: Node3D) -> void:
 		if departure.begin(source): _departures.append(departure)
 		else: departure.queue_free()
 		return
-	# A short separate cosmetic burst never delays authoritative unit removal.
-	var cloud := Node3D.new()
-	add_child(cloud)
-	cloud.position = unit.position
-	for i in 6:
-		var a := i * TAU / 6.0
-		var puff := _sphere(cloud, Vector3.ONE * .10, Vector3(cos(a)*.12,.32,sin(a)*.12), Color("ead4a2"))
-		var motion := create_tween().set_parallel(true)
-		motion.tween_property(puff,"position",Vector3(cos(a)*.55,.12,sin(a)*.55),.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		motion.tween_property(puff,"scale",Vector3.ONE*.005,.35)
-	var cleanup := create_tween()
-	cleanup.tween_interval(.38)
-	cleanup.tween_callback(cloud.queue_free)
-
-func _show_event(event: Dictionary) -> void:
-	var node := Node3D.new()
-	add_child(node)
-	node.position = Vector3(float(event.x), 0.25, float(event.z))
-	var color: Color = PALETTE.player if int(event.side) == 0 else PALETTE.enemy
-	var duration := 0.3
-	match str(event.kind):
-		"lightning":
-			duration = 0.42
-			var points := [Vector3(0, 0, 0), Vector3(-0.32, 1.0, 0), Vector3(0.28, 1.25, 0), Vector3(-0.2, 2.25, 0), Vector3(0.32, 3.5, 0)]
-			for i in range(points.size() - 1): _limb(node, points[i], points[i+1], 0.045, Color("ffe590"))
-			_cylinder(node, 1.05, 0.03, Vector3.ZERO, Color(1, 0.85, 0.35, 0.45))
-		"summon":
-			for i in 8:
-				var angle := i * TAU / 8
-				_sphere(node, Vector3(0.065, 0.14, 0.065), Vector3(cos(angle) * 0.5, 0.2, sin(angle) * 0.5), color)
-		"hit":
-			if event.has("source_x") and event.has("source_z"):
-				var destination := node.position + Vector3(0, 0.5, 0)
-				node.position = Vector3(float(event.source_x), 0.9, float(event.source_z))
-				_sphere(node, Vector3(0.08, 0.08, 0.19), Vector3.ZERO, Color("ffe2a3"))
-				_effects.append({"node":node, "age":0.0, "duration":0.16, "origin":node.position, "destination":destination})
-				return
-			for i in 4:
-				var angle := i * PI / 2
-				_limb(node, Vector3(0, 0.5, 0), Vector3(cos(angle) * 0.35, 0.7, sin(angle) * 0.35), 0.025, Color("ffe2a3"))
-	_effects.append({"node":node, "age":0.0, "duration":duration})
-
 func _make_tower(data: Dictionary) -> Node3D:
 	var node := Node3D.new()
 	add_child(node)
@@ -398,28 +315,6 @@ func _make_tower(data: Dictionary) -> Node3D:
 	_add_health(node, 2.3 if temple else 1.95, 1.05, team)
 	return node
 
-func _weather_architecture(node: Node3D) -> void:
-	for child in node.get_children():
-		if not child is MeshInstance3D: continue
-		var source := (child as MeshInstance3D).material_override
-		if not source is StandardMaterial3D: continue
-		var color: Color = (source as StandardMaterial3D).albedo_color
-		if color.a < .99: continue
-		(child as MeshInstance3D).material_override = _weathered_material(color)
-
-func _weathered_material(color: Color) -> ShaderMaterial:
-	var key := color.to_html()
-	if _weathered_materials.has(key): return _weathered_materials[key]
-	var material := ShaderMaterial.new()
-	material.shader = LIMESTONE
-	material.set_shader_parameter("base_color", color.darkened(.08))
-	var aged_metal := color.r > .45 and color.g / maxf(color.r, .001) > .68 and color.b / maxf(color.g, .001) < .62
-	material.set_shader_parameter("metalness", .58 if aged_metal else 0.0)
-	material.set_shader_parameter("surface_roughness", .48 if aged_metal else .88)
-	material.set_shader_parameter("wear_strength", .26 if aged_metal else .17)
-	_weathered_materials[key] = material
-	return material
-
 func _make_unit(kind: String, side: int) -> Node3D:
 	var node := Node3D.new()
 	add_child(node)
@@ -428,8 +323,6 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	var team: Color = PALETTE.player if side == 0 else PALETTE.enemy
 	_cylinder(node, 0.38, 0.055, Vector3(0, 0.035, 0), Color("263743"))
 	_cylinder(node, 0.36, 0.035, Vector3(0, 0.077, 0), team.darkened(.18))
-	var plinth := _cylinder(node, 0.315, 0.015, Vector3(0, 0.099, 0), Color("766d58"))
-	plinth.material_override = _weathered_material(Color("766d58"))
 	var ability := _cylinder(node, 0.31, 0.012, Vector3(0, 0.116, 0), Color("e6b96580"))
 	ability.name = "Ability"
 	ability.visible = false
@@ -439,7 +332,6 @@ func _make_unit(kind: String, side: int) -> Node3D:
 	figure.rotation.y = PI if side == 0 else 0.0
 	var size := 1.10 if kind in ["heracles", "minotaur", "hydra"] else .86
 	figure.scale = Vector3.ONE * size
-	if _figure_factory == null: _figure_factory = preload("res://presentation/olympus_figurines.gd").new(self)
 	if kind in ["hoplites", "atalanta", "medusa", "minotaur", "heracles", "harpies", "hydra"]:
 		figure.rotation=Vector3.ZERO
 		var sprite:=PixelActor.new()
@@ -465,7 +357,7 @@ func _make_unit(kind: String, side: int) -> Node3D:
 		sprite.reset_playback(rest)
 		node.set_meta("front_rest",rest)
 	else:
-		_figure_factory.build(figure, kind, team)
+		push_error("Missing 2D character art: "+kind)
 	_add_health(node, 2.10 if size > 1 else 1.75, .78, team)
 	return node
 
@@ -475,7 +367,7 @@ func _ability_status(node: Node3D, unit: Dictionary) -> void:
 	var recovering := str(unit.get("kind", "")) == "hydra" and float(unit.get("recovery_time", 0.0)) >= 4.0 and float(unit.get("hp", 0.0)) < float(unit.get("max_hp", 0.0))
 	marker.visible = charged or recovering
 	if not marker.visible: return
-	marker.material_override = _material(Color("e6b9659c") if charged else Color("72b98583"))
+	marker.material_override.set_shader_parameter("ink", Color("e6b9659c") if charged else Color("72b98583"))
 	var pulse := .94 + sin(_time * (6.5 if charged else 3.5)) * .06
 	marker.scale = Vector3(pulse, 1.0, pulse)
 
@@ -529,14 +421,7 @@ func _material(color: Color) -> StandardMaterial3D:
 	if _materials.has(color): return _materials[color]
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = color
-	mat.roughness = 0.84
-	# Bronze and gilded details should catch a thin highlight. Limestone, linen,
-	# paint and skin remain matte so the diorama reads as crafted material.
-	if color.r > .45 and color.g / maxf(color.r, .001) > .68 and color.b / maxf(color.g, .001) < .62:
-		mat.metallic = 0.46
-		mat.roughness = 0.42
-	elif color.get_luminance() < .24:
-		mat.roughness = 0.68
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	if color.a < 1:
 		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	_materials[color] = mat
@@ -551,31 +436,18 @@ func _mesh(parent: Node3D, mesh: Mesh, at: Vector3, color: Color) -> MeshInstanc
 	return instance
 
 func _box(parent: Node3D, size: Vector3, at: Vector3, color: Color) -> MeshInstance3D:
-	var mesh := BoxMesh.new()
-	mesh.size = size
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(size.x, size.y)
 	return _mesh(parent, mesh, at, color)
 
-func _cylinder(parent: Node3D, radius: float, height: float, at: Vector3, color: Color) -> MeshInstance3D:
-	var mesh := CylinderMesh.new()
-	mesh.top_radius = radius
-	mesh.bottom_radius = radius
-	mesh.height = height
-	mesh.radial_segments = 16
-	return _mesh(parent, mesh, at, color)
-
-func _sphere(parent: Node3D, scale_value: Vector3, at: Vector3, color: Color) -> MeshInstance3D:
-	var mesh := SphereMesh.new()
-	mesh.radius = 1
-	mesh.height = 2
-	mesh.radial_segments = 12
-	mesh.rings = 6
+func _cylinder(parent: Node3D, radius: float, _height: float, at: Vector3, color: Color) -> MeshInstance3D:
+	# Flat ground-space interface disk, not a sculpted base or model.
+	var mesh := PlaneMesh.new()
+	mesh.size = Vector2.ONE*radius*2.0
 	var node := _mesh(parent, mesh, at, color)
-	node.scale = scale_value
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://presentation/olympus_flat_marker.gdshader")
+	material.set_shader_parameter("ink", color)
+	node.material_override = material
+	node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return node
-
-func _limb(parent: Node3D, from: Vector3, to: Vector3, radius: float, color: Color) -> MeshInstance3D:
-	var mesh := _cylinder(parent, radius, from.distance_to(to), (from + to) / 2, color)
-	var direction := (to - from).normalized()
-	if abs(direction.dot(Vector3.UP)) < 0.999:
-		mesh.quaternion = Quaternion(Vector3.UP, direction)
-	return mesh
