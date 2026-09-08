@@ -24,9 +24,9 @@ No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy cop
 
 ## Source update after the current Windows checkpoint
 
-Harpy north and south flight now each use eight authored wingbeat poses, with separate extended downstroke and bent-wing recovery drawings. Native60frame reviews per direction inspected all phases; both native movement/hover/pause/reset tests passed, board84 and integrated seven-character 2D match gate passed. See HARPY_RICH_FLIGHT.md. Atalanta east walking also now uses eight individually authored poses with alternating contacts, passing and extension phases. Temporary limb-color guides were used only in generation intermediates; source originals remain in shared2D candidates. West walking remains four poses. These source changes are newer than the packaged Windows checkpoint below.
+Harpy north and south flight now each use eight authored wingbeat poses, with separate extended downstroke and bent-wing recovery drawings. Native60frame reviews per direction inspected all phases; both native movement/hover/pause/reset tests passed, board84 and integrated seven-character 2D match gate passed. See HARPY_RICH_FLIGHT.md. Atalanta east walking also now uses eight individually authored poses with alternating contacts, passing and extension phases. Temporary limb-color guides were used only in generation intermediates; source originals remain in shared2D candidates. West walking now also has eight independent poses, preserving equipment handedness. Six east poses received separate generated skin-shading corrections. Native board tests cover all eight source drawings in both directions, authoritative movement and stopped recovery. Health bars now anchor above each authored silhouette in the camera plane, including Harpy flight lift; the board suite passes 85 checks. These source changes are newer than the packaged Windows checkpoint below.
 
-## Current Windows checkpoint — richer sprites
+## Current Windows checkpoint ï¿½ richer sprites
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-richer-sprites-2026-09-08
 
@@ -61,17 +61,17 @@ The overall game quality goal remains active. Add richer authored intermediate p
 
 Hosted CI was previously unable to start due to account billing/spending limits. Local and exported verification are separate evidence; do not infer current CI green status.
 
-## Idle playback repair — 2026-09-08
+## Idle playback repair ï¿½ 2026-09-08
 
 Standing actors now advance their authored idle clips. Idle facing changes preserve normalized phase; attack recovery applies only time after the action ends, and pause/rematch preserve or clear clocks respectively. Native sprite checks passed (45) and motion continuity checks passed (20). The standard graphical verification now includes motion continuity. This source change is newer than the Windows checkpoint above; that executable does not include this repair.
 
-## Hydra lateral steps — 2026-09-08
+## Hydra lateral steps ï¿½ 2026-09-08
 
 Added separate east/west four-pose authored walk Resources. Movement selects them; standing uses idle playback, attacks retain authoritative event timing. Built-in generation plus one background-only correction; original chroma source preserved. Four ordered native poses inspected on the battlefield, resource timing checks and integrated 2D gate passed. North/south locomotion and smoother in-betweens remain unfinished. This is newer source than the downloadable Windows checkpoint.
 
 Atalanta east/west four-pose walks are now connected to movement (native clip tests: 16 passed). Contact poses remain similar and lifted steps exaggerated; smoother intermediate poses remain required. Heracles lateral generation was rejected for repeated planted feet; see HERACLES_LATERAL_REVIEW.md. No claim of complete locomotion coverage.
 
-## Latest Windows delivery — animated sprites
+## Latest Windows delivery ï¿½ animated sprites
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-animated-sprites-2026-09-08
 Build source: 09798cd996b6dc18b21633d687576724d139b73c. This supersedes the older downloadable checkpoint above and includes idle playback plus Atalanta/Hydra lateral walks.
@@ -99,7 +99,7 @@ HP loss now briefly warms the struck sprite, preserving dark contours and curren
 
 Water now has sparse travelling glints and broken surf highlights near painted land/boat edges, using existing water pixels only. Buildings, bridge registration and picking remain unchanged. Native stage13 checks passed, including visible pixel changes across animation times and identical paused frames. Native Water-Glints-Stage.png inspected. Painted boats remain stationary. This source update is newer than the downloadable build.
 
-## Latest delivery — living battlefield
+## Latest delivery ï¿½ living battlefield
 
 https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-living-battlefield-2026-09-08
 
@@ -112,3 +112,4 @@ Release also includes six-second30fps native motion (180frames, no retiming), ou
 ## Saved presentation preferences
 
 Menu now saves Sound and Animate scenery across launches in user://olympus_preferences.cfg. Disabling scenery holds only water/foliage time; unit actions, combat feedback and authoritative simulation remain active. Re-enabling resumes the held clock. Missing/malformed values use defaults. Native app68 and stage13 checks passed; persistence tests use a unique temporary file and do not modify player preferences. The Windows release above predates this source update.
+
