@@ -1,4 +1,4 @@
-Current status: EAST has four authored walking key poses connected to the board. WEST remains unfinished. The failed experiments below are historical; the natural-palette foundation and coordinator admission at the end describe the current implementation.
+Current status: EAST has four authored walking key poses connected to the board. WEST has four native-reviewed key poses awaiting coordinator board admission. The failed experiments below are historical; the natural-palette foundation and coordinator admission at the end describe the current implementation.
 
 # Heracles lateral walk: rejected experiment
 
@@ -78,3 +78,4 @@ The heracles_west_walk Resource orders near-forward extension, near support/far 
 Native tests/test_heracles_west_walk.gd passes 14 checks: chronological source selection, unique atlases, loop, attack return and stopped rest. tools/review_heracles_west_walk.gd captured 90 frames at 30 fps to outputs/Heracles-West-Four-Key-Study. Frames 0, 6, 11 and 17 were visually inspected beside west rest. Handedness, pelt and opposite leg overlap remain coherent. Board mapping and full-match admission remain coordinator work; WEST was not mapped by this slice.
 
 Four unchanged originals, exact prompts and SHA256 hashes are preserved locally in C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-west-foundation-2026-09-08/. Runtime provenance: assets/olympus_arena/sprites/heracles-west-walk.provenance.json. No public shared upload.
+
