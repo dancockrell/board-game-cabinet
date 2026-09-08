@@ -1,0 +1,30 @@
+{
+  "generator": "builtin imagegen",
+  "date": "2026-09-08",
+  "prompt": "Use case: identity-preserve. Create an actual eight-pose sequential SOUTH-facing claw attack sprite sheet for the SAME adult Greek harpy in these references. Input1 is identity and old raised-talons attack reference. Input2 is current flight identity/scale reference. Crisp detailed pixel-art matching their warm brown/cream feathers, short brown hair, gold laurel, white tunic with green sash, gold scaly bird legs. Exact front/south view throughout, no turn. Eight cells in regular 4 columns x2 rows, chronological left-to-right top then bottom. Uniform body dimensions, consistent face and costume. ACTION: 1 hovering preparation, wings halfway raised and legs hanging; 2 anticipation wings high, both knees start drawing up; 3 knees tightly tucked toward chest, wings high preparing strike; 4 strong talon thrust toward camera, wings spread high and wide, toes opening; 5 maximum claw strike both feet projected toward camera, spread hooked black claws, wings drive down to horizontal; 6 follow-through feet lower/extend down, wings lowered; 7 retract legs to normal hanging hover, wings cupped down; 8 settle into hover, normal straight hanging legs, wings lifting toward the next flight beat. Eight meaningfully distinct poses with smooth transitions, no duplicate poses. One harpy per cell. All wing tips and claws fully inside own cell, broad clean margins. Flat pure magenta #ff00ff background including gaps between feathers, no gradients, no ground shadow, no effects, no labels, no grid. Do not draw human hands, weapons, extra limbs, extra wings. Match reference detail and front-facing game perspective, no cinematic art.",
+  "source": "C:/Users/Admin/.codex/generated_images/01a07f94-ca55-71f1-a1b7-a2e4b2bc9ec4/exec-9ce79ebd-1e23-4566-9cb1-d3bec1f0792d.png",
+  "status": "admitted as incremental SOUTH attack improvement after native ordered pose and recovery review",
+  "operations": "Unchanged source PNG; Resource crops and pivots only. No raster masking or repainting.",
+  "sha256": "e95397b4cc6e2c0af89af328e2794086f4d6f0f013e3ac8c24e50f87c8606c32",
+  "phases": [
+    "hover preparation",
+    "wing lift and knee bend",
+    "tucked anticipation",
+    "first claw projection",
+    "full double claw strike",
+    "downstroke follow-through",
+    "leg recovery",
+    "hover recovery"
+  ],
+  "validation": [
+    "Godot4.3 import passed",
+    "test_harpy_south_attack.gd native passed with zero failures",
+    "90 native frames at60fps; all8 attack phases and flight transitions inspected",
+    "Irregular crops corrected neighbor wing fragments in phases3/7; corrected frames reinspected"
+  ],
+  "limitations": [
+    "Some torso and face variation remains",
+    "Short existing0.39s event playback preserved; no rule timing changes",
+    "SOUTH only; NORTH still uses old attack"
+  ]
+}
