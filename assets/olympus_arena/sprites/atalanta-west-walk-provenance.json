@@ -1,0 +1,105 @@
+{
+  "terms": "Generated work not assumedCC0; owner authorized sharedlocal2D preservation",
+  "frame_seconds": 0.1,
+  "sources": [
+    {
+      "selected_phase": 1,
+      "creation_id": "b713d841-784c-4c72-8042-e16077fb0593",
+      "source_file": "b713d841-784c-4c72-8042-e16077fb0593.png",
+      "sha256": "adfa4f1f541cc4712be2224cd8976d819476d2eaf75d27cf19cb660654885450"
+    },
+    {
+      "selected_phase": 2,
+      "creation_id": "015fb4e5-dc27-48ff-bde0-ed9d979e155d",
+      "source_file": "015fb4e5-dc27-48ff-bde0-ed9d979e155d.png",
+      "sha256": "5c6694cfbe649d13d773cb482d7e431d9f17dbfbbb8bc9301e2a6729ef442ca2"
+    },
+    {
+      "selected_phase": 0,
+      "creation_id": "a7dfb109-c65c-404d-ab31-1292b1f1fc4e",
+      "source_file": "a7dfb109-c65c-404d-ab31-1292b1f1fc4e.png",
+      "sha256": "424c9f4c9dd4480780e162dcaf1673fa56b317ce5d33bb669d950ba88f9d3be1"
+    },
+    {
+      "selected_phase": 0,
+      "creation_id": "1afbf526-a310-43fd-83ac-593ecd4a4fcb",
+      "source_file": "1afbf526-a310-43fd-83ac-593ecd4a4fcb.png",
+      "sha256": "554a869c066d37d593c3d36b57adaabb369ad903f78f38b5088626ed931c7e45"
+    },
+    {
+      "selected_phase": 3,
+      "creation_id": "86cfe2d6-abbd-4ea0-b09e-eb2d1d59509f",
+      "source_file": "86cfe2d6-abbd-4ea0-b09e-eb2d1d59509f.png",
+      "sha256": "6fb83fae20505f834792128bbb02808f1d9a5255f5e8b9bfbbd1d5b98bce5e47"
+    },
+    {
+      "selected_phase": 4,
+      "creation_id": "506106b3-5de4-4f3f-8790-7659f982d22c",
+      "source_file": "506106b3-5de4-4f3f-8790-7659f982d22c.png",
+      "sha256": "1be9664296f3d32bb52e60d65add697dd067801279d2131821dcd5aaf66a1153"
+    },
+    {
+      "selected_phase": 5,
+      "creation_id": "69eab09e-0acf-4163-a03b-30fcbc8dcc18",
+      "source_file": "69eab09e-0acf-4163-a03b-30fcbc8dcc18.png",
+      "sha256": "786898776df37b18835eb6e3bf21cef24d0c551b013cb5039412bd4d206b05f3"
+    },
+    {
+      "selected_phase": 6,
+      "creation_id": "3b7a691a-ffb8-4d70-bb0c-491a52931765",
+      "source_file": "3b7a691a-ffb8-4d70-bb0c-491a52931765.png",
+      "sha256": "be7701ec4639f32c206cdef3e441aaf4353588d0a7a94b7fa1d8ee18c07e8265"
+    },
+    {
+      "selected_phase": 7,
+      "creation_id": "891d7602-8387-4f9d-89bb-95c8985d50d3",
+      "source_file": "891d7602-8387-4f9d-89bb-95c8985d50d3.png",
+      "sha256": "f5c498735fdfe8b2f31e94151def25318f88ba5a92a9029447f0f9561a37489c"
+    },
+    {
+      "selected_phase": 8,
+      "creation_id": "4fce19b8-1dd8-49b6-bbd1-fd6b28a7930b",
+      "source_file": "4fce19b8-1dd8-49b6-bbd1-fd6b28a7930b.png",
+      "sha256": "80729b1e531b8a50b1af8c23bb6247543d3a62dab09e062375e349ea4cbb1be4"
+    }
+  ],
+  "limitations": [
+    "Low passing step has restrained knee flexion; more transition drawings remain useful",
+    "Arm counter-swing and braid response remain restrained",
+    "Far quiver is conspicuously exposed at rear outline; hand/equipment ownership kept but silhouette differs from older rest",
+    "Full-game board integration validation belongs to coordinator"
+  ],
+  "method": "Independent west pose from westidentity reference and eaststyle reference, then isolated pose edits. No horizontal mirroring or procedural pose substitution.",
+  "phase_order": [
+    "contact",
+    "weight transfer",
+    "low passing",
+    "extension",
+    "opposite contact",
+    "opposite weight transfer",
+    "opposite low passing",
+    "opposite extension"
+  ],
+  "source_reference_files": [
+    "atalanta-v2.png",
+    "atalanta-east-phase-1.png"
+  ],
+  "rejected_sources": {
+    "a7dfb109": "Straight kicking pose and generated ground shadow",
+    "1afbf526": "Raised knee too high, marching silhouette"
+  },
+  "draw_scale": 0.477,
+  "direction": "west",
+  "equipment": "Near anatomical left arm holds bow; right hip quiver behind body edge. New west drawing, not reflected east texture. Rear arm mostly occluded.",
+  "shared_source_folder": "C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-atalanta-west-eight-2026-09-08",
+  "generator": "OpenAI built-in image generation",
+  "runtime_resource": "themes/atalanta_west_walk.tres",
+  "character": "Atalanta",
+  "validation": [
+    "Godot4.3 import passed",
+    "Native west clip22checks passed",
+    "Native90frames30fps captured, all8phase images inspected"
+  ],
+  "date": "2026-09-08",
+  "pixel_processing": "Original bytes unchanged; Resource regions and measured skull-axis/ground-contact pivots only, runtime magenta key."
+}
