@@ -16,16 +16,11 @@ The modeled stage is replaced by an original painted pixel-art background. Paint
 
 Old model makers, 3D scenery materials, GLB tools, chess/Ninth Gate 3D apps and graphical tests are removed. Their rules, sessions and notation foundations remain parked. There is no menu path to those retired scenes.
 
-## Removal and preservation
+## Global removal status
 
-Shared archive outside this project:
-C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-legacy-2d-only-2026-09-08
+The 2026-09-08 owner decision applies to every project and shared pack: 2D artwork only. Delete retired 3D assets rather than preserve them for a future return. Reuse the shared 2D art folder across Olympus, Cattle Trail, DR Companion and Pirate Island. Physical removal outside this checkout is pending: automatic approval review rejected deletion with only "blocked by policy". Do not describe an inventory or a catalog exclusion as completed deletion.
 
-- manifest.json records 84 original source/document/art files.
-- work-residue/manifest.json records 1,622 ignored legacy model-work files, 1,424,102,441 bytes, moved outside the project and SHA256-verified.
-- No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory.
-- HANDOFF-before-2d-only.md preserves the former long handoff; SHA256 D1E54D9A39A8F801DF9D39925D3EF8C29147A1A14553C2BA87D09E6803F9C40F.
-- Current pixel sources, rejected sprite candidates, oracle-python and unfinished-heracles-lateral are retained. Never restore archived 3D art as a missing-sprite workaround.
+No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy copies in the shared library, other project checkouts, old build outputs and historical releases require separate removal. Current 2D sources, candidates and reference art remain valuable and are not deletion targets. The earlier archive-for-later decision is superseded.
 
 ## Verified Windows checkpoint
 

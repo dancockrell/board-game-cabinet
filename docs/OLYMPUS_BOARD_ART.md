@@ -23,4 +23,4 @@ Use the built-in image generator authorized by the user. No paid external model 
 
 ## Retired work
 
-Old 3D builders, model materials, model review tools, and chess/war-table presentation were copied and SHA256-verified before removal. Their archive is outside this project at `C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-legacy-2d-only-2026-09-08`. Its `manifest.json` records original project paths and hashes. Retained history is not active art authority.
+The 2026-09-08 owner decision applies to every project and shared pack: 2D artwork only. Delete retired 3D assets rather than preserve them for a future return. Reuse the shared 2D art folder across Olympus, Cattle Trail, DR Companion and Pirate Island. Physical removal outside this checkout is pending: automatic approval review rejected deletion with only "blocked by policy". Do not describe an inventory or a catalog exclusion as completed deletion.

@@ -2,7 +2,7 @@
 
 Olympus Arena is a playable pixel-art Greek arena battler built with Godot 4.3. Deploy a four-card hand from an eight-card deck, defend two lanes and your central temple, and defeat a local computer opponent. The roster is Hoplites, Atalanta, Minotaur, Medusa, Heracles, Hydra, Harpies, and Thunderbolt.
 
-**The active art direction is 2D only.** Characters and buildings use authored sprite sheets with explicit animation timing and pivots. The battlefield uses illustrated flat artwork. Orthographic placement supports the tactical camera; it does not authorize sculpted characters, volumetric scenery, PBR materials, or a 3D-model fallback. The old model builders and wooden-table/war-table presentations have been removed from the project and preserved outside it in a verified shared archive.
+**The active art direction is 2D only.** Characters and buildings use authored sprite sheets with explicit animation timing and pivots. The battlefield uses illustrated flat artwork. Orthographic placement supports the tactical camera; it does not authorize sculpted characters, volumetric scenery, PBR materials, or a 3D-model fallback. The old model builders and wooden-table/war-table presentations have been removed from the project and designated for deletion from their remaining external copies.
 
 Press **BATTLE**, choose a card with a click or **1–4**, then click your half of the arena. Dragging a card also deploys it. Thunderbolt can target either side. **Space** pauses; **Escape** clears selection. Destroy the rival central temple to win immediately, or win on towers at the clock. The final minute doubles elixir regeneration; tied matches enter sudden-death overtime.
 
@@ -30,3 +30,7 @@ Rules and state are RefCounted objects. Presentation observes immutable snapshot
 Chess legality, session history, save/load, notation, tutor and opponent foundations remain available as source and tests. Ninth Gate rules are retained as a parked experiment. Their old 3D scenes are removed, and neither is exposed as an active game. Future cabinet games must use the same 2D-only art direction. Go, Xiangqi and checkers are not implemented.
 
 See `AGENTS.md` before collaborating. Own independent files, commit small changes, and inspect real native motion before claiming visual quality.
+
+## Global 2D production decision
+
+The 2026-09-08 owner decision applies to every project and shared pack: 2D artwork only. Delete retired 3D assets rather than preserve them for a future return. Reuse the shared 2D art folder across Olympus, Cattle Trail, DR Companion and Pirate Island. Physical removal outside this checkout is pending: automatic approval review rejected deletion with only "blocked by policy". Do not describe an inventory or a catalog exclusion as completed deletion.

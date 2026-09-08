@@ -15,27 +15,18 @@ Crisp authored pixel clusters, restrained dark outlines, readable faces and equi
 
 Greek translation: bronze helmets, ivory linen, terracotta and olive environments, deep blue/red team accents. Hoplite carries a substantial round shield and a clearly pointed spear oriented toward the target. Myth creatures need compact silhouettes and expressive poses before fine detail. Judge everything at actual gameplay scale.
 
-## First implementation slice
+## Current implementation and next work
 
-Prove ONE Hoplite as a sprite in the existing arena before expanding the roster. Keep the authoritative simulation and deployment coordinates. A directional billboard presentation can use the existing 3D world for depth and picking; a renderer change must not move game rules into scenes. Use Sprite3D/atlas resources with nearest filtering, stable feet pivot, consistent pixels per world unit and explicit animation metadata.
+Seven Greek unit types now use sprite artwork on a painted battlefield. Buildings, collapse effects and combat drawings are flat; the existing spatial coordinates support picking and ordering without authorizing modeled artwork. Rules remain independent of scenes. See HANDOFF.md for the verified executable and remaining animation gaps.
 
-Start with front, back and both diagonal views; expand directions only after readability passes. Spear and shield sides must remain anatomically consistent; do not mirror asymmetrical equipment blindly. Require idle and a short complete walk cycle with stable ground contact. Attack must lead with the spearhead. No claim of animation readiness based on a sprite sheet alone.
+Expand authored lateral locomotion, anticipation, attack contact, recovery, reaction and departure poses. Keep stable feet pivots, scale, equipment ownership, clear frame order and explicit action/facing metadata. Never mirror asymmetric equipment blindly. Judge sequential motion at actual gameplay size, including crowded fights; a dense sheet is not proof of smooth animation.
 
-Render one Greek unit against a small matching terrain patch and the current arena at normal scale. Compare contour weight, pixel size, camera elevation, lighting direction and team distinction with the references. A pixelated render of the rejected model is not automatically an accepted sprite. Decide the final pixel dimensions from this trial rather than inventing them from a scaled reference sheet.
+## Shared production contract
 
-## Production constraints
+The 2026-09-08 owner decision applies to every project and shared pack: 2D artwork only. Delete retired 3D assets rather than preserve them for a future return. Reuse the shared 2D art folder across Olympus, Cattle Trail, DR Companion and Pirate Island. Physical removal outside this checkout is pending: automatic approval review rejected deletion with only "blocked by policy". Do not describe an inventory or a catalog exclusion as completed deletion.
 
-No paid generation or paid model work. Existing assets may serve as source/reference; guided Magnific browser generation only when Generate Unlimited is visibly confirmed. No headless generation. Keep original outputs and provenance. Separate reference, candidate and admitted runtime layers. Sprite generation requires inspection of every frame for anatomy, direction, equipment continuity, alpha and pivot stability.
-
-## Current status
-
-References preserved and direction documented. No pixel-art runtime replacement or finished Greek sprite is claimed in this checkpoint. The previous Hoplite mesh, grip and equipment experiments remain historical evidence, not the art target.
+Use only the built-in image generator authorized by the user. No Magnific or paid external generation APIs for this work. Preserve original generated sources and provenance for admitted 2D art. Use true transparency or deliberately controlled chroma backing; never create pale backgrounds and erase pale costume details during masking. Inspect every frame for anatomy, alpha edges, pivot drift and equipment continuity before admission.
 
 ## Animation density
 
-The user requests a richly animated whole world, with lots of variety and smooth motion. Their clarification supersedes the provisional twenty/400 clip quotas: there is no fixed per-item count. See [animated world production direction](ANIMATED_WORLD.md) and [starter catalogue](ANIMATION_CATALOGUE.json). No paid generation is authorized.
-
-## Generator update
-
-User explicitly selected the built-in image generator instead of Magnific. Use it for current sprite work; see [first Hoplite trial](PIXEL_HOPLITE_TRIAL.md). This does not authorize external paid model APIs.
-
+The user wants a richly animated world with variety and smooth motion, not a fixed twenty/400-clip quota. Animate water, building collapse and visible combat events; prioritize complete readable transitions over redundant frames. See ANIMATED_WORLD.md and ANIMATION_CATALOGUE.json. Shared art must keep compatible perspective, pixel density and palette across the games while preserving each character's identity.
