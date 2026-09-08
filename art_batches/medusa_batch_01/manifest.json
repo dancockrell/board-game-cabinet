@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "status": "candidate_not_runtime_admitted",
+  "status": "partially_runtime_admitted",
   "character": "medusa",
   "generator": "built-in image_gen",
   "calls": 4,
   "requested_cells": 128,
   "visible_occupied_cells": 128,
-  "accepted_runtime_frames": 0,
+  "accepted_runtime_frames": 16,
   "unique_motion_pose_count": "not claimed; occupied cells include similar and deliberately returning poses",
   "raster_processing": "none; original PNG copied unchanged",
   "reference": "assets/olympus_arena/sprites/medusa-v1.png",
@@ -1234,6 +1234,22 @@
         }
       ],
       "region_method": "Read-only foreground column measurement per row, two pixels padding; no raster edits. Equal grid has silhouette bleed in falling poses."
+    }
+  ],
+  "runtime_admissions": [
+    {
+      "direction": "north",
+      "frames": 8,
+      "action": "defeat",
+      "resource": "themes/medusa_north_defeat.tres",
+      "integration_commit": "8d58b19"
+    },
+    {
+      "direction": "south",
+      "frames": 8,
+      "action": "defeat",
+      "resource": "themes/medusa_south_defeat.tres",
+      "integration_commit": "8d58b19"
     }
   ]
 }

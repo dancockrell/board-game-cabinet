@@ -1,6 +1,6 @@
 # Medusa drawn defeat sequences
 
-The north and south defeat rows from Medusa batch 01 now have standalone runtime SpriteClip Resources. Each contains eight chronological drawings, lasts 0.78 seconds, does not loop, and holds its fallen final pose. Board event integration remains coordinator-owned.
+The north and south defeat rows from Medusa batch 01 now have standalone runtime SpriteClip Resources. Each contains eight chronological drawings, lasts 0.78 seconds, does not loop, and holds its fallen final pose. The board now selects the matching north/south clip when the authoritative unit disappears. The independent visual actor finishes the fall without retaining a rules unit. Other directions keep their existing departure effect.
 
 ## Runtime files
 
@@ -24,3 +24,5 @@ Native study: `outputs/Medusa-Defeat-Native.mp4` in the workspace above the repo
 
 Choose the Resource from the last facing, set playback once on departure, advance visual elapsed time while holding the removed unit's last world position, and retain the last body pose for the remainder of the departure effect. These Resources never decide whether a unit is dead or alter damage. East/west rows remain unadmitted candidates; do not mirror an admitted direction to claim independent lateral coverage.
 
+
+Board integration test covers both facings, all eight frames, unchanged authority, original placement, pause and bounded expiry. The 60-frame Medusa-Drawn-Defeat-Board study shows actual removal-driven playback. Full source verification passed; the exported match report also records drawn-defeat samples.
