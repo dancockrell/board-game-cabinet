@@ -1,0 +1,49 @@
+{
+  "generator": "builtin imagegen",
+  "date": "2026-09-08",
+  "status": "three native-reviewed west inbetweens admitted into seven-source loop",
+  "frames": [
+    {
+      "file": "heracles-west-walk-near-land.png",
+      "generation_id": "exec-f3c329a3-0d88-4430-925a-301b2e38a035",
+      "prompt": "Precise animation edit: draw the NEXT inbetween of this west-facing Heracles walking cel. His bright near LEFT leg reaches screen LEFT and now takes body weight: LOWER THAT FRONT SANDAL FLAT TO GROUND, bend that knee modestly to absorb weight, pelvis/head settle only a tiny amount. Rear dark RIGHT leg pushes off from toe at screen RIGHT, heel lifted. This is grounded down/weight-acceptance pose, not squat. Preserve exact identity, pixel rendering, costume, lion pelt, head orientation and size. Far RIGHT hand screen LEFT keeps same wooden club pointed down-left; near LEFT hand screen RIGHT stays empty, moves only fractionally backward in gentle walking swing. Same canvas and scale, whole figure on solid magenta, no shadow, no text. Changes must be restrained coherent single animation step, not different design.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-f3c329a3-0d88-4430-925a-301b2e38a035.png",
+      "admitted": true,
+      "reason": "Native seven-pose study inspected; dedicated walk and board tests pass.",
+      "sha256": "D907E678B97209C6C61FAF18F14A0809FE0AD74E9F013A88114985E44A1F1A84"
+    },
+    {
+      "file": "heracles-west-walk-far-swing-rejected.png",
+      "generation_id": "exec-f7fb1c03-cf5e-45ee-bd93-77a78db03b69",
+      "prompt": "Draw the next chronological inbetween AFTER this passing pose of Heracles walking LEFT. Preserve torso, face, lion pelt, costume, camera and exact natural pixel-art style. Near bright LEFT leg has passed beneath pelvis and now supports him slightly BEHIND to screen RIGHT, heel beginning to rise. Far shadow RIGHT leg swings FORWARD toward screen LEFT, knee mildly bent and sandal airborne just before landing, not high knee. Bright near thigh must be in foreground angling slightly down-right; shadow far thigh reaches down-left. Feet separated about half of a full stride, one support foot screen RIGHT and airborne forward foot screen LEFT. Club still in far right hand at screen LEFT, near left empty hand screen RIGHT may swing a tiny amount forward. Head upright, no large body shift. Same single full-body cel canvas, solid magenta no shadow no labels. Do not duplicate the same lifted-back foot from reference.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-f7fb1c03-cf5e-45ee-bd93-77a78db03b69.png",
+      "admitted": false,
+      "reason": "Rejected: far forward leg loses shadow separation, both legs read near-bright.",
+      "sha256": "9E8F4F41B95BB001DE3190C9BF9D7078523465E750BAA739C92B94002C681C06"
+    },
+    {
+      "file": "heracles-west-walk-far-settle.png",
+      "generation_id": "exec-d245f0bc-4935-4a7b-970b-5286b94a08df",
+      "prompt": "Precise animation inbetween edit: Heracles walking LEFT. Starting from this FAR-FORWARD CONTACT pose, show the NEXT weight-acceptance/down pose: far shadow-bronze RIGHT leg at screen LEFT bends modestly at knee and front sandal stays flat on ground. Near bright LEFT leg at screen RIGHT begins peeling off rear toes, heel lifted; foreground thigh still crosses in front of far thigh. Body settles a tiny amount, do not squat. Maintain far leg visibly shadow bronze as input, near leg bright bronze, never change leg overlap. Preserve identical lion hood/beard/body/red gold-hem skirt, right hand club at screen LEFT, left hand empty at screen RIGHT. Gentle tiny arm settling only, club same size. Same pixel art, canvas, camera, single full body, flat magenta no shadow no text.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-d245f0bc-4935-4a7b-970b-5286b94a08df.png",
+      "admitted": true,
+      "reason": "Native seven-pose study inspected; dedicated walk and board tests pass.",
+      "sha256": "28C7E6C71EAC2F58FE4AE2537E03142082CB48121243FFCAA93EAB554EC9DD36"
+    },
+    {
+      "file": "heracles-west-walk-near-swing.png",
+      "generation_id": "exec-96854657-6319-4b4d-996b-b181c70d864d",
+      "prompt": "Create the next walking inbetween AFTER this passing cel of Heracles facing LEFT. Bright near LEFT leg swings forward with low knee bend: foreground knee and sandal now move screen LEFT ahead of support leg, near foot airborne with toe up just before heel landing. Far shadow RIGHT leg stays supporting, foot below pelvis then slightly behind at screen RIGHT. Thus feet go from overlapping in input to about half a stride apart: bright airborne forward sandal LEFT, dark planted support sandal RIGHT. Keep near thigh overlap bright foreground and far thigh dark shadow. Preserve exact face, lion hood, costume, right-hand club screen LEFT and empty left hand screen RIGHT, camera and size. Near empty hand swings backward very slightly, no large arm change. Crisp identical pixel art on solid magenta, same full canvas, no ground shadow, no text. This is low forward swing, not straight high kick or marching.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-96854657-6319-4b4d-996b-b181c70d864d.png",
+      "admitted": true,
+      "reason": "Native seven-pose study inspected; dedicated walk and board tests pass.",
+      "sha256": "6DEC7DA840A7DD5A11D866C56F5977E08221D51B116A49600437A509395284ED"
+    }
+  ],
+  "native_review": "outputs/Heracles-West-Seven-Pose-Study: 90 frames at 30 fps; inspected phases at frames 0,3,6,11,14,17,20",
+  "limitations": [
+    "Far forward-swing inbetween remains missing; corresponding passing hold stays 0.18 seconds.",
+    "Upper-body response remains restrained; minor independent-cel texture differences remain.",
+    "Seven poses improve grounding but do not constitute final animation quality."
+  ]
+}

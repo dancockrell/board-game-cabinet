@@ -15,10 +15,11 @@ func run():
 		if actor.clip!=Walk or not is_equal_approx(board._tokens[1].position.x,state.units[0].x): push_error("West motion diverged from state or clip"); quit(1); return
 		if not seen.has(actor._shown): seen.append(actor._shown)
 		if actor.texture.atlas!=Walk.frame_atlases[actor._shown]: push_error("Pose used wrong source sheet"); quit(1); return
-	if seen.size()!=4: push_error("West gait did not play all four source poses"); quit(1); return
+	if seen.size()!=Walk.regions.size(): push_error("West gait did not play all authored source poses"); quit(1); return
 	state.elapsed+=.05
 	board.show_state(state,.05)
 	if actor.clip!=board.HERACLES_REST.west: push_error("Stopped Heracles failed to recover west rest"); quit(1); return
 	board.free()
-	print("Heracles west board: four source poses, authoritative movement and stopped recovery passed")
+	print("Heracles west board: authored source poses, authoritative movement and stopped recovery passed")
 	quit(0)
+

@@ -1,4 +1,4 @@
-Current status: EAST has four authored walking key poses connected to the board. WEST has four native-reviewed key poses awaiting coordinator board admission. The failed experiments below are historical; the natural-palette foundation and coordinator admission at the end describe the current implementation.
+Current status: EAST has four authored walking key poses connected to the board. WEST has seven native-reviewed walking poses connected to the board; four-key history below is superseded by the inbetween admission at the end. The failed experiments below are historical; the natural-palette foundation and coordinator admission at the end describe the current implementation.
 
 # Heracles lateral walk: rejected experiment
 
@@ -79,3 +79,14 @@ Native tests/test_heracles_west_walk.gd passes 14 checks: chronological source s
 
 Four unchanged originals, exact prompts and SHA256 hashes are preserved locally in C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-west-foundation-2026-09-08/. Runtime provenance: assets/olympus_arena/sprites/heracles-west-walk.provenance.json. No public shared upload.
 
+
+
+## WEST grounded inbetweens: seven-source loop
+
+A bounded four-call follow-up adds three real drawings: near heel-land/weight acceptance, far-leg weight acceptance, and near forward swing. These are new pose geometries, not repeated frames or retimed copies. The fourth generated candidate loses far-leg shadow separation and remains rejected in the shared candidate folder outside runtime. No eight-pose claim is made.
+
+The existing four originals remain untouched. The Resource now orders seven unique source images over the same 0.72 seconds, with 0.09-second new transitions and a 0.18-second passing hold where the far forward-swing inbetween is still missing. The near-forward foot now proceeds into a flat planted sandal, while opposite weight acceptance moves the calf toward support. Restrained arm settling is present; a broader coherent club/pelt swing and more balanced half-cycle timing still need work.
+
+Native test_heracles_west_walk passes 20 checks. The coordinator-owned test_heracles_west_board was updated under explicit delegation to validate all Resource frames dynamically; it passes actual source selection, authoritative movement and stopped recovery. Native review captured 90 frames at 30 fps in outputs/Heracles-West-Seven-Pose-Study, with all seven phases inspected at frames 0, 3, 6, 11, 14, 17 and 20. Video: outputs/Heracles-West-Seven-Poses.mp4. Slight independent-cel texture variation remains; this is improved grounding, not final polish or a newly exported build claim.
+
+All four unchanged generation originals, exact prompts and hashes are local in shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-west-inbetweens-2026-09-08. Runtime provenance: assets/olympus_arena/sprites/heracles-west-inbetweens.provenance.json. No public shared upload was made.
