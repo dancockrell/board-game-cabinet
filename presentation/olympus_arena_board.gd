@@ -271,7 +271,7 @@ func _prepare_pixel_attack(node: Node3D, unit: Dictionary) -> void:
 	var remaining := float(unit.get("cooldown", 1.0))
 	if remaining <= 0.0 or remaining > .5: return
 	if sprite._reaction_elapsed >= 0 and not sprite.awaiting_strike: return
-	if sprite.awaiting_strike and node.get_meta("prepared_target", null) != target.get("id"):
+	if sprite.awaiting_strike and str(node.get_meta("prepared_target", "")) != str(target.get("id", "")):
 		sprite.cancel_preparation()
 	_face_pixel_unit(node, Vector2(float(target.x)-float(unit.x),float(target.z)-float(unit.z)), true)
 	var action = _pixel_attacks(node).get(str(node.get_meta("pixel_facing", "east")))
