@@ -22,11 +22,23 @@ The 2026-09-08 owner decision applies to every project and shared pack: 2D artwo
 
 No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy copies in the shared library, other project checkouts, old build outputs and historical releases require separate removal. Current 2D sources, candidates and reference art remain valuable and are not deletion targets. The earlier archive-for-later decision is superseded.
 
-## Source update after the current Windows checkpoint
+## Current Windows checkpoint: expanded walks and wingbeats
 
-Harpy north and south flight now each use eight authored wingbeat poses, with separate extended downstroke and bent-wing recovery drawings. Native60frame reviews per direction inspected all phases; both native movement/hover/pause/reset tests passed, board84 and integrated seven-character 2D match gate passed. See HARPY_RICH_FLIGHT.md. Atalanta east walking also now uses eight individually authored poses with alternating contacts, passing and extension phases. Temporary limb-color guides were used only in generation intermediates; source originals remain in shared2D candidates. West walking now also has eight independent poses, preserving equipment handedness. Six east poses received separate generated skin-shading corrections. Native board tests cover all eight source drawings in both directions, authoritative movement and stopped recovery. Health bars now anchor above each authored silhouette in the camera plane, including Harpy flight lift; the board suite passes 85 checks. These source changes are newer than the packaged Windows checkpoint below.
+Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-expanded-walks-2026-09-08
 
-## Current Windows checkpoint � richer sprites
+Source: `a3fde440388bf87f6d9b0072c8cd450d0d361464`. Package: `Olympus-Expanded-Walks-Windows.zip` (112,297,164 bytes).
+ZIP SHA256: `917741BE7E17FD2457F3A1E34C95400A23B763CB90828E96709FE8EE9EF6F162`.
+Executable SHA256: `B27AB1105B3A54153A5D77D0D621D0E7980E2287B2269FEB325840D52465D2E3`.
+
+Atalanta east and west each have eight independently authored walking poses, preserving equipment handedness. Six east poses received separately generated skin-shading corrections. Both Harpy flight directions now have eight wingbeat drawings. Unit health indicators sit above authored silhouettes in the camera plane, including flight lift. The package retains prior richer Hoplite and Hydra clips, animated water/surf, collapse effects and saved preferences.
+
+Full graphical verification passed: Atalanta lateral41, west22, east/west board tests covering all eight source frames, board85, sprite67, continuity20, stage13, roster79, app68, effects337, arena775 and preserved rules suites. Integrated 2D gate: seven kinds,30 legal placements,963 effect samples,6756 planar drawings,zero failures.
+
+The exported executable passed1800 ticks,30 legal deployments,seven kinds,13 collapse samples,result/rematch,zero failures. It observed all eight Atalanta east and Harpy flight phases,seven of eight west phases; dedicated native board tests cover all eight west phases. Native exported battle and90-frame Atalanta motion review were inspected. The attached Atalanta video is a native30fps isolated study, not full-match footage.
+
+Remaining: richer Heracles lateral walking, more combat poses, arm/braid counter-motion, finer gait transitions and crowd readability. Rejected Heracles guides remain studies, not runtime art. This is a playable checkpoint, not final quality acceptance.
+
+## Historical Windows checkpoint: richer sprites
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-richer-sprites-2026-09-08
 
@@ -40,7 +52,7 @@ Full graphical verification passed: sprite67, continuity20, board84, stage13, ro
 
 The exported executable completed1800 ticks,30 legal deployments,all seven types,13 collapse samples,result and rematch; passed=true,failures=[]. Its accelerated sampling observes six Hoplite attack phases and all eight Hydra south frames. It does not cover every action/direction; dedicated native clip/board tests and motion reviews supply the new-frame coverage. The package includes notices, per-source provenance, BUILD-NOTES.md, VALIDATION.md and VERIFICATION.json. The release's Hoplite video is a native30fps motion study, not full-match footage.
 
-Remaining: richer Atalanta and Heracles walking, other short action/direction sequences, finer Hydra limb/tail transitions, broader combat readability and balance polish. The rear Hydra gait is an exaggerated stomp. No claim of final art approval or completed game quality. All checkpoints below are historical and superseded by this package.
+Remaining: richer Atalanta and Heracles walking, other short action/direction sequences, finer Hydra limb/tail transitions, broader combat readability and balance polish. The rear Hydra gait is an exaggerated stomp. No claim of final art approval or completed game quality. This checkpoint is superseded by the expanded-walks package above.
 
 ## Historical Windows checkpoint
 
@@ -112,4 +124,5 @@ Release also includes six-second30fps native motion (180frames, no retiming), ou
 ## Saved presentation preferences
 
 Menu now saves Sound and Animate scenery across launches in user://olympus_preferences.cfg. Disabling scenery holds only water/foliage time; unit actions, combat feedback and authoritative simulation remain active. Re-enabling resumes the held clock. Missing/malformed values use defaults. Native app68 and stage13 checks passed; persistence tests use a unique temporary file and do not modify player preferences. The Windows release above predates this source update.
+
 
