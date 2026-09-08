@@ -64,3 +64,9 @@ Native exported verification: passed=true, failures=[], exported=true, 1,800 tic
 Unit team footprints, health bars, hit/ability rings and damage-number origins now follow the same horizontal smoothing offset as the sprite. Replica roots remain exactly at authoritative coordinates. Native board tests: 81 checks passed, including movement, indicator alignment and pause invariance. This source change is newer than the animated-sprites Windows release above.
 
 The additional source capture run produced battle and collapse images, then ended without a result/report; complete-match acceptance from that run is unproven. Battle frame 300 was inspected. The previous published executable retains its separately verified full-match result.
+
+## Full-match rerun and animation evidence
+
+The attached-indicator source rerun completed successfully: 1,800 ticks, 30 deployments, result and rematch, passed=true and failures=[] in outputs/Attached-Indicators-Rerun/verification.json. The earlier incomplete capture did not reproduce; its cause remains unknown.
+
+The build diagnostic now separates ground-walk, flight and multi-frame idle samples, records actual observed frame indices per character/clip, and requires all seven characters plus building collapse. This is observed coverage of one seeded match, not proof of all facing/action clips or smooth animation.
