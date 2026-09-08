@@ -22,6 +22,10 @@ The 2026-09-08 owner decision applies to every project and shared pack: 2D artwo
 
 No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy copies in the shared library, other project checkouts, old build outputs and historical releases require separate removal. Current 2D sources, candidates and reference art remain valuable and are not deletion targets. The earlier archive-for-later decision is superseded.
 
+## Source update after the current Windows checkpoint
+
+Harpy north and south flight now each use eight authored wingbeat poses, with separate extended downstroke and bent-wing recovery drawings. Native60frame reviews per direction inspected all phases; both native movement/hover/pause/reset tests passed, board84 and integrated seven-character 2D match gate passed. See HARPY_RICH_FLIGHT.md. These source changes are newer than the packaged Windows checkpoint below.
+
 ## Current Windows checkpoint — richer sprites
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-richer-sprites-2026-09-08
