@@ -32,7 +32,7 @@ func run() -> void:
 	check(fx.effects.is_empty(),"Gaze effects expire")
 	state.towers[0].hp=0.0
 	fx.consume_state(state,0.0)
-	check(fx.effects.size() >= 15,"Tower destruction produces debris and smoke")
+	check(fx.effects.is_empty() and fx._shake_strength > 0,"Tower impact keeps camera cue while authored collapse owns debris")
 	count=fx.effects.size()
 	fx.consume_state(state,0.0)
 	check(fx.effects.size() == count,"Destroyed tower does not explode repeatedly")

@@ -286,13 +286,7 @@ func show_tower_damage(tower: Dictionary, _amount := 0.0) -> void:
 		e.velocity=Vector3(.10,.65,.04)
 		_ball(e.node,Vector3.ZERO,Vector3(.20,.24,.20),Color(.40,.37,.32,.48))
 
-func tower_destroyed(tower: Dictionary) -> void:
-	_shake_strength = maxf(_shake_strength,.11)
-	var at := Vector3(float(tower.x),.35,float(tower.z))
-	_ring(at,.65,Color("ffe0a0"),.58)
-	for i in 12: _debris(at+Vector3(0,1.0,0),i,Color("d7c4a1"),.16+(i%3)*.06,.85)
-	for i in 5:
-		var a := i*TAU/5
-		var e := _effect(at+Vector3(cos(a)*.45,.4,sin(a)*.45),1.1,"smoke")
-		e.velocity=Vector3(cos(a)*.35,.8,sin(a)*.35)
-		_ball(e.node,Vector3.ZERO,Vector3(.38,.42,.38),Color(.69,.62,.49,.65))
+func tower_destroyed(_tower: Dictionary) -> void:
+	# Authored shrine collapse owns the visible masonry and dust. A second generic
+	# explosion would cover those drawings with large circles and duplicate debris.
+	_shake_strength = maxf(_shake_strength,.055)

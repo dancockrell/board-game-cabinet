@@ -1,0 +1,29 @@
+{
+  "generator": "builtin imagegen",
+  "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-f810044e-b3cd-4728-8f9d-25f59ab6eaa2.png",
+  "sha256": "4c998a0c30d86569c21c28b86ff72b4a7388b7c9566eca591ee9d83fb762853d",
+  "references": [
+    "owl-shrine-v1.png",
+    "owl-shrine-rubble-v1.png"
+  ],
+  "status": "Integrated incremental authored collapse after native two-size review; final visual refinement remains",
+  "operations": "Unchanged generated source; explicit Resource regions, stair pivots and scale calibration. No raster editing.",
+  "phases": [
+    "column cracks",
+    "column failure",
+    "roof breaks",
+    "roof impacts",
+    "dust rises",
+    "secondary debris",
+    "settling",
+    "settled pile"
+  ],
+  "limitations": [
+    "Final persistent rubble is the existing original drawing. Minor rubble rearrangement between settling poses remains."
+  ],
+  "prompt": "Create a production 2D pixel-art sprite animation sheet of THIS EXACT Greek owl shrine collapsing from reference1 into reference2. References are identity and exact fixed elevated frontal perspective anchors. Eight distinct sequential frames in a precisely aligned 4 columns x2 rows grid, read left to right top then bottom. Solid uniform pure magenta #FF00FF background everywhere outside artwork, no floor shadows, no checkerboard, no labels, no borders. Each cell identical fixed camera/scale/base footprint: stairs bottom at same baseline, full intact shrine can fit with generous margins. Do not zoom into later debris. Rich crisp authored pixel art matching references, golden limestone, terracotta tiled roof, bronze door, owl pediment. Frame1 initial column cracks and dislodged roof tiles, still full height. Frame2 left column breaks and tilts sideways while lintel starts dropping, right column remains standing. Frame3 both columns fracture, lintel and pediment rotate/drop with rigid broken sections, roof ridge falls. Frame4 roof separated into several recognizable falling slabs and tumbling columns, half height. Frame5 heavy blocks and roof strike ground, low pale gold dust puffs expanding on either side, preserve visible stair base. Frame6 secondary tile fragments bounce amid settling rubble, owl pediment lies diagonally near right as in reference2. Frame7 low rubble pile, last few stones settle, dust fades. Frame8 final rubble like reference2 with exact matching stair footprint and no dust. Absolutely no rubber compression, no stretching intact building, no vertical scaling: redraw actual rigid structural failure. Keep broken stones in their own cells. Broad silhouette evolves progressively downward across8frames. This is detailed game sprite artwork, not photorealistic or modeled 3D.",
+  "validation": [
+    "Native170checks passed: every new stage and final persistent rubble, pause, event reuse, reset, fixed authoritative footprint, no squash",
+    "Native110frames at60fps for tower and temple sizes; removed overlapping generic explosion that obscured drawings"
+  ]
+}

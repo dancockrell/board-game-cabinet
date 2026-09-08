@@ -2,30 +2,22 @@ extends Node3D
 ## A short-lived replica of a destroyed shrine. Its clock is driven by the board,
 ## so pausing and replay resets cannot leave an independently running effect.
 const DURATION := 1.35
+const CollapseClip = preload("res://themes/olympus_shrine_collapse_clip.tres")
+const Actor = preload("res://presentation/pixel_actor.gd")
 var age := 0.0
-var _ghost: Sprite3D
+var _ghost: Actor
 var _origin := Vector3.ZERO
-var _original_scale := Vector3.ONE
 var _particles: Array[Dictionary] = []
 
 func begin(building: Sprite3D) -> void:
 	if _ghost != null: return
-	_ghost = Sprite3D.new()
+	_ghost = Actor.new()
 	_ghost.name = "FallingShrine"
-	_ghost.texture = building.texture.duplicate()
 	_ghost.pixel_size = building.pixel_size
-	_ghost.offset = building.offset
-	_ghost.billboard = building.billboard
-	_ghost.texture_filter = building.texture_filter
-	_ghost.alpha_cut = building.alpha_cut
-	_ghost.alpha_scissor_threshold = building.alpha_scissor_threshold
-	_ghost.shaded = building.shaded
-	_ghost.double_sided = true
-	_ghost.material_override = building.material_override
 	add_child(_ghost)
 	_ghost.transform = building.transform
 	_origin = _ghost.position
-	_original_scale = _ghost.scale
+	_ghost.set_clip(CollapseClip)
 	# Seedless arithmetic makes review captures reproducible and never consumes RNG
 	# from the simulation. Dust uses discrete blocks rather than smooth spheres.
 	var size_factor := building.pixel_size / .0014
@@ -64,10 +56,9 @@ func advance_visual(delta: float) -> void:
 	if not is_finite(delta) or delta < 0: return
 	age = minf(DURATION, age + delta)
 	if _ghost == null: return
-	var fall := clampf((age - .06) / .43, 0.0, 1.0)
-	_ghost.visible = age < .49
-	_ghost.position = _origin + Vector3(sin(age * 81.0) * .04 * (1.0 - fall), -fall * .02, .16)
-	_ghost.scale = _original_scale * Vector3(1.0 + fall * .05, maxf(.08, 1.0 - fall * .84), 1.0)
+	_ghost.show_time(age)
+	_ghost.visible = age < DURATION
+	_ghost.position = _origin
 	for particle in _particles:
 		var node: Sprite3D = particle.node
 		var t := maxf(0.0, age - (.14 if particle.dust else .07))

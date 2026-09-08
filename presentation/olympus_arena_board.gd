@@ -190,6 +190,11 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 						_collapses.remove_at(i)
 			node.set_meta("destroyed", destroyed)
 			node.get_node("Architecture/PixelBuilding").reset_playback(RUBBLE_CLIP if destroyed else SHRINE_CLIP)
+		var collapsing := false
+		for entry in _collapses:
+			if entry.tower == id: collapsing = true
+		# Persistent rubble is revealed after its authored transition, not beneath it.
+		node.get_node("Architecture/PixelBuilding").visible = not collapsing
 		node.get_node("Health").visible = float(tower["hp"]) > 0
 		_health(node, float(tower["hp"]) / maxf(1.0, float(tower.get("max_hp", tower["hp"]))))
 		_damage_feedback(node, float(tower["hp"]), delta)

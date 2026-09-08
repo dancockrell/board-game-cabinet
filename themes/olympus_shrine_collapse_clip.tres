@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=4 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/buildings/owl-shrine-collapse-eight.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/buildings/owl-shrine-rubble-v1.png" id="3"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+frame_atlases = Array[Texture2D]([ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("3")])
+regions = Array[Rect2i]([Rect2i(0, 0, 456, 470), Rect2i(456, 0, 431, 470), Rect2i(887, 0, 433, 470), Rect2i(1320, 0, 454, 470), Rect2i(0, 470, 456, 417), Rect2i(456, 470, 431, 417), Rect2i(887, 470, 433, 417), Rect2i(1320, 470, 454, 417), Rect2i(0,0,1254,1254)])
+frame_pivots = Array[Vector2]([Vector2(238,439), Vector2(190,439), Vector2(193,443), Vector2(198,444), Vector2(240,382), Vector2(197,394), Vector2(206,400), Vector2(198,410), Vector2(627,1240)])
+frame_draw_scales = PackedFloat32Array(2.88,2.82,2.5,2.5,2.5,2.5,2.5,2.5,1.0)
+durations = PackedFloat32Array(0.08,0.10,0.10,0.12,0.16,0.12,0.12,0.12,0.43)
+looping = false
+magenta_backing = true
+
