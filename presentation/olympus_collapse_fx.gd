@@ -43,17 +43,20 @@ func begin(building: Sprite3D) -> void:
 	advance_visual(0)
 
 func _particle(origin: Vector3, velocity: Vector3, size: float, dust: bool, index: int) -> void:
-	var piece := MeshInstance3D.new()
+	var piece := Sprite3D.new()
 	piece.name = ("Dust" if dust else "Stone") + str(index)
-	var mesh := BoxMesh.new()
-	mesh.size = Vector3(size, size * (.75 if dust else .65), size)
-	piece.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	var colors := [Color("bda57d"), Color("ddc99d"), Color("92816a")] if dust else [Color("e3d3b3"), Color("b4a185"), Color("857766")]
-	material.albedo_color = colors[index % 3]
-	piece.material_override = material
-	piece.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var image := Image.create(6, 6, false, Image.FORMAT_RGBA8)
+	image.fill(Color.TRANSPARENT)
+	for y in 6:
+		for x in 6:
+			if (x > 0 and x < 5) or (y > 1 and y < 4):
+				image.set_pixel(x, y, colors[(index + (1 if y > 3 else 0)) % 3])
+	piece.texture = ImageTexture.create_from_image(image)
+	piece.pixel_size = size / 6.0
+	piece.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	piece.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	piece.shaded = false
 	add_child(piece)
 	_particles.append({"node":piece, "origin":origin, "velocity":velocity, "dust":dust, "index":index})
 
@@ -66,7 +69,7 @@ func advance_visual(delta: float) -> void:
 	_ghost.position = _origin + Vector3(sin(age * 81.0) * .04 * (1.0 - fall), -fall * .02, .16)
 	_ghost.scale = _original_scale * Vector3(1.0 + fall * .05, maxf(.08, 1.0 - fall * .84), 1.0)
 	for particle in _particles:
-		var node: MeshInstance3D = particle.node
+		var node: Sprite3D = particle.node
 		var t := maxf(0.0, age - (.14 if particle.dust else .07))
 		node.visible = t > 0 and age < DURATION
 		if particle.dust:
@@ -79,7 +82,7 @@ func advance_visual(delta: float) -> void:
 			var travel: Vector3 = particle.origin + particle.velocity * t + Vector3.DOWN * 3.6 * t * t
 			travel.y = maxf(.025, travel.y)
 			node.position = travel
-			node.rotation = Vector3(t * 3.0, float(particle.index) + t * 2.0, t * 4.0)
+			node.rotation.z = t * 4.0
 			node.scale = Vector3.ONE * clampf((DURATION - age) / .3, 0.0, 1.0)
 	visible = age < DURATION
 

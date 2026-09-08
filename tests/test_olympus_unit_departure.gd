@@ -33,6 +33,8 @@ func run() -> void:
 	check(fx.ghost.texture != actor.texture, "Independent atlas wrapper")
 	check(fx.ghost.offset == actor.offset, "Foot pivot retained")
 	check(fx.global_transform == source_transform, "Rendered transform retained")
+	for fleck in fx._flecks:
+		check(fleck is Sprite3D, "Departure flecks are flat sprite cards")
 	actor.hide()
 	fx.advance_visual(0.0)
 	check(fx.elapsed == 0.0, "Pause freezes departure")
@@ -51,5 +53,5 @@ func run() -> void:
 	fx.advance_visual(1.0)
 	await process_frame
 	check(not is_instance_valid(fx), "Bounded departure freed")
-	print("Departure checks: 10; failures: ", failures)
+	print("Departure checks: 22; failures: ", failures)
 	quit(0 if failures == 0 else 1)

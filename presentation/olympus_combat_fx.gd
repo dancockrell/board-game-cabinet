@@ -123,25 +123,39 @@ func _mesh(p: Node3D, mesh: Mesh, at: Vector3, color: Color, glow := false) -> M
 	p.add_child(node)
 	return node
 
-func _ball(p: Node3D, at: Vector3, size: Vector3, color: Color, glow := false) -> MeshInstance3D:
-	var mesh := SphereMesh.new()
-	mesh.radius = 1.0
-	mesh.height = 2.0
-	mesh.radial_segments = 8
-	mesh.rings = 4
-	var node := _mesh(p,mesh,at,color,glow)
-	node.scale = size
+func _ball(p: Node3D, at: Vector3, size: Vector3, color: Color, _glow := false) -> Sprite3D:
+	# Small effects are pixel drawings on transparent cards, never solid models.
+	var image := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+	image.fill(Color.TRANSPARENT)
+	for y in 8:
+		for x in 8:
+			if Vector2(x - 3.5, y - 3.5).length() <= 3.8:
+				image.set_pixel(x, y, color)
+	var node := Sprite3D.new()
+	node.texture = ImageTexture.create_from_image(image)
+	node.pixel_size = 0.25
+	node.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	node.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	node.shaded = false
+	node.position = at
+	node.scale = Vector3(size.x, size.y, 1.0)
+	p.add_child(node)
 	return node
 
 func _line(p: Node3D, a: Vector3, b: Vector3, radius: float, color: Color) -> void:
 	if a.distance_squared_to(b) < .00001: return
-	var mesh := CylinderMesh.new()
-	mesh.height = a.distance_to(b)
-	mesh.top_radius = radius
-	mesh.bottom_radius = radius*.6
-	mesh.radial_segments = 6
-	var node := _mesh(p,mesh,(a+b)*.5,color,true)
-	node.quaternion = Quaternion(Vector3.UP,(b-a).normalized())
+	# A single flat ribbon facing the fixed tactical camera; no cylinder sides.
+	var direction := (b-a).normalized()
+	var across := direction.cross(Vector3(0, .63, .78)).normalized() * radius
+	if across.length_squared() < .000001: across = Vector3.RIGHT * radius
+	var vertices := PackedVector3Array([a-across, a+across, b+across, a-across, b+across, b-across])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var node := _mesh(p, mesh, Vector3.ZERO, color, true)
+	node.material_override.cull_mode = BaseMaterial3D.CULL_DISABLED
 
 func _ring(at: Vector3, radius: float, color: Color, life := .32, segments := 16) -> void:
 	var e := _effect(at,life,"ring")
@@ -262,9 +276,7 @@ func _debris(at: Vector3, index: int, color: Color, size: float, life: float) ->
 	var a := index*2.399+_sequence*.11
 	e.velocity=Vector3(cos(a)*(1.0+index*.08),1.2+(index%3)*.25,sin(a)*(1.0+index*.08))
 	e.spin=Vector3(2.0+index,1.0,2.0)
-	var mesh := BoxMesh.new()
-	mesh.size=Vector3(size,size*.75,size*.8)
-	_mesh(e.node,mesh,Vector3.ZERO,color)
+	_ball(e.node,Vector3.ZERO,Vector3(size,size*.75,size),color)
 
 func show_tower_damage(tower: Dictionary, _amount := 0.0) -> void:
 	var at := Vector3(float(tower.x),1.1,float(tower.z))

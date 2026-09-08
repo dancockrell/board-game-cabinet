@@ -33,6 +33,7 @@ func _initialize() -> void:
 	effect.advance_visual(4.0)
 	check(effect.is_finished() and not effect.visible, "Effect has bounded lifetime")
 	for particle in effect._particles:
+		check(particle.node is Sprite3D, "Collapse debris is flat pixel artwork")
 		check(particle.node.position.is_finite() and particle.node.position.y >= 0, "Debris stays above ground")
 	building.free()
 	effect.free()

@@ -59,6 +59,9 @@ func run() -> void:
 	for i in 100:
 		fx.show_event({"kind":"lightning","x":0,"z":0,"side":0})
 	check(fx.effects.size() <= fx.MAX_EFFECTS,"Heavy bursts respect hard effect cap")
+	for effect in fx.effects:
+		for drawing in effect.node.get_children():
+			check(drawing is Sprite3D or (drawing is MeshInstance3D and drawing.mesh is ArrayMesh), "Effects contain only sprite cards or flat ribbons")
 	state.elapsed=0.0
 	state.events=[]
 	fx.consume_state(state,0.0)

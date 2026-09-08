@@ -5,7 +5,7 @@ const LIFETIME := 0.78
 var elapsed := 0.0
 var ghost: Sprite3D
 var _material: ShaderMaterial
-var _flecks: Array[MeshInstance3D] = []
+var _flecks: Array[Sprite3D] = []
 
 func begin(source: Sprite3D) -> bool:
 	if ghost != null or not is_instance_valid(source) or source.texture == null or not is_inside_tree(): return false
@@ -34,15 +34,14 @@ func begin(source: Sprite3D) -> bool:
 	add_child(ghost)
 	var palette := [Color("bf954e"), Color("ebe0bd"), Color("426d89")]
 	for i in 12:
-		var fleck := MeshInstance3D.new()
-		var cube := BoxMesh.new()
-		cube.size = Vector3.ONE * (0.025 + (i % 3) * 0.009)
-		fleck.mesh = cube
-		var material := StandardMaterial3D.new()
-		material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		material.albedo_color = palette[i % palette.size()]
-		fleck.material_override = material
-		fleck.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		var fleck := Sprite3D.new()
+		var image := Image.create(3, 3, false, Image.FORMAT_RGBA8)
+		image.fill(palette[i % palette.size()])
+		fleck.texture = ImageTexture.create_from_image(image)
+		fleck.pixel_size = (0.025 + (i % 3) * 0.009) / 3.0
+		fleck.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		fleck.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+		fleck.shaded = false
 		fleck.visible = false
 		add_child(fleck)
 		_flecks.append(fleck)
