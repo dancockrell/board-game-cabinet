@@ -4,6 +4,7 @@ const BACKDROP = preload("res://assets/olympus_arena/terrain/pixel-arena-backdro
 const MOTION = preload("res://presentation/olympus_backdrop.gdshader")
 const BRIDGE_CENTERS = [Vector2(582,484), Vector2(944,484)]
 var _water_time := 0.0
+var animation_enabled := true
 var backdrop: Sprite3D
 var sea_fill: Sprite3D
 var _sea_material: ShaderMaterial
@@ -42,7 +43,7 @@ func configure(camera: Camera3D) -> void:
 	sea_fill.pixel_size = backdrop.pixel_size*3.0
 
 func advance_visual(delta: float) -> void:
-	if not is_finite(delta) or delta <= 0.0: return
+	if not animation_enabled or not is_finite(delta) or delta <= 0.0: return
 	_water_time += delta
 	_art_material.set_shader_parameter("animation_time", _water_time)
 	_sea_material.set_shader_parameter("animation_time", _water_time)

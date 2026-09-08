@@ -48,14 +48,19 @@ var start_button: Button
 var pause_button: Button
 var sound
 var muted := false
+var animate_scenery := true
+var preferences_path := "user://olympus_preferences.cfg"
 var notice := ""
 var _build_verifier: RefCounted
 
 func _ready() -> void:
+	_load_preferences()
 	catalog = session.catalog()
 	_build_ui()
 	sound = MoveAudio.new()
 	add_child(sound)
+	sound.set_muted(muted)
+	board.stage.animation_enabled=animate_scenery
 	_refresh()
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--verify-build="):
@@ -64,6 +69,22 @@ func _ready() -> void:
 			return
 		if argument.begins_with("--capture="):
 			_capture(argument.trim_prefix("--capture="))
+
+func _load_preferences() -> void:
+	if preferences_path.is_empty(): return
+	var config := ConfigFile.new()
+	if config.load(preferences_path) != OK: return
+	var saved_sound = config.get_value("presentation","sound",true)
+	var saved_scenery = config.get_value("presentation","animate_scenery",true)
+	if saved_sound is bool: muted=not saved_sound
+	if saved_scenery is bool: animate_scenery=saved_scenery
+
+func _save_preferences() -> void:
+	if preferences_path.is_empty(): return
+	var config := ConfigFile.new()
+	config.set_value("presentation","sound",not muted)
+	config.set_value("presentation","animate_scenery",animate_scenery)
+	if config.save(preferences_path) != OK: push_warning("Could not save Olympus preferences")
 
 func _build_ui() -> void:
 	var theme_ := Theme.new()
@@ -120,7 +141,9 @@ func _build_ui() -> void:
 	add_child(menu)
 	menu.get_popup().add_item("Restart match",0)
 	menu.get_popup().add_check_item("Sound",1)
-	menu.get_popup().set_item_checked(1,true)
+	menu.get_popup().set_item_checked(1,not muted)
+	menu.get_popup().add_check_item("Animate scenery",2)
+	menu.get_popup().set_item_checked(2,animate_scenery)
 	menu.get_popup().id_pressed.connect(func(id):
 		match id:
 			0: _restart_confirm()
@@ -128,6 +151,12 @@ func _build_ui() -> void:
 				muted = not muted
 				sound.set_muted(muted)
 				menu.get_popup().set_item_checked(1,not muted)
+				_save_preferences()
+			2:
+				animate_scenery=not animate_scenery
+				board.stage.animation_enabled=animate_scenery
+				menu.get_popup().set_item_checked(2,animate_scenery)
+				_save_preferences()
 	)
 	# The hand owns card identity and tooltips; no duplicate portrait sidebar.
 	_card_frames = {

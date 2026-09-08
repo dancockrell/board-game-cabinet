@@ -17,6 +17,7 @@ func expect(condition: bool, description: String) -> void:
 func _run() -> void:
 	root.size = Vector2i(1440, 960)
 	app = Battle.instantiate()
+	app.preferences_path=""
 	root.add_child(app)
 	app.set_process(false)
 	await process_frame
@@ -122,6 +123,35 @@ func _run() -> void:
 		app._refresh()
 		expect(app.overlay_title.text == ("VICTORY!" if winner == 0 else "DRAW"), "Result fixture renders requested winner branch")
 		app._start_or_restart()
+	# A unique test file exercises persistence without touching player settings.
+	var test_preferences := "user://test_preferences_%s.cfg" % Time.get_ticks_usec()
+	app.preferences_path=test_preferences
+	menu.id_pressed.emit(1)
+	menu.id_pressed.emit(2)
+	expect(app.muted and not app.animate_scenery and not app.board.stage.animation_enabled,"Menu toggles update sound and scenery independently")
+	var held_time: float = app.board.stage._water_time
+	app.board.stage.advance_visual(.5)
+	expect(app.board.stage._water_time==held_time,"Disabled scenery holds its animation clock")
+	var restored=Battle.instantiate()
+	restored.preferences_path=test_preferences
+	restored._load_preferences()
+	expect(restored.muted and not restored.animate_scenery,"Sound and scenery preferences survive a fresh controller")
+	restored.free()
+	var malformed := ConfigFile.new()
+	malformed.set_value("presentation","sound","wrong type")
+	malformed.set_value("presentation","animate_scenery",17)
+	malformed.save(test_preferences)
+	restored=Battle.instantiate()
+	restored.preferences_path=test_preferences
+	restored._load_preferences()
+	expect(not restored.muted and restored.animate_scenery,"Invalid preference types preserve safe defaults")
+	restored.free()
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(test_preferences))
+	app.preferences_path=""
+	menu.id_pressed.emit(1)
+	menu.id_pressed.emit(2)
+	app.board.stage.advance_visual(.5)
+	expect(app.board.stage._water_time>held_time and menu.is_item_checked(2),"Re-enabling scenery resumes its clock and menu check")
 	print("Olympus native app: %d checks, %d failures" % [checks, failures])
 	app.queue_free()
 	await process_frame
