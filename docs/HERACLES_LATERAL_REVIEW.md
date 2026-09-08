@@ -1,3 +1,5 @@
+Current status: EAST has four authored walking key poses connected to the board. WEST remains unfinished. The failed experiments below are historical; the natural-palette foundation and coordinator admission at the end describe the current implementation.
+
 # Heracles lateral walk: rejected experiment
 
 2026-09-08. Status: historical failed attempts below; **a new four-phase EAST walk Resource is now available for coordinator integration**. West locomotion remains unfinished. This report is evidence of an unsuccessful bounded production attempt, not animation acceptance.

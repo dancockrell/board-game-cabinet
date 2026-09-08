@@ -22,7 +22,25 @@ The 2026-09-08 owner decision applies to every project and shared pack: 2D artwo
 
 No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy copies in the shared library, other project checkouts, old build outputs and historical releases require separate removal. Current 2D sources, candidates and reference art remain valuable and are not deletion targets. The earlier archive-for-later decision is superseded.
 
-## Current Windows checkpoint: drawn collapse and Harpy attack
+## Current Windows checkpoint: prepared attacks and character continuity
+
+Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-prepared-attacks-2026-09-08
+
+Source: `d6fc6ea1c55eeb0985095728cb0764dcac87ab66`. Package: `Olympus-Prepared-Attacks-Windows.zip` (122,087,435 bytes).
+ZIP SHA256: `C38CEBA8751EBF7EAD270610730928B430E5283B405D5D64F447482E6B88C7A0`.
+Executable SHA256: `E71C5B6330C41F69B0E733A96FC1E2B16FAC3C1259AB3880CB5BE252CA78DE37`.
+
+Heracles east movement now uses four alternating contact/passing drawings, with native board movement and stopped recovery verified. West remains unfinished. Atalanta north aim/release now keep the bow in her left hand, quiver at right hip and shawl on left shoulder, matching the canonical rest. These are two corrected isolated anchors, not an eight-pose expansion. See HERACLES_LATERAL_REVIEW.md and ATALANTA_NORTH_ATTACK.md.
+
+The rules expose their chosen in-range target for presentation. Supported clips use that target and remaining cooldown to prepare before a hit, hold before contact, then commit on the authoritative event. Enabled for Hoplite east, Harpy south and Atalanta north/south attacks. Damage, attack intervals and legal movement are unchanged. Immediate first strikes without earlier in-range cooldown retain direct playback; limited time can skip early setup. See ATTACK_PREPARATION.md for exact boundaries and remaining cosmetic projectile timing.
+
+Full graphical verification passed: preparation 59, Heracles east 14 plus board integration, corrected Atalanta north 14, sprite 67, continuity 20, board 85, stage 13, roster 79, app 68, effects 337, arena 775 and preserved rules suites. Integrated 2D gate: seven kinds, 30 legal placements, 959 effect samples and 6,740 planar drawings, zero failures. The exported executable passed 1,800 ticks, 30 deployments, all seven types, 13 collapse samples, result/rematch and zero failures. Native exported battle capture inspected.
+
+Native evidence includes a 100-frame Heracles board study at 30 fps, a 90-frame corrected Atalanta study at 30 fps, and 180 frames of rules-driven attack preparation at 60 fps. Final timing record selects contact pose 9 at action time 0.335 when target HP falls from 640 to 616. These videos are controlled motion studies, not full-match footage. Package includes notices, provenance and the exported verification report.
+
+Remaining: Heracles west movement and additional inbetweens, richer bow actions, a coherent north Harpy strike, broader action coverage, crowd readability and balance. Heracles arm/club motion remains restrained; Atalanta rear attack is still short. The new north Harpy sheet attempts were rejected and archived outside runtime assets. This is a playable checkpoint; the full quality goal remains active.
+
+## Historical Windows checkpoint: drawn collapse and Harpy attack
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-drawn-collapse-2026-09-08
 
