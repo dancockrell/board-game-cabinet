@@ -8,6 +8,16 @@ The user explicitly requested removal of 3D artwork. All active artwork must be 
 
 The orthographic Node3D/Sprite3D coordinate infrastructure only places flat artwork and resolves picking. It does not contain or authorize volumetric artwork. Rules and authoritative state remain RefCounted and independent of presentation.
 
+## Current batch-production direction and source status
+
+The owner now requests full sprite sheets in large batches, building toward thousands of drawings. Follow CHARACTER_BATCH_PRODUCTION.md. The first wave produced sixteen current directional/action sheets across Hoplites, Atalanta, Heracles and Medusa: 512 requested cells, 511 visible candidate figures. One additional Heracles west repair sheet is preserved separately and is not additional coverage. These are not 511 unique approved frames; runtime admission is zero pending per-row crop/continuity checks. Native previews and exact prompts/hashes are in art_batches and local shared candidates. Candidate batches are explicitly excluded from Windows export.
+
+Current accepted runtime source also includes Atalanta north twelve poses (.930 seconds, release .465), Heracles west eight evenly timed gait phases and Medusa south seven gait drawings. Full battlefield review exposed allied bridge-entry deadlock: all three soldiers now cross using legal deck width rather than competing for the center. Regression covers both bridges and both armies. Prepared-target comparison normalizes numeric unit IDs and string tower IDs, fixing a runtime type error exposed by the now-flowing formations.
+
+The local Olympus-Bridge-Flow-Windows build opened for the user predates that ID-comparison fix and is NOT a newly published or fully accepted release. Its accelerated match report alone did not catch engine script errors; full source verification remains the stronger error gate. The last published Windows checkpoint remains expanded-motion below. Do not confuse current source/batch candidates with that download.
+
+Next: admit coherent hurt/defeat rows to actual event playback, then batch the remaining creature roster. Use wider four-column/eight-row sheets for long weapons where narrow cells cause overlap. Current character departure still dissolves the last pose; authored character defeat must be integrated before claiming it is finished.
+
 ## Current implementation
 
 Seven sprite character types: Hoplites, Atalanta, Medusa, Minotaur, Heracles, Hydra, Harpies. All have authored attacks; Hydra now has four idle/attack facings. Ground walking coverage remains incomplete for some lateral views. Pixel card portraits match deployed characters. Thunderbolt uses its flat illustrated symbol.
