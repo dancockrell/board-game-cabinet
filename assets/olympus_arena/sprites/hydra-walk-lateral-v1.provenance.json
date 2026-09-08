@@ -1,0 +1,13 @@
+{
+  "generator": "built-in image_gen",
+  "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-82726884-71e5-4807-bfed-6e72e57aec35.png",
+  "sha256": "5143e5c13f4ebc2a78b9e46433498f35b2cb3367adc642468b971bc70c866efb",
+  "reference": "hydra-lateral-v1.png",
+  "contract": "Two rows of four sequential east/west quadruped steps; three heads; original source retained; flat magenta shader backing",
+  "status": "Integrated east/west walk: 90 native frames captured; four ordered poses inspected against painted battlefield; integrated 2D match gate passed",
+  "limits": [
+    "Four poses per direction, no north/south locomotion authored",
+    "Three-quarter stance, not strict side profile",
+    "Four-pose loop still needs in-between work for final smoothness"
+  ]
+}

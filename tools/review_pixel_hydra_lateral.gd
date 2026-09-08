@@ -1,5 +1,7 @@
 extends SceneTree
 const SouthIdle = preload("res://themes/hydra_east_idle.tres")
+const EastWalk = preload("res://themes/hydra_east_walk.tres")
+const WestWalk = preload("res://themes/hydra_west_walk.tres")
 const NorthIdle = preload("res://themes/hydra_west_idle.tres")
 const SouthAttack = preload("res://themes/hydra_east_attack.tres")
 const NorthAttack = preload("res://themes/hydra_west_attack.tres")
@@ -28,10 +30,11 @@ func _run() -> void:
 		actor.pixel_size=.005
 		board.add_child(actor)
 		actor.position=Vector3(-1.2+i*2.4,.15,3)
-		actor.reset_playback(SouthIdle if i==0 else NorthIdle)
+		actor.reset_playback((EastWalk if i==0 else WestWalk) if "--walk" in OS.get_cmdline_user_args() else (SouthIdle if i==0 else NorthIdle))
 		actors.append(actor)
 	var title:=Label.new()
 	title.text="HYDRA / EAST AND WEST / BREATHING AND BITE STUDY"
+	if "--walk" in OS.get_cmdline_user_args(): title.text="HYDRA / EAST AND WEST / WALK AND BITE STUDY"
 	title.position=Vector2(30,25)
 	title.add_theme_font_size_override("font_size",24)
 	root.add_child(title)

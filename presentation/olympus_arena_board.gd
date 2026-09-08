@@ -5,6 +5,7 @@ const WEST_WALK = preload("res://themes/hoplite_west_walk.tres")
 const MINOTAUR_WALK = {"north":preload("res://themes/minotaur_north_walk.tres"),"south":preload("res://themes/minotaur_south_walk.tres")}
 const HERACLES_WALK = {"north":preload("res://themes/heracles_north_walk.tres"),"south":preload("res://themes/heracles_south_walk.tres")}
 const ATALANTA_WALK = {"north":preload("res://themes/atalanta_north_walk.tres"),"south":preload("res://themes/atalanta_south_walk.tres")}
+const HYDRA_WALK = {"east":preload("res://themes/hydra_east_walk.tres"),"west":preload("res://themes/hydra_west_walk.tres")}
 const HYDRA_IDLE = {"north":preload("res://themes/hydra_north_idle.tres"),"south":preload("res://themes/hydra_south_idle.tres"),"east":preload("res://themes/hydra_east_idle.tres"),"west":preload("res://themes/hydra_west_idle.tres")}
 const HYDRA_ATTACK = {"north":preload("res://themes/hydra_north_attack.tres"),"south":preload("res://themes/hydra_south_attack.tres"),"east":preload("res://themes/hydra_east_attack.tres"),"west":preload("res://themes/hydra_west_attack.tres")}
 const HERACLES_REST = {"east":preload("res://themes/heracles_east_rest.tres"),"west":preload("res://themes/heracles_west_rest.tres"),"north":preload("res://themes/heracles_north_rest.tres"),"south":preload("res://themes/heracles_south_rest.tres")}
@@ -153,11 +154,10 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			if str(node.get_meta("kind", "")) == "atalanta": walks=ATALANTA_WALK
 			if str(node.get_meta("kind", "")) == "heracles": walks=HERACLES_WALK
 			if str(node.get_meta("kind", "")) == "minotaur": walks=MINOTAUR_WALK
+			if str(node.get_meta("kind", "")) == "hydra": walks=HYDRA_WALK
 			var locomotion=walks.get(str(node.get_meta("pixel_facing", "east"))) if moving else null
 			if str(node.get_meta("kind", "")) == "harpies":
 				locomotion=HARPIES_FLIGHT[str(node.get_meta("pixel_facing", "south"))]
-			if str(node.get_meta("kind", "")) == "hydra":
-				locomotion=HYDRA_IDLE[str(node.get_meta("pixel_facing", "south"))]
 			sprite.set_locomotion(locomotion)
 			sprite.advance_visual(delta)
 	for id in _tokens.keys():
