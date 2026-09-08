@@ -25,3 +25,9 @@ Preview useful rows with the real PixelActor/key shader. Review the full sequenc
 ## Parallel ownership
 
 Each character agent owns one batch folder and one batch report. The coordinator owns export exclusions, batch indexing, preview tooling, runtime integration and publication. Work in sheet batches, commit exact owned files frequently, and keep generation, review and runtime-admission statuses honest. Small implementation fixes remain separate commits.
+
+## Runtime admission checkpoint — 2026-09-08
+
+Twelve eight-frame defeat clips now provide96runtime drawings across allsevencharacters: AtalantaN/S,MedusaN/S,HeraclesN/S,HydraN/S,HarpyN/S,HopliteS,MinotaurN. Other facings retain prior departure feedback. Hoplite north and Minotaur south currently fail weapon continuity. Batch manifests and character admission reports are authoritative for per-row details; requested or visible counts never imply unique approved drawings.
+
+Hoplite batch02 added one32drawing repair sheet and retained one rejected irregular-layout attempt separately. Only8southdefeats admitted. Exactprompts and hashes are stored with both unchanged originals and a verified local shared candidate copy. Whole-sheet regeneration remains bounded by specific defects rather than repeated unguided requests.

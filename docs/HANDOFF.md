@@ -1,3 +1,11 @@
+# Current roster animation integration - 2026-09-08
+
+All seven roster characters now have at least one drawn defeat: twelve clips and96drawings. New since the creature release: AtalantaN/S16,MinotaurN8,HopliteS8. HopliteS comes from a repaired complete32drawing batch; originals and exactprompts remain in art_batches/hoplite_batch_02 and the local shared candidate folder. MinotaurS andHopliteN remain unadmitted due to weapon continuity. Lateral facings retain previous feedback.
+
+Board integration checks all12clips, all8poses perclip, grounding, pause, authoritative removal, lifetime and clearing unfinished falls on rematch. Native controlled battlefield evidence is outputs/Roster-Drawn-Defeat-Board.mp4. The individual Hoplite comparison preserves full spear/shield and matches standing height, with broader shoulders than canonical art. Character admission reports describe remaining visual limitations.
+
+This source update follows the Windows creature release below; do not confuse source admission with a newer verified package. Native combat review identified allied Harpy overlap, shrine occlusion, and a small on-screen playfield. See CREATURE_COMBAT_REVIEW.md; further readability work remains.
+
 # Current creature collapse integration — 2026-09-08
 
 Hydra, Heracles and Harpies now join Medusa with eight drawn defeat poses in each north/south facing: 64 admitted drawings across eight clips. The newest 48 drawings come from existing complete batch sheets, copied unchanged. Other characters and lateral directions retain their prior departure effect.
