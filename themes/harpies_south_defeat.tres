@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/harpies-south-defeat-batch-01.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(15,1350,201,196), Rect2i(248,1365,184,178), Rect2i(476,1369,156,185), Rect2i(683,1404,184,154), Rect2i(33,1585,150,153), Rect2i(202,1607,221,127), Rect2i(445,1637,215,90), Rect2i(670,1645,207,83)])
+frame_pivots = Array[Vector2]([Vector2(95.875,194), Vector2(84.625,176), Vector2(78.375,183), Vector2(93.125,152), Vector2(77.875,151), Vector2(130.625,125), Vector2(109.375,88), Vector2(106.125,81)])
+durations = PackedFloat32Array(0.07,0.07,0.08,0.09,0.1,0.1,0.11,0.16)
+looping = false
+magenta_backing = true
+draw_scale = 1.9
+

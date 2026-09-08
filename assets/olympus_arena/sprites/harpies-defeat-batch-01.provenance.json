@@ -1,0 +1,196 @@
+{
+  "generator": "built-in image_gen",
+  "batch_manifest": "art_batches/harpies_batch_01/manifest.json",
+  "raster_editing": false,
+  "status": "resource study; board admission coordinator owned",
+  "first_ground_contact_seconds": {
+    "south": 0.22,
+    "north": 0.31
+  },
+  "total_seconds": 0.78,
+  "sources": [
+    {
+      "direction": "south",
+      "file": "assets/olympus_arena/sprites/harpies-south-defeat-batch-01.png",
+      "sha256": "a498482baef3aa553217ff180be5eaae539a543014cc534ba2ef0dfcdedb0b6a",
+      "original_generator_path": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-3f6563e3-4341-4e20-914b-3c23e4f7a834.png",
+      "exact_prompt_file": "art_batches/harpies_batch_01/south_a.prompt.txt",
+      "regions": [
+        [
+          15,
+          1350,
+          201,
+          196
+        ],
+        [
+          248,
+          1365,
+          184,
+          178
+        ],
+        [
+          476,
+          1369,
+          156,
+          185
+        ],
+        [
+          683,
+          1404,
+          184,
+          154
+        ],
+        [
+          33,
+          1585,
+          150,
+          153
+        ],
+        [
+          202,
+          1607,
+          221,
+          127
+        ],
+        [
+          445,
+          1637,
+          215,
+          90
+        ],
+        [
+          670,
+          1645,
+          207,
+          83
+        ]
+      ],
+      "pivots": [
+        [
+          95.875,
+          194
+        ],
+        [
+          84.625,
+          176
+        ],
+        [
+          78.375,
+          183
+        ],
+        [
+          93.125,
+          152
+        ],
+        [
+          77.875,
+          151
+        ],
+        [
+          130.625,
+          125
+        ],
+        [
+          109.375,
+          88
+        ],
+        [
+          106.125,
+          81
+        ]
+      ]
+    },
+    {
+      "direction": "north",
+      "file": "assets/olympus_arena/sprites/harpies-north-defeat-batch-01.png",
+      "sha256": "9fe9c67d3e26aa973b2f59f541337a8cf52e64133b7054e29480364d3f32b9e7",
+      "original_generator_path": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-860071a0-61f3-4d83-bb13-de59ffdd0699.png",
+      "exact_prompt_file": "art_batches/harpies_batch_01/north_a.prompt.txt",
+      "regions": [
+        [
+          10,
+          1346,
+          202,
+          207
+        ],
+        [
+          234,
+          1361,
+          203,
+          184
+        ],
+        [
+          441,
+          1378,
+          230,
+          168
+        ],
+        [
+          675,
+          1405,
+          200,
+          131
+        ],
+        [
+          19,
+          1601,
+          174,
+          137
+        ],
+        [
+          206,
+          1598,
+          209,
+          140
+        ],
+        [
+          428,
+          1639,
+          243,
+          102
+        ],
+        [
+          679,
+          1648,
+          191,
+          81
+        ]
+      ],
+      "pivots": [
+        [
+          100.875,
+          205
+        ],
+        [
+          98.625,
+          182
+        ],
+        [
+          113.375,
+          166
+        ],
+        [
+          101.125,
+          129
+        ],
+        [
+          91.875,
+          135
+        ],
+        [
+          126.625,
+          138
+        ],
+        [
+          126.375,
+          100
+        ],
+        [
+          97.125,
+          79
+        ]
+      ]
+    }
+  ],
+  "draw_scale": 1.9
+}
