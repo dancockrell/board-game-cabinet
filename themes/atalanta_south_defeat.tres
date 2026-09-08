@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-south-defeat-batch-01.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(40,699,140,182), Rect2i(261,724,143,150), Rect2i(486,734,124,140), Rect2i(679,745,164,123), Rect2i(869,749,210,108), Rect2i(1109,772,210,79), Rect2i(1329,788,214,71), Rect2i(1552,788,213,72)])
+frame_pivots = Array[Vector2]([Vector2(70.875,180), Vector2(71.625,148), Vector2(68.375,138), Vector2(97.125,121), Vector2(128.875,106), Vector2(110.625,73), Vector2(112.375,59), Vector2(111.125,59)])
+durations = PackedFloat32Array(0.07,0.07,0.08,0.09,0.1,0.1,0.11,0.16)
+looping = false
+magenta_backing = true
+draw_scale = 2.5
+
+

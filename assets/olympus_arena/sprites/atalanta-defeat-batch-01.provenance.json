@@ -1,0 +1,192 @@
+{
+  "generator": "built-in image_gen",
+  "batch_manifest": "art_batches/atalanta_batch_01/manifest.json",
+  "raster_editing": false,
+  "status": "resource study; board admission coordinator owned",
+  "total_seconds": 0.78,
+  "sources": [
+    {
+      "direction": "south",
+      "file": "assets/olympus_arena/sprites/atalanta-south-defeat-batch-01.png",
+      "sha256": "dba0b0506ad8bcbd2290e60a08c5bfbe32425d49d98eaaa0308eacaebc9b1b7a",
+      "original_generator_path": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-58ea84ab-6441-4857-9638-3ec63ad3c624.png",
+      "exact_prompt_file": "art_batches/atalanta_batch_01/south.prompt.txt",
+      "regions": [
+        [
+          40,
+          699,
+          140,
+          182
+        ],
+        [
+          261,
+          724,
+          143,
+          150
+        ],
+        [
+          486,
+          734,
+          124,
+          140
+        ],
+        [
+          679,
+          745,
+          164,
+          123
+        ],
+        [
+          869,
+          749,
+          210,
+          108
+        ],
+        [
+          1109,
+          772,
+          210,
+          79
+        ],
+        [
+          1329,
+          788,
+          214,
+          71
+        ],
+        [
+          1552,
+          788,
+          213,
+          72
+        ]
+      ],
+      "pivots": [
+        [
+          70.875,
+          180
+        ],
+        [
+          71.625,
+          148
+        ],
+        [
+          68.375,
+          138
+        ],
+        [
+          97.125,
+          121
+        ],
+        [
+          128.875,
+          106
+        ],
+        [
+          110.625,
+          73
+        ],
+        [
+          112.375,
+          59
+        ],
+        [
+          111.125,
+          59
+        ]
+      ]
+    },
+    {
+      "direction": "north",
+      "file": "assets/olympus_arena/sprites/atalanta-north-defeat-batch-01.png",
+      "sha256": "60cb4c7be011bfaeddcbcebbaad310cb9ecad2109ca947df1b804f42d4a89d48",
+      "original_generator_path": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-ba14cc7c-c9e3-4215-9cc6-c36f12e67224.png",
+      "exact_prompt_file": "art_batches/atalanta_batch_01/north.prompt.txt",
+      "regions": [
+        [
+          30,
+          689,
+          139,
+          173
+        ],
+        [
+          251,
+          709,
+          137,
+          153
+        ],
+        [
+          476,
+          722,
+          150,
+          140
+        ],
+        [
+          679,
+          733,
+          208,
+          129
+        ],
+        [
+          883,
+          726,
+          221,
+          112
+        ],
+        [
+          1101,
+          746,
+          221,
+          91
+        ],
+        [
+          1317,
+          772,
+          216,
+          67
+        ],
+        [
+          1537,
+          770,
+          226,
+          68
+        ]
+      ],
+      "pivots": [
+        [
+          80.875,
+          171
+        ],
+        [
+          81.625,
+          151
+        ],
+        [
+          78.375,
+          138
+        ],
+        [
+          97.125,
+          127
+        ],
+        [
+          114.875,
+          110
+        ],
+        [
+          118.625,
+          89
+        ],
+        [
+          124.375,
+          65
+        ],
+        [
+          126.125,
+          66
+        ]
+      ]
+    }
+  ],
+  "draw_scale": 2.5
+}
