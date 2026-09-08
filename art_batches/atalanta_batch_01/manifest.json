@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "character": "Atalanta",
+  "status": "candidate-only; not runtime-admitted",
+  "generator": "built-in image_gen",
+  "calls": 4,
+  "requested_cells": 128,
+  "observed_figure_cells": 128,
+  "admitted_frames": 0,
+  "distinct_useful_frames": null,
+  "reference": "assets/olympus_arena/sprites/atalanta-v2.png",
+  "rows": [
+    {
+      "action": "walk",
+      "frames_requested": 8,
+      "loop": true
+    },
+    {
+      "action": "bow_attack",
+      "frames_requested": 8,
+      "loop": false
+    },
+    {
+      "action": "hurt",
+      "frames_requested": 8,
+      "loop": false
+    },
+    {
+      "action": "defeat",
+      "frames_requested": 8,
+      "loop": false
+    }
+  ],
+  "sheets": [
+    {
+      "direction": "south",
+      "file": "south.png",
+      "prompt": "south.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-58ea84ab-6441-4857-9638-3ec63ad3c624.png",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "size": [
+        1774,
+        887
+      ],
+      "sha256": "DBA0B0506AD8BCBD2290E60A08C5BFBE32425D49D98EAAA0308EACAEBC9B1B7A"
+    },
+    {
+      "direction": "north",
+      "file": "north.png",
+      "prompt": "north.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-ba14cc7c-c9e3-4215-9cc6-c36f12e67224.png",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "size": [
+        1774,
+        887
+      ],
+      "sha256": "60CB4C7BE011BFAEDDCBCEBBAAD310CB9ECAD2109CA947DF1B804F42D4A89D48"
+    },
+    {
+      "direction": "east",
+      "file": "east.png",
+      "prompt": "east.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-49a1b6aa-271d-461b-9725-d251c626e325.png",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "size": [
+        1774,
+        887
+      ],
+      "sha256": "E25C4A6CF4072A6B113892127A07420F8A873DE85C03AE86590E916B1C146757"
+    },
+    {
+      "direction": "west",
+      "file": "west.png",
+      "prompt": "west.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-e73395ca-dc62-4a4e-82b3-cf3fc5dde4d5.png",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "size": [
+        1774,
+        887
+      ],
+      "sha256": "A76C580CB70F08ECA40C64E72F6B23894C0E237F58E40A6B9B4430FB2C2FBDAC"
+    }
+  ],
+  "limitations": [
+    "Visible cells are not a claim of 128 unique usable frames.",
+    "SOUTH and NORTH attack aiming turns sideways; not suitable directional replacement.",
+    "EAST walk repeats nearly one stride; insufficient alternating gait.",
+    "WEST hurt row creates an arrow prop not present at row start.",
+    "Rows are not perfectly uniform; preview uses manual row boundaries, provisional column boundaries and pivots. No source raster edited.",
+    "No candidate has passed full runtime admission."
+  ]
+}

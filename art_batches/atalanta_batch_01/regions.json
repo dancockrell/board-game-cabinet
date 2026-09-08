@@ -1,0 +1,1546 @@
+{
+  "south": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        59,
+        10,
+        120,
+        220
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        281,
+        10,
+        119,
+        221
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        500,
+        11,
+        124,
+        219
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        722,
+        8,
+        123,
+        223
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 4,
+      "region": [
+        945,
+        11,
+        121,
+        219
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 5,
+      "region": [
+        1168,
+        10,
+        119,
+        221
+      ],
+      "omitted_foreground_pixels": 3,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 6,
+      "region": [
+        1389,
+        11,
+        123,
+        220
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 7,
+      "region": [
+        1610,
+        8,
+        122,
+        223
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        52,
+        246,
+        127,
+        214
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        269,
+        246,
+        130,
+        214
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        499,
+        246,
+        124,
+        214
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        708,
+        232,
+        139,
+        230
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 4,
+      "region": [
+        928,
+        232,
+        164,
+        229
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 5,
+      "region": [
+        1146,
+        232,
+        158,
+        230
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 6,
+      "region": [
+        1366,
+        251,
+        171,
+        211
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 7,
+      "region": [
+        1611,
+        239,
+        118,
+        220
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        40,
+        476,
+        146,
+        211
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        251,
+        482,
+        152,
+        204
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        478,
+        483,
+        146,
+        198
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        707,
+        507,
+        141,
+        179
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 4,
+      "region": [
+        923,
+        541,
+        159,
+        144
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 5,
+      "region": [
+        1162,
+        501,
+        131,
+        181
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 6,
+      "region": [
+        1386,
+        483,
+        126,
+        205
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 7,
+      "region": [
+        1612,
+        471,
+        117,
+        217
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        40,
+        699,
+        140,
+        182
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        261,
+        724,
+        143,
+        150
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        486,
+        734,
+        124,
+        140
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        679,
+        745,
+        164,
+        123
+      ],
+      "omitted_foreground_pixels": 582,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 4,
+      "region": [
+        887,
+        749,
+        192,
+        108
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 5,
+      "region": [
+        1109,
+        772,
+        210,
+        79
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 6,
+      "region": [
+        1330,
+        788,
+        213,
+        71
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 7,
+      "region": [
+        1552,
+        788,
+        213,
+        72
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    }
+  ],
+  "north": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        62,
+        12,
+        105,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        279,
+        12,
+        108,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        500,
+        12,
+        105,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        720,
+        13,
+        100,
+        207
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 4,
+      "region": [
+        928,
+        12,
+        118,
+        208
+      ],
+      "omitted_foreground_pixels": 2,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 5,
+      "region": [
+        1151,
+        12,
+        105,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 6,
+      "region": [
+        1366,
+        12,
+        112,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 7,
+      "region": [
+        1577,
+        12,
+        121,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        53,
+        240,
+        127,
+        212
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        272,
+        241,
+        126,
+        212
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        476,
+        242,
+        139,
+        211
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        689,
+        225,
+        158,
+        228
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 4,
+      "region": [
+        900,
+        224,
+        163,
+        229
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 5,
+      "region": [
+        1117,
+        225,
+        194,
+        228
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 6,
+      "region": [
+        1358,
+        236,
+        162,
+        217
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 7,
+      "region": [
+        1585,
+        242,
+        127,
+        211
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        36,
+        465,
+        138,
+        204
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        260,
+        471,
+        130,
+        198
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        476,
+        476,
+        137,
+        193
+      ],
+      "omitted_foreground_pixels": 1,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        700,
+        479,
+        130,
+        190
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 4,
+      "region": [
+        932,
+        501,
+        118,
+        167
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 5,
+      "region": [
+        1152,
+        476,
+        112,
+        193
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 6,
+      "region": [
+        1373,
+        462,
+        107,
+        207
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 7,
+      "region": [
+        1576,
+        461,
+        125,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        30,
+        689,
+        139,
+        173
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        251,
+        709,
+        137,
+        153
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        476,
+        722,
+        150,
+        140
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        679,
+        733,
+        208,
+        129
+      ],
+      "omitted_foreground_pixels": 12,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 4,
+      "region": [
+        887,
+        726,
+        217,
+        112
+      ],
+      "omitted_foreground_pixels": 30,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 5,
+      "region": [
+        1109,
+        747,
+        213,
+        90
+      ],
+      "omitted_foreground_pixels": 63,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 6,
+      "region": [
+        1330,
+        772,
+        203,
+        67
+      ],
+      "omitted_foreground_pixels": 211,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 7,
+      "region": [
+        1552,
+        776,
+        211,
+        62
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    }
+  ],
+  "east": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        38,
+        21,
+        156,
+        216
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        265,
+        21,
+        156,
+        213
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        483,
+        21,
+        161,
+        214
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        709,
+        20,
+        156,
+        214
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 4,
+      "region": [
+        926,
+        20,
+        157,
+        215
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 5,
+      "region": [
+        1148,
+        19,
+        153,
+        216
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 6,
+      "region": [
+        1367,
+        20,
+        160,
+        218
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 7,
+      "region": [
+        1591,
+        20,
+        160,
+        216
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        30,
+        259,
+        170,
+        224
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        244,
+        259,
+        182,
+        222
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        470,
+        261,
+        154,
+        220
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        682,
+        242,
+        169,
+        244
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 4,
+      "region": [
+        897,
+        246,
+        175,
+        239
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 5,
+      "region": [
+        1124,
+        244,
+        162,
+        241
+      ],
+      "omitted_foreground_pixels": 348,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 6,
+      "region": [
+        1369,
+        250,
+        164,
+        235
+      ],
+      "omitted_foreground_pixels": 137,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 7,
+      "region": [
+        1597,
+        264,
+        157,
+        221
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        47,
+        500,
+        159,
+        199
+      ],
+      "omitted_foreground_pixels": 19,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        243,
+        497,
+        172,
+        205
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        468,
+        506,
+        159,
+        194
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        695,
+        499,
+        159,
+        202
+      ],
+      "omitted_foreground_pixels": 1,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 4,
+      "region": [
+        896,
+        550,
+        181,
+        158
+      ],
+      "omitted_foreground_pixels": 20,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 5,
+      "region": [
+        1134,
+        528,
+        170,
+        180
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 6,
+      "region": [
+        1370,
+        497,
+        149,
+        212
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 7,
+      "region": [
+        1601,
+        494,
+        149,
+        215
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        15,
+        711,
+        191,
+        164
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        224,
+        731,
+        202,
+        140
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        444,
+        744,
+        195,
+        126
+      ],
+      "omitted_foreground_pixels": 284,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        665,
+        770,
+        193,
+        103
+      ],
+      "omitted_foreground_pixels": 191,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 4,
+      "region": [
+        887,
+        769,
+        199,
+        101
+      ],
+      "omitted_foreground_pixels": 231,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 5,
+      "region": [
+        1109,
+        793,
+        197,
+        75
+      ],
+      "omitted_foreground_pixels": 168,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 6,
+      "region": [
+        1330,
+        797,
+        207,
+        71
+      ],
+      "omitted_foreground_pixels": 170,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 7,
+      "region": [
+        1552,
+        802,
+        216,
+        65
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    }
+  ],
+  "west": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        43,
+        15,
+        144,
+        200
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        260,
+        15,
+        147,
+        200
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        478,
+        14,
+        148,
+        201
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        691,
+        12,
+        134,
+        204
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 4,
+      "region": [
+        918,
+        15,
+        145,
+        201
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 5,
+      "region": [
+        1143,
+        14,
+        141,
+        203
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 6,
+      "region": [
+        1365,
+        15,
+        140,
+        202
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 0,
+      "column": 7,
+      "region": [
+        1585,
+        14,
+        142,
+        203
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        24,
+        237,
+        153,
+        202
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        249,
+        236,
+        148,
+        203
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        468,
+        239,
+        148,
+        203
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        699,
+        222,
+        142,
+        223
+      ],
+      "omitted_foreground_pixels": 39,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 4,
+      "region": [
+        887,
+        223,
+        176,
+        222
+      ],
+      "omitted_foreground_pixels": 82,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 5,
+      "region": [
+        1162,
+        233,
+        152,
+        213
+      ],
+      "omitted_foreground_pixels": 265,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 6,
+      "region": [
+        1340,
+        233,
+        195,
+        213
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 1,
+      "column": 7,
+      "region": [
+        1592,
+        238,
+        141,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        22,
+        454,
+        159,
+        207
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        252,
+        454,
+        160,
+        207
+      ],
+      "omitted_foreground_pixels": 1,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        470,
+        454,
+        147,
+        207
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        685,
+        475,
+        165,
+        184
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 4,
+      "region": [
+        909,
+        507,
+        160,
+        149
+      ],
+      "omitted_foreground_pixels": 36,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 5,
+      "region": [
+        1133,
+        464,
+        152,
+        197
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 6,
+      "region": [
+        1376,
+        459,
+        141,
+        203
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 2,
+      "column": 7,
+      "region": [
+        1587,
+        455,
+        134,
+        208
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        23,
+        677,
+        170,
+        185
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        236,
+        718,
+        183,
+        140
+      ],
+      "omitted_foreground_pixels": 1,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        468,
+        716,
+        158,
+        145
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        683,
+        745,
+        181,
+        114
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 4,
+      "region": [
+        892,
+        741,
+        195,
+        113
+      ],
+      "omitted_foreground_pixels": 117,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 5,
+      "region": [
+        1109,
+        759,
+        206,
+        98
+      ],
+      "omitted_foreground_pixels": 11,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 6,
+      "region": [
+        1330,
+        772,
+        222,
+        72
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    },
+    {
+      "row": 3,
+      "column": 7,
+      "region": [
+        1560,
+        780,
+        206,
+        77
+      ],
+      "omitted_foreground_pixels": 0,
+      "status": "provisional dominant connected figure; review required"
+    }
+  ]
+}
