@@ -1,24 +1,24 @@
 {
   "tool": "built-in imagegen",
   "date": "2026-09-08",
-  "status": "admitted incremental expansion; native sequential review complete; legacy rest handedness unresolved",
+  "status": "REJECTED: wrong-handed attack; no runtime admission",
   "sources": [
     {
       "file": "exec-d222efce-af89-40ce-9b02-21d055661336.png",
       "prompt": "Use case: stylized-concept. Production pixel-art sprite sheet: expand the reference's BOTTOM ROW THIRD character (Atalanta rear three-quarter archery view) into EIGHT sequential hand-drawn poses of ONE north-facing bow shot. Exact character identity: adult athletic Greek huntress, brown braid, thin gold circlet, short ivory tunic green hem, dark green shoulder shawl, brown belt, brown right-hip quiver and laced sandals, warm tan skin. Match crisp outlined shaded pixel-art reference, not 3D or soft painting. Make a clean FOUR COLUMNS by TWO ROWS sheet, eight equally spaced full-body characters, chronological left-to-right then next row. Same camera, scale, ground line, planted feet and equipment throughout. Rear view aimed diagonally up-right exactly like reference bottom-third pose, do not flip character. Bow remains in same hand throughout. Poses: 1 lifting low bow with arrow nocked; 2 raising bow halfway, drawing elbow begins back; 3 bow raised, half-drawn string; 4 full draw, arrow aimed up-right and hand anchored beside cheek; 5 actual release, string snaps straight and arrow has left, drawing hand follows back; 6 follow-through, bow still raised, free hand relaxed near shoulder; 7 lower bow halfway, shoulders relax; 8 bow near waist returning toward rest. Use clearly different meaningful shoulder/arm/bow/braid positions, anatomically coherent hands and bowstring. No extra floating arrows, no speed streaks, no duplicated poses. Solid pure #FF00FF magenta background including all gaps, no floor/shadows, no text/grid/labels. All bows, feet, braid tips safely within their cells, generous gutters.",
-      "status": "study; frame4 torso error",
+      "status": "rejected candidate; no runtime admission",
       "sha256": "FFA5C288D5578B805EC9346947661A268B783F43E919095961A78A7EE4B25722"
     },
     {
       "file": "exec-9a144dc0-582b-4aca-90ff-4b16ca551253.png",
       "prompt": "Use case: precise-object-edit. Correct ONLY these three errors in this eight-pose sprite sheet. Keep identical canvas, four-column two-row grid, palette, crisp pixel art, all character scales and positions, pure magenta. (1) TOP RIGHT / frame4 must show the BACK of Atalanta's ivory tunic and green shawl with her brown braid down her BACK, exactly same rear three-quarter torso as top row frame3. Currently frame4 wrongly shows her chest/front. Preserve fully drawn raised bow and drawing hand at cheek, but fix back-facing shoulder anatomy. (2) BOTTOM row third and fourth frames are recovery AFTER shooting, so REMOVE the arrows beside the lowered bows entirely; keep hands, bows, body unchanged. (3) TOP row second pose: lower extended bow arm and bow about 20 degrees so it is a genuine intermediate between first low pose and third raised pose; arrow stays nocked. Everything else unchanged, especially feet and quiver. No new backgrounds or labels.",
-      "status": "study; recovery gap",
+      "status": "rejected candidate; no runtime admission",
       "sha256": "D451AF17C5187F034367B4A39A0C8096D2A62B3E27F284F7BC754A4154DF0405"
     },
     {
       "file": "exec-f0799d59-1bcd-4b61-b21b-578df3836a3f.png",
       "prompt": "Use case: precise-object-edit. Single pose correction ONLY. In this exact four-column two-row eight-frame sprite sheet, change ONLY BOTTOM ROW THIRD character's RIGHT/bow arm and bow: rotate arm from its low waist-height position upward halfway toward bottom row SECOND character's extended shooting arm. The arm must angle forward-down about 30 degrees below horizontal, elbow slightly bent, holding empty bow upright diagonally with upper tip around shoulder height. This is an intermediate lowering follow-through pose between frames6 and8. No arrow. Keep character head, torso, braid, quiver, legs, feet and exact position unchanged. Keep ALL OTHER SEVEN characters pixel-for-pixel unchanged. Keep pure magenta background, no shadow, same dimensions and grid, crisp outlined pixel-art.",
-      "status": "selected",
+      "status": "rejected candidate; no runtime admission",
       "sha256": "F66A8C4D488B91A87CF5FC56F6FA0F197EE041766C91880A4C3E804B4711D0EE"
     }
   ],

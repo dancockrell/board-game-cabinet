@@ -1,0 +1,16 @@
+{
+  "status": "rejected; not runtime artwork",
+  "reason": "Left-hand bow and right-hip quiver corrected, but shawl switches shoulders between phases and grows into skirt. Two targeted calls insufficient.",
+  "attempts": [
+    {
+      "file": "exec-630f7f52-d502-4a6e-a89d-9b41877b7054.png",
+      "prompt": "Use case: precise-object-edit. Correct anatomical equipment ownership across all EIGHT poses of Image1. Image2 TOP ROW THIRD rear-rest character is CANONICAL: anatomical LEFT hand on SCREEN LEFT holds bow, quiver remains anatomical RIGHT HIP on SCREEN RIGHT, green shawl remains LEFT SHOULDER on SCREEN LEFT. Redraw Image1 eight rear-view poses with this correct assignment, shooting toward upper LEFT instead of upper right. LEFT arm extends toward upper-left holding bow; RIGHT hand pulls bowstring to right side of cheek then releases. TURN head to left for aiming. Quiver MUST STAY SCREEN RIGHT, green shawl MUST STAY SCREEN LEFT, so this is NOT a whole-character mirror. Show back and central braid throughout. Preserve chronological eight phases: top row low nocked, partly raise, half draw, full aim; bottom row release without arrow, follow through, bow partly lowered, bow low recovery. Bow always screen LEFT of body in all eight poses. Right quiver visible screen RIGHT in all eight. Same adult tan Greek huntress, ivory short tunic green hem, bronze bracelets, long braid/circlet, sandals, crisp pixel outlines and highlights. Exact 4 columns 2 rows fullbody sprite layout on pure #FF00FF magenta, no shadow, no text, safe generous gutters, consistent feet/scale. Correct arm ownership is the essential edit.",
+      "sha256": "32FFCB6720F21608B1BCF059C27F6E87C4BC3F0ABB672E66EDDB6A974533E6ED"
+    },
+    {
+      "file": "exec-0907d8bf-b215-4c5e-9df5-651dd3a3d0c9.png",
+      "prompt": "Use case: precise-object-edit. Keep this exact 8-pose left-handed bow sequence, 4 columns by 2 rows, all anatomy, feet, positions, scales and magenta background. Three continuity corrections ONLY: 1) In ALL eight rear-view poses, move green shoulder shawl from SCREEN RIGHT shoulder to SCREEN LEFT shoulder, matching canonical costume. Screen-right shoulder must be bare with ivory tunic strap; central braid remains same. Quiver MUST stay SCREEN RIGHT and bow MUST stay SCREEN LEFT, do not mirror. 2) TOP row SECOND and THIRD must show an arrow nocked on string pointing toward screen LEFT through bowgrip, with fletching at right pulling hand. Top-second left bow arm should be angled 25 degrees lower than top-third to provide raising transition, while right drawing hand is halfway to cheek instead of fully drawn. 3) BOTTOM row THIRD and FOURTH remove arrow from right hand entirely because shot is already released; hand empty beside right hip. All other content unchanged. Crisp pixel-art, solid magenta, no shadows/text.",
+      "sha256": "A3D96F14CD406EAB4D591662B20F8789F02C7F1EB5F9642837853D180C9B6FE1"
+    }
+  ]
+}

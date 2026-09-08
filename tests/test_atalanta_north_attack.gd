@@ -8,24 +8,16 @@ func check(ok: bool, label: String):
 	checks += 1
 	if not ok: failures += 1; push_error(label)
 func _initialize():
-	check(ATTACK.validation_error().is_empty(), "North attack validates")
-	check(ATTACK.regions.size() == 8 and not ATTACK.looping, "Eight ordered nonlooping poses")
+	check(ATTACK.validation_error().is_empty(), "Legacy north clip validates")
+	check(not ATTACK.looping, "Attack does not loop")
+	check(not ATTACK.atlas.resource_path.contains("north-attack-eight"), "Rejected wrong-handed eight sheet cannot ship")
+	for source in ATTACK.frame_atlases:
+		check(not source.resource_path.contains("north-attack-eight"), "Rejected sheet excluded from per-frame sources")
 	var actor := Actor.new()
 	actor.reset_playback(REST)
 	actor.play_attack(1, ATTACK)
-	var elapsed := 0.0
-	var unique := {}
-	for phase in 8:
-		actor.show_time(elapsed + .001)
-		check(actor.texture.region == Rect2(ATTACK.regions[phase]), "Actual texture visits phase %d" % phase)
-		unique[hash(ATTACK.atlas.get_image().get_region(ATTACK.regions[phase]).get_data())] = true
-		elapsed += ATTACK.durations[phase]
-	check(unique.size() == 8, "Eight different source drawings")
-	check(elapsed < 1.0, "Recovery completes before next attack cooldown")
-	check(ATTACK.frame_at(elapsed + 5) == 7, "Nonlooping clip holds final pose")
 	actor.advance_visual(1.0)
-	check(actor.clip == REST, "Attack recovers to facing rest")
+	check(actor.clip == REST, "Legacy attack still recovers to rest")
 	actor.free()
-	print("Atalanta north attack checks: ", checks, "; failures: ", failures)
+	print("Atalanta north attack admission checks: ", checks, "; failures: ", failures)
 	quit(1 if failures else 0)
-

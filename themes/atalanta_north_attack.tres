@@ -1,13 +1,14 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" load_steps=4 format=3]
 [ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-attack-eight.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-v2.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-release-v1.png" id="3"]
 [resource]
 script = ExtResource("1")
 atlas = ExtResource("2")
-regions = Array[Rect2i]([Rect2i(0,0,384,512), Rect2i(384,0,384,512), Rect2i(752,0,384,512), Rect2i(1136,0,400,512), Rect2i(0,512,384,512), Rect2i(384,512,384,512), Rect2i(752,512,384,512), Rect2i(1136,512,400,512)])
-frame_pivots = Array[Vector2]([Vector2(176,502),Vector2(138,502),Vector2(127,502),Vector2(97,502),Vector2(176,446),Vector2(131,446),Vector2(123,446),Vector2(98,446)])
-durations = PackedFloat32Array(0.07,0.08,0.09,0.1,0.065,0.065,0.09,0.1)
+frame_atlases = Array[Texture2D]([ExtResource("2"), ExtResource("3")])
+regions = Array[Rect2i]([Rect2i(768,512,384,512), Rect2i(768,512,384,512)])
+pivot = Vector2(171,421)
+durations = PackedFloat32Array(0.09, 0.15)
 looping = false
-draw_scale = 1.57
+draw_scale = 1.60
 magenta_backing = true
-
