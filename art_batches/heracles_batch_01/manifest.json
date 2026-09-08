@@ -1,0 +1,125 @@
+{
+  "character": "heracles",
+  "generator": "built-in image_gen",
+  "date": "2026-09-08",
+  "original_generation_calls": 4,
+  "whole_sheet_repair_calls": 1,
+  "requested_action_cells": 128,
+  "visible_current_candidate_cells": 128,
+  "additional_repair_attempt_cells": 32,
+  "unique_usable_animation_frames": null,
+  "runtime_admitted_frames": 0,
+  "rows": [
+    {
+      "index": 0,
+      "action": "walk",
+      "frames": 8,
+      "chronological_order": "left_to_right"
+    },
+    {
+      "index": 1,
+      "action": "run",
+      "frames": 8,
+      "chronological_order": "left_to_right"
+    },
+    {
+      "index": 2,
+      "action": "club_attack",
+      "frames": 8,
+      "chronological_order": "left_to_right"
+    },
+    {
+      "index": 3,
+      "action": "defeat",
+      "frames": 8,
+      "chronological_order": "left_to_right"
+    }
+  ],
+  "images": [
+    {
+      "file": "south.png",
+      "sha256": "8db05239d0fdadb5b8acec0d5b0b6d01f79ee63de59b2cccb15e4667668c6e45",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-454de524-7695-4870-b211-535cd8a69d8b.png",
+      "visible_cells": 32,
+      "columns": 8,
+      "rows": 4,
+      "admission": "candidate_only",
+      "superseded_attempt": false
+    },
+    {
+      "file": "north.png",
+      "sha256": "1a54786c3425c414927c2849fbefd8328e399859bf2bcef68d9a12591f04efb9",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-cf5a5183-a405-4f8a-b440-807448681488.png",
+      "visible_cells": 32,
+      "columns": 8,
+      "rows": 4,
+      "admission": "candidate_only",
+      "superseded_attempt": false
+    },
+    {
+      "file": "east.png",
+      "sha256": "c931e146d0982a82090f70be413f177c33efeefc39a493d705e1c4980fdb5740",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-28a9369e-7323-4713-bbe8-8322eef38391.png",
+      "visible_cells": 32,
+      "columns": 8,
+      "rows": 4,
+      "admission": "candidate_only",
+      "superseded_attempt": false
+    },
+    {
+      "file": "west-first.png",
+      "sha256": "8116661973368ae9b8e4ae46a0840a79413ea3d44e24cdaa87952e35a9e57320",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-8b0236c7-34f0-4152-906a-273ca599162f.png",
+      "visible_cells": 32,
+      "columns": 8,
+      "rows": 4,
+      "admission": "candidate_only",
+      "superseded_attempt": true
+    },
+    {
+      "file": "west.png",
+      "sha256": "61310cf6a6c84130e73141aaa98a0f6624a1e056358ec1397e24bd90db26854c",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-8168970e-8b85-4645-96f7-77e44cea5d3e.png",
+      "visible_cells": 32,
+      "columns": 8,
+      "rows": 4,
+      "admission": "candidate_only",
+      "superseded_attempt": false
+    }
+  ],
+  "native_preview": "outputs/Heracles-Batch-01.mp4",
+  "findings": [
+    "Uniform eight-column slicing clips some club silhouettes and imports neighboring fragments.",
+    "West repair improves walk hand continuity but walk column7 loses the club; run retains hand drift.",
+    "North walk column6 has no visible club.",
+    "Walk poses include repeated-looking phases; 128 visible cells is not 128 proven distinct usable drawings.",
+    "Defeat arcs and broad club arcs are candidate improvements requiring per-frame crop, pivot, hand and sequence admission.",
+    "Use four columns by eight rows, each action wrapping over two rows, in next broad-weapon batch."
+  ],
+  "sharing": "Local shared candidates only; no public shared-repository publication"
+}
