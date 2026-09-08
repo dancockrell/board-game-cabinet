@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-08",
+  "generator": "built-in image_gen",
+  "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-adc56c5e-7859-4a53-b6a4-d44824ea9f8f.png",
+  "reference": "assets/olympus_arena/sprites/medusa-walk-v1.png",
+  "prompt": "Use case: identity-preserve. Create a production 2D pixel-art sprite sheet for the SAME Medusa in the reference. Reference image is identity and style reference: use ONLY the BACK VIEW in row 2. Output exactly EIGHT distinct sequential NORTH / rear-view walking poses, arranged 4 columns by 2 rows, read left to right then next row, with equal cells. All sprites fully inside cells at consistent scale, head height and feet baseline. Solid flat exact #FF00FF backing, no shadows, no labels or grid. Match warm ochre skin, ivory short Greek chiton with dark Greek-key hem, gold belt and bracers/sandals, dense dark green snakes in precisely the established arrangement. No weapons, no added equipment. Show only back of head and torso, never face, no turn. Choreography is ONE complete walk away: 1 left foot planted forward and right heel lifted trailing; 2 weight drops over left foot and right knee starts swinging; 3 right foot passes planted left ankle, heel raised; 4 right foot reaches forward and left heel starts lifting; 5 right foot planted forward and left heel lifted trailing; 6 weight drops over right foot and left knee starts swinging; 7 left foot passes planted right ankle, heel raised; 8 left foot reaches forward preparing wrap to pose1. Opposite arms counter swing. Natural subtle bob, no running or high knees. Distinct silhouettes for contact/down/pass/up, BOTH opposite legs truly alternate. Modest cloth sway, snake tips secondary motion; preserve snake head number and identity. Fine crisp hand-authored pixel clusters, no smooth painted or clay/model appearance. Prioritize coherent anatomy and sequential motion over ornamental detail.",
+  "selected_cells_zero_based": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    6
+  ],
+  "excluded_cells_zero_based": [
+    4,
+    7
+  ],
+  "note": "Eight requested cells; two similar contact drawings excluded rather than counted as additional gait phases. Original pixels untouched; runtime magenta key and resource regions.",
+  "selection_status": "admitted after native six-pose and rest/loop review",
+  "scale": 1.24,
+  "sha256": "ff0f1562d458ddfbb86ef14525b250081fc4ecf18d5528f23823d268df1e3a89",
+  "reference_sha256": "45375bc5ae52cd6642a3f0313673f9831c5b1f4ef06cda3d5a2975e737070b32"
+}
