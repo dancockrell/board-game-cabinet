@@ -1,0 +1,27 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-09-08",
+  "status": "admitted two-pose continuity repair; not expanded animation",
+  "reference": "assets/olympus_arena/sprites/atalanta-v2.png top-row third rear rest",
+  "calls": [
+    {
+      "step": "rear_aim",
+      "prompt": "Use case: precise-object-edit. Make ONE isolated rear-view archer AIM sprite based ONLY on the TOP ROW THIRD character in the reference (rear REST). Ignore bottom row completely; bottom row has an incorrect hand. Full body centered on flat pure magenta #FF00FF, no shadow, no other drawings. Preserve exact pixel-art texture, white short tunic, green shawl on anatomical LEFT shoulder (screen LEFT in rear view), bare RIGHT shoulder, long central brown braid, bronze bracers, sandals, quiver at anatomical RIGHT hip (screen RIGHT). She faces AWAY north with back visible. Raise her anatomical LEFT arm (screen LEFT) to hold bow at upper LEFT of body, right arm bends drawing string to cheek. Bow grip in LEFT hand only; right elbow opens screen RIGHT. Bow tall curved wood, one taut string and one nocked arrow pointing away north/upper LEFT. Feet stay planted as reference rear rest, body anatomy and costume unchanged. Slight torso rotation permissible but retain back view. No lateral/front view. No cape, no quiver side swap. Match reference drawing detail and restrained sprite proportions, not a redesign. One correct canonical rear aim pose.",
+      "source": "exec-7f670db0-8567-4152-982c-9fb9a782dd11.png",
+      "admitted": true
+    },
+    {
+      "step": "rear_release",
+      "prompt": "Use case: precise-object-edit. EDIT this exact rear archer into the very next RELEASE animation frame. Change ONLY right drawing forearm/hand, bow string and arrow: arrow has departed so remove nocked arrow entirely; right hand opens beside right cheek/shoulder, fingertips relaxing just slightly backwards toward screen RIGHT; bow string springs into straight line between existing bow tips. Preserve the same bow size, curve, angle, left-hand grip and extended LEFT arm unchanged. Everything else must remain registered exactly: identical head braid left green shoulder shawl, bare right shoulder, right-hip quiver, white skirt green trim, planted feet, body scale and canvas positioning, pixel outlines, flat magenta #FF00FF background. Do not swap hands, do not rotate or shrink bow, do not move feet/body, no new equipment, no panel/sheet. One isolated matching frame, no text.",
+      "source": "exec-1baa276e-a8bb-46f3-bdfa-b6db8363414b.png",
+      "admitted": false
+    },
+    {
+      "step": "rear_release_string",
+      "prompt": "Use case: precise-object-edit. Repair ONLY the thin black bowstring in this image. Existing line incorrectly runs vertically down from upper bow tip past the lower tip. Erase that incorrect vertical line and replace with ONE thin straight black diagonal taut bowstring joining the exact upper bow tip at approximately (532,128) to the exact lower bow tip at approximately (476,596). String must end at the two wood tips with no dangling extension. Keep every other pixel/shape as unchanged as possible: bow wood curve and left grip, right open hand, costume, head, braid, quiver, planted legs, background and registration. No arrow. One sprite on magenta. Do not change the wooden bow to meet the old line; change line to connect existing tips.",
+      "source": "exec-53068c3e-5f4b-4a34-a3ab-f7c0a61e568b.png",
+      "admitted": true
+    }
+  ],
+  "validation": "90 native Godot frames; inspected rest 11, aim12, release15, recovered20. Head and feet registration remain stable; anatomical left bow/right hip quiver/left shawl preserved. Minor material variation; raising/lowering phases absent."
+}
