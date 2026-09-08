@@ -68,3 +68,13 @@ This is a usable four-key-pose foundation, not final smooth animation. Arms and 
 All four unchanged generation originals, exact prompts and hashes are preserved locally at `C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-east-foundation-2026-09-08/`. Runtime provenance is `assets/olympus_arena/sprites/heracles-east-walk.provenance.json`. Shared art has not been publicly published.
 
 Coordinator admission: EAST is now mapped on the board. Native100-frame30fps board review inspected all four phases, authoritative movement, health/footprint alignment and stopped recovery; dedicated board test passes. WEST remains unmapped. This fills the previous east-facing slide with a four-pose foundation and does not claim final smoothness.
+
+## WEST isolated natural-palette foundation
+
+Four built-in generation calls produced four independent west-facing cels. The first validated a low passing pose with club in the far right hand (screen left), near left hand empty. Single-cel edits supplied near-forward extension, far-forward contact and opposite passing. No east image was mirrored. One intended passing request instead produced a useful forward-extension key, labelled by observed geometry in provenance.
+
+The heracles_west_walk Resource orders near-forward extension, near support/far lift, far-forward contact, far support/near lift. Four original 1536 x 1024 canvases remain intact; per-frame foot pivots and scales normalize variations. The 0.72-second loop is a four-key-pose foundation, not final smooth animation. First forward foot approaches contact rather than being fully planted; arms and club remain restrained, body narrower than old rest, final cel slightly stronger pixel texture. More inbetweens and cloth response remain necessary.
+
+Native tests/test_heracles_west_walk.gd passes 14 checks: chronological source selection, unique atlases, loop, attack return and stopped rest. tools/review_heracles_west_walk.gd captured 90 frames at 30 fps to outputs/Heracles-West-Four-Key-Study. Frames 0, 6, 11 and 17 were visually inspected beside west rest. Handedness, pelt and opposite leg overlap remain coherent. Board mapping and full-match admission remain coordinator work; WEST was not mapped by this slice.
+
+Four unchanged originals, exact prompts and SHA256 hashes are preserved locally in C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-west-foundation-2026-09-08/. Runtime provenance: assets/olympus_arena/sprites/heracles-west-walk.provenance.json. No public shared upload.

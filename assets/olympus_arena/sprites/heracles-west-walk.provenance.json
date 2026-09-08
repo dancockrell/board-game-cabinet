@@ -1,0 +1,41 @@
+{
+  "generator": "builtin imagegen",
+  "date": "2026-09-08",
+  "status": "four west key poses; coordinator board admission pending",
+  "phase_order": [
+    "near forward extension",
+    "near support / far lift passing",
+    "far forward contact",
+    "far support / near lift passing"
+  ],
+  "frames": [
+    {
+      "file": "heracles-west-walk-phase-1.png",
+      "generation_id": "exec-7ef8cfac-61b6-43bc-af21-da76e57f97ae",
+      "prompt": "Precise animation edit of this single Heracles walking LEFT cel. Preserve ALL pixels/design above skirt: face, lion hood, torso, hands, club, empty near LEFT hand screen RIGHT, far RIGHT club hand screen LEFT, same natural palette, camera and frame. Change ONLY legs and skirt hem into opposite passing HALF-CYCLE. Far RIGHT leg supports weight straight down below pelvis, dark bronze. Near LEFT leg visibly crosses in FRONT of far thigh, knee bends slightly screen LEFT, calf angles backward screen RIGHT and heel lifted one sandal height. Near lifted leg is bright bronze, near foot airborne screen RIGHT. Far planted sandal is screen LEFT. Anatomical thigh overlap must reverse, not just recolor calves. Restrained walking low knees, not march. Same single full-body pixel art, solid magenta, no shadow, no text.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-7ef8cfac-61b6-43bc-af21-da76e57f97ae.png",
+      "sha256": "9B07383BC6F6B425D27A5D8167B349192E4D4A6F166260396F9F1D657CE46637"
+    },
+    {
+      "file": "heracles-west-walk-phase-2.png",
+      "generation_id": "exec-6402fe52-ef5f-4c34-b17b-d96259a69be7",
+      "prompt": "Create ONE isolated pixel-art animation cel of Heracles walking screen LEFT, using TOP ROW SECOND FIGURE of reference as exact identity and camera. This is WEST direction, not a mirrored east pose: right hand is the FAR hand toward screen LEFT, gripping wooden club that hangs down-left; near LEFT hand hangs empty at screen RIGHT. Lion hood, beard, bronze skin, red pleated skirt narrow gold hem, sandals unchanged. Pose restrained WALK PASSING: near LEFT leg supports weight vertically under pelvis, far RIGHT leg swings through with knee low and heel lifted behind to screen RIGHT about one sandal height. Feet almost overlap horizontally, one planted and one airborne. No high knee, running, attack or raised club. Crisp detailed pixel clusters, dark outlines. Full body one cel, generous margin, flat solid #ff00ff backing, no ground shadow, no text. Do not mirror or swap hands.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-6402fe52-ef5f-4c34-b17b-d96259a69be7.png",
+      "sha256": "25BAB1C65A4CEBE5C38037CD3A93DE572A2B5E6898CA93CAD2FF53C1DE28356B"
+    },
+    {
+      "file": "heracles-west-walk-phase-3.png",
+      "generation_id": "exec-70d33c29-94a2-42d8-9106-3f9c7cf79cd0",
+      "prompt": "Create the opposite FOOT CONTACT frame of this Heracles west walk. Preserve upper body exactly. Character faces LEFT. NEAR LEFT LEG must angle down-RIGHT from skirt to rear knee, with its bright bronze thigh crossing IN FRONT of the far thigh. Near rear sandal planted at screen RIGHT with heel up. FAR RIGHT LEG extends down-LEFT to front sandal landing at screen LEFT; far leg dark bronze. This is the opposite of reference bright leg extending forward-left: redraw near bright thigh backward-right, do not merely recolor calves. Both feet separated, knees nearly straight. Club remains far right hand at screen LEFT, near left hand empty screen RIGHT. Keep pixel art, lion pelt, red skirt, same head position, same full canvas solid magenta, no ground shadow.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-70d33c29-94a2-42d8-9106-3f9c7cf79cd0.png",
+      "sha256": "1721A50CAAB1EF7EDB27E11BEAF158EC50F5C46706D11B366A5B6AB54115A8FE"
+    },
+    {
+      "file": "heracles-west-walk-phase-4.png",
+      "generation_id": "exec-556479e7-63ef-4b82-b0a0-133fbd4a46fa",
+      "prompt": "Advance this same leftward Heracles walk into PASSING pose, changing only legs/skirt. FAR RIGHT LEG is planted vertically below pelvis, shadow bronze; its sandal touches ground directly below torso. NEAR LEFT LEG swings past in foreground: bright thigh slopes slightly LEFT to low bent knee, calf folds BACK RIGHT, near sandal entirely lifted off ground behind support ankle, toe down. Feet nearly overlap horizontally. Clear bent foreground knee and raised foreground heel, not two straight legs. Keep all above waist identical: lion hood, face, club in far right hand at screen LEFT, near empty hand screen RIGHT. Preserve camera and pixel clusters and canvas. Solid magenta background, one full-body cel, no shadow or labels. Natural low passing walk, not exaggerated march.",
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-556479e7-63ef-4b82-b0a0-133fbd4a46fa.png",
+      "sha256": "6BE039BD902174EC8CEAE6A504BC9EE7891D2DD8B931D26DB1C9E8AE52520649"
+    }
+  ]
+}
