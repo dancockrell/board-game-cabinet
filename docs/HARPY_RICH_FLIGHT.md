@@ -1,0 +1,5 @@
+# Harpy richer south flight
+
+Eight authored source poses replace the four-pose front-facing loop. Ordered extended downstroke and bent-wing recovery,0.5-second loop. A targeted generation correction fixed phase2 from a misplaced bent pose to upward extended wings. Sources stay unchanged; irregular row crops preserve talons and all wings. Draw scale matches the existing character body approximately. Native60frame study against the painted stage inspected downstroke,recovery,edge separation and foot anchors.
+
+Still provisional: torso varies slightly across rows; feather flex and lift-induced body motion need finer polish. North flight remains the existing four poses. No claim of complete eight-direction flight or finished character animation. Original and corrected sheets archived in shared2D candidates locally; no paid generation used.
