@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-08",
+  "generator": "built-in image_gen",
+  "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-b56606b9-fcfc-4f76-99b8-dccb5804fec5.png",
+  "reference": "assets/olympus_arena/sprites/medusa-walk-v1.png",
+  "attempts": [
+    {
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-a83fba97-35b2-4eab-b781-a682c3776a7e.png",
+      "prompt": "Use case: identity-preserve. Production 2D pixel art animation sheet for this EXACT Medusa: use ONLY the FRONT facing poses in the TOP ROW of the reference as identity/style. Eight distinct sequential SOUTH walking poses toward camera, 4 columns by 2 rows, evenly spaced cells. Fully visible bodies and consistent scale/head height. Solid exact #FF00FF backing, no ground shadows, no text, no grid. Olive/gold skin, stern adult face, gold diadem, dense dark green snake hair matching original head silhouette and arrangement, ivory short Greek chiton with dark Greek-key hem, gold belt and bracers, brown/gold sandals. Human legs, no weapons. Gait must depict full alternating walk with clear contact/down/pass/up phases: 1 left leg reaches forward with heel down, right trails; 2 weight sinks on left leg and right knee bends to swing; 3 right foot passes left ankle with lifted toe; 4 right leg extends forward before contact; 5 right heel down forward, left trails; 6 weight sinks on right leg and left knee bends to swing; 7 left foot passes right ankle with lifted toe; 8 left leg extends forward before contact. Opposite arms naturally counter swing. No high knees/running, no duplicate contact poses pretending to be passing poses. Subtle cloth sway and snake-tip secondary motion. Lock costume identity, face, snake head arrangement, limb proportions. Fine crisp pixel clusters and dark silhouette contours, no smooth paint/3D/clay look. Every cell is a usable different sequential gait drawing. Maintain exact frontal view throughout, never rotate or mirror.",
+      "status": "Rejected straight-leg passing poses; not admitted to runtime",
+      "sha256": "60935eb5c4f3d137551a94becf0ef9591a2053fb7c89941ba3bd8b2890eca11b"
+    },
+    {
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-b56606b9-fcfc-4f76-99b8-dccb5804fec5.png",
+      "prompt": "Use case: precise-object-edit. Edit ONLY the legs and lower skirt of the third sprite in the top row and the third sprite in the bottom row. This is a 4-column 2-row SOUTH/front walk sheet. All other six sprites and the two edited sprites' upper bodies, faces, snakes, palette, costume, gold trim and positions remain EXACTLY unchanged. Top row column3 MUST be a passing pose: her anatomical RIGHT leg on image LEFT is the planted straight support leg, its sandal under the hip; her LEFT leg on image RIGHT has its KNEE BENT and calf folded back, lifted sandal visible next to the planted calf, toe pointing down, NOT forward/long. Bottom row column3 is opposite passing pose: anatomical LEFT leg on image RIGHT straight support with sandal under hip; RIGHT leg on image LEFT KNEE BENT, calf folded back, lifted sandal beside planted calf and toe down. Both passing poses have a narrow silhouette with feet beneath hips, NOT a wide stride, NOT high knees. Modest knee height near other knee. Preserve pure saturated magenta background, exact pixel style, no shadows, no added accessories. These TWO cells must show genuine bent-knee passing rather than another straight-leg contact. Do not alter any other cell.",
+      "status": "Six selected gait stages with corrected bent-knee passing",
+      "sha256": "951ad05a6acc72f83c9ac38c487e3b38c583c878f8d420a64c09fc5629df8a9f"
+    }
+  ],
+  "selected_cells_zero_based": [
+    1,
+    2,
+    7,
+    4,
+    6,
+    3
+  ],
+  "excluded_cells_zero_based": [
+    0,
+    5
+  ],
+  "note": "Cell order remapped to contact/passing/reach for each opposite leg. Complete original pixels intact. Runtime keying only; no image editing outside built-in generator.",
+  "draw_scale": 1.28,
+  "sha256": "951ad05a6acc72f83c9ac38c487e3b38c583c878f8d420a64c09fc5629df8a9f",
+  "reference_sha256": "45375bc5ae52cd6642a3f0313673f9831c5b1f4ef06cda3d5a2975e737070b32"
+}
