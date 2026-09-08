@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/hydra-north-defeat-batch.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(21,1340,177,230),Rect2i(242,1340,173,230),Rect2i(454,1340,194,230),Rect2i(677,1340,198,230),Rect2i(20,1580,191,194),Rect2i(227,1580,211,194),Rect2i(447,1580,207,194),Rect2i(662,1580,213,194)])
+frame_pivots = Array[Vector2]([Vector2(92,178),Vector2(90,182),Vector2(101,184),Vector2(98,184),Vector2(97,155),Vector2(104,150),Vector2(106,146),Vector2(105,150)])
+durations = PackedFloat32Array(0.07,0.08,0.08,0.09,0.10,0.10,0.12,0.14)
+looping = false
+draw_scale = 2.05
+depth_bias = 0.12
+magenta_backing = true
+

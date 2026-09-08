@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "character": "hydra",
+  "action": "defeat",
+  "direction": "north",
+  "generator": "built-in image_gen",
+  "source_generated_image": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-17277b8b-835a-481c-8ff3-45089bbbdb58.png",
+  "sha256": "708ecbf7e0663fc757c590fea07a6c4c8ea2c9915e5536b64b2163ec64b8b7b2",
+  "source_batch": "art_batches/hydra_batch_01/manifest.json",
+  "exact_prompt": "Create ONE rich pixel-art HYDRA sprite sheet, FOUR columns x EIGHT rows =32 isolated complete drawings. Portrait canvas1024x2048 or larger1:2. Four eight-frame actions; each action occupies TWO consecutive rows of FOUR frames, read row-major. Fixed cell width256 height256, generous15% gutters, no overlaps. Same reference monster: exactlyTHREE serpentine heads and necks, stocky four-legged crocodilian green body, gold throat plates and bronze dorsal spikes, long coiledtail, yelloweyes. No extra heads/limbs, no wings. Elevated classic2D pixel game perspective, mature detailed darkoutline pixelclusters matching reference. Uniform magenta#FF00FF background, no shadows, text, grid or checkerboard. Fullbody andtail fit everycell, consistent scale and foot anchors. Actions: rows1-2 WALK eightframes with alternating planted and raised fore/hindlegs, weighttransfer and tailcountermotion; rows3-4 BITE eightframes: ready,three heads recoil,neck coils,lean forward,full biting extension,close jaws,withdraw,recover; rows5-6 HURT eightframes:ready,flinch,leftheadrecoil,centralheadrecoil,lowcrouch,catchbalance,lift,recover; rows7-8 DEFEAT eightframes:hit,allheadsweaken,forekneesfold,bodylowers,leftheadfalls,rightheadfalls,middleheadfalls,fullycollapsedbody andthree headsgrounded. No gore/dismemberment. Every cell a genuinely different chronological stage, no repeated idle filler. ALL32 drawings face NORTH away from viewer, show armored backs of three necks and tail toward camera; no front-facing flip.\n",
+  "raster_processing": "none; complete source sheet copied byte-for-byte",
+  "resource": "themes/hydra_north_defeat.tres",
+  "selected_rows": [
+    6,
+    7
+  ],
+  "frames": 8,
+  "duration_seconds": 0.78,
+  "status": "resource and native actor review passed; board integration coordinator-owned",
+  "review_note": "Uniform scale with measured foot/support pivots. South all three heads remain visible; north middle head folds away behind back in late poses, anatomically occluded."
+}
