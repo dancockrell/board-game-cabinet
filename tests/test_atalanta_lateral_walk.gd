@@ -20,9 +20,12 @@ func _initialize() -> void:
 		actor.reset_playback(RESTS[i])
 		actor.set_locomotion(walk)
 		var time := 0.0
+		if i == 0: check(walk.frame_atlases.size() == 8, "East has eight authored source frames")
 		for phase in walk.durations.size():
 			actor.show_time(time + .001)
 			check(actor.texture.region == Rect2(walk.regions[phase]), "Each authored phase reached in order")
+			var expected_source = walk.atlas if walk.frame_atlases.is_empty() else walk.frame_atlases[phase]
+			check(actor.texture.atlas == expected_source, "Each phase selects its own authored image")
 			time += walk.durations[phase]
 		actor.show_time(time + .001)
 		check(actor.texture.region == Rect2(walk.regions[0]), "Walk loops to first phase")
@@ -34,4 +37,5 @@ func _initialize() -> void:
 		actor.free()
 	print("Atalanta lateral walk checks: ", checks, "; failures: ", failures)
 	quit(1 if failures else 0)
+
 

@@ -31,7 +31,7 @@
     "90-frame native sequence captured in outputs/atalanta-lateral-walk-review; four phases inspected. Initial lateral drift corrected with measured per-frame pivots."
   ],
   "character": "Atalanta",
-  "status": "provisional lateral walk; integration pending",
+  "status": "East eight authored phase sources provisionally admitted; West four phase sources unchanged",
   "correction_contract": "Only change legs and arm counter-swing; preserve identity, layout and equipment. Col1 near leg forward; col2 near leg beneath hips, far knee forward raised; col3 near leg back far leg forward; col4 far leg beneath hips near knee forward raised. Distinct contact/passing silhouettes with negative space.",
   "sources": [
     {
@@ -58,5 +58,102 @@
     "date": "2026-09-08",
     "useful_admitted_frames": 0,
     "result": "Rejected: repeated support-leg poses, then identity drift in independent generation. Active short clip unchanged; richer-cycle requirement unfinished."
+  },
+  "isolated_east_workflow": {
+    "validation": "Native lateral test33checks0failures",
+    "review": "Native90frames at30fps, all8phases reviewed; source shapes and groundpoints preserved",
+    "limitations": [
+      "Far leg shadow too dark in several phases, can read as stocking",
+      "Arms/bow mostly held steady rather than full counter-swing",
+      "Eight keyposes still require more intermediate cadence polish",
+      "West remains four poses"
+    ],
+    "shared_source_folder": "C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-atalanta-east-eight-2026-09-08/isolated-poses",
+    "phase_creation_ids": [
+      "6ce83a8f-f564-48d8-bd76-4c75fbbfa369",
+      "1aad9a92-143e-4d01-8f15-0d6e43b9e089",
+      "58384122-fcbb-4a2b-a8a7-80533522326d",
+      "1faaa57f-7cef-4b64-94a5-21e01fffb304",
+      "a8895733-e61a-4ce6-83e8-e981f5c0fe41",
+      "0f07501d-747b-45ac-ac0e-a09075e1b02d",
+      "2f2b502f-0d83-4919-babd-dc4d32e92d98",
+      "d5460338-3159-44b8-af63-c447437b8c03"
+    ],
+    "runtime_resource": "themes/atalanta_east_walk.tres",
+    "sources": [
+      {
+        "sha256": "dd401dc2633dd8fd659b2e667130b9bc6faa31ac2c80d73936613da97375016e",
+        "selected_phase": 1,
+        "creation_id": "6ce83a8f-f564-48d8-bd76-4c75fbbfa369",
+        "file": "6ce83a8f-f564-48d8-bd76-4c75fbbfa369.png"
+      },
+      {
+        "sha256": "9cf63fc017127a68fa529cdf6e54136190ff4bf1cae74b11226e9f589e4611fd",
+        "selected_phase": 0,
+        "creation_id": "520e685c-0f3a-4d6a-9df3-d4ed78c1655e",
+        "file": "520e685c-0f3a-4d6a-9df3-d4ed78c1655e.png"
+      },
+      {
+        "sha256": "25ea00ad8a0c08bb27e89787ba6f2a6acf23103d9271302480b99f45783eb2ac",
+        "selected_phase": 0,
+        "creation_id": "1e8f5d89-b07a-4cd2-be0b-3e10fdb1ec51",
+        "file": "1e8f5d89-b07a-4cd2-be0b-3e10fdb1ec51.png"
+      },
+      {
+        "sha256": "0cfb08731c5fb828a3d8b2876fcd58103984fb5bb81057327ee71ebb1ff50459",
+        "selected_phase": 5,
+        "creation_id": "a8895733-e61a-4ce6-83e8-e981f5c0fe41",
+        "file": "a8895733-e61a-4ce6-83e8-e981f5c0fe41.png"
+      },
+      {
+        "sha256": "6384813c36e6538275e113c58bbb74375ba27c102e85ee9dbf214212c475df96",
+        "selected_phase": 7,
+        "creation_id": "2f2b502f-0d83-4919-babd-dc4d32e92d98",
+        "file": "2f2b502f-0d83-4919-babd-dc4d32e92d98.png"
+      },
+      {
+        "sha256": "13707b5e7a4ccb4164eb739789aeb6959e83be4d56bc291cee4ebdce5a0ab2c2",
+        "selected_phase": 3,
+        "creation_id": "58384122-fcbb-4a2b-a8a7-80533522326d",
+        "file": "58384122-fcbb-4a2b-a8a7-80533522326d.png"
+      },
+      {
+        "sha256": "d1f163b48a655b7a7a8b772809596ad828be2da6615d19a7644e78e6cb156fc8",
+        "selected_phase": 0,
+        "creation_id": "7e983c3a-9fcf-4c07-a249-b495e1e8707a",
+        "file": "7e983c3a-9fcf-4c07-a249-b495e1e8707a.png"
+      },
+      {
+        "sha256": "fc2432e146bb81fc10fdef7eabad066ee8943111fa821e2b1e24fa3d32bfa508",
+        "selected_phase": 0,
+        "creation_id": "70d7580f-e340-4278-a297-62cee3d84ef2",
+        "file": "70d7580f-e340-4278-a297-62cee3d84ef2.png"
+      },
+      {
+        "sha256": "9c8e2462770f672d2de287d05dce61679a1ee82a29df96017e45c84fcb0d53bd",
+        "selected_phase": 4,
+        "creation_id": "1faaa57f-7cef-4b64-94a5-21e01fffb304",
+        "file": "1faaa57f-7cef-4b64-94a5-21e01fffb304.png"
+      },
+      {
+        "sha256": "47328ee6557c5460419e69d98243d5a6cee05e8bf5b0dab9e6024dbc43147112",
+        "selected_phase": 8,
+        "creation_id": "d5460338-3159-44b8-af63-c447437b8c03",
+        "file": "d5460338-3159-44b8-af63-c447437b8c03.png"
+      },
+      {
+        "sha256": "ec20110659a14fd87f454af6119743be9f49f0e50a279f64e38f796a5402ad8b",
+        "selected_phase": 2,
+        "creation_id": "1aad9a92-143e-4d01-8f15-0d6e43b9e089",
+        "file": "1aad9a92-143e-4d01-8f15-0d6e43b9e089.png"
+      },
+      {
+        "sha256": "b52f8de824135205132a1fa2d8a85e59c88f1ea4b3747c3b581bf8e54f3ea87b",
+        "selected_phase": 6,
+        "creation_id": "0f07501d-747b-45ac-ac0e-a09075e1b02d",
+        "file": "0f07501d-747b-45ac-ac0e-a09075e1b02d.png"
+      }
+    ],
+    "frame_seconds": 0.1
   }
 }
