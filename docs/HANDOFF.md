@@ -22,6 +22,14 @@ The 2026-09-08 owner decision applies to every project and shared pack: 2D artwo
 
 No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy copies in the shared library, other project checkouts, old build outputs and historical releases require separate removal. Current 2D sources, candidates and reference art remain valuable and are not deletion targets. The earlier archive-for-later decision is superseded.
 
+## Source update after the prepared-attacks Windows checkpoint
+
+The source now expands Atalanta's north attack from two to five drawings, adding three authored bow-lowering recovery poses while preserving the .09-second release marker. Heracles now has four independently drawn westward walking poses connected to authoritative board movement. Medusa's north walk expands from two to six selected gait drawings. These are actual new drawings, not duplicated timing cells or mirrored equipment.
+
+Attack cancellation releases its facing lock before locomotion chooses direction, preventing a one-tick wrong-facing transition after target loss. Dedicated native tests cover the new resources and Heracles west board playback; all new tests are registered in the standard verifier.
+
+Remaining art work: Heracles still needs intermediate gait drawings and better rest continuity; Atalanta needs raising/draw poses and a smoother last lowering-to-rest transition; Medusa needs richer upper-body and snake motion. Four- and six-pose foundations are progress, not final smooth-animation approval. The Windows download below predates this source update.
+
 ## Current Windows checkpoint: prepared attacks and character continuity
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-prepared-attacks-2026-09-08
