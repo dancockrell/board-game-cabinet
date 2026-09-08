@@ -25,6 +25,24 @@ func run():
 	actor.reset_playback(Walk)
 	assert(actor._shown==0)
 	actor.free()
+	var board=preload("res://presentation/olympus_arena_board.gd").new()
+	root.add_child(board)
+	var state={"units":[{"id":1,"kind":"hydra","side":1,"x":0.0,"z":-2.0,"hp":100.0,"max_hp":100.0}],"towers":[],"elapsed":1.0,"events":[]}
+	board.show_state(state,0.0)
+	var moving=board._tokens[1].get_node("Figure/PixelActor")
+	var seen=[]
+	for step in 24:
+		state.units[0].z+=.04
+		state.elapsed+=.05
+		board.show_state(state,.05)
+		assert(moving.clip==Walk)
+		if not seen.has(moving._shown): seen.append(moving._shown)
+		assert(is_equal_approx(board._tokens[1].position.z,state.units[0].z))
+	assert(seen.size()==8)
+	state.elapsed+=.05
+	board.show_state(state,.05)
+	assert(moving.clip==board.HYDRA_IDLE.south)
+	board.free()
 	print("Hydra south walk: eight distinct cells, ordered timing, loop, pause and reset passed")
 	quit(0)
 
