@@ -50,5 +50,13 @@
       ],
       "sha256": "029c6a8bbf27a1d910974103d8c07970136d90d198ef539d885185efed6e6688"
     }
-  ]
+  ],
+  "richer_east_followup": {
+    "generation_count": 4,
+    "shared_candidate_folder": "C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-atalanta-east-eight-2026-09-08",
+    "requested": "Eight or more genuine authored walk phases",
+    "date": "2026-09-08",
+    "useful_admitted_frames": 0,
+    "result": "Rejected: repeated support-leg poses, then identity drift in independent generation. Active short clip unchanged; richer-cycle requirement unfinished."
+  }
 }
