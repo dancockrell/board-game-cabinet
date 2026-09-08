@@ -263,10 +263,12 @@ func _step_unit(unit: Dictionary) -> void:
 	# Every ground crossing uses a bridge, even when chasing an enemy.
 	if not unit.flying and current.y * destination.y < 0:
 		var sign_z := 1.0 if current.y > 0 else -1.0
-		if absf(current.x - float(unit.lane)) > 0.12 and absf(current.y) > 0.22:
+		if absf(current.x - float(unit.lane)) > BRIDGE_HALF_WIDTH and absf(current.y) > 0.22:
 			destination = Vector2(unit.lane, sign_z * (RIVER_BANK + 0.05))
 		else:
-			destination = Vector2(unit.lane, -sign_z * (RIVER_BANK + 0.05))
+			# Use the available deck width: forcing every ally to the center
+			# lets separation cancel forward progress at the entrance.
+			destination = Vector2(clampf(current.x, float(unit.lane)-BRIDGE_HALF_WIDTH+.02, float(unit.lane)+BRIDGE_HALF_WIDTH-.02), -sign_z * (RIVER_BANK + 0.05))
 	var next := current.move_toward(destination, float(unit.speed) * STEP * (0.45 if unit.slow > 0 else 1.0))
 	next = _constrain_position(unit, current, next)
 	if unit.kind == "minotaur" and not unit.charge_ready:

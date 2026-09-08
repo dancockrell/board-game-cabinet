@@ -41,7 +41,7 @@ func _init() -> void:
 		game.tick()
 		for unit in game.snapshot().units:
 			if absf(unit.z) < 0.15:
-				_check(absf(absf(unit.x) - 2.7) < 0.15, "ground unit crosses on bridge")
+				_check(absf(absf(unit.x) - 2.7) <= Arena.BRIDGE_HALF_WIDTH + 0.00001, "ground unit crosses on bridge")
 			if unit.z < 0:
 				crossed = true
 	_check(crossed, "unit crosses river")
