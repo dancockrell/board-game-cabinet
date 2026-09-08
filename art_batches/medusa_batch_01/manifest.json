@@ -1,0 +1,1239 @@
+{
+  "schema_version": 1,
+  "status": "candidate_not_runtime_admitted",
+  "character": "medusa",
+  "generator": "built-in image_gen",
+  "calls": 4,
+  "requested_cells": 128,
+  "visible_occupied_cells": 128,
+  "accepted_runtime_frames": 0,
+  "unique_motion_pose_count": "not claimed; occupied cells include similar and deliberately returning poses",
+  "raster_processing": "none; original PNG copied unchanged",
+  "reference": "assets/olympus_arena/sprites/medusa-v1.png",
+  "sheets": [
+    {
+      "direction": "south",
+      "file": "medusa-south-32.png",
+      "source": "C:/Users/Admin/.codex/generated_images/01a0801a-5f6c-76c1-91a0-ee69c0400058/exec-adba0b69-a74d-4aac-bba3-859ae2cfa52e.png",
+      "sha256": "62a7f6cfdcef2daac0686440ddda12038d9f4f6d5013b70393c6ff17a1014573",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "visible_occupied_cells": 32,
+      "column_boundaries": [
+        0,
+        222,
+        444,
+        665,
+        887,
+        1109,
+        1330,
+        1552,
+        1774
+      ],
+      "row_boundaries": [
+        0,
+        234,
+        456,
+        674,
+        887
+      ],
+      "prompt_file": "prompt-south.txt",
+      "rows": [
+        {
+          "action": "walk",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              62,
+              0,
+              112,
+              234
+            ],
+            [
+              269,
+              0,
+              113,
+              234
+            ],
+            [
+              490,
+              0,
+              117,
+              234
+            ],
+            [
+              712,
+              0,
+              114,
+              234
+            ],
+            [
+              934,
+              0,
+              113,
+              234
+            ],
+            [
+              1155,
+              0,
+              115,
+              234
+            ],
+            [
+              1376,
+              0,
+              117,
+              234
+            ],
+            [
+              1599,
+              0,
+              115,
+              234
+            ]
+          ],
+          "duration_seconds_per_cell": 0.12,
+          "looping": true,
+          "review": "Walk mostly repeats the same leading leg; requires a new gait row."
+        },
+        {
+          "action": "gaze_attack",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              58,
+              234,
+              115,
+              222
+            ],
+            [
+              266,
+              234,
+              122,
+              222
+            ],
+            [
+              476,
+              234,
+              130,
+              222
+            ],
+            [
+              702,
+              234,
+              132,
+              222
+            ],
+            [
+              908,
+              234,
+              157,
+              222
+            ],
+            [
+              1103,
+              234,
+              213,
+              222
+            ],
+            [
+              1378,
+              234,
+              123,
+              222
+            ],
+            [
+              1602,
+              234,
+              115,
+              222
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Hands and snakes progress through brace/extension/recovery; return has a pose jump."
+        },
+        {
+          "action": "hurt",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              58,
+              456,
+              115,
+              218
+            ],
+            [
+              262,
+              456,
+              123,
+              218
+            ],
+            [
+              491,
+              456,
+              120,
+              218
+            ],
+            [
+              704,
+              456,
+              122,
+              218
+            ],
+            [
+              931,
+              456,
+              117,
+              218
+            ],
+            [
+              1152,
+              456,
+              122,
+              218
+            ],
+            [
+              1382,
+              456,
+              119,
+              218
+            ],
+            [
+              1601,
+              456,
+              116,
+              218
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Readable flinch/recovery; end and start intentionally similar."
+        },
+        {
+          "action": "defeat",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              51,
+              674,
+              117,
+              213
+            ],
+            [
+              267,
+              674,
+              119,
+              213
+            ],
+            [
+              489,
+              674,
+              118,
+              213
+            ],
+            [
+              707,
+              674,
+              117,
+              213
+            ],
+            [
+              919,
+              674,
+              119,
+              213
+            ],
+            [
+              1100,
+              674,
+              182,
+              213
+            ],
+            [
+              1296,
+              674,
+              225,
+              213
+            ],
+            [
+              1530,
+              674,
+              230,
+              213
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Progressive knees/hands/side fall; candidate for native admission."
+        }
+      ],
+      "region_method": "Read-only foreground column measurement per row, two pixels padding; no raster edits. Equal grid has silhouette bleed in falling poses."
+    },
+    {
+      "direction": "north",
+      "file": "medusa-north-32.png",
+      "source": "C:/Users/Admin/.codex/generated_images/01a0801a-5f6c-76c1-91a0-ee69c0400058/exec-7c3a836b-28c8-45a4-9c16-123afa7e43db.png",
+      "sha256": "04ce00d8d4882096a3503229b3607e3715771de0c3492f30afa2cfe52740c11b",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "visible_occupied_cells": 32,
+      "column_boundaries": [
+        0,
+        222,
+        444,
+        665,
+        887,
+        1109,
+        1330,
+        1552,
+        1774
+      ],
+      "row_boundaries": [
+        0,
+        228,
+        450,
+        668,
+        887
+      ],
+      "prompt_file": "prompt-north.txt",
+      "rows": [
+        {
+          "action": "walk",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              63,
+              0,
+              102,
+              228
+            ],
+            [
+              277,
+              0,
+              103,
+              228
+            ],
+            [
+              502,
+              0,
+              100,
+              228
+            ],
+            [
+              720,
+              0,
+              104,
+              228
+            ],
+            [
+              947,
+              0,
+              102,
+              228
+            ],
+            [
+              1169,
+              0,
+              102,
+              228
+            ],
+            [
+              1389,
+              0,
+              104,
+              228
+            ],
+            [
+              1613,
+              0,
+              100,
+              228
+            ]
+          ],
+          "duration_seconds_per_cell": 0.12,
+          "looping": true,
+          "review": "Alternating heels visible but toe-off/passing phases need playback scrutiny."
+        },
+        {
+          "action": "gaze_attack",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              61,
+              228,
+              105,
+              222
+            ],
+            [
+              269,
+              228,
+              127,
+              222
+            ],
+            [
+              482,
+              228,
+              139,
+              222
+            ],
+            [
+              706,
+              228,
+              141,
+              222
+            ],
+            [
+              927,
+              228,
+              158,
+              222
+            ],
+            [
+              1106,
+              228,
+              221,
+              222
+            ],
+            [
+              1348,
+              228,
+              195,
+              222
+            ],
+            [
+              1610,
+              228,
+              104,
+              222
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Clear arms and snake extension; fast late return."
+        },
+        {
+          "action": "hurt",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              62,
+              450,
+              104,
+              218
+            ],
+            [
+              267,
+              450,
+              130,
+              218
+            ],
+            [
+              497,
+              450,
+              111,
+              218
+            ],
+            [
+              715,
+              450,
+              118,
+              218
+            ],
+            [
+              935,
+              450,
+              122,
+              218
+            ],
+            [
+              1154,
+              450,
+              124,
+              218
+            ],
+            [
+              1381,
+              450,
+              111,
+              218
+            ],
+            [
+              1610,
+              450,
+              104,
+              218
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Flinch/braced stance changes readable; late recovery similar."
+        },
+        {
+          "action": "defeat",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              43,
+              668,
+              139,
+              219
+            ],
+            [
+              277,
+              668,
+              123,
+              219
+            ],
+            [
+              488,
+              668,
+              132,
+              219
+            ],
+            [
+              700,
+              668,
+              139,
+              219
+            ],
+            [
+              905,
+              668,
+              153,
+              219
+            ],
+            [
+              1113,
+              668,
+              184,
+              219
+            ],
+            [
+              1312,
+              668,
+              208,
+              219
+            ],
+            [
+              1537,
+              668,
+              219,
+              219
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Forward fall has eight progressive drawings."
+        }
+      ],
+      "region_method": "Read-only foreground column measurement per row, two pixels padding; no raster edits. Equal grid has silhouette bleed in falling poses."
+    },
+    {
+      "direction": "east",
+      "file": "medusa-east-32.png",
+      "source": "C:/Users/Admin/.codex/generated_images/01a0801a-5f6c-76c1-91a0-ee69c0400058/exec-cf8184aa-729c-4692-989d-7a37a4c2b369.png",
+      "sha256": "f3f889ade66dbc8f887196d449b2e2d8d9a38c1cb6532fff578b2873a2bd24e2",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "visible_occupied_cells": 32,
+      "column_boundaries": [
+        0,
+        222,
+        444,
+        665,
+        887,
+        1109,
+        1330,
+        1552,
+        1774
+      ],
+      "row_boundaries": [
+        0,
+        230,
+        455,
+        674,
+        887
+      ],
+      "prompt_file": "prompt-east.txt",
+      "rows": [
+        {
+          "action": "walk",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              67,
+              0,
+              116,
+              230
+            ],
+            [
+              270,
+              0,
+              115,
+              230
+            ],
+            [
+              474,
+              0,
+              115,
+              230
+            ],
+            [
+              692,
+              0,
+              111,
+              230
+            ],
+            [
+              895,
+              0,
+              122,
+              230
+            ],
+            [
+              1117,
+              0,
+              122,
+              230
+            ],
+            [
+              1335,
+              0,
+              121,
+              230
+            ],
+            [
+              1559,
+              0,
+              124,
+              230
+            ]
+          ],
+          "duration_seconds_per_cell": 0.12,
+          "looping": true,
+          "review": "Eight drawings retain near-identical leading leg; not a valid complete gait."
+        },
+        {
+          "action": "gaze_attack",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              68,
+              230,
+              106,
+              225
+            ],
+            [
+              252,
+              230,
+              128,
+              225
+            ],
+            [
+              468,
+              230,
+              129,
+              225
+            ],
+            [
+              683,
+              230,
+              120,
+              225
+            ],
+            [
+              886,
+              230,
+              162,
+              225
+            ],
+            [
+              1118,
+              230,
+              192,
+              225
+            ],
+            [
+              1359,
+              230,
+              127,
+              225
+            ],
+            [
+              1585,
+              230,
+              116,
+              225
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Brace/extend/recover progression; frame eight remains braced."
+        },
+        {
+          "action": "hurt",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              68,
+              455,
+              105,
+              219
+            ],
+            [
+              256,
+              455,
+              137,
+              219
+            ],
+            [
+              443,
+              455,
+              176,
+              219
+            ],
+            [
+              652,
+              455,
+              178,
+              219
+            ],
+            [
+              900,
+              455,
+              125,
+              219
+            ],
+            [
+              1124,
+              455,
+              130,
+              219
+            ],
+            [
+              1352,
+              455,
+              118,
+              219
+            ],
+            [
+              1574,
+              455,
+              120,
+              219
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Recoil and recovery sequence; final frames similar."
+        },
+        {
+          "action": "defeat",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              60,
+              674,
+              132,
+              213
+            ],
+            [
+              243,
+              674,
+              133,
+              213
+            ],
+            [
+              429,
+              674,
+              155,
+              213
+            ],
+            [
+              628,
+              674,
+              178,
+              213
+            ],
+            [
+              829,
+              674,
+              188,
+              213
+            ],
+            [
+              1037,
+              674,
+              213,
+              213
+            ],
+            [
+              1263,
+              674,
+              231,
+              213
+            ],
+            [
+              1507,
+              674,
+              239,
+              213
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Knees/hands/side fall progression, consistent right-facing identity."
+        }
+      ],
+      "region_method": "Read-only foreground column measurement per row, two pixels padding; no raster edits. Equal grid has silhouette bleed in falling poses."
+    },
+    {
+      "direction": "west",
+      "file": "medusa-west-32.png",
+      "source": "C:/Users/Admin/.codex/generated_images/01a0801a-5f6c-76c1-91a0-ee69c0400058/exec-147a0abc-e243-43c7-9aac-a83ef6655c74.png",
+      "sha256": "90901451c4b196e6519c5fc379cf8f303cc4ac1a4826068c1d2c54ba2d006d1c",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGB",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_grid": [
+        8,
+        4
+      ],
+      "visible_occupied_cells": 32,
+      "column_boundaries": [
+        0,
+        222,
+        444,
+        665,
+        887,
+        1109,
+        1330,
+        1552,
+        1774
+      ],
+      "row_boundaries": [
+        0,
+        228,
+        450,
+        670,
+        887
+      ],
+      "prompt_file": "prompt-west.txt",
+      "rows": [
+        {
+          "action": "walk",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              54,
+              0,
+              118,
+              228
+            ],
+            [
+              284,
+              0,
+              105,
+              228
+            ],
+            [
+              509,
+              0,
+              100,
+              228
+            ],
+            [
+              722,
+              0,
+              109,
+              228
+            ],
+            [
+              940,
+              0,
+              119,
+              228
+            ],
+            [
+              1164,
+              0,
+              112,
+              228
+            ],
+            [
+              1394,
+              0,
+              101,
+              228
+            ],
+            [
+              1609,
+              0,
+              109,
+              228
+            ]
+          ],
+          "duration_seconds_per_cell": 0.12,
+          "looping": true,
+          "review": "Contacts/passing vary but opposite-leg stride still weak."
+        },
+        {
+          "action": "gaze_attack",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              64,
+              228,
+              106,
+              222
+            ],
+            [
+              266,
+              228,
+              121,
+              222
+            ],
+            [
+              478,
+              228,
+              136,
+              222
+            ],
+            [
+              722,
+              228,
+              116,
+              222
+            ],
+            [
+              905,
+              228,
+              161,
+              222
+            ],
+            [
+              1109,
+              228,
+              209,
+              222
+            ],
+            [
+              1383,
+              228,
+              114,
+              222
+            ],
+            [
+              1614,
+              228,
+              105,
+              222
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Distinct reach/peak; abrupt return at column seven."
+        },
+        {
+          "action": "hurt",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              64,
+              450,
+              105,
+              220
+            ],
+            [
+              253,
+              450,
+              135,
+              220
+            ],
+            [
+              474,
+              450,
+              133,
+              220
+            ],
+            [
+              693,
+              450,
+              140,
+              220
+            ],
+            [
+              923,
+              450,
+              137,
+              220
+            ],
+            [
+              1152,
+              450,
+              118,
+              220
+            ],
+            [
+              1384,
+              450,
+              110,
+              220
+            ],
+            [
+              1613,
+              450,
+              105,
+              220
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Guard/flinch/knee/recovery sequence; last poses similar."
+        },
+        {
+          "action": "defeat",
+          "frame_order": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "regions": [
+            [
+              48,
+              670,
+              133,
+              217
+            ],
+            [
+              253,
+              670,
+              126,
+              217
+            ],
+            [
+              454,
+              670,
+              169,
+              217
+            ],
+            [
+              671,
+              670,
+              180,
+              217
+            ],
+            [
+              892,
+              670,
+              184,
+              217
+            ],
+            [
+              1101,
+              670,
+              194,
+              217
+            ],
+            [
+              1312,
+              670,
+              220,
+              217
+            ],
+            [
+              1535,
+              670,
+              230,
+              217
+            ]
+          ],
+          "duration_seconds_per_cell": 0.1,
+          "looping": false,
+          "review": "Clear progressive knee/floor/side collapse, left-facing identity."
+        }
+      ],
+      "region_method": "Read-only foreground column measurement per row, two pixels padding; no raster edits. Equal grid has silhouette bleed in falling poses."
+    }
+  ]
+}
