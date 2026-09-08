@@ -1,4 +1,4 @@
-Current status: EAST has four authored walking key poses connected to the board. WEST has seven native-reviewed walking poses connected to the board; four-key history below is superseded by the inbetween admission at the end. The failed experiments below are historical; the natural-palette foundation and coordinator admission at the end describe the current implementation.
+Current status: EAST has four authored walking key poses connected to the board. WEST has eight native-reviewed walking poses connected to the board; the four- and seven-pose histories below are superseded by the eight-pose admission at the end. The failed experiments below are historical; the natural-palette foundation and coordinator admission at the end describe the current implementation.
 
 # Heracles lateral walk: rejected experiment
 
@@ -90,3 +90,12 @@ The existing four originals remain untouched. The Resource now orders seven uniq
 Native test_heracles_west_walk passes 20 checks. The coordinator-owned test_heracles_west_board was updated under explicit delegation to validate all Resource frames dynamically; it passes actual source selection, authoritative movement and stopped recovery. Native review captured 90 frames at 30 fps in outputs/Heracles-West-Seven-Pose-Study, with all seven phases inspected at frames 0, 3, 6, 11, 14, 17 and 20. Video: outputs/Heracles-West-Seven-Poses.mp4. Slight independent-cel texture variation remains; this is improved grounding, not final polish or a newly exported build claim.
 
 All four unchanged generation originals, exact prompts and hashes are local in shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-west-inbetweens-2026-09-08. Runtime provenance: assets/olympus_arena/sprites/heracles-west-inbetweens.provenance.json. No public shared upload was made.
+
+
+## WEST completed eight-phase gait foundation
+
+One isolated built-in edit filled the missing far forward-swing transition. Starting from the already accepted far-foot contact and asking for the instant before landing preserved the dark far thigh/calf and foreground leg overlap. This succeeded where asking a passing pose to step forward had lost leg shadow separation. Club ownership, lion pelt, camera and upper-body identity remain consistent.
+
+The Resource now contains eight distinct source drawings at 0.09 seconds each, preserving the 0.72-second cycle while removing the uneven passing hold. Native walk checks: 22, zero failures; the dynamic board test passes source selection, authoritative movement and stopped recovery. Native sequential review in outputs/Heracles-West-Eight-Pose-Study inspected the previous passing frame 6, new swing frame 9 and following contact frame 11. Normal-camera battlefield capture in outputs/Heracles-West-Eight-Board ran 100 frames; frames 18/21/24 verified the same sequence at gameplay size and frame 85 verified stopped rest. This is source-native validation, not a new export claim.
+
+The new unchanged original, exact prompt and SHA256 hash are archived locally in shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-west-far-swing-2026-09-08. Runtime provenance: assets/olympus_arena/sprites/heracles-west-far-swing.provenance.json. The seven existing originals remain untouched. Eight phases complete this gait foundation, not all animation polish: pelt and arms remain restrained and minor texture variation persists.

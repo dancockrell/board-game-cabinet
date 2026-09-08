@@ -12,7 +12,7 @@ func check(ok: bool, label: String) -> void:
 		push_error(label)
 func _initialize() -> void:
 	check(WALK.validation_error().is_empty(), "West clip validates")
-	check(WALK.regions.size() == 7 and WALK.frame_atlases.size() == 7, "Seven individually authored west sources")
+	check(WALK.regions.size() == 8 and WALK.frame_atlases.size() == 8, "Eight individually authored west sources")
 	var actor := Actor.new()
 	actor.reset_playback(REST)
 	actor.set_locomotion(WALK)
@@ -24,7 +24,7 @@ func _initialize() -> void:
 		check(actor.texture.region == Rect2(WALK.regions[phase]), "West source region stays intact")
 		seen[actor.texture.atlas.resource_path] = true
 		elapsed += WALK.durations[phase]
-	check(seen.size() == WALK.regions.size(), "No repeated atlas fills the seven-source cycle")
+	check(seen.size() == WALK.regions.size(), "No repeated atlas fills the eight-source cycle")
 	actor.show_time(elapsed + .001)
 	check(actor.texture.atlas == WALK.frame_atlases[0], "West cycle loops")
 	actor.play_attack(1, ATTACK)
@@ -35,5 +35,6 @@ func _initialize() -> void:
 	actor.free()
 	print("Heracles west walk checks: ", checks, "; failures: ", failures)
 	quit(1 if failures else 0)
+
 
 

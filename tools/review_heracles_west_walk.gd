@@ -30,7 +30,7 @@ func run() -> void:
 		actor.reset_playback(REST if i == 0 else WALK)
 		actors.append(actor)
 	var title := Label.new()
-	title.text = "HERACLES WEST - REST (LEFT) / SEVEN DRAWN WALK POSES (RIGHT)"
+	title.text = "HERACLES WEST - REST (LEFT) / EIGHT DRAWN WALK POSES (RIGHT)"
 	title.position = Vector2(24,24)
 	root.add_child(title)
 	if not capture.is_empty(): DirAccess.make_dir_recursive_absolute(capture)
@@ -40,4 +40,5 @@ func run() -> void:
 		await RenderingServer.frame_post_draw
 		if not capture.is_empty(): root.get_texture().get_image().save_png(capture.path_join("frame-%04d.png" % frame))
 	quit()
+
 

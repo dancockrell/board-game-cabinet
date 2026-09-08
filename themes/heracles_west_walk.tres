@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=9 format=3]
+[gd_resource type="Resource" load_steps=10 format=3]
 [ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-west-walk-phase-1.png" id="2"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-west-walk-near-land.png" id="3"]
@@ -7,13 +7,15 @@
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-west-walk-far-settle.png" id="6"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-west-walk-phase-4.png" id="7"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-west-walk-near-swing.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-west-walk-far-swing.png" id="9"]
 [resource]
 script = ExtResource("1")
 atlas = ExtResource("2")
-frame_atlases = Array[Texture2D]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8")])
-regions = Array[Rect2i]([Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024)])
-frame_pivots = Array[Vector2]([Vector2(750,913), Vector2(750,903), Vector2(750,913), Vector2(750,909), Vector2(750,899), Vector2(750,893), Vector2(750,885)])
-frame_draw_scales = PackedFloat32Array(0.725,0.731,0.725,0.729,0.735,0.744,0.75)
-durations = PackedFloat32Array(0.09,0.09,0.18,0.09,0.09,0.09,0.09)
+frame_atlases = Array[Texture2D]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("9"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8")])
+regions = Array[Rect2i]([Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024), Rect2i(0,0,1536,1024)])
+frame_pivots = Array[Vector2]([Vector2(750,913), Vector2(750,903), Vector2(750,913), Vector2(750,909), Vector2(750,909), Vector2(750,899), Vector2(750,893), Vector2(750,885)])
+frame_draw_scales = PackedFloat32Array(0.725,0.731,0.725,0.729,0.729,0.735,0.744,0.75)
+durations = PackedFloat32Array(0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09)
 looping = true
 magenta_backing = true
+

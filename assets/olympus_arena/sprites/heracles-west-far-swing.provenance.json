@@ -1,0 +1,13 @@
+{
+  "generator": "builtin imagegen",
+  "date": "2026-09-08",
+  "status": "admitted after native sequential and normal-camera board review",
+  "file": "heracles-west-walk-far-swing.png",
+  "generation_id": "exec-4924d731-23fc-4ad8-9c6f-17ea62037e6e",
+  "prompt": "Precise edit ONLY far leg of this LEFT-walking pixel-art Heracles. Produce the animation frame JUST BEFORE this foot contact. Keep bright foreground LEFT leg and all upper body exactly as shown. The shadow bronze FAR RIGHT leg at screen LEFT has not landed yet: bend its knee modestly, draw that dark calf a little closer to pelvis, and lift its whole front sandal off the ground by one sandal height with toes slightly up. The dark far sandal now hovers ahead at screen LEFT, while bright near sandal at screen RIGHT still supports weight. Preserve far leg's existing dark bronze shadow across BOTH thigh AND calf: NO bright white highlights on far leg. Bright near thigh continues crossing in front of far thigh. Keep exact club in far RIGHT hand at screen LEFT, empty near left hand screen RIGHT, lion pelt, red skirt, face, camera, size. One full-body cel same canvas, crisp pixel clusters on flat magenta, no ground shadow, no text. This is a small backward-in-time foot-swing change, not a new pose of torso.",
+  "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-8bdb-7921-b019-c8f3d357cc6e/exec-4924d731-23fc-4ad8-9c6f-17ea62037e6e.png",
+  "method": "Backward-in-time single edit from accepted far-foot contact, preserving leg shadows and upper body.",
+  "sha256": "98382A2F526F44E465D308A10A84A25E6BA0EDDD9856499A9FFCB404B1B7E73D",
+  "native_review": "Heracles-West-Eight-Pose-Study: previous passing frame 6, new swing frame 9, next contact frame 11; Heracles-West-Eight-Board: normal-camera frames 18,21,24 and stopped frame 85.",
+  "validation": "Native walk 22 checks zero failures; dynamic board source-selection/movement/stopped-recovery test passes; 100-frame normal-camera board capture completed."
+}
