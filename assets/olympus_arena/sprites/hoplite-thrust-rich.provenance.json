@@ -1,0 +1,25 @@
+{
+  "generator": "OpenAI built-in imagegen",
+  "source": "exec-da50fa76-35a9-44d5-8984-8ad421752911.png",
+  "sha256": "7df880e1e829d61ca7bc14b7ca2c23acde38fdf18770fdeebc81b7886b3f8627",
+  "source_poses": 12,
+  "playback_source_indices": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "excluded_pose": {
+    "index": 1,
+    "reason": "Low spear guard breaks continuous overhand thrust"
+  },
+  "duration_seconds": 0.59,
+  "notes": "Untouched keyed original; per-frame foot anchors. Eleven distinct poses, no repeated padding. Perspective and transitions remain provisional pending further polish."
+}
