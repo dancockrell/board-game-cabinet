@@ -28,9 +28,21 @@ The source now expands Atalanta's north attack from two to five drawings, adding
 
 Attack cancellation releases its facing lock before locomotion chooses direction, preventing a one-tick wrong-facing transition after target loss. Dedicated native tests cover the new resources and Heracles west board playback; all new tests are registered in the standard verifier.
 
-Remaining art work: Heracles still needs intermediate gait drawings and better rest continuity; Atalanta needs raising/draw poses and a smoother last lowering-to-rest transition; Medusa needs richer upper-body and snake motion. Four- and six-pose foundations are progress, not final smooth-animation approval. The Windows download below predates this source update.
+Remaining art work: Heracles still needs intermediate gait drawings and better rest continuity; Atalanta needs raising/draw poses and a smoother last lowering-to-rest transition; Medusa needs richer upper-body and snake motion. Four- and six-pose foundations are progress, not final smooth-animation approval. These changes are included in the expanded-motion Windows checkpoint below.
 
-## Current Windows checkpoint: prepared attacks and character continuity
+## Current Windows checkpoint: expanded character motion
+
+Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-expanded-motion-2026-09-08
+
+Source: `8162fb03703e158e2aaf265ba41f4327caf7a492`. Package: `Olympus-Expanded-Motion-Windows.zip` (130,754,123 bytes).
+ZIP SHA256: `84EC61B45379AC13B432E43223052F7091B2413AB4A930F1824A4034DAFC5A94`; remote release digest verified identical.
+Executable SHA256: `C3F1B0A566EC35EE8A605A99EB8621E50ED8F1CE8CCF0AD2F6456D86E872359E`.
+
+Export built from an isolated committed-source archive. Full native source verifier passed. Exported verification passed 1800 ticks, 30 legal deployments, seven character types, 13 collapse samples, result and rematch. All five Atalanta north attack frames and six Medusa north walk frames were observed. Heracles west was covered by dedicated source board tests rather than this match. Package includes notices, provenance, build notes and the exported verification report. Release also includes Atalanta lowering and Medusa walk native motion studies.
+
+More animation authoring remains active; this is a playable development checkpoint, not final art approval.
+
+## Previous Windows checkpoint: prepared attacks and character continuity
 
 Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-prepared-attacks-2026-09-08
 
