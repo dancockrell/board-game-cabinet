@@ -58,3 +58,9 @@ Build source: 09798cd996b6dc18b21633d687576724d139b73c. This supersedes the olde
 Executable SHA256: 0F5867B98542B603960EEF1230B15F60BE4D8EBBE26284B02CDFCAD57F01582D.
 ZIP SHA256: CB4373FE437D2622FFA8777BE78A093522D549126DA20A6C673A15C58D1DA76E; 76,820,127 bytes.
 Native exported verification: passed=true, failures=[], exported=true, 1,800 ticks, 30 legal deployments, seven characters, 13 collapse samples, result/state agreement and rematch reset. Battle capture inspected at outputs/Animated-Sprites-Export-Verification/battle-0300.png. Accelerated diagnostic is not real-time footage. The animated_idle_samples field groups Hydra and Harpy motion samples and should not be interpreted as proof of distinct idle frames.
+
+## Attached movement indicators
+
+Unit team footprints, health bars, hit/ability rings and damage-number origins now follow the same horizontal smoothing offset as the sprite. Replica roots remain exactly at authoritative coordinates. Native board tests: 81 checks passed, including movement, indicator alignment and pause invariance. This source change is newer than the animated-sprites Windows release above.
+
+The additional source capture run produced battle and collapse images, then ended without a result/report; complete-match acceptance from that run is unproven. Battle frame 300 was inspected. The previous published executable retains its separately verified full-match result.

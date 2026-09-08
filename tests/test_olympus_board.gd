@@ -34,6 +34,14 @@ func run() -> void:
 	check(board._tokens[1] == unit, "Unit reused for snapshot updates")
 	check(is_equal_approx(unit.position.z, 2.0), "Authoritative position rendered")
 	check(is_equal_approx(unit.get_node("Health/Fill").scale.x, 0.5), "Health ratio rendered")
+	var eased_figure: Node3D = unit.get_node("Figure")
+	check(eased_figure.position.z > 0.0, "Moving artwork retains a temporary smoothing offset")
+	for drawing in unit.get_children():
+		if drawing is Node3D:
+			check(is_equal_approx(drawing.position.x,eased_figure.position.x) and is_equal_approx(drawing.position.z,eased_figure.position.z), "Unit indicators remain attached to smoothed artwork")
+	var frozen_offset := eased_figure.position
+	board.show_state(state,0.0)
+	check(eased_figure.position == frozen_offset and unit.position.z == 2.0, "Pause holds presentation offset without changing authoritative position")
 	check(unit.get_node("Hit").visible, "Damage impact visible")
 	state.units[0].charge_ready = true
 	board.show_state(state, 0.05)

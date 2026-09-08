@@ -130,8 +130,12 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 		visual_offset += previous - target
 		visual_offset = visual_offset.lerp(Vector3.ZERO, 1.0 - exp(-delta * 28.0))
 		node.set_meta("visual_offset", visual_offset)
-		node.get_node("Figure").position.x = visual_offset.x
-		node.get_node("Figure").position.z = visual_offset.z
+		# Keep the sprite, team footprint and health/ability indicators together.
+		# The replica origin still snaps to authoritative coordinates for picking.
+		for drawing in node.get_children():
+			if drawing is Node3D:
+				drawing.position.x = visual_offset.x
+				drawing.position.z = visual_offset.z
 		if previous.distance_to(target) > 0.004:
 			_face_pixel_unit(node, Vector2(target.x-previous.x,target.z-previous.z))
 			if not node.get_node("Figure").has_node("PixelActor"):
@@ -410,7 +414,7 @@ func _damage_feedback(node: Node3D, hp: float, delta: float) -> void:
 			if str(node.get_meta("kind", ""))=="hoplites" and node.get_meta("pixel_facing","east")=="east": sprite.react_to_hit(serial,HOPLITE_GUARD)
 		timer = 0.22
 		var height: float = node.get_node("Health").position.y + 0.32
-		damage_numbers.show_loss(node.get_instance_id(), node.position + Vector3(0,height,0), previous_hp-hp)
+		damage_numbers.show_loss(node.get_instance_id(), node.position + Vector3(0,height,0) + Vector3(node.get_node("Health").position.x,0,node.get_node("Health").position.z), previous_hp-hp)
 	node.set_meta("previous_hp", hp)
 	node.set_meta("hit_time", timer)
 	var hit: MeshInstance3D = node.get_node("Hit")
