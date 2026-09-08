@@ -24,7 +24,7 @@ No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy cop
 
 ## Source update after the current Windows checkpoint
 
-Harpy north and south flight now each use eight authored wingbeat poses, with separate extended downstroke and bent-wing recovery drawings. Native60frame reviews per direction inspected all phases; both native movement/hover/pause/reset tests passed, board84 and integrated seven-character 2D match gate passed. See HARPY_RICH_FLIGHT.md. These source changes are newer than the packaged Windows checkpoint below.
+Harpy north and south flight now each use eight authored wingbeat poses, with separate extended downstroke and bent-wing recovery drawings. Native60frame reviews per direction inspected all phases; both native movement/hover/pause/reset tests passed, board84 and integrated seven-character 2D match gate passed. See HARPY_RICH_FLIGHT.md. Atalanta east walking also now uses eight individually authored poses with alternating contacts, passing and extension phases. Temporary limb-color guides were used only in generation intermediates; source originals remain in shared2D candidates. West walking remains four poses. These source changes are newer than the packaged Windows checkpoint below.
 
 ## Current Windows checkpoint — richer sprites
 
