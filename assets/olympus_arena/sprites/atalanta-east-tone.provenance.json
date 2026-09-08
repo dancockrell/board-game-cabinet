@@ -1,0 +1,49 @@
+{
+  "generator": "OpenAI built-in imagegen",
+  "purpose": "Natural far-leg shadow cleanup without changing gait poses",
+  "frames": [
+    {
+      "phase": 3,
+      "file": "atalanta-east-phase-3-tone.png",
+      "source": "exec-0de79187-62ae-45be-9a09-1b7bddcd2ac0.png",
+      "sha256": "fa635d94359cb5b5b2776495731751b2abda4c4969ac0f19bc1b7d7f18c01d10",
+      "source_pose": "atalanta-east-phase-3.png"
+    },
+    {
+      "phase": 4,
+      "file": "atalanta-east-phase-4-tone.png",
+      "source": "exec-6a8364b8-e06c-4838-96d6-92066d023707.png",
+      "sha256": "3194315c918b40e8e879a21949c908348020c81ed664d69ddac4cbef25f4935d",
+      "source_pose": "atalanta-east-phase-4.png"
+    },
+    {
+      "phase": 5,
+      "file": "atalanta-east-phase-5-tone.png",
+      "source": "exec-b89593fe-ca42-4f65-b190-1293570785c5.png",
+      "sha256": "31ac43e0306bed7e7ed5753742259fadf59ca92c6eb4dfd65b4a8f9572eaee2d",
+      "source_pose": "atalanta-east-phase-5.png"
+    },
+    {
+      "phase": 6,
+      "file": "atalanta-east-phase-6-tone.png",
+      "source": "exec-955dd6e8-5b6e-406e-88cb-771aae17fa7c.png",
+      "sha256": "cb0b4dd97a0124226531219b70c9c16d82f744fa0439aad44845f16eed895cbc",
+      "source_pose": "atalanta-east-phase-6.png"
+    },
+    {
+      "phase": 7,
+      "file": "atalanta-east-phase-7-tone.png",
+      "source": "exec-32cb5d5b-4b31-43a9-b871-ffb54b62234a.png",
+      "sha256": "0ecc04ad537a350191226439e6787f79675114667019578bf07dd5db4adb7e59",
+      "source_pose": "atalanta-east-phase-7.png"
+    },
+    {
+      "phase": 8,
+      "file": "atalanta-east-phase-8-tone.png",
+      "source": "exec-51acd1f5-1615-44ad-a44a-f884cb7d1c94.png",
+      "sha256": "bc23e892ccaed948ce50dcbb10a90b6e571fa26894ea59b1aa2334629f565df2",
+      "source_pose": "atalanta-east-phase-8.png"
+    }
+  ],
+  "remaining": "Minor contour/texture variation from generated edits; full native cycle review required."
+}

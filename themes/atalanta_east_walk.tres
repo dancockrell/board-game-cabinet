@@ -2,17 +2,17 @@
 [ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-1.png" id="2"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-2.png" id="3"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-3.png" id="4"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-4.png" id="5"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-5.png" id="6"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-6.png" id="7"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-7.png" id="8"]
-[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-8.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-3-tone.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-4-tone.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-5-tone.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-6-tone.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-7-tone.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-east-phase-8-tone.png" id="9"]
 [resource]
 script = ExtResource("1")
 atlas = ExtResource("2")
 frame_atlases = Array[Texture2D]([ExtResource("2"),ExtResource("3"),ExtResource("4"),ExtResource("5"),ExtResource("6"),ExtResource("7"),ExtResource("8"),ExtResource("9")])
-regions = Array[Rect2i]([Rect2i(0,0,1086,1448),Rect2i(0,0,1085,1450),Rect2i(0,0,1086,1449),Rect2i(0,0,1086,1448),Rect2i(0,0,1086,1448),Rect2i(0,0,1085,1450),Rect2i(0,0,1085,1450),Rect2i(0,0,1086,1448)])
+regions = Array[Rect2i]([Rect2i(0,0,1086,1448),Rect2i(0,0,1085,1450),Rect2i(0,0,1086,1448),Rect2i(0,0,1086,1448),Rect2i(0,0,1086,1448),Rect2i(0,0,1085,1450),Rect2i(0,0,1085,1450),Rect2i(0,0,1086,1448)])
 frame_pivots = Array[Vector2]([Vector2(511,1301),Vector2(518,1314),Vector2(508,1309),Vector2(508,1319),Vector2(512,1303),Vector2(518,1314),Vector2(508,1309),Vector2(510,1319)])
 durations = PackedFloat32Array(0.10,0.10,0.10,0.10,0.10,0.10,0.10,0.10)
 frame_draw_scales = PackedFloat32Array(0.495,0.477,0.495,0.495,0.495,0.477,0.495,0.495)
