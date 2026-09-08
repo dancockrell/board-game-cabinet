@@ -1,6 +1,14 @@
-# Atalanta north attack: authored lowering recovery
+# Atalanta north attack: eight authored raising, release and lowering poses
 
-The live attack has five independently drawn poses: corrected aim, release, shoulder-level bow lowering, bent-elbow lowering, and relaxed low-arm recovery. The three new drawings preserve left-hand bow, right-hip quiver and left-shoulder shawl. The release marker remains .09 seconds; durations are .09/.075/.075/.075/.09 (total .405 seconds). All sources use the full 1254-square canvas, pivot (675,1067) and scale .708.
+The live clip now adds low nocking, bent-elbow draw and shoulder-level draw ahead of the accepted aim/release and three lowering poses. These are independent source drawings. Release moves to .315 seconds (three .075-second raising poses plus .09-second aim); total duration is .630 seconds. The authoritative hit remains synchronized through the Resource strike marker; no rules timing was changed.
+
+Four built-in image-generation edits produced three admitted raising poses and one rejected intermediate with an extra flesh protrusion below the arm, corrected by the fourth edit. Exact prompts, original hashes and admission decisions are in `assets/olympus_arena/sprites/atalanta-north-raising.provenance.json`. All originals are unchanged in local shared `assets/candidates_needing_review/olympus-atalanta-north-raising-2026-09-08`. No paid API, masking, painting or public shared upload.
+
+Native test passes 28 checks including actual chronological texture selection for all eight poses, correct release marker and recovery to canonical rest. A 90-frame 30fps capture and adjacent MP4 are at `outputs/Atalanta-North-Raising`. Low12, bent14, shoulder17, aim19 and release21 were visually inspected in sequence. The head/feet stay registered, and bow/hip quiver/shoulder shawl retain their proper sides. Minor hem and texture differences remain; the low nock still jumps from the canonical angled-bow rest, and the final lowering-to-rest transition needs another intermediate. Eight poses improves the action rather than completing all animation work.
+
+## Previous lowering admission evidence
+
+The previous attack had five independently drawn poses: corrected aim, release, shoulder-level bow lowering, bent-elbow lowering, and relaxed low-arm recovery. The three new drawings preserve left-hand bow, right-hip quiver and left-shoulder shawl. The release marker remains .09 seconds; durations are .09/.075/.075/.075/.09 (total .405 seconds). All sources use the full 1254-square canvas, pivot (675,1067) and scale .708.
 
 Four built-in imagegen calls produced three admitted poses and one rejected midpoint with altered bow shape. Exact prompts, hashes and admission decisions are in `assets/olympus_arena/sprites/atalanta-north-recovery.provenance.json`. All four unchanged originals and manifest are archived locally in shared `assets/candidates_needing_review/olympus-atalanta-north-recovery-2026-09-08`. No paid API, public shared upload, raster masking or painting was used.
 

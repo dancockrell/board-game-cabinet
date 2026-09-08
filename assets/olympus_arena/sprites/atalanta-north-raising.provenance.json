@@ -1,0 +1,34 @@
+{
+  "generator": "builtin imagegen",
+  "date": "2026-09-08",
+  "records": [
+    {
+      "source": "exec-cfff9a4a-00a6-4f96-9b0d-deabe5500f5d.png",
+      "prompt": "Precise object edit for pixel-art animation. Edit this single rear Atalanta AIM sprite into the earlier HALF DRAW pose. Keep the whole lower body, torso, braid, head and equipment EXACTLY stationary and identical. Lower her LEFT bow hand until it is at SHOULDER height, with left arm extended horizontally screen left. Bow stays upright in LEFT hand. Arrow rests across bow grip pointing screen-left slightly upward, with RIGHT hand drawing its nock only halfway back at chest level, rather than fully back at her cheek. Right elbow is lower and closer to body. String forms shallow V from bow tips to right-hand nock. White tunic, green LEFT shawl, RIGHT hip quiver, identical pixel texture and palette; exact planted feet and canvas registration. Single full body, no sheet, no extra figures, no text, identical magenta backing. The arrow must be a single straight shaft through left bow grip to right drawing hand.",
+      "status": "admitted after native sequential review",
+      "sha256": "8160ff6635ae33d2e7baca520b83b4807430769c86ec5294617f04a3571595fb",
+      "runtime": "atalanta-north-draw-shoulder.png"
+    },
+    {
+      "source": "exec-9341a2d9-6f8c-48e0-8c43-187b1ac65bd6.png",
+      "prompt": "Edit this rear-facing Atalanta sprite into an EARLY BOW RAISING pose before drawing. Keep character head, feet, torso, braid and clothing positions identical. LEFT hand holding upright bow is at WAIST height on screen left; left elbow bent and left upper arm slopes down. RIGHT hand reaches across in front of her body to touch the arrow nock just behind the bow grip at waist height, mostly hidden by body. Arrow is laid on the bow pointing horizontally LEFT, not fully drawn. Bowstring almost straight between the two bow tips, shallow V pulled only 20 pixels. Both shoulders relaxed, right elbow low and partly visible to screen-right at belt level. Same LEFT green shoulder shawl and RIGHT hip quiver. Single full body pixel-art sprite, exact scale and 1254-square magenta background. No change to skirt hem, boots, head or body silhouette below belt. Actual low-ready archery pose, no second character, no words.",
+      "status": "admitted after native sequential review",
+      "sha256": "c584f934b85a722b8832ad7e90425f529b0f9470e1567ff56d249c60a648451c",
+      "runtime": "atalanta-north-nock-low.png"
+    },
+    {
+      "source": "exec-332b02b7-8146-459d-bf98-5b017887e2df.png",
+      "prompt": "Precise animation pose edit, same single rear Atalanta. Raise her LEFT bow hand from waist height to LOWER CHEST height and extend left elbow a little farther outward. Upright bow grip at x385 y450. Her RIGHT drawing hand draws arrow nock halfway toward her upper chest, hidden behind the torso, with right elbow bent and protruding slightly at right ribs. The single arrow points left and slightly upward, shaft through bow grip to nock; bowstring V pulls toward that nock. This is the midpoint between low ready and shoulder-level full draw. Keep EXACT same head/feet/torso registration, rear view, proportions, braid, LEFT green shawl, RIGHT hip quiver, white tunic, sandals and pixel style. Magenta canvas same size. Only arms/arrow/bow articulate. No text, no floor shadow, no sheet, no additional figures.",
+      "status": "rejected: stray flesh protrusion below left arm",
+      "sha256": "74fb51d20a1e4b026e5c8eaf9311aa377ed92a1a405a80aa731a0ebbbda07ec9"
+    },
+    {
+      "source": "exec-5a34fc14-88d9-4c18-82aa-8eacc69fbda6.png",
+      "prompt": "Precise local cleanup edit. In this rear Atalanta sprite remove ONLY the stray small flesh-colored finger/hand protrusion peeking from her left waist under her raised left arm, at approximately x590 y515. That extra protrusion should instead be uninterrupted white tunic outline and magenta outside, matching the other accepted poses. Keep both actual arms, bow, arrow, upper drawing hand, head, feet, skirt, braid, quiver, LEFT shawl, dimensions and pixel style exactly unchanged. No other changes.",
+      "status": "admitted after native sequential review",
+      "sha256": "3523cabb1d7aad79b618b4ebbcf064ad67f1bf30a5b26649c281bc78f17307c7",
+      "runtime": "atalanta-north-draw-bent.png"
+    }
+  ],
+  "validation": "Native Godot test: 28 checks, zero failures; 90 frames at 30fps. Inspected low12, bent14, shoulder17, aim19, release21. Equipment sides and head/feet remain consistent; slight hem/texture variation remains."
+}
