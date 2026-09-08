@@ -136,6 +136,7 @@ func show_time(seconds: float) -> void:
 	var index := clip.frame_at(seconds)
 	if index < 0 or index == _shown: return
 	_shown=index
+	scale=Vector3.ONE * (clip.draw_scale if clip.frame_draw_scales.is_empty() else clip.frame_draw_scales[index])
 	var source: Texture2D = clip.atlas if clip.frame_atlases.is_empty() else clip.frame_atlases[index]
 	_atlas.atlas = source
 	_atlas.region=Rect2(clip.regions[index])

@@ -10,12 +10,15 @@ extends Resource
 @export var magenta_backing := false
 @export var frame_pivots: Array[Vector2] = []
 @export var frame_cutouts: Array[Rect2i] = []
+## Optional absolute art scale per frame, for untouched sheets authored at different resolutions.
+@export var frame_draw_scales: PackedFloat32Array = PackedFloat32Array()
 @export var draw_scale := 1.0
 @export var depth_bias := 0.0
 
 func validation_error() -> String:
 	if atlas == null or regions.is_empty(): return "Missing atlas or frames"
 	if not frame_atlases.is_empty() and frame_atlases.size() != regions.size(): return "Each frame needs a source atlas"
+	if not frame_draw_scales.is_empty() and frame_draw_scales.size()!=regions.size(): return "Each frame needs an art scale"
 	if durations.size() != regions.size(): return "Each frame needs a duration"
 	if not frame_pivots.is_empty() and frame_pivots.size()!=regions.size(): return "Each irregular frame needs a pivot"
 	if not frame_cutouts.is_empty() and (not magenta_backing or frame_cutouts.size()!=regions.size()): return "Cutouts require keyed frames and one rectangle per frame"
@@ -26,6 +29,7 @@ func validation_error() -> String:
 		if source == null: return "Missing frame source atlas"
 		var bounds := Rect2i(Vector2i.ZERO,Vector2i(source.get_size()))
 		if regions[i].size.x <= 0 or regions[i].size.y <= 0 or not bounds.encloses(regions[i]): return "Frame outside atlas"
+		if not frame_draw_scales.is_empty() and (not is_finite(frame_draw_scales[i]) or frame_draw_scales[i]<=0): return "Invalid frame art scale"
 		if not is_finite(durations[i]) or durations[i] <= 0: return "Invalid duration"
 		if frame_pivots.is_empty() and regions[i].size != regions[0].size: return "Unequal cells need individual pivots"
 		if not frame_pivots.is_empty() and not frame_pivots[i].is_finite(): return "Invalid frame pivot"

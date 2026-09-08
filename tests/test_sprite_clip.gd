@@ -22,6 +22,14 @@ func _initialize() -> void:
 	invalid.frame_pivots.clear()
 	check(not invalid.validation_error().is_empty(), "Unequal frames reject absent pivots")
 	invalid=ThrustClip.duplicate()
+	invalid.frame_draw_scales=PackedFloat32Array([1.0])
+	check(not invalid.validation_error().is_empty(), "Reject incomplete frame art scales")
+	invalid.frame_draw_scales=ThrustClip.frame_draw_scales.duplicate()
+	invalid.frame_draw_scales[0]=NAN
+	check(not invalid.validation_error().is_empty(), "Reject nonfinite frame art scale")
+	invalid.frame_draw_scales[0]=0.0
+	check(not invalid.validation_error().is_empty(), "Reject zero frame art scale")
+	invalid=ThrustClip.duplicate()
 	invalid.draw_scale=0.0
 	check(not invalid.validation_error().is_empty(), "Reject zero art scale")
 	check(SouthAttack.validation_error()=="", "South attack depth metadata is valid")
@@ -80,11 +88,17 @@ func _initialize() -> void:
 		actor.advance_visual(1)
 		check(actor.clip==rest,"Completed reaction returns to rest")
 		check(not actor.react_to_hit(6,clip),"Older events ignored")
+		actor.set_clip(ThrustClip)
+		var phase_time:=0.0
+		for phase in ThrustClip.regions.size():
+			actor.show_time(phase_time+.001)
+			check(actor._shown==phase and actor.texture.atlas==ThrustClip.frame_atlases[phase] and actor.scale.is_equal_approx(Vector3.ONE*ThrustClip.frame_draw_scales[phase]), "Every authored attack phase keeps its source and calibrated scale")
+			phase_time+=ThrustClip.durations[phase]
 		actor.reset_playback(rest)
 		check(actor.react_to_hit(0,clip),"Rematch accepts new event numbering")
 		check(actor.play_attack(40,ThrustClip), "Attack event starts independent action clock")
-		actor.advance_visual(.3)
-		check(actor.scale==Vector3.ONE*ThrustClip.draw_scale and actor.texture.region==Rect2(ThrustClip.regions[6]), "Thrust reaches full extension at matching scale")
+		actor.advance_visual(.36)
+		check(actor.scale==Vector3.ONE*ThrustClip.draw_scale and actor.texture.region==Rect2(ThrustClip.regions[9]), "Thrust reaches full extension at matching scale")
 		check(not actor.play_attack(40,ThrustClip), "Repeated attack does not rewind clip")
 		actor.advance_visual(1)
 		check(actor.clip==rest and actor.scale==Vector3.ONE and actor.material_override==null, "Attack recovery restores rest scale and native alpha material")
@@ -104,7 +118,7 @@ func _initialize() -> void:
 		check(actor.play_attack(1,ThrustClip), "Attack overrides walking")
 		actor.set_locomotion(NorthWalk)
 		check(actor.clip==ThrustClip, "Movement snapshots cannot interrupt attack")
-		actor.advance_visual(.6)
+		actor.advance_visual(.8)
 		check(actor.clip==NorthWalk, "Attack returns to moving state when movement continues")
 		actor.set_locomotion(null)
 		check(actor.clip==NorthRest, "Stopping immediately restores directional rest")

@@ -1,0 +1,14 @@
+{
+  "generator": "OpenAI built-in imagegen",
+  "source": "exec-2730f9fe-39f4-4c00-a099-2673e2c123e2.png",
+  "sha256": "dd817097e9deb8dfe2342d431a0e5db8b08a473c85d07db63466269ea45bc7a8",
+  "selected_indices": [
+    0,
+    1,
+    2,
+    5,
+    6,
+    7
+  ],
+  "notes": "Six new transition drawings; unchanged original. Per-frame absolute scales align source drawing heights. Seventeen-pose combined attack."
+}

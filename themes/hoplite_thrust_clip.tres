@@ -1,12 +1,15 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" load_steps=4 format=3]
 [ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/hoplite-thrust-rich.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/hoplite-spear-transitions.png" id="3"]
 [resource]
 script = ExtResource("1")
 atlas = ExtResource("2")
-regions = Array[Rect2i]([Rect2i(0,0,362,362),Rect2i(724,0,362,362),Rect2i(1086,0,362,362),Rect2i(0,362,362,362),Rect2i(362,362,362,362),Rect2i(724,362,362,362),Rect2i(1086,362,362,362),Rect2i(0,724,362,362),Rect2i(362,724,362,362),Rect2i(724,724,362,362),Rect2i(1086,724,362,362)])
-frame_pivots = Array[Vector2]([Vector2(180,309),Vector2(126,307),Vector2(98,304),Vector2(157,268),Vector2(129,269),Vector2(105,270),Vector2(79,270),Vector2(153,239),Vector2(141,242),Vector2(119,247),Vector2(148,245)])
-durations = PackedFloat32Array(0.065,0.055,0.045,0.04,0.035,0.045,0.075,0.05,0.05,0.055,0.075)
+frame_atlases = Array[Texture2D]([ExtResource("3"),ExtResource("3"),ExtResource("3"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("3"),ExtResource("3"),ExtResource("3")])
+regions = Array[Rect2i]([Rect2i(0,0,362,543),Rect2i(362,0,362,543),Rect2i(724,0,362,543),Rect2i(0,0,362,362),Rect2i(724,0,362,362),Rect2i(1086,0,362,362),Rect2i(0,362,362,362),Rect2i(362,362,362,362),Rect2i(724,362,362,362),Rect2i(1086,362,362,362),Rect2i(0,724,362,362),Rect2i(362,724,362,362),Rect2i(724,724,362,362),Rect2i(1086,724,362,362),Rect2i(362,543,362,543),Rect2i(724,543,362,543),Rect2i(1086,543,362,543)])
+frame_pivots = Array[Vector2]([Vector2(225,469),Vector2(181,470),Vector2(140,470),Vector2(180,309),Vector2(126,307),Vector2(98,304),Vector2(157,268),Vector2(129,269),Vector2(105,270),Vector2(79,270),Vector2(153,239),Vector2(141,242),Vector2(119,247),Vector2(148,245),Vector2(183,358),Vector2(155,359),Vector2(134,357)])
+frame_draw_scales = PackedFloat32Array(2.622,2.6938,2.7313,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.85,2.796,2.7313,2.6574)
+durations = PackedFloat32Array(0.04,0.045,0.045,0.035,0.04,0.035,0.03,0.03,0.035,0.06,0.04,0.04,0.035,0.035,0.045,0.05,0.06)
 draw_scale = 2.85
 looping = false
 magenta_backing = true
