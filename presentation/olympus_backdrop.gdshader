@@ -28,5 +28,4 @@ void fragment() {
 		if (shifted.g > shifted.r*1.12 && shifted.b < shifted.g*0.8) original = shifted;
 	}
 	ALBEDO = original.rgb;
-	ALPHA = original.a;
 }
