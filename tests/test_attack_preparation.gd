@@ -78,11 +78,13 @@ func run():
 	check(actor.awaiting_strike,"Second fixture prepares")
 	board.show_state(game.snapshot(),2.0)
 	check(actor.awaiting_strike and actor._reaction_elapsed<Strike.strike_time,"Slow or stale snapshot cannot invent a strike")
-	game._state.towers[0].x=4.0
+	game._state.towers[0].x=-4.0
 	game._step_unit(unit)
 	check(not unit.has("attack_target"),"Rules clear intent when target leaves range")
 	board.show_state(game.snapshot(),.01)
 	check(not actor.awaiting_strike,"Lost target cancels preparation into locomotion")
+	check(actor.clip==Board.WEST_WALK,"Lost target immediately turns locomotion toward authoritative movement")
 	board.free()
 	print("Attack preparation: %s checks, %s failures"%[checks,failures])
 	quit(1 if failures else 0)
+

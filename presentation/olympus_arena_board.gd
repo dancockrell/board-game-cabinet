@@ -123,6 +123,10 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			_tokens[id] = _make_unit(str(unit.get("kind", "hoplites")), int(unit["side"]))
 			_tokens[id].position = Vector3(float(unit["x"]), 0.12, float(unit["z"]))
 		var node: Node3D = _tokens[id]
+		# A withdrawn aim must release facing before this tick chooses locomotion.
+		var preparing_actor = node.get_node_or_null("Figure/PixelActor")
+		if preparing_actor != null and unit.get("attack_target", {}).is_empty():
+			preparing_actor.cancel_preparation()
 		var target := Vector3(float(unit["x"]), 0.12, float(unit["z"]))
 		var previous: Vector3 = node.position
 		node.position = target
