@@ -5,8 +5,8 @@ const WEST_WALK = preload("res://themes/hoplite_west_walk.tres")
 const MINOTAUR_WALK = {"north":preload("res://themes/minotaur_north_walk.tres"),"south":preload("res://themes/minotaur_south_walk.tres")}
 const HERACLES_WALK = {"north":preload("res://themes/heracles_north_walk.tres"),"south":preload("res://themes/heracles_south_walk.tres")}
 const ATALANTA_WALK = {"north":preload("res://themes/atalanta_north_walk.tres"),"south":preload("res://themes/atalanta_south_walk.tres")}
-const HYDRA_IDLE = {"north":preload("res://themes/hydra_north_idle.tres"),"south":preload("res://themes/hydra_south_idle.tres")}
-const HYDRA_ATTACK = {"north":preload("res://themes/hydra_north_attack.tres"),"south":preload("res://themes/hydra_south_attack.tres")}
+const HYDRA_IDLE = {"north":preload("res://themes/hydra_north_idle.tres"),"south":preload("res://themes/hydra_south_idle.tres"),"east":preload("res://themes/hydra_east_idle.tres"),"west":preload("res://themes/hydra_west_idle.tres")}
+const HYDRA_ATTACK = {"north":preload("res://themes/hydra_north_attack.tres"),"south":preload("res://themes/hydra_south_attack.tres"),"east":preload("res://themes/hydra_east_attack.tres"),"west":preload("res://themes/hydra_west_attack.tres")}
 const HERACLES_REST = {"east":preload("res://themes/heracles_east_rest.tres"),"west":preload("res://themes/heracles_west_rest.tres"),"north":preload("res://themes/heracles_north_rest.tres"),"south":preload("res://themes/heracles_south_rest.tres")}
 const HERACLES_ATTACK = {"east":preload("res://themes/heracles_east_attack.tres"),"west":preload("res://themes/heracles_west_attack.tres"),"north":preload("res://themes/heracles_north_attack.tres"),"south":preload("res://themes/heracles_south_attack.tres")}
 const HARPIES_FLIGHT = {"north":preload("res://themes/harpies_north_flight.tres"),"south":preload("res://themes/harpies_south_flight.tres")}
@@ -294,7 +294,7 @@ func _face_pixel_unit(node: Node3D, direction: Vector2, attack_target := false) 
 	var north:=direction.y<0 and absf(direction.y)>=absf(direction.x)
 	var south:=direction.y>0 and absf(direction.y)>=absf(direction.x)
 	var facing:="north" if north else ("south" if south else ("west" if direction.x<0 else "east"))
-	if str(node.get_meta("kind", "")) in ["minotaur","harpies","hydra"]:
+	if str(node.get_meta("kind", "")) in ["minotaur","harpies"]:
 		# With only front/rear art, almost lateral motion must not flip the
 		# entire creature because of a tiny positive/negative crowd adjustment.
 		facing="north" if direction.y<0 else "south"
