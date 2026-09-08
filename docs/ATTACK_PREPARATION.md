@@ -6,6 +6,8 @@ A nonlooping SpriteClip can declare strike_time. The board uses the authoritativ
 
 Initially enabled for the rich Hoplite east thrust, Harpy south attack and Atalanta north/south bow shots. Other clips retain their existing event playback until their contact poses are identified. An immediate first strike with no preceding in-range cooldown still uses direct playback; the renderer never delays rules damage to manufacture anticipation. Limited available preparation time can skip early setup poses. Projectile travel remains cosmetic after the hit decision; this is not a simulation wind-up or delayed-damage redesign.
 
-Validation: dedicated59 native checks drive the real session cooldown and board, covering multiple preparation drawings, exact contact frame, unchanged damage, pause, stale snapshots, recovery and target loss. Existing motion continuity20 and sprite67 checks pass. A180-frame60fps rules-driven combat study recorded snapshots and contact timing; this is a controlled study, not a full match.
+Validation: 65 dedicated native checks drive the real session cooldown and board, covering multiple preparation drawings, exact contact frame, unchanged damage, pause, stale snapshots, recovery and target loss. Existing motion continuity20 and sprite67 checks pass. A180-frame60fps rules-driven combat study recorded snapshots and contact timing; this is a controlled study, not a full match.
 
 The intent does not authorize the view to apply damage or move units. More authored anticipation/recovery directions remain needed.
+
+Atalanta north now has twelve poses over .930 seconds, with release at .465 seconds. The dedicated board check follows a real cooldown through that marker and verifies the release drawing, unchanged damage and distinct anticipation. The canonical standing silhouette still varies slightly at the transition.
