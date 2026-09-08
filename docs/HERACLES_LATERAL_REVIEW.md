@@ -64,3 +64,5 @@ Native evidence: `outputs/Heracles-Passing-Foundation.png` and `outputs/Heracles
 This is a usable four-key-pose foundation, not final smooth animation. Arms and club remain restrained, body is slightly narrower than the original rest, and passing poses have less anatomical separation than contact poses. More inbetweens and cloth response remain necessary.
 
 All four unchanged generation originals, exact prompts and hashes are preserved locally at `C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-east-foundation-2026-09-08/`. Runtime provenance is `assets/olympus_arena/sprites/heracles-east-walk.provenance.json`. Shared art has not been publicly published.
+
+Coordinator admission: EAST is now mapped on the board. Native100-frame30fps board review inspected all four phases, authoritative movement, health/footprint alignment and stopped recovery; dedicated board test passes. WEST remains unmapped. This fills the previous east-facing slide with a four-pose foundation and does not claim final smoothness.

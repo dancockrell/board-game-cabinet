@@ -17,7 +17,7 @@ foreach ($test in @("test_sprite_clip", "test_chess", "test_chess_oracle", "test
     Invoke-GodotCheck @("--headless", "--script", "res://tests/$test.gd")
 }
 if ($Graphics) {
-    foreach ($test in @("test_sprite_clip", "test_pixel_motion_continuity", "test_attack_preparation", "test_hydra_lateral", "test_hydra_south_walk", "test_hydra_north_walk", "test_harpy_south_flight", "test_harpy_north_flight", "test_atalanta_lateral_walk", "test_atalanta_east_board", "test_atalanta_west_walk", "test_atalanta_west_board", "test_harpy_south_attack", "test_olympus_attack_sequences", "test_shrine_collapse", "test_olympus_combat_fx", "test_olympus_board", "test_olympus_stage", "test_olympus_models", "test_olympus_app", "test_olympus_2d_only")) {
+    foreach ($test in @("test_sprite_clip", "test_pixel_motion_continuity", "test_attack_preparation", "test_hydra_lateral", "test_hydra_south_walk", "test_hydra_north_walk", "test_harpy_south_flight", "test_harpy_north_flight", "test_atalanta_lateral_walk", "test_atalanta_east_board", "test_atalanta_north_attack", "test_heracles_east_walk", "test_heracles_east_board", "test_atalanta_west_walk", "test_atalanta_west_board", "test_harpy_south_attack", "test_olympus_attack_sequences", "test_shrine_collapse", "test_olympus_combat_fx", "test_olympus_board", "test_olympus_stage", "test_olympus_models", "test_olympus_app", "test_olympus_2d_only")) {
         Invoke-GodotCheck @("--rendering-method", "gl_compatibility", "--script", "res://tests/$test.gd")
     }
 }
