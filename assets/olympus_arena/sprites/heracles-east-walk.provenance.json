@@ -1,0 +1,44 @@
+{
+  "generator": "builtin imagegen",
+  "date": "2026-09-08",
+  "status": "four-phase east walk foundation; board admission owned by coordinator",
+  "phase_order": [
+    "near-forward contact",
+    "near support / far lift passing",
+    "far-forward contact",
+    "far support / near lift passing"
+  ],
+  "frames": [
+    {
+      "file": "heracles-east-walk-phase-1.png",
+      "generation_id": "exec-988c6620-5687-497b-86e3-654f8e5b6bd7",
+      "prompt": "Edit this one pixel-art Heracles sprite into WALK CONTACT pose facing right. Keep head, lion hood, body, arms, club and costume identical. Change only the legs and necessary skirt hem: NEAR leg extends diagonally forward screen RIGHT, near sandal touches ground farthest RIGHT, toe right. FAR leg extends diagonally backward screen LEFT, far sandal touches ground at LEFT, heel lifted and toes down. Two clearly separated grounded feet, natural long walking stride. Foreground thigh begins at left edge of skirt and angles DOWN-RIGHT crossing in front of far thigh. Both knees almost straight. Preserve bronze skin colors, shade far leg bronze brown. Do not retain the lifted backward bent leg of reference. One full body isolated cel on flat magenta, same canvas/head position, no shadow or text.",
+      "sha256": "83d1efbcdebd803993d4adb443b54e81aec6264082abe793493d9f3fe1d74621"
+    },
+    {
+      "file": "heracles-east-walk-phase-2.png",
+      "generation_id": "exec-9619e157-e836-44c9-a9ac-25d2007067a7",
+      "prompt": "Use case: precise-object-edit. This is a pixel-art walk animation cel. Make the opposite HALF-CYCLE passing pose of exactly this character, walking screen RIGHT, preserving ALL artwork from belt upward, size, pixel style, lion hood, club hand and wooden club, camera, colors and blank solid magenta background. Swap the LEG roles anatomically without mirroring the picture: the nearer right leg now supports weight, foot planted below pelvis; farther left leg swings past behind with knee mildly bent and heel lifted a sandal-height. Near leg is fully visible in front of the far leg, lit bronze; far lifted leg is bronze shadow, not blue or black. Keep knees low and feet nearly aligned horizontally: natural walking, not marching. No change to torso/face/clothing design or weapon. One full-body isolated cel, same canvas and same head location as input.",
+      "sha256": "4d38f5f7cc50f25a13332021128d7ea7a389c9ece393cf34653b3f076f4cef38"
+    },
+    {
+      "file": "heracles-east-walk-phase-3.png",
+      "generation_id": "exec-80a061b8-58dd-42ea-8389-86a56022a505",
+      "prompt": "Precise animation edit: create the OTHER FOOT CONTACT of this Heracles rightward walk. Keep head, torso, arms, club, palette, framing unchanged. Swap which anatomical leg is ahead: NEAR RIGHT THIGH from the LEFT part of the skirt angles DOWN-LEFT to the BACK knee and LEFT sandal; this foreground leg is BRIGHT bronze and must CROSS IN FRONT OF and OCCLUDE the far thigh. FAR LEFT THIGH from the RIGHT part of skirt angles DOWN-RIGHT to the FRONT knee and RIGHT sandal; far leg is shadow bronze. The current bright forward thigh must be removed and redrawn as the backward near thigh. Both feet still separated in long contact stride. Near back foot toe touches ground at LEFT; far front foot heel lands at RIGHT. Do not just darken one calf: change thigh overlap and knee anatomy. Club stays in near right hand. Same natural pixel-art character, one cel, solid magenta background, no labels.",
+      "sha256": "387187607fdb896939d0cb184ee01dfab457303a85c9004a370ee653a4215781"
+    },
+    {
+      "file": "heracles-east-walk-phase-4.png",
+      "generation_id": "exec-17cb047f-22b9-4e34-b9b3-761d68bf1c49",
+      "prompt": "Use case: identity-preserve. Create ONE isolated finished pixel-art animation cel of Heracles walking toward screen RIGHT, same slightly elevated three-quarter camera and exact costume of the TOP LEFT resting character in the reference. Natural bronze skin palette, dark beard, lion-head hood, red pleated skirt with narrow gold hem, bronze cuffs, strapped sandals, wooden club hanging from his near right hand diagonally across lower legs. Pose is a restrained WALK PASSING pose, NOT a high-knee march: his far leg supports weight vertically underneath pelvis; near leg swings through with knee only mildly forward of the support knee, lower leg bent backward, heel clearly lifted behind him about one sandal-height above ground. Thus feet nearly overlap horizontally, with one planted sandal and the other airborne behind it. Head upright, torso stable, near hanging hand unchanged, club unchanged; do not rest free hand on knee. Keep whole figure visible with generous margin on flat solid #ff00ff background, no shadow, no text, no additional characters. Preserve established detailed crisp pixel clusters and dark outlines, no smooth painting. This is ONE animation drawing, not a sheet.",
+      "sha256": "d126d226564670c2a971361f62ddc9a67603f5af6ede62f679bc012e8e275b22"
+    }
+  ],
+  "native_review": "outputs/Heracles-Four-Phase-Study: 90 frames at 30 fps, all four phases inspected",
+  "limitations": [
+    "Four key poses only; more inbetweens needed",
+    "No significant upper-body swing",
+    "Walking body is narrower than old rest"
+  ],
+  "archive": "C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-east-foundation-2026-09-08"
+}

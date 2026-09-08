@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-east-walk-phase-1.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-east-walk-phase-2.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-east-walk-phase-3.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-east-walk-phase-4.png" id="5"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+frame_atlases = Array[Texture2D]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5")])
+regions = Array[Rect2i]([Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254)])
+frame_pivots = Array[Vector2]([Vector2(645,1105), Vector2(645,1087), Vector2(645,1095), Vector2(645,1050)])
+frame_draw_scales = PackedFloat32Array(0.622,0.635,0.629,0.659)
+durations = PackedFloat32Array(0.18,0.18,0.18,0.18)
+looping = true
+magenta_backing = true

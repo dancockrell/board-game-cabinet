@@ -1,6 +1,6 @@
 # Heracles lateral walk: rejected experiment
 
-2026-09-08. Status: **rejected, not connected to runtime**. East/west locomotion remains unfinished. This report is evidence of an unsuccessful bounded production attempt, not animation acceptance.
+2026-09-08. Status: historical failed attempts below; **a new four-phase EAST walk Resource is now available for coordinator integration**. West locomotion remains unfinished. This report is evidence of an unsuccessful bounded production attempt, not animation acceptance.
 
 ## Contract and method
 
@@ -51,3 +51,16 @@ All four unchanged originals and their hashes are in the existing local shared c
 ## Visible colored pose-guide attempt
 
 A built-in generated four-phase red/blue leg guide was supplied alongside the Heracles identity sheet. The finished result still repeats its contact and passing poses, so no runtime clip was admitted. Both sources and SHA256 provenance are preserved in the same shared folder as heracles-colored-pose-guide.png, heracles-pose-guided-rejected.png and pose-guided-attempt.json. The guide method alone did not solve anatomical continuity.
+
+
+## Natural-palette isolated foundation: four usable key poses
+
+A materially different isolated request kept natural colors throughout and requested a low passing knee with the heel lifted behind. Its first drawing establishes a useful passing silhouette; native side-by-side comparison with the original east rest confirmed coherent identity. Three subsequent isolated edits supplied opposite passing and contact roles. The two contacts visibly alternate bright foreground and shadow far thigh placement; they are not mirrored images.
+
+`themes/heracles_east_walk.tres` contains four unchanged originals in chronological order: near-forward contact, near support/far lift passing, far-forward contact, far support/near lift passing. Total loop is 0.72 seconds. Small per-frame scale and foot-pivot adjustments normalize independently generated canvases. No 3D artwork, Python masking, paid API or generated filler frames were used.
+
+Native evidence: `outputs/Heracles-Passing-Foundation.png` and `outputs/Heracles-Four-Phase-Study` (90 captures at 30 fps, all four ordered phases inspected). The dedicated preview accepts external sources so historical candidates can be assessed without adding them to the shipped game. `tests/test_heracles_east_walk.gd` verifies chronological texture selection, unique sources, loop and attack/stop recovery. Board integration and full-match validation belong to the coordinator.
+
+This is a usable four-key-pose foundation, not final smooth animation. Arms and club remain restrained, body is slightly narrower than the original rest, and passing poses have less anatomical separation than contact poses. More inbetweens and cloth response remain necessary.
+
+All four unchanged generation originals, exact prompts and hashes are preserved locally at `C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-heracles-east-foundation-2026-09-08/`. Runtime provenance is `assets/olympus_arena/sprites/heracles-east-walk.provenance.json`. Shared art has not been publicly published.
