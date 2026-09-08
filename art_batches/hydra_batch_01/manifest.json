@@ -1,0 +1,87 @@
+{
+  "actions": [
+    "walk",
+    "bite",
+    "hurt",
+    "defeat"
+  ],
+  "observed_cells": 124,
+  "character": "hydra",
+  "sheets": [
+    {
+      "requested_grid": [
+        4,
+        8
+      ],
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-59cf3485-4ac0-4b33-9c98-f2425851be83.png",
+      "status": "candidate",
+      "observed_grid": [
+        4,
+        8
+      ],
+      "file": "south.png",
+      "observed_cells": 32,
+      "sha256": "9767709E9C1A575AF2D25FE00711361CCDB105133C6E8C43FE9EE82C0BC6DC74",
+      "direction": "south",
+      "prompt_file": "south.prompt.txt",
+      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission."
+    },
+    {
+      "requested_grid": [
+        4,
+        8
+      ],
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-17277b8b-835a-481c-8ff3-45089bbbdb58.png",
+      "status": "candidate",
+      "observed_grid": [
+        4,
+        8
+      ],
+      "file": "north.png",
+      "observed_cells": 32,
+      "sha256": "708ECBF7E0663FC757C590FEA07A6C4C8EA2C9915E5536B64B2163EC64B8B7B2",
+      "direction": "north",
+      "prompt_file": "north.prompt.txt",
+      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission."
+    },
+    {
+      "requested_grid": [
+        4,
+        8
+      ],
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-7edce9bd-0e08-4ca1-83a0-4f24eca39d79.png",
+      "status": "candidate",
+      "observed_grid": [
+        4,
+        8
+      ],
+      "file": "east.png",
+      "observed_cells": 32,
+      "sha256": "372BBC1667D7E1CB177DC25D05928BA6B6EAB2980F6E61F1435DF0E8112D4FD4",
+      "direction": "east",
+      "prompt_file": "east.prompt.txt",
+      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission."
+    },
+    {
+      "requested_grid": [
+        4,
+        8
+      ],
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-1d8f7ae7-7245-45a0-85b7-0624b2ab02b4.png",
+      "status": "candidate",
+      "observed_grid": [
+        4,
+        7
+      ],
+      "file": "west.png",
+      "observed_cells": 28,
+      "sha256": "641923AB2263E48D599DA3D00DDFAE63546E1FD174F572F43DA2EC5E919A13CE",
+      "direction": "west",
+      "prompt_file": "west.prompt.txt",
+      "notes": "Seven rows instead of eight; action boundaries require remapping, not uniform32-cell slicing."
+    }
+  ],
+  "tool": "built-in image_gen",
+  "runtime_admitted": 0,
+  "requested_cells": 128
+}
