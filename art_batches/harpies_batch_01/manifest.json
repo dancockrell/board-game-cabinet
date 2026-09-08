@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "character": "Harpies",
+  "status": "candidate-only; no runtime admission",
+  "generator": "built-in image_gen",
+  "calls": 4,
+  "requested_cells": 128,
+  "observed_figure_cells": 128,
+  "admitted_frames": 0,
+  "distinct_useful_frames": null,
+  "reference": "assets/olympus_arena/sprites/harpies-flight-v1.png",
+  "read_order": "4 columns x 8 rows; each action spans two consecutive rows, four cells left-to-right then next four cells left-to-right",
+  "families": {
+    "a": [
+      "flight",
+      "dive_attack",
+      "hurt",
+      "defeat"
+    ],
+    "b": [
+      "hover",
+      "takeoff",
+      "landing",
+      "victory"
+    ]
+  },
+  "sheets": [
+    {
+      "name": "south_a",
+      "direction": "south",
+      "family": "a",
+      "file": "south_a.png",
+      "prompt": "south_a.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-3f6563e3-4341-4e20-914b-3c23e4f7a834.png",
+      "requested_grid": [
+        4,
+        8
+      ],
+      "observed_grid": [
+        4,
+        8
+      ],
+      "size": [
+        887,
+        1774
+      ],
+      "sha256": "A498482BAEF3AA553217FF180BE5EAAE539A543014CC534BA2EF0DFCDEDB0B6A"
+    },
+    {
+      "name": "north_a",
+      "direction": "north",
+      "family": "a",
+      "file": "north_a.png",
+      "prompt": "north_a.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-860071a0-61f3-4d83-bb13-de59ffdd0699.png",
+      "requested_grid": [
+        4,
+        8
+      ],
+      "observed_grid": [
+        4,
+        8
+      ],
+      "size": [
+        887,
+        1774
+      ],
+      "sha256": "9FE9C67D3E26AA973B2F59F541337A8CF52E64133B7054E29480364D3F32B9E7"
+    },
+    {
+      "name": "south_b",
+      "direction": "south",
+      "family": "b",
+      "file": "south_b.png",
+      "prompt": "south_b.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-615f7c81-531d-4a3d-83f0-dfe2bd3729fa.png",
+      "requested_grid": [
+        4,
+        8
+      ],
+      "observed_grid": [
+        4,
+        8
+      ],
+      "size": [
+        887,
+        1774
+      ],
+      "sha256": "46F4C5C357FFE8EAE13A5179F7516E6EDA6DFBF536D0E64C9D1311ED645C390A"
+    },
+    {
+      "name": "north_b",
+      "direction": "north",
+      "family": "b",
+      "file": "north_b.png",
+      "prompt": "north_b.prompt.txt",
+      "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a08019-b488-7370-b856-f6e5e14e4f98\\exec-23797215-a6dc-426a-82e4-2143bf493f6a.png",
+      "requested_grid": [
+        4,
+        8
+      ],
+      "observed_grid": [
+        4,
+        8
+      ],
+      "size": [
+        887,
+        1774
+      ],
+      "sha256": "FAB9AF75DB3D85BF428155E758CB1F419331A600770827CD8BA695E957EACADE"
+    }
+  ],
+  "validation": {
+    "native": "Godot 4.3 Compatibility source-only sixteen-action playback completed, 128 display ticks, eight source poses each shown",
+    "captures": "outputs/Harpies-Batch-01-Native",
+    "reviewed_captures": [
+      "frame-0032.png",
+      "frame-0056.png"
+    ],
+    "raster_edited": false
+  },
+  "limitations": [
+    "Observed figure cells are not a distinct accepted frame count.",
+    "Body scale and vertical registration shift between generated poses; pivots require row-specific admission.",
+    "Magenta edge fringe remains visible in provisional simple-key preview.",
+    "Some wing poses recur across action families; unique useful motion not counted.",
+    "Victory is primarily wing/talon gesturing and does not match every requested microbeat.",
+    "Whole-sheet connected-component rectangles can include nearby detached feathers or exclude isolated details; provisional only.",
+    "No runtime integration or full-match claim."
+  ]
+}

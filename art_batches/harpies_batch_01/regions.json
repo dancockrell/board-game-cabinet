@@ -1,0 +1,1546 @@
+{
+  "south_a": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        21,
+        12,
+        193,
+        228
+      ],
+      "body_pixels": 19112,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        234,
+        20,
+        205,
+        207
+      ],
+      "body_pixels": 17329,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        444,
+        67,
+        219,
+        164
+      ],
+      "body_pixels": 14585,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        662,
+        66,
+        215,
+        165
+      ],
+      "body_pixels": 14995,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        6,
+        308,
+        222,
+        126
+      ],
+      "body_pixels": 12838,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        239,
+        250,
+        195,
+        188
+      ],
+      "body_pixels": 17314,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        448,
+        253,
+        213,
+        188
+      ],
+      "body_pixels": 17425,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        680,
+        226,
+        183,
+        215
+      ],
+      "body_pixels": 17164,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        10,
+        480,
+        225,
+        192
+      ],
+      "body_pixels": 17577,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        274,
+        481,
+        135,
+        161
+      ],
+      "body_pixels": 14029,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        456,
+        465,
+        206,
+        183
+      ],
+      "body_pixels": 12188,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        692,
+        441,
+        162,
+        245
+      ],
+      "body_pixels": 11311,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        11,
+        675,
+        217,
+        219
+      ],
+      "body_pixels": 21845,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        230,
+        682,
+        215,
+        201
+      ],
+      "body_pixels": 22649,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        447,
+        663,
+        213,
+        214
+      ],
+      "body_pixels": 20397,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        664,
+        686,
+        217,
+        203
+      ],
+      "body_pixels": 20105,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 0,
+      "region": [
+        19,
+        925,
+        196,
+        199
+      ],
+      "body_pixels": 19536,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 1,
+      "region": [
+        235,
+        933,
+        188,
+        197
+      ],
+      "body_pixels": 18458,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 2,
+      "region": [
+        446,
+        929,
+        207,
+        193
+      ],
+      "body_pixels": 18362,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 3,
+      "region": [
+        702,
+        929,
+        134,
+        181
+      ],
+      "body_pixels": 14265,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 0,
+      "region": [
+        12,
+        1152,
+        216,
+        186
+      ],
+      "body_pixels": 19039,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 1,
+      "region": [
+        240,
+        1132,
+        198,
+        207
+      ],
+      "body_pixels": 17365,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 2,
+      "region": [
+        453,
+        1128,
+        203,
+        209
+      ],
+      "body_pixels": 18727,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 3,
+      "region": [
+        660,
+        1146,
+        216,
+        186
+      ],
+      "body_pixels": 17122,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 0,
+      "region": [
+        15,
+        1350,
+        201,
+        196
+      ],
+      "body_pixels": 19808,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 1,
+      "region": [
+        248,
+        1365,
+        184,
+        178
+      ],
+      "body_pixels": 16682,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 2,
+      "region": [
+        476,
+        1369,
+        156,
+        185
+      ],
+      "body_pixels": 15630,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 3,
+      "region": [
+        683,
+        1404,
+        184,
+        154
+      ],
+      "body_pixels": 17622,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 0,
+      "region": [
+        33,
+        1585,
+        150,
+        153
+      ],
+      "body_pixels": 14963,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 1,
+      "region": [
+        202,
+        1607,
+        221,
+        127
+      ],
+      "body_pixels": 16196,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 2,
+      "region": [
+        445,
+        1637,
+        215,
+        90
+      ],
+      "body_pixels": 11809,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 3,
+      "region": [
+        670,
+        1645,
+        207,
+        83
+      ],
+      "body_pixels": 10920,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    }
+  ],
+  "north_a": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        12,
+        12,
+        202,
+        220
+      ],
+      "body_pixels": 17604,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        224,
+        50,
+        217,
+        182
+      ],
+      "body_pixels": 15475,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        445,
+        64,
+        219,
+        168
+      ],
+      "body_pixels": 14703,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        666,
+        70,
+        218,
+        162
+      ],
+      "body_pixels": 13652,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        1,
+        312,
+        225,
+        130
+      ],
+      "body_pixels": 10759,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        231,
+        298,
+        207,
+        148
+      ],
+      "body_pixels": 13207,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        456,
+        252,
+        199,
+        189
+      ],
+      "body_pixels": 14932,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        669,
+        229,
+        212,
+        218
+      ],
+      "body_pixels": 18123,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        5,
+        475,
+        218,
+        188
+      ],
+      "body_pixels": 20349,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        268,
+        473,
+        130,
+        159
+      ],
+      "body_pixels": 13649,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        443,
+        478,
+        220,
+        159
+      ],
+      "body_pixels": 15291,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        695,
+        444,
+        162,
+        222
+      ],
+      "body_pixels": 10238,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        5,
+        683,
+        218,
+        185
+      ],
+      "body_pixels": 16200,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        249,
+        703,
+        169,
+        164
+      ],
+      "body_pixels": 13007,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        453,
+        678,
+        202,
+        199
+      ],
+      "body_pixels": 16764,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        674,
+        678,
+        202,
+        210
+      ],
+      "body_pixels": 16916,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 0,
+      "region": [
+        22,
+        888,
+        184,
+        225
+      ],
+      "body_pixels": 18128,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 1,
+      "region": [
+        241,
+        904,
+        177,
+        201
+      ],
+      "body_pixels": 17016,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 2,
+      "region": [
+        451,
+        922,
+        184,
+        179
+      ],
+      "body_pixels": 14382,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 3,
+      "region": [
+        675,
+        930,
+        195,
+        172
+      ],
+      "body_pixels": 16225,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 0,
+      "region": [
+        17,
+        1147,
+        191,
+        185
+      ],
+      "body_pixels": 15891,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 1,
+      "region": [
+        231,
+        1123,
+        205,
+        208
+      ],
+      "body_pixels": 17668,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 2,
+      "region": [
+        449,
+        1147,
+        207,
+        185
+      ],
+      "body_pixels": 15873,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 3,
+      "region": [
+        674,
+        1122,
+        202,
+        210
+      ],
+      "body_pixels": 17781,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 0,
+      "region": [
+        10,
+        1346,
+        202,
+        207
+      ],
+      "body_pixels": 14868,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 1,
+      "region": [
+        234,
+        1361,
+        203,
+        184
+      ],
+      "body_pixels": 16002,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 2,
+      "region": [
+        441,
+        1378,
+        230,
+        168
+      ],
+      "body_pixels": 14738,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 3,
+      "region": [
+        675,
+        1405,
+        200,
+        131
+      ],
+      "body_pixels": 14255,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 0,
+      "region": [
+        19,
+        1601,
+        174,
+        137
+      ],
+      "body_pixels": 12512,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 1,
+      "region": [
+        206,
+        1598,
+        209,
+        140
+      ],
+      "body_pixels": 15636,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 2,
+      "region": [
+        428,
+        1639,
+        243,
+        102
+      ],
+      "body_pixels": 12851,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 3,
+      "region": [
+        679,
+        1648,
+        191,
+        81
+      ],
+      "body_pixels": 9944,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    }
+  ],
+  "south_b": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        18,
+        51,
+        183,
+        181
+      ],
+      "body_pixels": 15652,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        219,
+        56,
+        225,
+        178
+      ],
+      "body_pixels": 16474,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        455,
+        4,
+        194,
+        226
+      ],
+      "body_pixels": 19327,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        669,
+        54,
+        198,
+        177
+      ],
+      "body_pixels": 15811,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        24,
+        254,
+        175,
+        181
+      ],
+      "body_pixels": 17121,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        225,
+        257,
+        213,
+        179
+      ],
+      "body_pixels": 17285,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        449,
+        258,
+        208,
+        178
+      ],
+      "body_pixels": 16195,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        694,
+        256,
+        161,
+        180
+      ],
+      "body_pixels": 14896,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        52,
+        490,
+        112,
+        180
+      ],
+      "body_pixels": 12380,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        248,
+        512,
+        157,
+        158
+      ],
+      "body_pixels": 16709,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        436,
+        481,
+        230,
+        184
+      ],
+      "body_pixels": 18495,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        672,
+        437,
+        205,
+        233
+      ],
+      "body_pixels": 19833,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        8,
+        707,
+        201,
+        176
+      ],
+      "body_pixels": 17687,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        208,
+        694,
+        247,
+        178
+      ],
+      "body_pixels": 18275,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        469,
+        665,
+        169,
+        218
+      ],
+      "body_pixels": 17927,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        650,
+        699,
+        237,
+        173
+      ],
+      "body_pixels": 17359,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 0,
+      "region": [
+        14,
+        885,
+        188,
+        221
+      ],
+      "body_pixels": 18824,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 1,
+      "region": [
+        222,
+        917,
+        219,
+        189
+      ],
+      "body_pixels": 16896,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 2,
+      "region": [
+        446,
+        900,
+        214,
+        192
+      ],
+      "body_pixels": 19309,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 3,
+      "region": [
+        666,
+        931,
+        214,
+        176
+      ],
+      "body_pixels": 16522,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 0,
+      "region": [
+        0,
+        1136,
+        220,
+        165
+      ],
+      "body_pixels": 16911,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 1,
+      "region": [
+        225,
+        1138,
+        217,
+        163
+      ],
+      "body_pixels": 18115,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 2,
+      "region": [
+        488,
+        1135,
+        133,
+        168
+      ],
+      "body_pixels": 13616,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 3,
+      "region": [
+        717,
+        1122,
+        113,
+        181
+      ],
+      "body_pixels": 12162,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 0,
+      "region": [
+        17,
+        1346,
+        182,
+        175
+      ],
+      "body_pixels": 15165,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 1,
+      "region": [
+        219,
+        1345,
+        225,
+        177
+      ],
+      "body_pixels": 18012,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 2,
+      "region": [
+        427,
+        1326,
+        250,
+        196
+      ],
+      "body_pixels": 19906,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 3,
+      "region": [
+        688,
+        1306,
+        178,
+        231
+      ],
+      "body_pixels": 19365,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 0,
+      "region": [
+        13,
+        1523,
+        191,
+        225
+      ],
+      "body_pixels": 19264,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 1,
+      "region": [
+        226,
+        1561,
+        212,
+        186
+      ],
+      "body_pixels": 17016,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 2,
+      "region": [
+        462,
+        1566,
+        183,
+        179
+      ],
+      "body_pixels": 16796,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 3,
+      "region": [
+        718,
+        1561,
+        110,
+        187
+      ],
+      "body_pixels": 12314,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    }
+  ],
+  "north_b": [
+    {
+      "row": 0,
+      "column": 0,
+      "region": [
+        39,
+        36,
+        147,
+        177
+      ],
+      "body_pixels": 13856,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "region": [
+        221,
+        39,
+        224,
+        175
+      ],
+      "body_pixels": 15997,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "region": [
+        450,
+        5,
+        208,
+        208
+      ],
+      "body_pixels": 18954,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "region": [
+        666,
+        39,
+        217,
+        174
+      ],
+      "body_pixels": 15301,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "region": [
+        9,
+        264,
+        207,
+        174
+      ],
+      "body_pixels": 17834,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "region": [
+        234,
+        267,
+        197,
+        171
+      ],
+      "body_pixels": 16160,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "region": [
+        447,
+        232,
+        213,
+        206
+      ],
+      "body_pixels": 18808,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "region": [
+        663,
+        267,
+        222,
+        171
+      ],
+      "body_pixels": 16023,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "region": [
+        56,
+        480,
+        111,
+        176
+      ],
+      "body_pixels": 12072,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "region": [
+        278,
+        503,
+        114,
+        153
+      ],
+      "body_pixels": 10874,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "region": [
+        432,
+        490,
+        243,
+        167
+      ],
+      "body_pixels": 18544,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "region": [
+        672,
+        432,
+        204,
+        225
+      ],
+      "body_pixels": 20159,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "region": [
+        9,
+        678,
+        212,
+        191
+      ],
+      "body_pixels": 18170,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "region": [
+        240,
+        672,
+        196,
+        195
+      ],
+      "body_pixels": 17629,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "region": [
+        442,
+        685,
+        224,
+        139
+      ],
+      "body_pixels": 14693,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "region": [
+        662,
+        692,
+        223,
+        169
+      ],
+      "body_pixels": 14504,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 0,
+      "region": [
+        12,
+        881,
+        202,
+        211
+      ],
+      "body_pixels": 18948,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 1,
+      "region": [
+        231,
+        918,
+        204,
+        175
+      ],
+      "body_pixels": 16914,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 2,
+      "region": [
+        440,
+        914,
+        228,
+        179
+      ],
+      "body_pixels": 15966,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 4,
+      "column": 3,
+      "region": [
+        669,
+        887,
+        210,
+        206
+      ],
+      "body_pixels": 17698,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 0,
+      "region": [
+        2,
+        1138,
+        221,
+        156
+      ],
+      "body_pixels": 15300,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 1,
+      "region": [
+        221,
+        1127,
+        226,
+        167
+      ],
+      "body_pixels": 16188,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 2,
+      "region": [
+        473,
+        1121,
+        161,
+        173
+      ],
+      "body_pixels": 15838,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 5,
+      "column": 3,
+      "region": [
+        718,
+        1120,
+        107,
+        174
+      ],
+      "body_pixels": 11395,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 0,
+      "region": [
+        4,
+        1341,
+        217,
+        173
+      ],
+      "body_pixels": 15120,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 1,
+      "region": [
+        224,
+        1341,
+        217,
+        173
+      ],
+      "body_pixels": 15245,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 2,
+      "region": [
+        447,
+        1313,
+        213,
+        206
+      ],
+      "body_pixels": 18707,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 6,
+      "column": 3,
+      "region": [
+        672,
+        1301,
+        205,
+        218
+      ],
+      "body_pixels": 19434,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 0,
+      "region": [
+        5,
+        1535,
+        216,
+        200
+      ],
+      "body_pixels": 18661,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 1,
+      "region": [
+        221,
+        1554,
+        224,
+        181
+      ],
+      "body_pixels": 16813,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 2,
+      "region": [
+        458,
+        1553,
+        191,
+        182
+      ],
+      "body_pixels": 15657,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    },
+    {
+      "row": 7,
+      "column": 3,
+      "region": [
+        720,
+        1553,
+        109,
+        182
+      ],
+      "body_pixels": 11839,
+      "status": "provisional full-sheet connected body; detached feathers excluded; review required"
+    }
+  ]
+}
