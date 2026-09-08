@@ -39,6 +39,20 @@ func run() -> void:
 		var screen: Vector2 = board.camera.unproject_position(Vector3(lane,.12,0))
 		var color := rendered.get_pixelv(Vector2i(screen))
 		check(color.r>color.b and color.r>0.3,"Painted stone bridge remains visible above the sea margin layer")
+	stage.advance_visual(.75)
+	await process_frame
+	await RenderingServer.frame_post_draw
+	var later := root.get_texture().get_image()
+	var changed := 0
+	for y in range(100,700,5):
+		for x in range(20,250,5):
+			if not rendered.get_pixel(x,y).is_equal_approx(later.get_pixel(x,y)): changed+=1
+	check(changed > 10,"Water visibly changes between native rendered animation times")
+	stage.advance_visual(0.0)
+	await process_frame
+	await RenderingServer.frame_post_draw
+	var held := root.get_texture().get_image()
+	check(held.get_data() == later.get_data(),"Paused backdrop produces identical native pixels")
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--capture="):
 			check(root.get_texture().get_image().save_png(arg.trim_prefix("--capture="))==OK,"Native 2D stage capture saved")

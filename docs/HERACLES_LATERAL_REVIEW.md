@@ -39,3 +39,7 @@ Both unchanged originals are in the same local shared candidate folder:
 - `heracles-east-contact-v2-rejected.png`: generation `exec-3be20014-5a2f-4712-96ca-4c7782a9cbe4`.
 
 This confirms that text-only leg-position instructions against this identity sheet are insufficient. **Do not repeat another text-only contact-pair request.** A future attempt needs a visibly posed anatomical guide or a different approved drawing workflow, preserving the 2D-only rule. Heracles lateral walk remains absent; no runtime Resource or central roster change was made.
+
+## Visible colored pose-guide attempt
+
+A built-in generated four-phase red/blue leg guide was supplied alongside the Heracles identity sheet. The finished result still repeats its contact and passing poses, so no runtime clip was admitted. Both sources and SHA256 provenance are preserved in the same shared folder as heracles-colored-pose-guide.png, heracles-pose-guided-rejected.png and pose-guided-attempt.json. The guide method alone did not solve anatomical continuity.

@@ -74,3 +74,7 @@ The build diagnostic now separates ground-walk, flight and multi-frame idle samp
 ## Sprite damage feedback
 
 HP loss now briefly warms the struck sprite, preserving dark contours and current attack playback. The effect fades on gameplay time, holds during pause and clears on rematch; clip changes preserve its strength. East-facing Hoplite guard no longer interrupts a playing action. Native board checks84 and sprite checks47 passed. A90-frame native Hydra damage study was captured; initial pale tint rejected, revised35% highlight with dark-outline protection visually inspected. The existing Windows release predates this source change.
+
+## Living shoreline
+
+Water now has sparse travelling glints and broken surf highlights near painted land/boat edges, using existing water pixels only. Buildings, bridge registration and picking remain unchanged. Native stage13 checks passed, including visible pixel changes across animation times and identical paused frames. Native Water-Glints-Stage.png inspected. Painted boats remain stationary. This source update is newer than the downloadable build.
