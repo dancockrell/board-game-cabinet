@@ -22,7 +22,23 @@ The 2026-09-08 owner decision applies to every project and shared pack: 2D artwo
 
 No GLB/GLTF/FBX/BLEND/OBJ files remain in the project work directory. Legacy copies in the shared library, other project checkouts, old build outputs and historical releases require separate removal. Current 2D sources, candidates and reference art remain valuable and are not deletion targets. The earlier archive-for-later decision is superseded.
 
-## Verified Windows checkpoint
+## Current Windows checkpoint — richer sprites
+
+Release: https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-richer-sprites-2026-09-08
+
+Source: `9958b5705ea4e99fd97ea71f2671d9e89f80afee`. Package: `Olympus-Richer-Sprites-Windows.zip` (82,603,904 bytes).
+ZIP SHA256: `4B0652D3412DA1E2F4A2973805C5FB6407853EE42D4E4BD105BD086EDCB2E82B`.
+Executable SHA256: `973E272DF23C3E6ECD273D3F72B0EE69EEB28C650ED023C893A66B2E09B5C06E`.
+
+Hoplite east attack now contains seventeen distinct source poses including spear raising/lowering; Hydra north/south each have eight-pose walking clips connected to movement. Source sheets stay intact, using per-frame pivots and optional calibrated absolute frame scales. Saved sound/scenery settings are included. See RICHER_SPRITES_2026-09-08.md for admission and remaining defects.
+
+Full graphical verification passed: sprite67, continuity20, board84, stage13, roster79, app68, effects337, arena775 and preserved rule suites. Native north/south Hydra checks exercise all eight frames, movement positions and idle recovery. The integrated 2D gate inspected seven kinds,30 legal placements,963 effect samples and6756 planar drawings with no failures.
+
+The exported executable completed1800 ticks,30 legal deployments,all seven types,13 collapse samples,result and rematch; passed=true,failures=[]. Its accelerated sampling observes six Hoplite attack phases and all eight Hydra south frames. It does not cover every action/direction; dedicated native clip/board tests and motion reviews supply the new-frame coverage. The package includes notices, per-source provenance, BUILD-NOTES.md, VALIDATION.md and VERIFICATION.json. The release's Hoplite video is a native30fps motion study, not full-match footage.
+
+Remaining: richer Atalanta and Heracles walking, other short action/direction sequences, finer Hydra limb/tail transitions, broader combat readability and balance polish. The rear Hydra gait is an exaggerated stomp. No claim of final art approval or completed game quality. All checkpoints below are historical and superseded by this package.
+
+## Historical Windows checkpoint
 
 Olympus-2D-Only-Windows.zip, source e8c9454ce09b9b27e6043b2be4abdcdfa5c91630.
 Executable SHA256: 9C3325D94D6ED710C546435A738683ADD03D6358E526D14B31C25B862B0A32FD.
