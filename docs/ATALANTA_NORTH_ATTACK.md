@@ -1,4 +1,12 @@
-# Atalanta north attack: eight authored raising, release and lowering poses
+# Atalanta north attack: twelve authored poses
+
+Four new transition drawings bridge the eight-pose action: reaching to the right-hip quiver and extracting an arrow precede low nocking; diagonal and near-horizontal relaxed bow poses follow lowering. Twelve independent drawings now cover preparation, release and recovery. Release is .465 seconds, total duration .930 seconds, under one second. The marker remains the actual release frame; rules timing is unchanged.
+
+All four built-in imagegen outputs are admitted after native sequence review. Exact prompts/hashes are in `assets/olympus_arena/sprites/atalanta-north-transition.provenance.json`; unchanged originals and manifest are local shared `assets/candidates_needing_review/olympus-atalanta-north-transition-2026-09-08`. No public upload, paid API or raster alteration.
+
+Native dedicated test passes 36 checks with chronological texture selection for all twelve frames, release marker and return to rest. `outputs/Atalanta-North-Twelve` contains 90 native 30fps frames with adjacent normal-speed MP4. Reach12, extracted14, diagonal35, horizontal38 and canonical-rest41 were inspected. The new wrist rotations visibly bridge the upright bow and resting angle. Minor torso/material variation and the final canonical-rest silhouette shift remain; this is improved continuity, not identical pixels across drawings.
+
+## Previous eight-pose admission evidence
 
 The live clip now adds low nocking, bent-elbow draw and shoulder-level draw ahead of the accepted aim/release and three lowering poses. These are independent source drawings. Release moves to .315 seconds (three .075-second raising poses plus .09-second aim); total duration is .630 seconds. The authoritative hit remains synchronized through the Resource strike marker; no rules timing was changed.
 

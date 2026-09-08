@@ -1,0 +1,34 @@
+{
+  "generator": "builtin imagegen",
+  "records": [
+    {
+      "source": "exec-23dec0bc-1d39-46f5-8d62-1d7b1ab3f253.png",
+      "prompt": "Precise pixel-art sprite edit. Edit image1 rear Atalanta low recovery into a later bow-lowering pose: LEFT hand is lower at upper-thigh height x450 y700, bow rotated 45 degrees counterclockwise from upright so its top tip points upper-left and bottom tip lower-right. Right empty arm hangs relaxed beside RIGHT hip quiver. Keep EXACT head, torso, braid, feet registration, white tunic, LEFT green shawl, RIGHT quiver, scale and palette. Image2 top-row third figure is supporting reference ONLY for final relaxed horizontal-bow position; this output is halfway from upright bow to that low horizontal bow. Single isolated figure matching image1 1254 square magenta background. No arrow. Bowstring straight attached tip to tip. No sheet, text, shadow or other figure.",
+      "runtime": "atalanta-north-relax-diagonal.png",
+      "sha256": "cce96bec8dcedfdaa5085e9b6e3329322f23856c3834e5507e0bd646cda5bf17",
+      "status": "admitted after native sequential review"
+    },
+    {
+      "source": "exec-dde43e1e-017f-4867-a8ed-e56a6b5933bf.png",
+      "prompt": "Precise pixel sprite edit, same single rear Atalanta. Earlier READYING pose: keep the diagonal LEFT-hand bow exactly where it is in this image. Change ONLY right arm: right elbow bends inward and RIGHT hand reaches toward the feather tips of the RIGHT hip quiver, fingers about to pluck an arrow. Do not move quiver, bow, feet, head, braid, torso, clothing or scale. Green shawl remains LEFT shoulder. No arrow yet removed, no extra hand. This is an actual preparatory animation drawing preceding low-nock. Same magenta square backing and pixel art, no floor shadow or text.",
+      "runtime": "atalanta-north-reach-quiver.png",
+      "sha256": "34e47094b706846a95b2625fe94e01659b48eb408304049f292d848b3c71fe86",
+      "status": "admitted after native sequential review"
+    },
+    {
+      "source": "exec-22f20155-c28f-4162-bc8e-d3501add1db1.png",
+      "prompt": "Precise single sprite animation edit. Edit this rear Atalanta to the NEXT moment: her RIGHT hand has lifted ONE arrow from right-hip quiver, holding its shaft just below feathers with hand now at right elbow/rib height. Arrow points diagonally down-left across the front of her torso, mostly hidden except near right hand. LEFT hand starts rotating the same bow toward upright, midpoint 20 degrees counterclockwise from vertical, grip at left waist height. Maintain all head/feet/torso registration, LEFT shawl RIGHT quiver, body, clothing and pixel palette. One arrow only in right hand, no extra hand. Same magenta square, one whole body, no text or shadow.",
+      "runtime": "atalanta-north-extract-arrow.png",
+      "sha256": "b6b74b008301b63e952c6ccbb021c803a71102f15b6a529c52c68ad793c2ec98",
+      "status": "admitted after native sequential review"
+    },
+    {
+      "source": "exec-7c923f6c-5b42-4fe7-9bec-412e6c1a3ba0.png",
+      "prompt": "Precise local pose edit. This same single rear Atalanta relaxes the LEFT bow wrist further: rotate bow another 30 degrees counterclockwise toward horizontal, grip remains at same left-thigh position. Bow upper tip now extends mostly LEFT slightly upward; lower tip extends mostly RIGHT slightly downward across lower skirt. Her left arm hangs a little closer to left thigh. Right arm relaxed same as input. All other pixels/head/feet/torso/scale/equipment and clothing stay unchanged. Bowstring straight tip-to-tip, no arrow, no extra hands. Same isolated pixel-art sprite magenta background.",
+      "runtime": "atalanta-north-relax-horizontal.png",
+      "sha256": "019ba7b155ca8ce94b616b35b5bab86a3a97033ca57719664a1b3fd0cbd75a5e",
+      "status": "admitted after native sequential review"
+    }
+  ],
+  "validation": "36 native checks, zero failures; 90 chronological Godot frames at 30fps. Inspected reach12, arrow14, diagonal35, horizontal38, rest41. Four admitted independent drawings, equipment sides and foot/head registration preserved; small torso/material drift and remaining canonical-rest shift acknowledged."
+}

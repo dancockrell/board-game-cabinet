@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=10 format=3]
+[gd_resource type="Resource" load_steps=14 format=3]
 [ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-aim-v3.png" id="2"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-release-v3.png" id="3"]
@@ -8,14 +8,18 @@
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-nock-low.png" id="7"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-draw-bent.png" id="8"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-draw-shoulder.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-relax-diagonal.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-reach-quiver.png" id="11"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-extract-arrow.png" id="12"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/atalanta-north-relax-horizontal.png" id="13"]
 [resource]
 script = ExtResource("1")
 atlas = ExtResource("2")
-frame_atlases = Array[Texture2D]([ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6")])
-regions = Array[Rect2i]([Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254)])
+frame_atlases = Array[Texture2D]([ExtResource("11"), ExtResource("12"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("10"), ExtResource("13")])
+regions = Array[Rect2i]([Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254), Rect2i(0,0,1254,1254)])
 pivot = Vector2(675,1067)
-durations = PackedFloat32Array(0.075, 0.075, 0.075, 0.09, 0.075, 0.075, 0.075, 0.09)
-strike_time = 0.315
+durations = PackedFloat32Array(0.075, 0.075, 0.075, 0.075, 0.075, 0.09, 0.075, 0.075, 0.075, 0.09, 0.075, 0.075)
+strike_time = 0.465
 looping = false
 draw_scale = 0.708
 magenta_backing = true
