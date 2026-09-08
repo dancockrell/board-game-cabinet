@@ -8,7 +8,7 @@
   "visible_current_candidate_cells": 128,
   "additional_repair_attempt_cells": 32,
   "unique_usable_animation_frames": null,
-  "runtime_admitted_frames": 0,
+  "runtime_admitted_frames": 16,
   "rows": [
     {
       "index": 0,
@@ -48,8 +48,9 @@
       "visible_cells": 32,
       "columns": 8,
       "rows": 4,
-      "admission": "candidate_only",
-      "superseded_attempt": false
+      "admission": "partial: defeat regions only",
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 8
     },
     {
       "file": "north.png",
@@ -63,8 +64,9 @@
       "visible_cells": 32,
       "columns": 8,
       "rows": 4,
-      "admission": "candidate_only",
-      "superseded_attempt": false
+      "admission": "partial: defeat regions only",
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 8
     },
     {
       "file": "east.png",
@@ -79,7 +81,8 @@
       "columns": 8,
       "rows": 4,
       "admission": "candidate_only",
-      "superseded_attempt": false
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 0
     },
     {
       "file": "west-first.png",
@@ -94,7 +97,8 @@
       "columns": 8,
       "rows": 4,
       "admission": "candidate_only",
-      "superseded_attempt": true
+      "superseded_attempt": true,
+      "admitted_defeat_frames": 0
     },
     {
       "file": "west.png",
@@ -109,7 +113,8 @@
       "columns": 8,
       "rows": 4,
       "admission": "candidate_only",
-      "superseded_attempt": false
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 0
     }
   ],
   "native_preview": "outputs/Heracles-Batch-01.mp4",
@@ -119,7 +124,136 @@
     "North walk column6 has no visible club.",
     "Walk poses include repeated-looking phases; 128 visible cells is not 128 proven distinct usable drawings.",
     "Defeat arcs and broad club arcs are candidate improvements requiring per-frame crop, pivot, hand and sequence admission.",
-    "Use four columns by eight rows, each action wrapping over two rows, in next broad-weapon batch."
+    "Use four columns by eight rows, each action wrapping over two rows, in next broad-weapon batch.",
+    "Selected defeat regions are now recorded under runtime_admissions; historical whole-sheet preview findings apply to the unadmitted remainder. This manifest is not proof of a particular packaged build."
   ],
-  "sharing": "Local shared candidates only; no public shared-repository publication"
+  "sharing": "Local shared candidates only; no public shared-repository publication",
+  "status": "partial admission: 16 selected defeat frames; all other rows remain candidate-only",
+  "runtime_admissions": [
+    {
+      "action": "defeat",
+      "direction": "north",
+      "frames": 8,
+      "resource": "themes/heracles_north_defeat.tres",
+      "resource_sha256": "7c3a83e23935ed1c707fc8f1c2b34e9dab4c84c1f795459cbb0f5d94ed6dbc79",
+      "runtime_texture": "assets/olympus_arena/sprites/heracles-north-defeat-batch.png",
+      "source_batch_image": "art_batches/heracles_batch_01/north.png",
+      "source_sha256": "1a54786c3425c414927c2849fbefd8328e399859bf2bcef68d9a12591f04efb9",
+      "regions": [
+        [
+          22,
+          680,
+          165,
+          181
+        ],
+        [
+          236,
+          690,
+          167,
+          168
+        ],
+        [
+          469,
+          714,
+          148,
+          146
+        ],
+        [
+          686,
+          722,
+          180,
+          149
+        ],
+        [
+          905,
+          747,
+          182,
+          121
+        ],
+        [
+          1100,
+          739,
+          207,
+          107
+        ],
+        [
+          1324,
+          775,
+          222,
+          78
+        ],
+        [
+          1551,
+          776,
+          216,
+          75
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    },
+    {
+      "action": "defeat",
+      "direction": "south",
+      "frames": 8,
+      "resource": "themes/heracles_south_defeat.tres",
+      "resource_sha256": "e0616498aa53ba9c9623d7bf46e5424b8df90760e54f5688b4295045443e8f68",
+      "runtime_texture": "assets/olympus_arena/sprites/heracles-south-defeat-batch.png",
+      "source_batch_image": "art_batches/heracles_batch_01/south.png",
+      "source_sha256": "8db05239d0fdadb5b8acec0d5b0b6d01f79ee63de59b2cccb15e4667668c6e45",
+      "regions": [
+        [
+          26,
+          676,
+          165,
+          190
+        ],
+        [
+          237,
+          684,
+          162,
+          180
+        ],
+        [
+          441,
+          701,
+          170,
+          165
+        ],
+        [
+          650,
+          727,
+          192,
+          143
+        ],
+        [
+          874,
+          744,
+          183,
+          127
+        ],
+        [
+          1073,
+          744,
+          234,
+          122
+        ],
+        [
+          1307,
+          772,
+          231,
+          94
+        ],
+        [
+          1551,
+          774,
+          211,
+          93
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    }
+  ],
+  "admission_reconciled_date": "2026-09-08"
 }

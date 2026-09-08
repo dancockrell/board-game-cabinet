@@ -14,7 +14,7 @@
         8
       ],
       "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-59cf3485-4ac0-4b33-9c98-f2425851be83.png",
-      "status": "candidate",
+      "status": "partial: defeat regions only",
       "observed_grid": [
         4,
         8
@@ -24,7 +24,8 @@
       "sha256": "9767709E9C1A575AF2D25FE00711361CCDB105133C6E8C43FE9EE82C0BC6DC74",
       "direction": "south",
       "prompt_file": "south.prompt.txt",
-      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission."
+      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission.",
+      "admitted_defeat_frames": 8
     },
     {
       "requested_grid": [
@@ -32,7 +33,7 @@
         8
       ],
       "source": "C:\\Users\\Admin\\.codex\\generated_images\\01a07171-2bb1-7e43-a95f-f956c8814af6\\exec-17277b8b-835a-481c-8ff3-45089bbbdb58.png",
-      "status": "candidate",
+      "status": "partial: defeat regions only",
       "observed_grid": [
         4,
         8
@@ -42,7 +43,8 @@
       "sha256": "708ECBF7E0663FC757C590FEA07A6C4C8EA2C9915E5536B64B2163EC64B8B7B2",
       "direction": "north",
       "prompt_file": "north.prompt.txt",
-      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission."
+      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission.",
+      "admitted_defeat_frames": 8
     },
     {
       "requested_grid": [
@@ -60,7 +62,8 @@
       "sha256": "372BBC1667D7E1CB177DC25D05928BA6B6EAB2980F6E61F1435DF0E8112D4FD4",
       "direction": "east",
       "prompt_file": "east.prompt.txt",
-      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission."
+      "notes": "Visible movement/reactions/defeat; verify distinct gait legs and exact three-head continuity before admission.",
+      "admitted_defeat_frames": 0
     },
     {
       "requested_grid": [
@@ -78,10 +81,139 @@
       "sha256": "641923AB2263E48D599DA3D00DDFAE63546E1FD174F572F43DA2EC5E919A13CE",
       "direction": "west",
       "prompt_file": "west.prompt.txt",
-      "notes": "Seven rows instead of eight; action boundaries require remapping, not uniform32-cell slicing."
+      "notes": "Seven rows instead of eight; action boundaries require remapping, not uniform32-cell slicing.",
+      "admitted_defeat_frames": 0
     }
   ],
   "tool": "built-in image_gen",
-  "runtime_admitted": 0,
-  "requested_cells": 128
+  "runtime_admitted": 16,
+  "requested_cells": 128,
+  "status": "partial admission: 16 selected defeat frames; all other rows remain candidate-only",
+  "runtime_admissions": [
+    {
+      "action": "defeat",
+      "direction": "north",
+      "frames": 8,
+      "resource": "themes/hydra_north_defeat.tres",
+      "resource_sha256": "1abccfc8e35bf29a812fddff6daf6ba7fec8b01a694498301417c17578c0fb9c",
+      "runtime_texture": "assets/olympus_arena/sprites/hydra-north-defeat-batch.png",
+      "source_batch_image": "art_batches/hydra_batch_01/north.png",
+      "source_sha256": "708ecbf7e0663fc757c590fea07a6c4c8ea2c9915e5536b64b2163ec64b8b7b2",
+      "regions": [
+        [
+          21,
+          1340,
+          177,
+          230
+        ],
+        [
+          242,
+          1340,
+          173,
+          230
+        ],
+        [
+          454,
+          1340,
+          194,
+          230
+        ],
+        [
+          677,
+          1340,
+          198,
+          230
+        ],
+        [
+          20,
+          1580,
+          191,
+          194
+        ],
+        [
+          227,
+          1580,
+          211,
+          194
+        ],
+        [
+          447,
+          1580,
+          207,
+          194
+        ],
+        [
+          662,
+          1580,
+          213,
+          194
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    },
+    {
+      "action": "defeat",
+      "direction": "south",
+      "frames": 8,
+      "resource": "themes/hydra_south_defeat.tres",
+      "resource_sha256": "d27c8ca98208ef7f69da9b8e754af9df682c84d45d85d8554a919843c39a9808",
+      "runtime_texture": "assets/olympus_arena/sprites/hydra-south-defeat-batch.png",
+      "source_batch_image": "art_batches/hydra_batch_01/south.png",
+      "source_sha256": "9767709e9c1a575af2d25fe00711361ccdb105133c6e8c43fe9ee82c0bc6dc74",
+      "regions": [
+        [
+          19,
+          1340,
+          199,
+          208
+        ],
+        [
+          236,
+          1340,
+          208,
+          208
+        ],
+        [
+          453,
+          1340,
+          207,
+          208
+        ],
+        [
+          671,
+          1340,
+          207,
+          208
+        ],
+        [
+          6,
+          1568,
+          215,
+          206
+        ],
+        [
+          226,
+          1568,
+          213,
+          206
+        ],
+        [
+          443,
+          1568,
+          212,
+          206
+        ],
+        [
+          662,
+          1568,
+          216,
+          206
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    }
+  ],
+  "admission_reconciled_date": "2026-09-08"
 }

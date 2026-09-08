@@ -8,7 +8,7 @@
   "visible_current_candidate_cells": 128,
   "additional_repair_attempt_cells": 32,
   "unique_usable_animation_frames": null,
-  "runtime_admitted_frames": 0,
+  "runtime_admitted_frames": 8,
   "layout": "Four columns, eight rows; action frames 0-3 in first row then 4-7 in next row",
   "actions": [
     {
@@ -57,7 +57,8 @@
       "columns": 4,
       "rows": 8,
       "visible_cells": 32,
-      "superseded_attempt": false
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 0
     },
     {
       "file": "north-first.png",
@@ -71,7 +72,8 @@
       "columns": 4,
       "rows": 8,
       "visible_cells": 32,
-      "superseded_attempt": true
+      "superseded_attempt": true,
+      "admitted_defeat_frames": 0
     },
     {
       "file": "north.png",
@@ -85,7 +87,8 @@
       "columns": 4,
       "rows": 8,
       "visible_cells": 32,
-      "superseded_attempt": false
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 8
     },
     {
       "file": "east.png",
@@ -99,7 +102,8 @@
       "columns": 4,
       "rows": 8,
       "visible_cells": 32,
-      "superseded_attempt": false
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 0
     },
     {
       "file": "west.png",
@@ -113,7 +117,8 @@
       "columns": 4,
       "rows": 8,
       "visible_cells": 32,
-      "superseded_attempt": false
+      "superseded_attempt": false,
+      "admitted_defeat_frames": 0
     }
   ],
   "native_preview": "outputs/Minotaur-Batch-01.mp4",
@@ -124,7 +129,73 @@
     "East and west attack sequences jump from raised axe to ready stance before impact; not correctly chronological throughout.",
     "Walk cells contain repeated-looking poses; visible cell count does not prove distinct usable frames.",
     "Portrait 1:2 canvas with 4x8 cells still yields square cells. For wider weapon room use square canvas with 4x8 cells.",
-    "No new gameplay or runtime Resource changes. Entire batch excluded from Windows exports."
+    "Selected defeat regions are now recorded under runtime_admissions; historical whole-sheet preview findings apply to the unadmitted remainder. This manifest is not proof of a particular packaged build."
   ],
-  "sharing": "Local shared candidates only, no public shared repository push"
+  "sharing": "Local shared candidates only, no public shared repository push",
+  "status": "partial admission: 8 selected defeat frames; all other rows remain candidate-only",
+  "runtime_admissions": [
+    {
+      "action": "defeat",
+      "direction": "north",
+      "frames": 8,
+      "resource": "themes/minotaur_north_defeat.tres",
+      "resource_sha256": "dc574a5f58f3b1194b1fbde24a5063617f17673ef46764b4d83478d0bc15a33a",
+      "runtime_texture": "assets/olympus_arena/sprites/minotaur-north-defeat-batch.png",
+      "source_batch_image": "art_batches/minotaur_batch_01/north.png",
+      "source_sha256": "3a7006730e858984a6e9c130abc49e2d5ca00876fccc56aac7727a31c0159e97",
+      "regions": [
+        [
+          31,
+          1368,
+          165,
+          172
+        ],
+        [
+          239,
+          1369,
+          183,
+          172
+        ],
+        [
+          459,
+          1388,
+          177,
+          153
+        ],
+        [
+          678,
+          1398,
+          172,
+          144
+        ],
+        [
+          11,
+          1620,
+          192,
+          120
+        ],
+        [
+          232,
+          1621,
+          194,
+          128
+        ],
+        [
+          460,
+          1622,
+          184,
+          124
+        ],
+        [
+          664,
+          1622,
+          200,
+          122
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    }
+  ],
+  "admission_reconciled_date": "2026-09-08"
 }

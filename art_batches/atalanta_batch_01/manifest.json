@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "character": "Atalanta",
-  "status": "candidate-only; not runtime-admitted",
+  "status": "partial admission: 16 selected defeat frames; all other rows remain candidate-only",
   "generator": "built-in image_gen",
   "calls": 4,
   "requested_cells": 128,
   "observed_figure_cells": 128,
-  "admitted_frames": 0,
+  "admitted_frames": 16,
   "distinct_useful_frames": null,
   "reference": "assets/olympus_arena/sprites/atalanta-v2.png",
   "rows": [
@@ -49,7 +49,8 @@
         1774,
         887
       ],
-      "sha256": "DBA0B0506AD8BCBD2290E60A08C5BFBE32425D49D98EAAA0308EACAEBC9B1B7A"
+      "sha256": "DBA0B0506AD8BCBD2290E60A08C5BFBE32425D49D98EAAA0308EACAEBC9B1B7A",
+      "admitted_defeat_frames": 8
     },
     {
       "direction": "north",
@@ -68,7 +69,8 @@
         1774,
         887
       ],
-      "sha256": "60CB4C7BE011BFAEDDCBCEBBAAD310CB9ECAD2109CA947DF1B804F42D4A89D48"
+      "sha256": "60CB4C7BE011BFAEDDCBCEBBAAD310CB9ECAD2109CA947DF1B804F42D4A89D48",
+      "admitted_defeat_frames": 8
     },
     {
       "direction": "east",
@@ -87,7 +89,8 @@
         1774,
         887
       ],
-      "sha256": "E25C4A6CF4072A6B113892127A07420F8A873DE85C03AE86590E916B1C146757"
+      "sha256": "E25C4A6CF4072A6B113892127A07420F8A873DE85C03AE86590E916B1C146757",
+      "admitted_defeat_frames": 0
     },
     {
       "direction": "west",
@@ -106,7 +109,8 @@
         1774,
         887
       ],
-      "sha256": "A76C580CB70F08ECA40C64E72F6B23894C0E237F58E40A6B9B4430FB2C2FBDAC"
+      "sha256": "A76C580CB70F08ECA40C64E72F6B23894C0E237F58E40A6B9B4430FB2C2FBDAC",
+      "admitted_defeat_frames": 0
     }
   ],
   "limitations": [
@@ -115,6 +119,133 @@
     "EAST walk repeats nearly one stride; insufficient alternating gait.",
     "WEST hurt row creates an arrow prop not present at row start.",
     "Rows are not perfectly uniform; preview uses manual row boundaries, provisional column boundaries and pivots. No source raster edited.",
-    "No candidate has passed full runtime admission."
-  ]
+    "Selected defeat regions are now recorded under runtime_admissions; historical whole-sheet preview findings apply to the unadmitted remainder. This manifest is not proof of a particular packaged build."
+  ],
+  "runtime_admissions": [
+    {
+      "action": "defeat",
+      "direction": "north",
+      "frames": 8,
+      "resource": "themes/atalanta_north_defeat.tres",
+      "resource_sha256": "c122bb1d0071431e8769b1a8c2c4c3fc0fb89a53ac814af11a402cee251a9011",
+      "runtime_texture": "assets/olympus_arena/sprites/atalanta-north-defeat-batch-01.png",
+      "source_batch_image": "art_batches/atalanta_batch_01/north.png",
+      "source_sha256": "60cb4c7be011bfaeddcbcebbaad310cb9ecad2109ca947df1b804f42d4a89d48",
+      "regions": [
+        [
+          30,
+          689,
+          139,
+          173
+        ],
+        [
+          251,
+          709,
+          137,
+          153
+        ],
+        [
+          476,
+          722,
+          150,
+          140
+        ],
+        [
+          679,
+          733,
+          208,
+          129
+        ],
+        [
+          883,
+          726,
+          221,
+          112
+        ],
+        [
+          1101,
+          746,
+          221,
+          91
+        ],
+        [
+          1317,
+          772,
+          216,
+          67
+        ],
+        [
+          1537,
+          770,
+          226,
+          68
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    },
+    {
+      "action": "defeat",
+      "direction": "south",
+      "frames": 8,
+      "resource": "themes/atalanta_south_defeat.tres",
+      "resource_sha256": "831f8857084afa8e75f72b478c0e547998b2890a53780160256ce861298559e4",
+      "runtime_texture": "assets/olympus_arena/sprites/atalanta-south-defeat-batch-01.png",
+      "source_batch_image": "art_batches/atalanta_batch_01/south.png",
+      "source_sha256": "dba0b0506ad8bcbd2290e60a08c5bfbe32425d49d98eaaa0308eacaebc9b1b7a",
+      "regions": [
+        [
+          40,
+          699,
+          140,
+          182
+        ],
+        [
+          261,
+          724,
+          143,
+          150
+        ],
+        [
+          486,
+          734,
+          124,
+          140
+        ],
+        [
+          679,
+          745,
+          164,
+          123
+        ],
+        [
+          869,
+          749,
+          210,
+          108
+        ],
+        [
+          1109,
+          772,
+          210,
+          79
+        ],
+        [
+          1329,
+          788,
+          214,
+          71
+        ],
+        [
+          1552,
+          788,
+          213,
+          72
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    }
+  ],
+  "admission_reconciled_date": "2026-09-08"
 }

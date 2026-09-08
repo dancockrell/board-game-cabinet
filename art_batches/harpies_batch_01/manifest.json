@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "character": "Harpies",
-  "status": "candidate-only; no runtime admission",
+  "status": "partial admission: 16 selected defeat frames; all other rows remain candidate-only",
   "generator": "built-in image_gen",
   "calls": 4,
   "requested_cells": 128,
   "observed_figure_cells": 128,
-  "admitted_frames": 0,
+  "admitted_frames": 16,
   "distinct_useful_frames": null,
   "reference": "assets/olympus_arena/sprites/harpies-flight-v1.png",
   "read_order": "4 columns x 8 rows; each action spans two consecutive rows, four cells left-to-right then next four cells left-to-right",
@@ -44,7 +44,8 @@
         887,
         1774
       ],
-      "sha256": "A498482BAEF3AA553217FF180BE5EAAE539A543014CC534BA2EF0DFCDEDB0B6A"
+      "sha256": "A498482BAEF3AA553217FF180BE5EAAE539A543014CC534BA2EF0DFCDEDB0B6A",
+      "admitted_defeat_frames": 8
     },
     {
       "name": "north_a",
@@ -65,7 +66,8 @@
         887,
         1774
       ],
-      "sha256": "9FE9C67D3E26AA973B2F59F541337A8CF52E64133B7054E29480364D3F32B9E7"
+      "sha256": "9FE9C67D3E26AA973B2F59F541337A8CF52E64133B7054E29480364D3F32B9E7",
+      "admitted_defeat_frames": 8
     },
     {
       "name": "south_b",
@@ -86,7 +88,8 @@
         887,
         1774
       ],
-      "sha256": "46F4C5C357FFE8EAE13A5179F7516E6EDA6DFBF536D0E64C9D1311ED645C390A"
+      "sha256": "46F4C5C357FFE8EAE13A5179F7516E6EDA6DFBF536D0E64C9D1311ED645C390A",
+      "admitted_defeat_frames": 0
     },
     {
       "name": "north_b",
@@ -107,7 +110,8 @@
         887,
         1774
       ],
-      "sha256": "FAB9AF75DB3D85BF428155E758CB1F419331A600770827CD8BA695E957EACADE"
+      "sha256": "FAB9AF75DB3D85BF428155E758CB1F419331A600770827CD8BA695E957EACADE",
+      "admitted_defeat_frames": 0
     }
   ],
   "validation": {
@@ -126,6 +130,133 @@
     "Some wing poses recur across action families; unique useful motion not counted.",
     "Victory is primarily wing/talon gesturing and does not match every requested microbeat.",
     "Whole-sheet connected-component rectangles can include nearby detached feathers or exclude isolated details; provisional only.",
-    "No runtime integration or full-match claim."
-  ]
+    "Selected defeat regions are now recorded under runtime_admissions; historical whole-sheet preview findings apply to the unadmitted remainder. This manifest is not proof of a particular packaged build."
+  ],
+  "runtime_admissions": [
+    {
+      "action": "defeat",
+      "direction": "north",
+      "frames": 8,
+      "resource": "themes/harpies_north_defeat.tres",
+      "resource_sha256": "6e2b7692dbffb89a5d9bf2ee564844534d8ec024e3a77af3df4a1511c2781100",
+      "runtime_texture": "assets/olympus_arena/sprites/harpies-north-defeat-batch-01.png",
+      "source_batch_image": "art_batches/harpies_batch_01/north_a.png",
+      "source_sha256": "9fe9c67d3e26aa973b2f59f541337a8cf52e64133b7054e29480364d3f32b9e7",
+      "regions": [
+        [
+          10,
+          1346,
+          202,
+          207
+        ],
+        [
+          234,
+          1361,
+          203,
+          184
+        ],
+        [
+          441,
+          1378,
+          230,
+          168
+        ],
+        [
+          675,
+          1405,
+          200,
+          131
+        ],
+        [
+          19,
+          1601,
+          174,
+          137
+        ],
+        [
+          206,
+          1598,
+          209,
+          140
+        ],
+        [
+          428,
+          1639,
+          243,
+          102
+        ],
+        [
+          679,
+          1648,
+          191,
+          81
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    },
+    {
+      "action": "defeat",
+      "direction": "south",
+      "frames": 8,
+      "resource": "themes/harpies_south_defeat.tres",
+      "resource_sha256": "e587401478bea5c847063fbf962ec73a8d752481979d10465859ca54ca80193b",
+      "runtime_texture": "assets/olympus_arena/sprites/harpies-south-defeat-batch-01.png",
+      "source_batch_image": "art_batches/harpies_batch_01/south_a.png",
+      "source_sha256": "a498482baef3aa553217ff180be5eaae539a543014cc534ba2ef0dfcdedb0b6a",
+      "regions": [
+        [
+          15,
+          1350,
+          201,
+          196
+        ],
+        [
+          248,
+          1365,
+          184,
+          178
+        ],
+        [
+          476,
+          1369,
+          156,
+          185
+        ],
+        [
+          683,
+          1404,
+          184,
+          154
+        ],
+        [
+          33,
+          1585,
+          150,
+          153
+        ],
+        [
+          202,
+          1607,
+          221,
+          127
+        ],
+        [
+          445,
+          1637,
+          215,
+          90
+        ],
+        [
+          670,
+          1645,
+          207,
+          83
+        ]
+      ],
+      "duration_seconds": 0.78,
+      "scope": "Selected defeat regions only; other source rows remain candidates"
+    }
+  ],
+  "admission_reconciled_date": "2026-09-08"
 }
