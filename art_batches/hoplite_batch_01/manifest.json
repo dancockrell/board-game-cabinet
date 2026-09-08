@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "character": "hoplite",
+  "tool": "built-in image_gen",
+  "requested_cells": 128,
+  "observed_drawings": 127,
+  "runtime_admitted_drawings": 0,
+  "status": "candidate sheets; per-row curation required",
+  "background": "generated magenta; unchanged originals; no raster masking",
+  "sheets": [
+    {
+      "file": "south-reactions.png",
+      "source": "exec-e1804857-4e31-4f4d-b4cd-1296d8e0694b.png",
+      "prompt": "Create ONE production pixel-art SPRITE SHEET, 8 equal columns by 4 equal rows, EXACTLY 32 isolated complete drawings of the SAME Greek hoplite from the reference. Reference is identity only, not output layout. Large landscape canvas 3072x2048 if available. Every cell equal size, no borders, no text, generous empty gutter, identical feet baseline per row except falling. All characters face SOUTH toward viewer with slight elevated classic 2D game perspective. Keep gold Corinthian helmet with BLUE crest, ivory tunic with blue Greek hem, bronze greaves, sandals, large BLUE owl shield on anatomical LEFT arm (screen right), long spear in RIGHT hand (screen left). Refined hand-authored pixel look with discrete clusters, dark outlines, no clay/3D render. TRUE TRANSPARENT background; if transparency unavailable use completely uniform saturated magenta #FF00FF, never white/checkerboard/gradient, no cast shadow. Each row is a DIFFERENT coherent eight-frame animation, sequential LEFT TO RIGHT: row1 shield brace: relaxed, sees threat, bends knees, shield raises, impact brace, absorbs recoil, lowers, recover; row2 hurt/stagger: ready, shoulder struck, chest recoil, backwards step, deep stagger, catches balance, rises, ready; row3 kneeling defeat: struck, knees buckle, drops to knee, shield lowers, spear tips sideways, kneels bowed, slumps sideways, rests fully fallen (non-gory PG13); row4 victory: ready, chest rises, spear raised halfway, spear aloft, shield lifts, proud cheer, lowers shield, settles. Animate limbs, weight transfer, crest and tunic secondary motion; no repeated standing filler. Spear stays continuous and complete within every cell; shield remains large. Preserve armor and equipment identity across all32. Rows must have8cells, no merged cells, no cloned exact poses. Consistent scale and pixel density.",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_row_counts": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "actions": [
+        "shield_brace",
+        "hurt",
+        "defeat",
+        "victory"
+      ],
+      "status": "candidate",
+      "notes": "Reaction and defeat sequences useful-looking; repeated bookend standing poses are not independent new actions.",
+      "sha256": "EC7365C72D670962787AB23081C10DA6B7853631D181E985345DE23E34EFA206"
+    },
+    {
+      "file": "north-actions.png",
+      "source": "exec-9b9e9877-3a1c-49c1-8767-77f8c2aa7ca2.png",
+      "prompt": "Make ONE large production pixel-art animation SPRITE SHEET, exact8 columns x4rows =32 complete isolated cells, landscape1536x1024 or larger same3:2 ratio. Reference only defines existing Greek hoplite identity. Entire sheet REAR/NORTH facing away from viewer, elevated classic2D perspective. Gold helmet blue crest, ivory blueGreekhem tunic, bronze greaves, shield anatomicalLEFT screenLEFT showing brown inner straps, spear anatomicalRIGHT screenRIGHT; do not change handedness or turn front. Rich discrete pixel clusters darkoutlined readable mature sprites. Pureuniform magenta#FF00FF no white/black/checkerboard,no shadows,no gridlines/text. Consistent cell centers/baselines and full equipment contained including spear. Four ordered8frame animations rows lefttoright. Row1 walkaway: leftcontact,weightdown,leftsupport passing,rightleg forward,rightcontact,weightdown,rightsupport passing,leftlegforward, actual alternating feet. Row2 spearthrust: guard, anticipatorycrouch,drawrightelbowback,raiseforward,extendthrustaway,fullreach,withdraw,guard. Row3 hurt: guard,backimpact,archback,staggerleft,deepkneebend,catchbalance,straighten,guard. Row4 defeat: struck,kneesbuckle,rightkneeldown,bothknees,bowhead,leftsupporthand,fallforward,fullyprone withshieldandspearontheground. No gore. Exactly8 separate sequentialdrawingcells perrow and4rows. No replicated idle filler, no missing legs, no weapon direction reversing. Show substantial readable movement and secondarycrest/tunic motion. Source background remains uniformmagenta throughallgaps.",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_row_counts": [
+        8,
+        7,
+        8,
+        8
+      ],
+      "actions": [
+        "walk",
+        "spear_thrust",
+        "hurt",
+        "defeat"
+      ],
+      "status": "candidate",
+      "notes": "Thrust row has seven wide drawings and does not fit uniform eight-column slicing.",
+      "sha256": "83CD09BEE744FF793BC1DA80B44E730E94EC2E545042B22F44925677AEC2DCF6"
+    },
+    {
+      "file": "east-actions.png",
+      "source": "exec-f3353393-8b1f-4866-bc5b-124657d98c3d.png",
+      "prompt": "One large pixel-art Greek HOPLITE spritesheet EXACT8columns x4rows=32 isolatedcomplete drawings, landscape1536x1024 orlarger3:2. Same character referenceidentity, allfaceEAST/screenRIGHT, elevated classic2D game camera. GOLD Corinthianhelmet BLUEcrest ivorytunic blueGreekhem bronzegreaves sandals. Largeblue owlshield anatomicalLEFT/neararm visible; spearRIGHT/farhand. Preserve equipment ownership across32. Uniformmagenta#FF00FF background no shadows/no labels/no grid/no checkerboard. Eachcell complete equipment withinbounds generousgutters equalcenters consistentbaseline; pixelclusters darkoutlines sophisticatedsameartstyle. Row1 eightstep WALK: leftcontact,leftdown,leftpassing,leftup,rightcontact,rightdown,rightpassing,rightup; realalternatinglegs notsamefoot. Row2 eightstep RUN: rearloading,push-off,flight,strike,oppositeloading,push-off,flight,strike; spearhelduprightcompact. Row3 SHIELDBASH:guard,crouch,drawshieldback,stepforward,shieldthrust,fullbash,recoil,recover, rightarmspearkeepsupright. Row4 DEFEAT:hit,recoil,kneebuckle,one-knee,bothknees,slumpsideways,fall,lyingstill withshieldandspearontheground. PG13nogore. Eachrow8coherent chronological poses lefttoright, no repeatedstandstill filler, no weaponsbleedinginto nextcell. Reference onlyidentity; output is32 not4. Keepfigureheightconsistent, animatecrest/tunic subtly.",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_row_counts": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "actions": [
+        "walk",
+        "run",
+        "shield_bash",
+        "defeat"
+      ],
+      "status": "candidate",
+      "notes": "Locomotion repeats leading-leg silhouette; do not replace accepted walk. Reactions/defeat need sequence and equipment review.",
+      "sha256": "E1DD91225A1B86475BC56A54196F3057FE9BD522C152D081EB1692B5D847953F"
+    },
+    {
+      "file": "west-actions.png",
+      "source": "exec-0935329d-45e5-4748-91bb-091fcf8fc31f.png",
+      "prompt": "Create a complete professional pixel-art sprite sheet: exactly EIGHT columns and FOUR rows, 32 separate full-body poses, landscape 1536x1024 or larger with 3:2 ratio. Identity reference only: same Greek hoplite gold Corinthian helmet, blue crest, ivory tunic blue Greek hem, bronze greaves, sandals, large blue owl shield LEFT arm, spear RIGHT hand. Every pose faces WEST/screen LEFT, three-quarter elevated 2D camera matching reference. Not a mirror of an east character. Pure uniform saturated magenta #FF00FF background, no gradients, grid, labels, ground shadows, checkerboard or white. Rich clean pixel clusters, same scale, full spear inside every cell, wide gutters. Row1 EIGHT FRAME WALK: left leg contact, weight down, right knee passing, right foot swings ahead, RIGHT LEG CONTACT WITH LEGS CLEARLY EXCHANGED, weight down, left knee passing, left foot swings ahead. Show both feet alternating. Row2 SHIELD DEFENSE: ready, crouch, raise shield, absorb impact, lean behind shield, recover balance, lower shield, ready. Row3 HURT: ready, hit, recoil chest, backward step, crouched stagger, plant foot, rise, recover. Row4 DEFEAT: hit, stagger, buckle knees, one knee, both knees, fall sideways, shield hits ground, body lying still. PG13 no gore. Each row one coherent sequential action read left to right, eight cells and no merged cells. Standing repeat allowed only at start/end of nonlooping clips, no repeated filler. Animate actual posture, legs, cloth, crest, keep anatomy and equipment intact. Prefer upright spear for compact poses; complete fallen spear lies within last cell.",
+      "requested_grid": [
+        8,
+        4
+      ],
+      "observed_row_counts": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "actions": [
+        "walk",
+        "shield_defense",
+        "hurt",
+        "defeat"
+      ],
+      "status": "candidate",
+      "notes": "Locomotion repeats leading-leg silhouette; do not replace accepted walk. Reactions/defeat need sequence and equipment review.",
+      "sha256": "F785D75C3D68400F65616F5CFD152D968893FDD0162CDB86FCA2EAF956E97AEF"
+    }
+  ]
+}

@@ -13,8 +13,10 @@ func deploy_available(app):
 			return
 func run():
 	var output:=""
+	var warmup_ticks:=300
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--motion-output="): output=arg.trim_prefix("--motion-output=")
+		if arg.begins_with("--warmup-ticks="): warmup_ticks=clampi(arg.trim_prefix("--warmup-ticks=").to_int(),0,1200)
 	if not output.is_absolute_path(): quit(2); return
 	DirAccess.make_dir_recursive_absolute(output)
 	var app=preload("res://app/olympus_arena.gd").new()
@@ -27,7 +29,7 @@ func run():
 	app._start_or_restart()
 	app._countdown_remaining=0.0
 	# Advance to established battle through the same controller and legal requests.
-	for tick in 300:
+	for tick in warmup_ticks:
 		if tick%10==0: deploy_available(app)
 		app._process(.1)
 	var beginning=float(app.state.elapsed)
@@ -37,7 +39,7 @@ func run():
 		await process_frame
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png(output.path_join("frame-%03d.png"%frame))
-	var report={"start_seconds":beginning,"end_seconds":app.state.elapsed,"frames":180,"fps":30,"legal_deployments_including_warmup":placements,"authoritative_snapshot_matches":app.state==app.session.snapshot(),"scope":"Six-second native controller sample after 30-second legal-match warmup; not full-match validation"}
+	var report={"start_seconds":beginning,"end_seconds":app.state.elapsed,"frames":180,"fps":30,"legal_deployments_including_warmup":placements,"authoritative_snapshot_matches":app.state==app.session.snapshot(),"warmup_ticks":warmup_ticks,"scope":"Six-second native controller sample after recorded legal-match warmup; not full-match validation"}
 	FileAccess.open(output.path_join("study.json"),FileAccess.WRITE).store_string(JSON.stringify(report,"\t"))
 	print("Native battlefield motion: 180 frames at 30 fps; authoritative state match: ",report.authoritative_snapshot_matches)
 	quit(0 if report.authoritative_snapshot_matches else 1)
