@@ -95,7 +95,7 @@ func _run() -> void:
 			if sprite._reaction_elapsed >= 0.0:
 				action_frames_by_kind[kind] = int(action_frames_by_kind.get(kind,0))+1
 			elif sprite._motion_clip != null:
-				var counts: Dictionary = ambient_frames_by_kind if kind in ["hydra","harpies"] else walking_frames_by_kind
+				var counts: Dictionary = ambient_frames_by_kind if kind == "harpies" else walking_frames_by_kind
 				counts[kind] = int(counts.get(kind,0))+1
 		var filename := "frame-%04d.png" % frame
 		error = root.get_texture().get_image().save_png(directory.path_join(filename))
@@ -116,7 +116,7 @@ func _run() -> void:
 		"action_actor_frames_by_kind":action_frames_by_kind,
 		"walking_actor_frames_by_kind":walking_frames_by_kind,
 		"ambient_actor_frames_by_kind":ambient_frames_by_kind,
-		"animation_count_definition":"Rendered actor-frames, not unique drawings. Actions include attacks and hit reactions; ambient includes Hydra breathing and Harpy flight.",
+		"animation_count_definition":"Rendered actor-frames, not unique drawings. Actions include attacks and hit reactions; ambient includes Harpy flight; Hydra movement is counted as walking. Counts do not prove distinct poses.",
 		"player_legal_placements": placements,
 		"final_elapsed": app.state.elapsed,
 		"final_unit_count": app.state.units.size(),
