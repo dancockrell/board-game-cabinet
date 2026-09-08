@@ -50,3 +50,11 @@ Native review `outputs/Medusa-South-Six-Review/` contains 90 frames at 30 fps: s
 `tests/test_medusa_south_walk.gd` passes 90 native checks, including actual board playback of every source cell, authoritative southward positions, pause and stopped recovery; its headless subset passes 15. Remaining polish includes more down/up inbetweens, softer knee recovery, stronger counter-swing and less fabric-detail variation. This is a six-drawing cycle, not an eight-drawing claim.
 
 Both original generation attempts, exact prompts, the identity reference and SHA256 hashes are archived locally in the shared library under `assets/candidates_needing_review/olympus-medusa-south-walk-2026-09-08`. The rejected first sheet is not a runtime asset, and no shared candidate was publicly pushed.
+
+### Follow-up intermediate admission
+
+The active south cycle now has **seven** useful drawings. `medusa-south-down-phases.png` contributes only cell 5, a lowered weight-transfer / lifting-heel pose between left-foot contact and right-leg passing. The original six poses keep their original texture atlas, so edit drift cannot change their pixels. Each half-cycle remains 0.32 seconds despite unequal drawing counts; total loop time remains 0.64 seconds.
+
+Three bounded built-in edits attempted two intermediate poses and corrected arm direction. Native eight-pose playback exposed a distracting arm rise to the belt in cell 0, so that proposed eighth pose is excluded. The opposite intermediate preserves a modest arm position and smooths the heel lift. This pass does not claim eight admitted poses or a fully symmetric finished gait.
+
+Native test now passes **92 checks**, with seven actual source cells played on the board. Final 90-frame rest/walk/rest review: `outputs/Medusa-South-Seven-Final/`; video: `outputs/Medusa-South-Seven-Walk.mp4`. The new intermediate and adjacent contacts/passing stages were inspected, along with standing continuity. All three unchanged generated sheets, reference, prompts and hashes are archived locally in shared `assets/candidates_needing_review/olympus-medusa-south-down-2026-09-08`. Earlier six- and eight-pose review outputs are historical evidence, not the current runtime sequence.

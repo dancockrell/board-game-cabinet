@@ -1,12 +1,14 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" load_steps=4 format=3]
 [ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/medusa-south-walk-six.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/medusa-south-down-phases.png" id="3"]
 [resource]
 script = ExtResource("1")
 atlas = ExtResource("2")
-regions = Array[Rect2i]([Rect2i(313,0,313,627),Rect2i(626,0,313,627),Rect2i(939,627,315,627),Rect2i(0,627,313,627),Rect2i(626,627,313,627),Rect2i(939,0,315,627)])
-frame_pivots = Array[Vector2]([Vector2(164,585),Vector2(148,585),Vector2(129,515),Vector2(185,514),Vector2(150,509),Vector2(129,580)])
-durations = PackedFloat32Array(0.12,0.10,0.10,0.12,0.10,0.10)
+frame_atlases = Array[Texture2D]([ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("2"),ExtResource("3"),ExtResource("2"),ExtResource("2")])
+regions = Array[Rect2i]([Rect2i(313,0,313,627),Rect2i(626,0,313,627),Rect2i(939,627,315,627),Rect2i(0,627,313,627),Rect2i(313,627,313,627),Rect2i(626,627,313,627),Rect2i(939,0,315,627)])
+frame_pivots = Array[Vector2]([Vector2(164,585),Vector2(148,585),Vector2(129,515),Vector2(185,514),Vector2(163,508),Vector2(150,509),Vector2(129,580)])
+durations = PackedFloat32Array(0.12,0.10,0.10,0.09,0.08,0.075,0.075)
 looping = true
 draw_scale = 1.28
 magenta_backing = true

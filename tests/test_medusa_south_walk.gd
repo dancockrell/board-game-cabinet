@@ -10,12 +10,12 @@ func check(value: bool, message: String):
 func _initialize(): run.call_deferred()
 func run():
 	check(Walk.validation_error().is_empty(), "Clip resource validation")
-	check(Walk.regions.size() == 6 and Walk.looping, "Six admitted gait cells and looping")
+	check(Walk.regions.size() == 7 and Walk.looping, "Seven admitted gait cells and looping")
 	var elapsed = 0.0
 	var hashes = []
 	for i in Walk.regions.size():
 		check(Walk.frame_at(elapsed + .001) == i, "Sequential timing %d" % i)
-		var digest = hash(Walk.atlas.get_image().get_region(Walk.regions[i]).get_data())
+		var digest = hash(Walk.frame_atlases[i].get_image().get_region(Walk.regions[i]).get_data())
 		check(not hashes.has(digest), "Distinct source pixels %d" % i)
 		hashes.append(digest)
 		elapsed += Walk.durations[i]
@@ -35,7 +35,7 @@ func run():
 			check(is_equal_approx(board._tokens[1].position.z,state.units[0].z), "Visual root follows authoritative position")
 			check(actor.texture.region == Rect2(Walk.regions[actor._shown]), "Actual texture selects admitted region")
 			if not seen.has(actor._shown): seen.append(actor._shown)
-		check(seen.size() == 6, "Board played all six gait poses")
+		check(seen.size() == 7, "Board played all seven gait poses")
 		var prior = actor._shown
 		actor.advance_visual(0.0)
 		check(actor._shown == prior, "Paused animation does not advance")

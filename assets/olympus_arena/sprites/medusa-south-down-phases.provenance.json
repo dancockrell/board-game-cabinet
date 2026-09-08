@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-08",
+  "generator": "built-in image_gen",
+  "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-4c038761-599a-4a36-aaa8-b132e5ad3ed8.png",
+  "reference": "assets/olympus_arena/sprites/medusa-south-walk-six.png",
+  "selected_cells_zero_based": [
+    5
+  ],
+  "rejected_cell_zero_based": 0,
+  "rejection_reason": "Native 8-pose review revealed excessive arm rise on first down pose; excluded. Only opposite down pose is useful and admitted, making seven drawings.",
+  "attempts": [
+    {
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-5dacc939-4e75-4d10-b515-5d5f1c74a05a.png",
+      "prompt": "Use case: precise-object-edit. In this exact 4 column 2 row Medusa front-walk sprite sheet, edit ONLY TWO CELLS: TOP ROW COLUMN ONE and BOTTOM ROW COLUMN TWO. All other cells stay EXACTLY unchanged. These two cells will become the missing DOWN / weight-absorption poses. Top row col1: anatomical RIGHT leg on image LEFT is planted and visibly FLEXED at knee, its calf angled slightly under body, her weight lowered modestly by 8 pixels, anatomical LEFT leg on image RIGHT just lifts its heel to swing behind. Bottom row col2: opposite, anatomical LEFT leg on image RIGHT planted with visibly flexed supporting knee, weight lowered 8px, RIGHT leg on image LEFT just lifting heel to swing. Keep both feet low, not high-knee, not crouching. Clearly distinct from straight contact and fully raised passing poses already in other cells. A modest natural opposite-arm counter-swing in these2cells: arm opposite supporting leg swings forward slightly. Preserve ALL identity, stern face, gold diadem, green snake arrangement, skin palette, ivory short chiton with Greek key trim, gold bracers and sandals. Same frontal view, scale, pixel cluster style, same pure #FF00FF backing, no shadows/grid/text. Do NOT make a new full sheet composition. Modify ONLY those TWO unused cells into bent-support-leg down poses, no other change.",
+      "sha256": "3d42581048a9ca57ef8973b8367a2887881dea9102445ace4ea23a65c2f47c06"
+    },
+    {
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-fb43ea0f-5c5b-403b-9aa1-b26d5b6879c5.png",
+      "prompt": "Use case: precise-object-edit. Make exactly ONE targeted correction to these TWO edited cells: TOP ROW COLUMN1 and BOTTOM ROW COLUMN2. Fix arm counter-swing only. In top-row column1, the image-RIGHT forearm/hand swings slightly forward (hand visibly in front of skirt edge, around upper-thigh level) while image-LEFT arm trails back, straighter and partly behind left torso edge. In bottom-row column2, image-LEFT forearm/hand swings slightly forward in front of skirt edge, while image-RIGHT arm trails back. Small walking counter-swing, no raised fists, no attack. KEEP ALL LEGS, FEET, KNEES, SKIRT, FACE, SNAKES AND BODY PLACEMENT EXACTLY UNCHANGED in these cells, do not straighten or move either leg. Keep gold wrist bracers and skin palette. Do not change any other six cells. Same exact 4x2 sheet, pure magenta backing, same crisp pixel style. Only correct those two arm counter-swings.",
+      "sha256": "67edbe58d8278a3ec30a6c80aafd2bcdd8d5db2ebbe4bf7d2d6168b61aa5cafd"
+    },
+    {
+      "source": "C:/Users/Admin/.codex/generated_images/01a07fbd-e2bd-7323-9437-dfd72d6dc20c/exec-4c038761-599a-4a36-aaa8-b132e5ad3ed8.png",
+      "prompt": "Precise edit ONLY TOP LEFT sprite's arms. Its LEFT SIDE OF IMAGE arm must be straight, hand down by outer thigh, almost behind body. Its RIGHT SIDE OF IMAGE arm must have elbow bent with fist forward IN FRONT OF ITS BELT at about waist/lower rib height. This produces right-of-image forward arm opposite the left-of-image forward leg. Keep BOTH LEGS, feet, entire dress, snakes, face, head, body scale and all seven other sprites exactly untouched. Only two arms of the very first upper-left cell change, preserving gold bracers and skin tone. Pure magenta background. Important: the fist that moves forward is on the RIGHT SIDE OF THE IMAGE for that first cell, NOT the left. No added fingers, weapons or accessories.",
+      "sha256": "c08b1793aa8b1e46b8f7a79db469c118df487311cc4ba3434a137c069c0a9237"
+    }
+  ],
+  "note": "Original six selected poses keep original texture atlas. One new authored heel-lift/weight-transfer pose inserted on left-support half cycle. Both half cycles remain0.32seconds. Pixels untouched, runtime key only.",
+  "sha256": "c08b1793aa8b1e46b8f7a79db469c118df487311cc4ba3434a137c069c0a9237",
+  "reference_sha256": "951ad05a6acc72f83c9ac38c487e3b38c583c878f8d420a64c09fc5629df8a9f"
+}
