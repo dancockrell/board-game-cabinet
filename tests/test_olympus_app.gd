@@ -22,7 +22,7 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	app.sound.set_muted(true)
-	expect(app.board is Node3D and app.board.camera is Camera3D, "Native 3D board and camera")
+	expect(app.board is Node3D and app.board.camera is Camera3D, "Native spatial placement for the 2D board")
 	expect(not app.started and app.battle_overlay.visible, "Battle waits for explicit start")
 	var initial: Dictionary = app.session.snapshot()
 	app._process(0.2)
@@ -41,8 +41,10 @@ func _run() -> void:
 		expect(app.cards[slot].name.text == app.catalog[initial.hand[slot]].name, "Card label agrees with authoritative hand")
 		expect(app.cards[slot].icon.texture != null, "Card has an original portrait")
 	for kind in app.catalog.keys():
-		var art: AtlasTexture = app._texture(kind)
-		expect(art != null and Rect2(Vector2.ZERO,art.atlas.get_size()).encloses(art.region), "Every card portrait has a valid atlas region")
+		var art: Texture2D = app._texture(kind)
+		expect(art != null and art.get_width()>0 and art.get_height()>0, "Every card has a usable illustration")
+		if art is AtlasTexture:
+			expect(art.atlas != null and Rect2(Vector2.ZERO,art.atlas.get_size()).encloses(art.region), "Atlas card portrait stays within its source")
 	expect(app.get_node("NextArt").texture != null, "Next-card preview contains artwork")
 	app._start_or_restart()
 	expect(app.started and not app.paused and not app.battle_overlay.visible, "Start enters the battle")
