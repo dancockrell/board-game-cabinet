@@ -6,7 +6,7 @@ func check(value,label):
 func _initialize(): run.call_deferred()
 func run():
 	for kind in Board.DRAWN_DEFEATS:
-		for direction in ["north","south"]:
+		for direction in Board.DRAWN_DEFEATS[kind]:
 			var board=Board.new()
 			root.add_child(board)
 			var state={"units":[{"id":7,"kind":kind,"side":0,"x":0.0,"z":2.0,"hp":100.0,"max_hp":100.0}],"towers":[],"events":[],"elapsed":1.0}
@@ -39,6 +39,17 @@ func run():
 			check(state==snapshot and board._tokens.is_empty(),"Visual defeat cannot resurrect or mutate state")
 			board.show_state(state,.1)
 			check(board._departures.is_empty(),"Defeat lifetime remains bounded")
+			state.units=[{"id":8,"kind":kind,"side":0,"x":0.0,"z":2.0,"hp":100.0,"max_hp":100.0}]
+			state.elapsed=2.0
+			board.show_state(state,0.0)
+			board._face_pixel_unit(board._tokens[8],Vector2.UP if direction=="north" else Vector2.DOWN)
+			state.units=[]
+			state.elapsed=2.1
+			board.show_state(state,.05)
+			check(board._departures.size()==1,"Second removal creates a fresh cosmetic departure")
+			state.elapsed=0.0
+			board.show_state(state,0.0)
+			check(board._departures.is_empty(),"Rematch immediately clears unfinished departures")
 			board.free()
-	print("Drawn defeat board integration: four characters, two facings, eight frames each, pause, placement, removal and lifetime; failures: ",failures)
+	print("Drawn defeat board integration: seven characters, admitted facings, eight frames each, pause, placement, removal and lifetime; failures: ",failures)
 	quit(1 if failures else 0)

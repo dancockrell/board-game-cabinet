@@ -9,13 +9,14 @@ func run():
 	var board=preload("res://presentation/olympus_arena_board.gd").new()
 	root.add_child(board)
 	var state={"units":[],"towers":[],"events":[],"elapsed":1.0}
-	var kinds=["medusa","heracles","hydra","harpies"]
-	for index in kinds.size():
-		for side in 2:
-			state.units.append({"id":index*2+side+1,"kind":kinds[index],"side":side,"x":-3.0+index*2.0,"z":1.0+side*3.0,"hp":100.0,"max_hp":100.0})
+	var clips=[]
+	for kind in board.DRAWN_DEFEATS:
+		for facing in board.DRAWN_DEFEATS[kind]: clips.append([kind,facing])
+	for index in clips.size():
+		state.units.append({"id":index+1,"kind":clips[index][0],"side":index%2,"x":-3.0+(index%4)*2.0,"z":.8+(index/4)*2.4,"hp":100.0,"max_hp":100.0})
 	board.show_state(state,0.0)
-	for unit in state.units:
-		board._face_pixel_unit(board._tokens[unit.id],Vector2.UP if unit.side==0 else Vector2.DOWN)
+	for index in clips.size():
+		board._face_pixel_unit(board._tokens[index+1],Vector2.UP if clips[index][1]=="north" else Vector2.DOWN)
 	board.camera.size=11
 	board.camera.position=Vector3(0,10.5,14)
 	board.camera.look_at(Vector3(0,.5,2))
@@ -27,5 +28,5 @@ func run():
 		await process_frame
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png(output.path_join("frame-%03d.png"%frame))
-	print("Eight facing-specific drawn removals captured; cosmetic actors only")
+	print("Twelve facing-specific drawn removals captured; cosmetic actors only")
 	quit(0)

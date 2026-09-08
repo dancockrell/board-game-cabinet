@@ -1,6 +1,9 @@
 extends Node3D
 const DepartureFX = preload("res://presentation/olympus_unit_departure_fx.gd")
 const DRAWN_DEFEATS = {
+	"atalanta": {"north":preload("res://themes/atalanta_north_defeat.tres"),"south":preload("res://themes/atalanta_south_defeat.tres")},
+	"minotaur": {"north":preload("res://themes/minotaur_north_defeat.tres")},
+	"hoplites": {"south":preload("res://themes/hoplite_south_defeat.tres")},
 	"medusa": {"north":preload("res://themes/medusa_north_defeat.tres"),"south":preload("res://themes/medusa_south_defeat.tres")},
 	"hydra": {"north":preload("res://themes/hydra_north_defeat.tres"),"south":preload("res://themes/hydra_south_defeat.tres")},
 	"heracles": {"north":preload("res://themes/heracles_north_defeat.tres"),"south":preload("res://themes/heracles_south_defeat.tres")},
