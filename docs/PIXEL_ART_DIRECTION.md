@@ -1,6 +1,6 @@
 # Current visual direction - 2026-09-07
 
-The user supplied two visual references and explicitly selected their art style and perspective. This supersedes realistic 3D miniature polishing as the visual target. The existing renderer remains implementation history until a replacement is tested. Working scope is the existing Greek arena game; western subject matter, text, technology lists and production schedules inside the reference images are not instructions to build Cattle Trail.
+The user supplied two visual references and explicitly selected their art style and perspective. This supersedes realistic 3D miniature polishing as the visual target. The user strengthened this on 2026-09-08 to 2D artwork only. Old 3D artwork and model tooling are removed from the project; do not restore a model fallback. Working scope is the existing Greek arena game; western subject matter, text, technology lists and production schedules inside the reference images are not instructions to build Cattle Trail.
 
 ## Reference authority
 
@@ -38,3 +38,4 @@ The user requests a richly animated whole world, with lots of variety and smooth
 ## Generator update
 
 User explicitly selected the built-in image generator instead of Magnific. Use it for current sprite work; see [first Hoplite trial](PIXEL_HOPLITE_TRIAL.md). This does not authorize external paid model APIs.
+

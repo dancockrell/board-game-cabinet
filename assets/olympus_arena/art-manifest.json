@@ -1,31 +1,8 @@
 {
-  "schema": 1,
-  "assets": [
-    {
-      "id": "olympus-card-atlas-v1",
-      "runtime_path": "res://assets/olympus_arena/card-atlas-v1.png",
-      "source_file": "exec-7606c2f2-490a-4372-88a6-be02ae859ebb.png",
-      "source_tool": "OpenAI built-in image generation",
-      "generation_date": "2026-09-05",
-      "sha256": "5628BC155EB0F5A2DB0AFD184B049ECE38F020C4C4EB65D4B4DE25E122CA1350",
-      "bytes": 3874779,
-      "dimensions": [
-        1536,
-        1024
-      ],
-      "layout": {
-        "columns": 4,
-        "rows": 2,
-        "cell": [
-          384,
-          512
-        ]
-      },
-      "status": "historical-source-not-runtime",
-      "runtime_consumers": [],
-      "review": "Retained 2D historical source only. Runtime cards use current character sprites. Old 3D-associated materials and ornament provenance are preserved in the external archive.",
-      "prompt_record": "res://assets/olympus_arena/ART-PROVENANCE.md"
-    }
-  ],
-  "model_contract": "res://docs/OLYMPUS_BOARD_ART.md"
+  "schema": 2,
+  "art_direction": "2D pixel artwork only",
+  "active_contract": "res://docs/OLYMPUS_BOARD_ART.md",
+  "runtime_provenance": "Individual source-adjacent provenance JSON files in sprites, buildings and terrain describe current pixel assets. Card portraits use those same sprites; Thunderbolt uses thunderbolt.svg.",
+  "retired_archive": "C:/Users/Admin/Documents/Codex/shared-game-environment-library/assets/candidates_needing_review/olympus-legacy-2d-only-2026-09-08/manifest.json",
+  "retired_status": "Old illustrated card atlas, PBR material maps, owl inlay, model builders and 3D presentation were removed from the project after SHA256-verified archival. Their original paths are not runtime paths."
 }

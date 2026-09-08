@@ -1,9 +1,10 @@
 # Ninth Gate original presentation assets
 
-**Rejected study:** the user rejected this character-art style. The image is now archived as `docs/images/rejected-commander-study.png`, excluded from the game. The former header usage described below is historical. See `docs/ART_DIRECTION_STATUS.md` before creating new art.
+**Rejected study:** the user rejected this character-art style. The image is now archived as the external shared `olympus-legacy-2d-only-2026-09-08/docs/images/rejected-commander-study.png` archive, excluded from the game. The former header usage described below is historical. See `docs/ART_DIRECTION_STATUS.md` before creating new art.
 
 `commanders.png` was generated with the built-in image generation tool on 2026-09-05 for this project. The prompt specified original adult fantasy rivals around age 30: Marshal Aureth, an ivory-and-gold angelic warrior, and Veyra, a dark crimson infernal regent. It requested glamorous PG-13 styling, no nudity or explicit sexuality, no gore, and no recognizable franchise characters. The user requested original canon, rule-of-cool presentation, and PG-13 flirtatious glamour.
 
 The source image is 2172×724. Its saved generation identifier is `exec-b644b256-5d28-47ec-b1f5-1c6bb7d1ee0a`. The complete original is retained; the Godot UI uses an AtlasTexture region for its header. This is character key art, not proof of rigged or animated characters in the game.
 
 The 3D miniatures, scenery, and map geometry are procedural original code in `presentation/ninth_gate_board.gd`. Terrain colours are Godot Resources. No external miniature, texture pack, or audio sample is included. The wooden tap uses the cabinet's original synthesis code.
+

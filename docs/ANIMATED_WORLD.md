@@ -1,5 +1,7 @@
 # Animated world production direction
 
+Active art is 2D pixel artwork only. Do not restore 3D characters, modeled scenery or volumetric miniature effects. All environmental animation must support the illustrated world.
+
 User clarified the earlier twenty-times suggestion: not necessarily hundreds of clips; prioritize lots of variety and animation smoothness. This clarification supersedes numeric minimums and the provisional 400-clip interpretation.
 
 ## Scale and counting
@@ -24,6 +26,7 @@ The simulation remains authoritative. Presentation event markers synchronize vis
 
 ## Production records
 
-See ANIMATION_CATALOGUE.json for starter families and required clip metadata. Track planned, generated, rejected, accepted and integrated counts separately. Only accepted clips count toward delivered coverage; quality and useful variety govern acceptance, not clip totals. Preserve sources and provenance. No paid generation; Magnific browser generation only with visibly confirmed Generate Unlimited. Bulk volume does not authorize paid tools or unchecked submissions.
+See ANIMATION_CATALOGUE.json for starter families and required clip metadata. Track planned, generated, rejected, accepted and integrated counts separately. Only accepted clips count toward delivered coverage; quality and useful variety govern acceptance, not clip totals. Preserve sources and provenance. Use only the built-in image generator authorized by the user. No external paid APIs or Magnific generation. Bulk volume does not authorize paid tools or unchecked submissions.
 
-Current checkpoint is direction and catalogue only. No sprite animations have been generated or integrated by this change.
+This document describes production standards; it is not an inventory. See HANDOFF.md and per-character sprite records for current integrated animation coverage and native verification.
+
