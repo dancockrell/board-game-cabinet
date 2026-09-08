@@ -36,7 +36,7 @@ func run() -> void:
 	await RenderingServer.frame_post_draw
 	var rendered := root.get_texture().get_image()
 	for lane in [-2.7,2.7]:
-		var screen := board.camera.unproject_position(Vector3(lane,.12,0))
+		var screen: Vector2 = board.camera.unproject_position(Vector3(lane,.12,0))
 		var color := rendered.get_pixelv(Vector2i(screen))
 		check(color.r>color.b and color.r>0.3,"Painted stone bridge remains visible above the sea margin layer")
 	for arg in OS.get_cmdline_user_args():
