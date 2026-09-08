@@ -78,3 +78,13 @@ HP loss now briefly warms the struck sprite, preserving dark contours and curren
 ## Living shoreline
 
 Water now has sparse travelling glints and broken surf highlights near painted land/boat edges, using existing water pixels only. Buildings, bridge registration and picking remain unchanged. Native stage13 checks passed, including visible pixel changes across animation times and identical paused frames. Native Water-Glints-Stage.png inspected. Painted boats remain stationary. This source update is newer than the downloadable build.
+
+## Latest delivery — living battlefield
+
+https://github.com/dancockrell/board-game-cabinet/releases/tag/olympus-living-battlefield-2026-09-08
+
+Build source fdd441050c4fda2b56f2bc201e235bdc92accd06. Includes attached indicators, damage highlights and shoreline glints. ZIP76,822,485 bytes; SHA256 3D621EE3B8DFF5BFE2522EDAA326A7B892074B2AF23E1F7288E749AA09204B20. Executable SHA256 D77ADCDBF8E3D85E5898CAB114ED0530E18E6F545AF571511E98FDB419A0021E. GitHub ZIP digest matches local.
+
+Full tools/verify.ps1 -Graphics passed after repairing an outdated card-art test that assumed standalone Thunderbolt was an atlas. Native app63, board84, sprites47, stage13, roster79, rules775, full2Dgate and preserved rules suites passed. Separate exported diagnostic passed1800ticks,30placements,7characters,collapse,result and rematch with failures=[]. Evidence outputs/Living-Battlefield-Export-Verification/verification.json.
+
+Release also includes six-second30fps native motion (180frames, no retiming), outputs/Olympus-Living-Battlefield-Motion.mp4. This early exchange shows flight/action and environmental motion, not all ground-walking clips; capture metadata is in outputs/Combined-Polish-Motion/capture.json. Representative frame90 inspected. Remaining locomotion and final-polish requirements above are unchanged.
