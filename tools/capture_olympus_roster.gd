@@ -25,9 +25,9 @@ func _run() -> void:
 	board.show_state({"units":units,"towers":[],"events":[],"elapsed":1.0},.016)
 	for unit in board._tokens.values():
 		unit.get_node("Figure").rotation.y = 0
-		unit.get_node("Health").hide()
+		if not "--health" in OS.get_cmdline_user_args(): unit.get_node("Health").hide()
 	var title := Label.new()
-	title.text = "OLYMPUS ARENA  /  MINIATURE ART STUDY"
+	title.text = "OLYMPUS ARENA  /  2D SPRITE STUDY"
 	title.position = Vector2(28,22)
 	title.add_theme_font_size_override("font_size",24)
 	title.add_theme_color_override("font_color",Color("fff0d2"))

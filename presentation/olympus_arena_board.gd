@@ -141,6 +141,7 @@ func show_state(state: Dictionary, delta: float = 0.0) -> void:
 			if not node.get_node("Figure").has_node("PixelActor"):
 				node.get_node("Figure").rotation.y = atan2(target.x - previous.x, target.z - previous.z)
 			node.set_meta("walking_until", _time + .14)
+		_position_unit_health(node)
 		_health(node, float(unit["hp"]) / maxf(1.0, float(unit.get("max_hp", unit["hp"]))))
 		_ability_status(node, unit)
 		_damage_feedback(node, float(unit["hp"]), delta)
@@ -364,6 +365,18 @@ func _make_unit(kind: String, side: int) -> Node3D:
 		push_error("Missing 2D character art: "+kind)
 	_add_health(node, 2.10 if size > 1 else 1.75, .78, team)
 	return node
+
+# Screen-plane clearances reviewed against the authored resting silhouettes.
+# These intentionally exclude long weapons and include the Harpy's raised wings.
+const UNIT_HEALTH_CLEARANCE = {"hoplites":1.42,"atalanta":1.42,"medusa":1.45,"minotaur":1.78,"heracles":1.88,"hydra":2.12,"harpies":1.50}
+func _position_unit_health(node: Node3D) -> void:
+	var sprite: Node3D = node.get_node("Figure/PixelActor")
+	var holder: Node3D = node.get_node("Health")
+	var clearance: float = UNIT_HEALTH_CLEARANCE.get(str(node.get_meta("kind")),1.5)
+	# Use the sprite origin (including flight lift and movement smoothing), then
+	# move upward in the camera plane. World Y foreshortens at this board angle.
+	holder.global_position = sprite.global_position + camera.global_basis.y * clearance
+	holder.global_rotation = camera.global_rotation
 
 func _ability_status(node: Node3D, unit: Dictionary) -> void:
 	var marker: MeshInstance3D = node.get_node("Ability")

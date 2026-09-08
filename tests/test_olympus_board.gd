@@ -37,8 +37,12 @@ func run() -> void:
 	var eased_figure: Node3D = unit.get_node("Figure")
 	check(eased_figure.position.z > 0.0, "Moving artwork retains a temporary smoothing offset")
 	for drawing in unit.get_children():
-		if drawing is Node3D:
+		if drawing is Node3D and drawing.name!="Health":
 			check(is_equal_approx(drawing.position.x,eased_figure.position.x) and is_equal_approx(drawing.position.z,eased_figure.position.z), "Unit indicators remain attached to smoothed artwork")
+	var sprite_origin: Vector3 = unit.get_node("Figure/PixelActor").global_position
+	var health_delta: Vector3 = unit.get_node("Health").global_position-sprite_origin
+	check(is_zero_approx(health_delta.dot(board.camera.global_basis.x)) and is_zero_approx(health_delta.dot(board.camera.global_basis.z)), "Health stays centered over smoothed sprite in camera plane")
+	check(health_delta.dot(board.camera.global_basis.y)>1.0, "Health keeps authored clearance above sprite")
 	var frozen_offset := eased_figure.position
 	board.show_state(state,0.0)
 	check(eased_figure.position == frozen_offset and unit.position.z == 2.0, "Pause holds presentation offset without changing authoritative position")
