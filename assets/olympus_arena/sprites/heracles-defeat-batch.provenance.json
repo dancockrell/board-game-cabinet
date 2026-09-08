@@ -1,0 +1,27 @@
+{
+  "generator": "built-in image_gen",
+  "date": "2026-09-08",
+  "source_images_unchanged": true,
+  "new_generation_calls": 0,
+  "admitted_resource_frames": 16,
+  "source_rows": "bottom row only, eight separately measured silhouettes per direction",
+  "runtime_wiring": "coordinator pending",
+  "images": [
+    {
+      "direction": "south",
+      "source_batch": "art_batches/heracles_batch_01/south.png",
+      "runtime_file": "assets/olympus_arena/sprites/heracles-south-defeat-batch.png",
+      "sha256": "8db05239d0fdadb5b8acec0d5b0b6d01f79ee63de59b2cccb15e4667668c6e45",
+      "prompt": "Use case: stylized-concept. Production 2D pixel-art game sprite atlas. Reference is character/style only, not layout. Create EXACTLY 8 columns x 4 rows, 32 separate full-body sequential poses of this SAME Heracles, with regular equal cells and generous empty magenta gutters. Wide landscape 2:1 canvas. Golden bronze skin, muscular adult Greek bearded hero, golden lion head hood and back pelt, red gold-trim skirt, bronze cuffs and strapped sandals, knotted wooden club ALWAYS in anatomical RIGHT hand. Crisp carefully authored pixel clusters, dark outline, warm earthy rich shading matching reference. Fixed elevated orthographic RPG camera, no perspective change between cells, no 3D render. Row1 WALK full 8-frame alternating contact/down/passing/up cycle. Row2 RUN full 8-frame vigorous cycle with opposed arms/legs and airborne phases. Row3 CLUB STRIKE 8 frames: ready, crouch, raise, full overhead windup, descending swing, low impact, followthrough, recovery. Row4 DEFEAT 8 frames: recoil, stagger, buckle, one knee, both knees, falling sideways, ground contact, settled on ground. Every column is a distinct chronological drawing. Consistent actor scale, no duplicate poses, no numbers or text, no guides/borders, no effects hiding anatomy, all limbs/club wholly inside own cell. Entire empty background solid pure RGB255,0,255 magenta, never white/grey/checkerboard, no drop shadows or magenta reflected on actor. ALL 32 POSES face SOUTH toward viewer, front view slightly from above. His right club arm is screen LEFT. Hold this direction even when collapsing.\n",
+      "generation_source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-454de524-7695-4870-b211-535cd8a69d8b.png"
+    },
+    {
+      "direction": "north",
+      "source_batch": "art_batches/heracles_batch_01/north.png",
+      "runtime_file": "assets/olympus_arena/sprites/heracles-north-defeat-batch.png",
+      "sha256": "1a54786c3425c414927c2849fbefd8328e399859bf2bcef68d9a12591f04efb9",
+      "prompt": "Use case: stylized-concept. Production 2D pixel-art game sprite atlas. Reference is character/style only, not layout. Create EXACTLY 8 columns x 4 rows, 32 separate full-body sequential poses of this SAME Heracles, with regular equal cells and generous empty magenta gutters. Wide landscape 2:1 canvas. Golden bronze skin, muscular adult Greek bearded hero, golden lion head hood and back pelt, red gold-trim skirt, bronze cuffs and strapped sandals, knotted wooden club ALWAYS in anatomical RIGHT hand. Crisp carefully authored pixel clusters, dark outline, warm earthy rich shading matching reference. Fixed elevated orthographic RPG camera, no perspective change between cells, no 3D render. Row1 WALK full 8-frame alternating contact/down/passing/up cycle. Row2 RUN full 8-frame vigorous cycle with opposed arms/legs and airborne phases. Row3 CLUB STRIKE 8 frames: ready, crouch, raise, full overhead windup, descending swing, low impact, followthrough, recovery. Row4 DEFEAT 8 frames: recoil, stagger, buckle, one knee, both knees, falling sideways, ground contact, settled on ground. Every column is a distinct chronological drawing. Consistent actor scale, no duplicate poses, no numbers or text, no guides/borders, no effects hiding anatomy, all limbs/club wholly inside own cell. Entire empty background solid pure RGB255,0,255 magenta, never white/grey/checkerboard, no drop shadows or magenta reflected on actor. ALL 32 POSES face NORTH away from viewer, rear view slightly from above. Face is hidden by rear lion mane. Anatomical RIGHT club hand is on screen RIGHT. Hold rear orientation throughout walk/run/attack/defeat; no front views.\n",
+      "generation_source": "C:/Users/Admin/.codex/generated_images/01a08019-f832-70c3-8861-f5a8bdcceb78/exec-cf5a5183-a405-4f8a-b440-807448681488.png"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://presentation/sprite_clip.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/olympus_arena/sprites/heracles-north-defeat-batch.png" id="2"]
+[resource]
+script = ExtResource("1")
+atlas = ExtResource("2")
+regions = Array[Rect2i]([Rect2i(22,680,165,181),Rect2i(236,690,167,168),Rect2i(469,714,148,146),Rect2i(686,722,180,149),Rect2i(905,747,182,121),Rect2i(1100,739,207,107),Rect2i(1324,775,222,78),Rect2i(1551,776,216,75)])
+frame_pivots = Array[Vector2]([Vector2(90,175),Vector2(90,163),Vector2(70,142),Vector2(78,141),Vector2(74,116),Vector2(70,103),Vector2(91,73),Vector2(92,70)])
+durations = PackedFloat32Array(0.07,0.08,0.08,0.09,0.10,0.10,0.12,0.14)
+looping = false
+draw_scale = 3.2
+magenta_backing = true
