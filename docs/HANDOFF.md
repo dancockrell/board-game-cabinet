@@ -1,3 +1,11 @@
+# Current creature collapse integration — 2026-09-08
+
+Hydra, Heracles and Harpies now join Medusa with eight drawn defeat poses in each north/south facing: 64 admitted drawings across eight clips. The newest 48 drawings come from existing complete batch sheets, copied unchanged. Other characters and lateral directions retain their prior departure effect.
+
+Authoritative removal creates only a cosmetic actor lasting .78 seconds. Harpy flight lift descends in world space, reaching ground at .22 seconds south or .31 north; the drawing pivots retain ground contact. Pause holds animation, and no defeated actor remains in rules state. The board integration test covers all eight clips, every pose, scale, starting placement, final grounding, authority and bounded lifetime. Native battlefield capture: outputs/Creature-Drawn-Defeat-Board.mp4. Inspected mid/final frames show intact bodies and grounded Harpies. This controlled removal study does not establish crowded-combat polish or full-match balance.
+
+The previously published Windows checkpoint below remains the playable release until a new package is explicitly verified. Resource-level details are in HYDRA_DEFEAT.md, HERACLES_DEFEAT_ADMISSION.md and HARPIES_DEFEAT.md. Earlier entries below describe historical checkpoints; their counts and coverage do not describe this newest integration.
+
 # Olympus Arena handoff â€” 2D only
 
 Updated 2026-09-08. Private repository: https://github.com/dancockrell/board-game-cabinet

@@ -6,9 +6,12 @@ var elapsed := 0.0
 var ghost: Sprite3D
 var _material: ShaderMaterial
 var _flecks: Array[Sprite3D] = []
+var _start_position := Vector3.ZERO
+var _flight_offset := Vector3.ZERO
+var _landing_time := 0.0
 var drawn_actor
 
-func begin(source: Sprite3D, defeat_clip = null) -> bool:
+func begin(source: Sprite3D, defeat_clip = null, landing_time: float = 0.0) -> bool:
 	if ghost != null or not is_instance_valid(source) or source.texture == null or not is_inside_tree(): return false
 	if defeat_clip != null:
 		if defeat_clip.looping or not defeat_clip.validation_error().is_empty(): return false
@@ -21,6 +24,10 @@ func begin(source: Sprite3D, defeat_clip = null) -> bool:
 		# into the new sheet's independently authored scale.
 		global_transform = source.get_parent_node_3d().global_transform
 		global_position = source.global_position
+		_start_position = global_position
+		_landing_time = clampf(landing_time, 0.0, LIFETIME)
+		if _landing_time > 0.0:
+			_flight_offset = source.get_parent_node_3d().global_basis * Vector3(0, source.position.y, 0)
 		drawn_actor = preload("res://presentation/pixel_actor.gd").new()
 		ghost = drawn_actor
 		add_child(ghost)
@@ -71,6 +78,8 @@ func advance_visual(delta: float) -> void:
 	var phase := elapsed / LIFETIME
 	if drawn_actor != null:
 		drawn_actor.show_time(elapsed)
+		if _landing_time > 0.0:
+			global_position = _start_position - _flight_offset * smoothstep(0.0, _landing_time, elapsed)
 		_material.set_shader_parameter("departure", smoothstep(.88, 1.0, phase))
 		if elapsed >= LIFETIME: queue_free()
 		return
